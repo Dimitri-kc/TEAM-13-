@@ -74,7 +74,9 @@ import java.util.Scanner; // Import the Scanner class to read input
     Function: This function takes two inputs as integers and returns the sum
     ********************************/
 
-    // Write your function here
+    public static multiple(double a, double b) {
+        return a * b;
+    }
 
     /********************************
     Developer: Dimitri Khair-Cabalan
