@@ -86,12 +86,18 @@ import java.util.Scanner; // Import the Scanner class to read input
 
 
     /********************************
-    Developer: Full Name
-    University ID: ID Here
-    Function: This function takes two inputs as integers and returns the sum
+    Developer: Amatullaah Stevenson
+    University ID: 160158221
+    Function: This function takes two inputs as integers and returns the maximum one.
     ********************************/
 
-    // Write your function here
+    public static int max(int a, int b) {
+        if (a > b ) {
+            return a;
+        } else {
+            return b;
+        }
+    }
 
 
     /********************************
