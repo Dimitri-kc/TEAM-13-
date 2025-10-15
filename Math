@@ -39,7 +39,7 @@ import java.util.Scanner; // Import the Scanner class to read input
         System.out.println("Added together; " + add(num1, num2)); // Done by Navdeep Malhi
         System.out.println("First Number Subtracted from Second Number; " + subtract(num1, num2)); // Done by Navdeep Malhi
         // Multiplication
-        System.out.println("Multiplied together:" + )
+        System.out.println("Multiplied together:" + Multi(num 1, num2));
         // Divison
         System.out.println("Divided together; " + divide(num1, num2)); // Done by Manaal Aouttah
         System.out.println("First Number Divided from Second Number; " + divide(num1, num2)); // Done by Manaal Aouttah
