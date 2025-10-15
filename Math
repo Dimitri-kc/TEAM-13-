@@ -40,6 +40,8 @@ import java.util.Scanner; // Import the Scanner class to read input
         System.out.println("First Number Subtracted from Second Number; " + subtract(num1, num2)); // Done by Navdeep Malhi
         // Multiplication
         // Divison
+        System.out.println("Divided together; " + divide(num1, num2)); // Done by Manaal Aouttah
+        System.out.println("First Number Divided from Second Number; " + divide(num1, num2)); // Done by Manaal Aouttah
         // Max
         // Min
         // Power
