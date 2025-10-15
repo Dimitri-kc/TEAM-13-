@@ -69,12 +69,38 @@ import java.util.Scanner; // Import the Scanner class to read input
     }
 
     /********************************
-    Developer: Full Name
-    University ID: ID Here
-    Function: This function takes two inputs as integers and returns the sum
+    Developer: Dimitri Khair-Cabalan
+    University ID: 240124715
+    Function: Multi, this function takes two integers as inputs, multiple both numbers and returns the result
+    ********************************/
+
+    public static multiple(double a, double b) {
+        return a * b; 
+    }
+
+    /********************************
+    Developer: 
+    University ID: 
+    Function: 
     ********************************/
 
     // Write your function here
+
+
+    /********************************
+    Developer: Amatullaah Stevenson
+    University ID: 160158221
+    Function: This function takes two inputs as integers and returns the maximum one.
+    ********************************/
+
+    public static int max(int a, int b) {
+        if (a > b ) {
+            return a;
+        } else {
+            return b;
+        }
+    }
+
 
     /********************************
     Developer: Full Name
@@ -97,24 +123,6 @@ import java.util.Scanner; // Import the Scanner class to read input
     /********************************
     Developer: Full Name
     University ID: ID Here
-    Function: This function takes two inputs as integers and returns the sum
-    ********************************/
-
-    // Write your function here
-
-
-    /********************************
-    Developer: Full Name
-    University ID: ID Here
-    Function: This function takes two inputs as integers and returns the sum
-    ********************************/
-
-    // Write your function here
-
-
-    /********************************
-    Developer: Omar Fareh
-    University ID: 30087675
     Function: This function takes two inputs as integers and returns the sum
     ********************************/
 
