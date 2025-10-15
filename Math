@@ -93,7 +93,8 @@ import java.util.Scanner; // Import the Scanner class to read input
     Developer: Manaal Aouttah
     University ID: 240124977
     Function: This function takes two integer as input, divide the first number by second number and returns the result.
-    ********************************/
+    *****************
+    ***************/
 
     public static int divide(int a, int b) {
         return a / b;
