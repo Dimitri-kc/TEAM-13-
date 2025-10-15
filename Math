@@ -39,7 +39,7 @@ import java.util.Scanner; // Import the Scanner class to read input
         System.out.println("Added together; " + add(num1, num2)); // Done by Navdeep Malhi
         System.out.println("First Number Subtracted from Second Number; " + subtract(num1, num2)); // Done by Navdeep Malhi
         // Multiplication
-        System.out.println("Multiplied together:" + )
+        System.out.println("Multiplied together:" + Multi(num 1, num2));
         // Divison
         System.out.println("Divided together; " + divide(num1, num2)); // Done by Manaal Aouttah
         System.out.println("First Number Divided from Second Number; " + divide(num1, num2)); // Done by Manaal Aouttah
@@ -83,13 +83,16 @@ import java.util.Scanner; // Import the Scanner class to read input
     }
 
     /********************************
-    Developer: 
-    University ID: 
-    Function: 
+    Developer: Manaal Aouttah
+    University ID: 240124977
+    Function: Division
+
     ********************************/
 
     // Write your function here
-
+    public static int divide(int a, int b) {
+        return a / b;
+    }
 
     /********************************
     Developer: Amatullaah Stevenson
@@ -115,12 +118,18 @@ import java.util.Scanner; // Import the Scanner class to read input
 
 
     /********************************
-    Developer: Full Name
-    University ID: ID Here
+    Developer: Bibi Alaradi
+    University ID: 240006097
     Function: This function takes two inputs as integers and returns the sum
     ********************************/
 
-    // Write your function here
+    public static int power(int base, int coefficient) {
+        int result = 1;
+        for (int i =1; i <= coefficient; i++ ){
+            result = result * base;
+        }
+        return result;
+    }
 
 
     /********************************
