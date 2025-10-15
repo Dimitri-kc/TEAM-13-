@@ -42,7 +42,7 @@ import java.util.Scanner; // Import the Scanner class to read input
         // Divison
         // Max
         // Min
-        // Power
+        System.out.println(base + "raised to the power of " + coefficient + "is" + result); // Done by Bibi Alaradi 
         // Mod
 
     }
@@ -69,19 +69,17 @@ import java.util.Scanner; // Import the Scanner class to read input
     }
 
     /********************************
-    Developer: Dimitri Khair-Cabalan
-    University ID: 240124715
-    Function: Multi, this function takes two integers as inputs, multiple both numbers and returns the result
+    Developer: Full Name
+    University ID: ID Here
+    Function: This function takes two inputs as integers and returns the sum
     ********************************/
 
-    public static multiple(double a, double b) {
-        return a * b; 
-    }
+    // Write your function here
 
     /********************************
-    Developer: 
-    University ID: 
-    Function: 
+    Developer: Dimitri Khair-Cabalan
+    University ID: 240124715
+    Function: Multi- This function takes two integers as inputs , multiple both numbers and returns the result.
     ********************************/
 
     // Write your function here
