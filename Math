@@ -1,0 +1,116 @@
+import java.util.Scanner; // Import the Scanner class to read input
+
+/****
+ * To do this task what i've done is created a class called MathFunctions
+ * and inside this class it's going to take two numbers and perform all
+ * of the maths operations we're being asked to do on those two numbers.
+ * Once you've done your individual function make a commit and push it and
+ * in the comments leave the information the worksheet asked for.
+ * 
+ * So once you write the line e.g. System.out.println("Added together; " + add(num1, num2));
+ * you would leave a comment saying e.g. // Done by Navdeep and then towards the bottom of the code write
+ * your function with your full name and student number. You can copy the public static format and add your function
+ ******/
+
+ public class MathFunctions
+    public static void main(String[] args) {
+        Scanner inputs = new Scanner(System.in); // Create a Scanner object to read input
+
+        println("Enter Two Numbers when prompted and multiple operations will be performed on them")
+
+        System.out.print("Enter a Number: ");
+        double num1 = inputs.nextDouble(); // Read the first number
+
+        System.out.print("Enter A Second Number: ");
+        double num2 = inputs.nextDouble(); // Read the second number
+
+        System.out.println("Added together; " + add(num1, num2)); // Done by Navdeep Malhi
+        System.out.println("First Number Subtracted from Second Number; " + subtract(num1, num2)); // Done by Navdeep Malhi
+        // Multiplication
+        // Divison
+        // Max
+        // Min
+        // Power
+        // Mod
+
+    }
+
+
+    /********************************
+    Developer: Navdeep Malhi
+    University ID: 230042537
+    Function: This function takes two inputs as integers and returns the sum
+    ********************************/
+
+    public static double add(double a, double b) {
+        return a + b;
+    }
+
+    /********************************
+    Developer: Navdeep Malhi
+    University ID: 230042537
+    Function: This function takes two inputs as integers and subtracts the first number from the second number
+    ********************************/
+
+    public static double subtract(double a, double b) {
+        return a - b;
+    }
+
+    /********************************
+    Developer: Full Name
+    University ID: ID Here
+    Function: This function takes two inputs as integers and returns the sum
+    ********************************/
+
+    // Write your function here
+
+    /********************************
+    Developer: Full Name
+    University ID: ID Here
+    Function: This function takes two inputs as integers and returns the sum
+    ********************************/
+
+    // Write your function here
+
+
+    /********************************
+    Developer: Full Name
+    University ID: ID Here
+    Function: This function takes two inputs as integers and returns the sum
+    ********************************/
+
+    // Write your function here
+
+
+    /********************************
+    Developer: Full Name
+    University ID: ID Here
+    Function: This function takes two inputs as integers and returns the sum
+    ********************************/
+
+    // Write your function here
+
+
+    /********************************
+    Developer: Full Name
+    University ID: ID Here
+    Function: This function takes two inputs as integers and returns the sum
+    ********************************/
+
+    // Write your function here
+
+
+    /********************************
+    Developer: Full Name
+    University ID: ID Here
+    Function: This function takes two inputs as integers and returns the sum
+    ********************************/
+
+    // Write your function here
+
+}
+    
+
+
+
+
