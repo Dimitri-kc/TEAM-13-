@@ -69,19 +69,19 @@ import java.util.Scanner; // Import the Scanner class to read input
     }
 
     /********************************
-    Developer: Full Name
-    University ID: ID Here
-    Function: This function takes two inputs as integers and returns the sum
+    Developer: Dimitri Khair-Cabalan
+    University ID: 240124715
+    Function: Multi, this function takes two integers as inputs, multiple both numbers and returns the result
     ********************************/
 
     public static multiple(double a, double b) {
-        return a * b;
+        return a * b; 
     }
 
     /********************************
-    Developer: Dimitri Khair-Cabalan
-    University ID: 240124715
-    Function: Multi- This function takes two integers as inputs , multiple both numbers and returns the result.
+    Developer: 
+    University ID: 
+    Function: 
     ********************************/
 
     // Write your function here
@@ -106,18 +106,12 @@ import java.util.Scanner; // Import the Scanner class to read input
 
 
     /********************************
-    Developer: Bibi Alaradi
-    University ID: 240006097
+    Developer: Full Name
+    University ID: ID Here
     Function: This function takes two inputs as integers and returns the sum
     ********************************/
 
-    public static int power(int base, int coefficient) {
-        int result = 1;
-        for (int i =1; i <= coefficient; i++ ){
-            result = result * base;
-        }
-        return result;
-    }
+    // Write your function here
 
 
     /********************************
