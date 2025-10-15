@@ -41,6 +41,8 @@ import java.util.Scanner; // Import the Scanner class to read input
         // Multiplication
         System.out.println("Multiplied together:" + )
         // Divison
+        System.out.println("Divided together; " + divide(num1, num2)); // Done by Manaal Aouttah
+        System.out.println("First Number Divided from Second Number; " + divide(num1, num2)); // Done by Manaal Aouttah
         // Max
         // Min
         System.out.println(base + "raised to the power of " + coefficient + "is" + result); // Done by Bibi Alaradi 
