@@ -82,13 +82,16 @@ import java.util.Scanner; // Import the Scanner class to read input
     }
 
     /********************************
-    Developer: Dimitri Khair-Cabalan
-    University ID: 240124715
-    Function: Multi- This function takes two integers as inputs , multiple both numbers and returns the result.
+    Developer: Manaal Aouttah
+    University ID: 240124977
+    Function: Division
+
     ********************************/
 
     // Write your function here
-
+    public static int divide(int a, int b) {
+        return a / b;
+    }
 
     /********************************
     Developer: Amatullaah Stevenson
