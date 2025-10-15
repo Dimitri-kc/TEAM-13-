@@ -77,12 +77,14 @@ import java.util.Scanner; // Import the Scanner class to read input
     // Write your function here
 
     /********************************
-    Developer: Full Name
-    University ID: ID Here
-    Function: This function takes two inputs as integers and returns the sum
+    Developer: Manaal Aouttah
+    University ID: 240124977
+    Function: This function takes two integer as input, divide the first number by second number and returns the result.
     ********************************/
 
-    // Write your function here
+    public static int divide(int a, int b) {
+        return a / b;
+    }
 
 
     /********************************
