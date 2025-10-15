@@ -74,12 +74,25 @@ import java.util.Scanner; // Import the Scanner class to read input
     Function: This function takes two inputs as integers and returns the sum
     ********************************/
 
-    // Write your function here
+    public static multiple(double a, double b) {
+        return a * b;
+    }
 
     /********************************
+<<<<<<< HEAD
     Developer: Full Name
     University ID: ID Here
     Function: This function takes two inputs as integers and returns the sum
+=======
+    Developer: Dimitri Khair-Cabalan
+    University ID: 240124715
+    Function: Multi- This function takes two integers as inputs , multiple both numbers and returns the result.
+>>>>>>> 0a4e5dce233a0511aa5ed74c8cd42e85716f8ee4
+    ********************************/
+   /********************************
+    Developer: Manaal Aouttah
+    University ID: 240124977
+    Function: This function takes two integer as input, divide the first number by second number and returns the result.
     ********************************/
 
     public static int divide(int a, int b) {
@@ -106,12 +119,18 @@ import java.util.Scanner; // Import the Scanner class to read input
 
 
     /********************************
-    Developer: Full Name
-    University ID: ID Here
+    Developer: Bibi Alaradi
+    University ID: 240006097
     Function: This function takes two inputs as integers and returns the sum
     ********************************/
 
-    // Write your function here
+    public static int power(int base, int coefficient) {
+        int result = 1;
+        for (int i =1; i <= coefficient; i++ ){
+            result = result * base;
+        }
+        return result;
+    }
 
 
     /********************************
