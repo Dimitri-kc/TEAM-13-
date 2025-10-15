@@ -109,12 +109,21 @@ import java.util.Scanner; // Import the Scanner class to read input
     }
 
     /********************************
-    Developer: Full Name
-    University ID: ID Here
+    Developer: Ayoub Abdisalam
+    University ID: 240240392
     Function: This function takes two inputs as integers and returns the sum
     ********************************/
 
-    // Write your function here
+     public static int min(int a, int b) {
+        if (a < b) {
+            return a;
+        } else {
+            return b;
+        }
+          
+     }   
+     
+
 
 
     /********************************
