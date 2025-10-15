@@ -138,7 +138,10 @@ import java.util.Scanner; // Import the Scanner class to read input
     Function: This function takes two inputs as integers and returns the sum
     ********************************/
 
-    // Tetsing
+    // public static int Mod(int num1, int num2) {
+    return num1 % num2;
+}
+
 
 }
     
