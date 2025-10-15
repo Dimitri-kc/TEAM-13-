@@ -114,12 +114,18 @@ import java.util.Scanner; // Import the Scanner class to read input
 
 
     /********************************
-    Developer: Full Name
-    University ID: ID Here
+    Developer: Bibi Alaradi
+    University ID: 240006097
     Function: This function takes two inputs as integers and returns the sum
     ********************************/
 
-    // Write your function here
+    public static int power(int base, int coefficient) {
+        int result = 1;
+        for (int i =1; i <= coefficient; i++ ){
+            result = result * base;
+        }
+        return result;
+    }
 
 
     /********************************
