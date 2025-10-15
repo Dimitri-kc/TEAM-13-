@@ -79,15 +79,9 @@ import java.util.Scanner; // Import the Scanner class to read input
     }
 
     /********************************
-<<<<<<< HEAD
-    Developer: Full Name
-    University ID: ID Here
-    Function: This function takes two inputs as integers and returns the sum
-=======
     Developer: Dimitri Khair-Cabalan
     University ID: 240124715
     Function: Multi- This function takes two integers as inputs , multiple both numbers and returns the result.
->>>>>>> 0a4e5dce233a0511aa5ed74c8cd42e85716f8ee4
     ********************************/
    /********************************
     Developer: Manaal Aouttah
