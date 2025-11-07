@@ -5,32 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact</title>
     <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
+ 
 </head>
 <body>
     <header id="main-header">
         <h1 class="title">Contact Us</h1>
-        <!-- <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="recipes.html">Recipes</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav> -->
     </header>
 
     <main>
         <section>
-            
+            <div class="form-container">
             <form id="contact-form" onsubmit="return validateForm()">
-                <input type="text" name="first" placeholder="First Name" required>
-                <input type="text" name="last" placeholder="Last Name" required>
-                <input type="email" name="email" placeholder="Email Address" required>
+                <label for="first">Name</label>
+                <input type="text" id="first" name="first" placeholder="First Name" required>
+                
+                <label for="last">Surname</label>
+                <input type="text" id="last" name="last" placeholder="Last Name" required>
+                
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Email Address" required>
 
-                <textarea rows="5" cols="60" name="message" placeholder="Enter text" required></textarea>
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Enter message or query" required></textarea>
 
                 <button type="submit">Submit</button>
             </form>
+            </div>
         </section>
     </main>
 
