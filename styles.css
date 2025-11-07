@@ -1,9 +1,8 @@
-{
-    background-color: #060616;
+body { background-color: #ffffff;
     
 }
 h1{
-    color: white;
+    color: rgb(0, 0, 0);
     padding-top: 10px;
     text-align: center;
     font-size: 60px;
@@ -12,13 +11,55 @@ h1{
 }
 
 input {
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     width: 70%;
     margin-left: 12%;
     font-size: 20px;
     padding: 16px 16px;
     border-radius: 10px;
-    border-color: black;
+    border-color: rgb(0, 0, 0);
     margin-bottom: 20px;
     
+}
+
+textarea {
+    background-color: rgb(255, 255, 255);
+    width: 70%;
+    margin-left: 12%;
+    font-size: 20px;
+    padding: 16px 16px;
+    border-radius: 10px;
+    border-color: rgb(0, 0, 0);
+    margin-bottom: 20px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+input:focus-within {
+    outline: none;
+    border-color: rgb(0, 0, 0);
+    border-width: 3px;
+}
+
+textarea:focus-within {
+    outline: none;
+    border-color: rgb(0, 0, 0);
+    border-width: 3px;
+}
+
+button {
+    background-color:rgb(0, 0, 0) ;
+    color:white;
+    border-radius: 20x;
+    border-color: rgb(0, 0, 0);
+    font-size: 22px;
+    padding: 10px 18px;
+    text-align:center;
+    display: flex;
+    margin: auto;
+
+}
+
+button:hover {
+    opacity: 80%;
+    cursor: pointer;
 }
