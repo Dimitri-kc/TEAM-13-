@@ -10,35 +10,32 @@
 <body>
     <header id="main-header">
         <h1 class="title">Contact Us</h1>
-        <nav>
+        <!-- <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="recipes.html">Recipes</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
-        </nav>
+        </nav> -->
     </header>
 
     <main>
         <section>
-            <h2>Book a Cooking Lesson</h2>
+            
             <form id="contact-form" onsubmit="return validateForm()">
-                <label for="name">Name:</label>
-                <input type="text" id="name" required>
+                <input type="text" name="first" placeholder="First Name" required>
+                <input type="text" name="last" placeholder="Last Name" required>
+                <input type="email" name="email" placeholder="Email Address" required>
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" required>
+                <textarea rows="5" cols="60" name="message" placeholder="Enter text" required></textarea>
 
-                <label for="date">Preferred Date:</label>
-                <input type="date" id="date" required>
-
-                <button type="submit">Book Now</button>
+                <button type="submit">Submit</button>
             </form>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Virtual Kitchen | All Rights Reserved.</p>
+        <p>&copy; 2025 Loft & Living | All Rights Reserved.</p>
     </footer>
 </body>
 </html>
