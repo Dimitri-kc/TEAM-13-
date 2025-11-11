@@ -19,6 +19,8 @@ CREATE TABLE products (
    image VARCHAR(255),
 --Each product has an id that puts it with a category, required as all products will belong in a category
    category_id INT NOT NULL,
+--Creates a link to the category
+   FOREIGN KEY (category_id) REFERENCES categories(id),
 )
 
 --Returns Table 
