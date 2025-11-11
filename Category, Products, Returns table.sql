@@ -20,3 +20,27 @@ CREATE TABLE products (
 --Each product has an id that puts it with a category, required as all products will belong in a category
    category_id INT NOT NULL,
 )
+
+--Returns Table 
+CREATE TABLE returns(
+--Primary KEY, a unique identifier for each return request
+   id INT AUTO_INCREMENT PRIMARY KEY,
+--The specific item id number from the order being returned, also links to the order_items table
+   order_items_id INT,
+--Shows user id that created return, links to user table
+   user_id INT,
+--Optional text to explain reason  for return 
+   reason TEXT,
+--Current status of the return set as "PENDING" by default
+   status VARCHAR(25) DEFAULT 'Pending', 
+--Updates status of returned products when they are confirmed to have been returned
+   UPDATE returns,
+   SET status = 'Returned'
+   WHERE id =1;
+--Creates a time stamp for when the return request was put through 
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--Creates link to order_ items table and defines relationship
+  FOREIGN KEY (order_item_id) REFERENCES order_items(id),
+--Creates link to users table and defines relationship
+  FOREIGN KEY (user_id) REFERENCES users(id),
+);
