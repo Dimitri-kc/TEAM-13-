@@ -21,7 +21,7 @@ CREATE TABLE products (
 --Each product has an id that puts it with a category, required as all products will belong in a category
    category_id INT NOT NULL,
 --Creates a link to the category
-   FOREIGN KEY (category_id) REFERENCES categories(id),
+   FOREIGN KEY (category_id) REFERENCES categories(id)
 )
 
 --Returns Table 
@@ -36,14 +36,14 @@ CREATE TABLE returns(
    reason TEXT,
 --Current status of the return set as "PENDING" by default
    status VARCHAR(25) DEFAULT 'Pending', 
+--Creates a time stamp for when the return request was put through 
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--Creates link to order_ items table and defines relationship
+  FOREIGN KEY (order_item_id) REFERENCES order_item(id),
+--Creates link to users table and defines relationship
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
 --Updates status of returned products when they are confirmed to have been returned
    UPDATE returns,
    SET status = 'Returned'
    WHERE id =1;
---Creates a time stamp for when the return request was put through 
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---Creates link to order_ items table and defines relationship
-  FOREIGN KEY (order_item_id) REFERENCES order_items(id),
---Creates link to users table and defines relationship
-  FOREIGN KEY (user_id) REFERENCES users(id),
-);
