@@ -1,7 +1,7 @@
 --Categories Table
 CREATE TABLE categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL
 );
 
 --Products Table
@@ -22,14 +22,14 @@ CREATE TABLE products (
    category_id INT NOT NULL,
 --Creates a link to the category
    FOREIGN KEY (category_id) REFERENCES categories(id)
-)
+);
 
 --Returns Table 
 CREATE TABLE returns(
 --Primary KEY, a unique identifier for each return request
    id INT AUTO_INCREMENT PRIMARY KEY,
 --The specific item id number from the order being returned, also links to the order_items table
-   order_items_id INT,
+   order_item_id INT,
 --Shows user id that created return, links to user table
    user_id INT,
 --Optional text to explain reason  for return 
@@ -44,6 +44,6 @@ CREATE TABLE returns(
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 --Updates status of returned products when they are confirmed to have been returned
-   UPDATE returns,
+   UPDATE returns
    SET status = 'Returned'
    WHERE id =1;
