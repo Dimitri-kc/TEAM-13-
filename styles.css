@@ -1,0 +1,41 @@
+/* displays images in rows and columns */
+.image-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:20px;
+    max-width: 800px;
+    margin: 40px auto;
+    justify-content: center;
+
+}
+
+/* container of each image */
+.item {
+background:#ddddd4 ;
+padding: 10px;
+border-radius: 1px;
+display: flex;
+flex-direction: column;
+align-items: left;
+}
+/* image */
+.image-row img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    border-radius: 1px;
+}
+/* living room header */
+h1 {
+text-align: center;
+justify-content: center;
+font-family:'Montserrat', sans-serif;
+font-size: 40px;
+
+}
+/* product information */
+h2 {
+    text-align: left;
+    font-size: 20px;
+}
