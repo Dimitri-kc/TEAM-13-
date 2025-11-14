@@ -65,3 +65,38 @@ h2 {
   align-items: center;
   padding: 2px;
 }
+
+.faq-section {
+max-width: 800px;
+margin: 10% auto;
+padding: 0 20px;
+text-align: center;
+}
+
+.faq-section h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+  color: #333;
+  justify-content: center;
+}
+
+.faq-item {
+  background: #ddddd4;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  /* overflow: hidden; */
+  text-align: left;
+  /* cursor: pointer; */
+}
+
+.faq-question {
+  padding: 20px;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.faq-answer {
+  padding: 20px;
+  font-weight: 400;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
