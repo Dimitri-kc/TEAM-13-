@@ -21,7 +21,7 @@ import java.util.Scanner; // Import the Scanner class to read input
  * 
  * So once you write the line e.g. System.out.println("Added together; " + add(num1, num2));
  * you would leave a comment saying e.g. // Done by Navdeep and then towards the bottom of the code write
- * your function with your full name and student number. You can copy the public static format and add your function
+ * your function with your full name and student number. You can copy the public static format and add your function.
  ******/
 
  public class MathFunctions
