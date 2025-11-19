@@ -1,0 +1,44 @@
+/* MAIN RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* BODY */
+body {
+    background: white;
+    color: #333;
+}
+
+/* HEADER */
+.top-bar {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu-icon {
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.logo {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    line-height: 1.2;
+}
+
+.logo span {
+    font-size: 12px;
+    letter-spacing: 4px;
+}
+
+.icons .icon {
+    margin-left: 15px;
+    font-si
