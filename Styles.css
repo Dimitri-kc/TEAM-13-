@@ -1,61 +1,44 @@
-/* Reset */
+/* MAIN RESET */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
 }
 
-/* Header */
-header {
-    background-color: #333;
-    color: white;
-    padding: 1rem;
-    text-align: center;
+/* BODY */
+body {
+    background: white;
+    color: #333;
 }
 
-header nav ul {
-    list-style: none;
+/* HEADER */
+.top-bar {
+    width: 100%;
+    padding: 20px;
     display: flex;
-    justify-content: center;
-    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
 }
 
-header nav a {
-    color: white;
-    text-decoration: none;
+.menu-icon {
+    font-size: 28px;
+    cursor: pointer;
 }
 
-/* Hero section */
-#hero {
-    padding: 2rem;
+.logo {
     text-align: center;
-    background-color: #f4f4f4;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    line-height: 1.2;
 }
 
-/* Features section */
-#features {
-    display: flex;
-    justify-content: space-around;
-    padding: 2rem;
+.logo span {
+    font-size: 12px;
+    letter-spacing: 4px;
 }
 
-.feature-item {
-    background-color: #ddd;
-    padding: 1rem;
-    border-radius: 5px;
-    width: 30%;
-    text-align: center;
-}
-
-/* Footer */
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-}
+.icons .icon {
+    margin-left: 15px;
+    font-si
