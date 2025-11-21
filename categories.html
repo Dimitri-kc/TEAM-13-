@@ -8,41 +8,46 @@
 
 <h1>LIVING ROOM</h1>
 
+<div class="content-wrap">
 <aside class="side-bar">
 
   <h3>Keywords</h3>
   <div class="tags">
 <input type="checkbox" id="grey-tag" hidden>
-<label for="grey-tag" class="tag">Grey</label>
+<label for="grey-tag" class="tag"> Grey<span class="X"> X </span></label>
 
 <input type="checkbox" id="smart-tag" hidden>
-<label for="smart-tag" class="tag">Smart</label>
+<label for="smart-tag" class="tag">Smart <span class="X"> X </span></label>
 
 <input type="checkbox" id="modern-tag" hidden>
-<label for="modern-tag" class="tag">Modern</label>
+<label for="modern-tag" class="tag">Modern <span class="X"> X </span></label>
 
 
   </div>
 
   <h3>Categories</h3>
-  <label><input type="checkbox" checked> Coffee Tables</label>
-  <label><input type="checkbox" checked> Side chairs</label>
-  <label><input type="checkbox" checked> Throws</label>
 
-<h3> Label  </h3>
-  <label for="vol">£0-100</label>
-  <input type="range" id="price" name="price" min="0" max="100">
+  <label><input type="checkbox" checked> Coffee Tables </label>
+  <label><input type="checkbox" checked> Side chairs </label>
+  <label><input type="checkbox" checked> Throws </label>
+
+<h3> Price  </h3>
+<div class="price-wrap">
+  <label for="price" id="price-num">£0-100</label>
+  <input type="range" id="price" name="price" min="0" max="100" value="0">
+</div>
 
 <h3> Color </h3>
-<label><input type="checkbox" checked> Black</label>
-  <label><input type="checkbox" checked> Beige</label>
-  <label><input type="checkbox" checked> Grey</label>
+<label><input type="checkbox" checked> Black </label>
+  <label><input type="checkbox" checked> Beige </label>
+  <label><input type="checkbox" checked> Grey </label>
 
   <h3>  Size </h3>
-   <label><input type="checkbox" checked> ONE SIZE </label>
+  <label><input type="checkbox" checked> ONE SIZE </label>
 
 </aside>
 
+<div class="main">
 
 <div class="top-bar">
   <input class="search" type="text" placeholder="Search..">
@@ -96,5 +101,14 @@
     </div>
 </div>
 
+<script>
+  const slider = document.getElementById("price");
+  const label= document.getElementById("price-num");
+
+  slider.addEventListener("input", function() {
+    label.textContent =`£0-${slider.value}`;
+  });
+
+</script>
 </body>
 </html>
