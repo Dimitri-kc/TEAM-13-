@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@400;600;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Font+Name&display=swap');
 
 /* displays images in rows and columns */
 .product-grid {
@@ -44,6 +44,10 @@ h2 {
     text-align: left;
     font-size: 20px;
 }
+h3 {
+    font-family: "Body/Font Family", serif ;
+    font-weight: 300;
+}
 .search-bar {
     display: flex;
     justify-content:left;
@@ -54,5 +58,30 @@ h2 {
     padding: 10px 10px;
     border-radius: 25px;
     border: 1px solid #ddddd4;
+
+}
+
+.side-bar {
+    padding: 20px;
+    border-radius: 10px;
+    width: 240px;
+    height: auto;
+    border: 1px solid ;
+
+}
+
+.tags {
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
+
+}
+
+.tag {
+background-color: #F5F5F5;
+padding: Space/200;
+border-radius: Radius/200;
+font-size: medium;
+gap: 8;
 
 }
