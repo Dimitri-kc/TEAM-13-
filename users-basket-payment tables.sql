@@ -63,4 +63,5 @@ CREATE TABLE payments (
 --ON DELETE CASCADE so no lone records.
 --Unique constraints for 1-1 relationships.
 --May need to include additional fields in payments table (e.g., payment method) but sticking to ERD for now.
+--Maybe status for payments (pending, completed, failed, cancelled) could be useful?
 --Also possibly increase phone field length for scalability .e.g., international numbers?
