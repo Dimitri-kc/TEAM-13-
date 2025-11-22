@@ -27,11 +27,11 @@
 
   <h3>Categories</h3>
 
-  <label><input type="checkbox" checked> Sofas </label>
-  <label><input type="checkbox" checked> Throw pillows</label>
-  <label><input type="checkbox" checked> Throw blankets</label>
-    <label><input type="checkbox" checked> Rugs</label>
-      <label><input type="checkbox" checked> Coffee tables</label>
+  <label><input type="checkbox" class="category-filter" value="sofas" > Sofas </label>
+  <label><input type="checkbox" class="category-filter" value="throw pillows" > Throw pillows</label>
+  <label><input type="checkbox" class="category-filter" value="throw blankets" > Throw blankets</label>
+  <label><input type="checkbox" class="category-filter" value="rugs" > Rugs</label>
+  <label><input type="checkbox" class="category-filter" value="coffee tables"> Coffee tables</label>
 
 <h3> Price  </h3>
 <div class="price-wrap">
@@ -39,10 +39,10 @@
   <input type="range" id="price" name="price" min="0" max="100" value="0">
 </div>
 
-<h3> Color </h3>
-<label><input type="checkbox" checked> Black </label>
-  <label><input type="checkbox" checked> Beige </label>
-  <label><input type="checkbox" checked> Grey </label>
+<h3> Colour </h3>
+<label><input type="checkbox" class="colour-filter" value="black"> Black </label>
+  <label><input type="checkbox" class="colour-filter" value="beige"> Beige </label>
+  <label><input type="checkbox" class="colour-filter" value="grey" > Grey </label>
 
   <h3>  Size </h3>
   <label><input type="checkbox" checked> ONE SIZE </label>
@@ -61,7 +61,7 @@
 </div>
 
 <div class="product-grid">
-    <div class="item" data-keywords="grey modern sofa">
+    <div class="item" data-keywords="grey modern sofa" data-category="sofas" data-colour="beige">
 
      <img src="sofa.jpg" alt="item 1"> 
               <div class="product-text">
@@ -70,7 +70,7 @@
               </div>
     </div>
 
- <div class="item" data-keywords="smart modern pillow">
+ <div class="item" data-keywords="smart modern pillow" data-category="throw pillows" data-colour="grey">
          <img src="throwpillow2.png" alt="item 2">
          <div class="product-text">
             <h2> Throw Pillow</h2>
@@ -78,7 +78,7 @@
          </div>
     </div>
 
-      <div class="item" data-keywords="grey pillows">
+      <div class="item" data-keywords="grey blankets"data-category="throw blankets" data-colour="grey">
          <img src="throwblanket.png" alt="item 3">
                   <div class="product-text">
             <h2> Throw Blanket</h2>
@@ -86,8 +86,8 @@
     </div>
       </div>
 
-  <div class="item">
-         <img src="rug.png" alt="item 4">
+  <div class="item" data-category="rugs" data-colour="black">
+         <img src="rug.png" alt="item 4" >
                   <div class="product-text">
             <h2> Rug </h2>
             <p> £20 </p>
@@ -95,7 +95,7 @@
   </div>
 
     <div class="item">
-         <img src="consoletable.png" alt="item 5">
+         <img src="consoletable.png" alt="item 5" data-category="coffee tables" data-colour="grey">
                   <div class="product-text">
             <h2> Console table </h2>
             <p> £20 </p>
@@ -103,33 +103,42 @@
     </div>
 </div>
 
-<!-- JS to allow price adjustment -->
-<script>
-  const slider = document.getElementById("price");
-  const label= document.getElementById("price-num");
-
-  slider.addEventListener("input", function() {
-    label.textContent =`£0-${slider.value}`;
-  });
-
-</script>
-
-<!-- JS to filer based on the keywords -->
 <script>
 const keywordCheckboxes = document.querySelectorAll(".tags input[type='checkbox']");
+const categoryCheckboxes = document.querySelectorAll(".category-filter");
+const colourCheckboxes = document.querySelectorAll(".colour-filter");
 const products = document.querySelectorAll(".item");
 
-keywordCheckboxes.forEach(cb => cb.addEventListener("change", () => {
-
+function applyFilters() {
   const activeKeywords = [...keywordCheckboxes].filter(cb => cb.checked).map(cb => cb.value);
+  const activeCategories = [...categoryCheckboxes].filter(cb => cb.checked).map(cb => cb.value);
+  const activeColours = [...colourCheckboxes].filter(cb => cb.checked).map(cb => cb.value);
+
   products.forEach(product => {
+    const productKeywords = (product.dataset.keywords || "").split(" ");
+    const productCategory = product.dataset.category || "";
+    const productColours = (product.dataset.colour || "").split(" ");
 
-    const productKeywords = product.dataset.keywords.split(" ");
-    product.style.display = activeKeywords.length === 0 || activeKeywords.some(k => productKeywords.includes(k)) ? "block" : "none";
+    const categoryMatch = activeCategories.length === 0 || activeCategories.includes(productCategory);
+    const keywordMatch = activeKeywords.length === 0 || activeKeywords.some(k => productKeywords.includes(k));
+    const colourMatch = activeColours.length === 0 || activeColours.some(c => productColours.includes(c));
+
+    product.style.display = categoryMatch && keywordMatch && colourMatch ? "block" : "none";
   });
+}
 
-}));
+keywordCheckboxes.forEach(cb => cb.addEventListener("change", applyFilters));
+categoryCheckboxes.forEach(cb => cb.addEventListener("change", applyFilters));
+colourCheckboxes.forEach(cb => cb.addEventListener("change", applyFilters));
 </script>
+
+<!-- Adjusts the price slider -->
+<script>
+const slider = document.getElementById("price");
+const label = document.getElementById("price-num");
+slider.addEventListener("input", () => label.textContent = `£0-${slider.value}`);
+</script>
+
 
 </body>
 </html>

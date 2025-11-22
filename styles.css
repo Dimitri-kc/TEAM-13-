@@ -179,12 +179,13 @@ cursor: pointer;
     margin-left: 6px;
   
 }
+/* displays the cross when user selects keyword */
 input[type="checkbox"]:checked + label .X {
     display: inline;
 }
 
 input[type="checkbox"]:checked + .tag {
-    background-color: #b5b1b1;
+    background-color: #bab7b7bd;
 }
 
 input[type="checkbox"]:checked + .tag:hover {
