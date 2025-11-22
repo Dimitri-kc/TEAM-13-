@@ -168,10 +168,28 @@ font-size: medium;
 display: inline-flex;
 align-items: center;
 gap: 8;
-transition: background 0.2s;
+transition: opacity 0.2s ease;
+cursor: pointer;
 
 }
 
+.tag .X {
+    display: none;
+    font-weight: bold;
+    margin-left: 6px;
+  
+}
+input[type="checkbox"]:checked + label .X {
+    display: inline;
+}
+
+input[type="checkbox"]:checked + .tag {
+    background-color: #b5b1b1;
+}
+
+input[type="checkbox"]:checked + .tag:hover {
+    opacity: 0.8;
+}
 .tag .X {
     font-size: 14px;
     opacity: 0.6;

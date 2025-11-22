@@ -13,23 +13,25 @@
 
   <h3>Keywords</h3>
   <div class="tags">
-<input type="checkbox" id="grey-tag" hidden>
-<label for="grey-tag" class="tag"> Grey<span class="X"> X </span></label>
+<input type="checkbox" id="grey-tag" value="grey" hidden>
+<label for="grey-tag" class="tag"> Grey<span class="X">✕</span></label>
 
-<input type="checkbox" id="smart-tag" hidden>
-<label for="smart-tag" class="tag">Smart <span class="X"> X </span></label>
+<input type="checkbox" id="smart-tag" value="smart" hidden>
+<label for="smart-tag" class="tag">Smart <span class="X">✕</span></label>
 
-<input type="checkbox" id="modern-tag" hidden>
-<label for="modern-tag" class="tag">Modern <span class="X"> X </span></label>
+<input type="checkbox" id="modern-tag" value="modern" hidden>
+<label for="modern-tag" class="tag">Modern <span class="X">✕</span></label>
 
 
   </div>
 
   <h3>Categories</h3>
 
-  <label><input type="checkbox" checked> Coffee Tables </label>
-  <label><input type="checkbox" checked> Side chairs </label>
-  <label><input type="checkbox" checked> Throws </label>
+  <label><input type="checkbox" checked> Sofas </label>
+  <label><input type="checkbox" checked> Throw pillows</label>
+  <label><input type="checkbox" checked> Throw blankets</label>
+    <label><input type="checkbox" checked> Rugs</label>
+      <label><input type="checkbox" checked> Coffee tables</label>
 
 <h3> Price  </h3>
 <div class="price-wrap">
@@ -59,7 +61,7 @@
 </div>
 
 <div class="product-grid">
-    <div class="item">
+    <div class="item" data-keywords="grey modern sofa">
 
      <img src="sofa.jpg" alt="item 1"> 
               <div class="product-text">
@@ -68,7 +70,7 @@
               </div>
     </div>
 
- <div class="item">
+ <div class="item" data-keywords="smart modern pillow">
          <img src="throwpillow2.png" alt="item 2">
          <div class="product-text">
             <h2> Throw Pillow</h2>
@@ -76,7 +78,7 @@
          </div>
     </div>
 
-      <div class="item">
+      <div class="item" data-keywords="grey pillows">
          <img src="throwblanket.png" alt="item 3">
                   <div class="product-text">
             <h2> Throw Blanket</h2>
@@ -101,6 +103,7 @@
     </div>
 </div>
 
+<!-- JS to allow price adjustment -->
 <script>
   const slider = document.getElementById("price");
   const label= document.getElementById("price-num");
@@ -110,5 +113,23 @@
   });
 
 </script>
+
+<!-- JS to filer based on the keywords -->
+<script>
+const keywordCheckboxes = document.querySelectorAll(".tags input[type='checkbox']");
+const products = document.querySelectorAll(".item");
+
+keywordCheckboxes.forEach(cb => cb.addEventListener("change", () => {
+
+  const activeKeywords = [...keywordCheckboxes].filter(cb => cb.checked).map(cb => cb.value);
+  products.forEach(product => {
+
+    const productKeywords = product.dataset.keywords.split(" ");
+    product.style.display = activeKeywords.length === 0 || activeKeywords.some(k => productKeywords.includes(k)) ? "block" : "none";
+  });
+
+}));
+</script>
+
 </body>
 </html>
