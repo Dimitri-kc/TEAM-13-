@@ -36,11 +36,17 @@
 <h3> Price  </h3>
 <div class="price-wrap">
   <label for="price" id="price-num">£0-100</label>
-  <input type="range" id="price" name="price" min="0" max="100" value="0">
+<div class="price-slider">
+
+  <input type="range" id="price-min" min="0" max="100" value="0">
+  <input type="range" id="price-max"  min="0" max="100" value="100">
+  
+  <div class="track"></div>
+  <div class="range" id="range-display"></div>
 </div>
 
 <h3> Colour </h3>
-<label><input type="checkbox" class="colour-filter" value="black"> Black </label>
+ <label><input type="checkbox" class="colour-filter" value="black"> Black </label>
   <label><input type="checkbox" class="colour-filter" value="beige"> Beige </label>
   <label><input type="checkbox" class="colour-filter" value="grey" > Grey </label>
 
@@ -59,6 +65,10 @@
  <button class="btn-Rating button-sort">Rating</button>
 
 </div>
+<p id="no-results" style="display:none; font-size:14px; margin-top:10px;">
+    No products matched your search.
+</p>
+
 
 <div class="product-grid">
     <div class="item" data-keywords="grey modern sofa" data-category="sofas" data-colour="beige"

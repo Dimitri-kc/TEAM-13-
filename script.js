@@ -66,6 +66,54 @@ btnRating.addEventListener("click", () => {
 });
 
 
-const slider = document.getElementById("price");
-const label = document.getElementById("price-num");
-slider.addEventListener("input", () => label.textContent = `£0-${slider.value}`);
+const minSlider = document.getElementById("price-min");
+const maxSlider = document.getElementById("price-max");
+const label  = document.getElementById("price-num");
+const rangeDisplay = document.getElementById("range-display");
+
+
+function updatePrice() {
+    let min = Number(minSlider.value);
+    let max = Number(maxSlider.value);
+
+    if(min > max) {
+        [min, max ] = [max, min]
+    }
+    label.textContent = `£${min} - £${max}`;
+
+      const percentMin = (min / minSlider.max) * 100;
+      const percentMax = (max / maxSlider.max) * 100;
+
+  rangeDisplay.style.left = percentMin + "%";
+  rangeDisplay.style.width = (percentMax - percentMin) + "%";
+}
+
+minSlider.addEventListener("input", updatePrice);
+maxSlider.addEventListener("input", updatePrice);
+
+updatePrice();
+
+// search bar inputs
+
+const searchInput = document.querySelector(".search");
+const allProducts = document.querySelectorAll(".item");
+const noResults = document.getElementById("no-results");
+
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.toLowerCase().trim();
+  let anyVisible = false;
+
+  allProducts.forEach(product => {
+    const name = product.querySelector("h2").textContent.toLowerCase();
+    const keywords = (product.dataset.keywords || "").toLowerCase();
+
+    if (name.includes(query) || keywords.includes(query)) {
+      product.style.display = "block";
+      anyVisible = true;
+    } else {
+      product.style.display = "none";
+    }
+  });
+
+  noResults.style.display = anyVisible ? "none" : "block";
+});
