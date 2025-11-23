@@ -34,8 +34,6 @@
 
 }
 
-
-.
 /* colour of checkbox */
 input[type="checkbox"] {
   accent-color: black;  
@@ -84,6 +82,8 @@ border-radius: 40px;
 border: 1px solid #ccc;
 }
 
+
+
 /* top-bar buttons */
 .btn-New, .btn-PriceAsc, .btn-PriceDesc, .btn-Rating {
     padding: 10px 10px;
@@ -105,6 +105,13 @@ opacity: 0.8;
     background: #313131f4 ;
     color:#fffdfdbd
 }
+.no-results {
+margin: 8px 0 12px 12px;
+max-width: 800px;
+width: 100%;
+
+}
+
 /* displays images in rows and columns */
 .product-grid {
     display: grid;
