@@ -1,5 +1,6 @@
 import { getProductsArray, render, setActiveButton } from "./utils.js";
 
+const productGrid = document.querySelector(".product-grid");
 const btnNew       = document.querySelector(".btn-New");
 const btnPriceAsc  = document.querySelector(".btn-PriceAsc");
 const btnPriceDesc = document.querySelector(".btn-PriceDesc");
@@ -14,15 +15,15 @@ btnNew.addEventListener("click", () => {
 
 btnPriceAsc.addEventListener("click", () => {
   setActiveButton(btnPriceAsc);
-  render(getProductsArray().sort((a, b) => Number(a.dataset.price) - Number(b.dataset.price)));
+  render(getProductsArray().sort((a, b) => Number(a.dataset.price) - Number(b.dataset.price)), productGrid);
 });
 
 btnPriceDesc.addEventListener("click", () => {
   setActiveButton(btnPriceDesc);
-  render(getProductsArray().sort((a, b) => Number(b.dataset.price) - Number(a.dataset.price)));
+  render(getProductsArray().sort((a, b) => Number(b.dataset.price) - Number(a.dataset.price)), productGrid);
 });
 
 btnRating.addEventListener("click", () => {
   setActiveButton(btnRating);
-  render(getProductsArray().sort((a, b) => Number(b.dataset.rating) - Number(a.dataset.rating)));
+  render(getProductsArray().sort((a, b) => Number(b.dataset.rating) - Number(a.dataset.rating)), productGrid);
 });
