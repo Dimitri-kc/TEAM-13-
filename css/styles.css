@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@400;600;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@400;600;700&display=swap'); */
 
-.content-wrap {
+/* .content-wrap {
     display: flex;
     gap: 30px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-}
+} */
 
 /*  side bar containing keywords, categories, price, colour and size */
-.side-bar {
+/* .side-bar {
     padding: 10px;
     border-radius: 10px;
     width: 250px;
@@ -22,27 +22,27 @@
     padding-bottom: 10px;
 
 
-}
+} */
 
 /* side bar lists of each sub-header */
-.side-bar label {
+/* .side-bar label {
     font-size: 14px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     display: flex;
     gap: 6px;
     align-items: center;
 
-}
+} */
 
 /* colour of checkbox */
-input[type="checkbox"] {
+/* input[type="checkbox"] {
   accent-color: black;  
 }
 input[type="range"] {
 accent-color: black;  
-}
+} */
 
-.price-wrap {
+/* .price-wrap {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -52,19 +52,19 @@ align-self: flex-start;
 font-size: 14px;
 margin-bottom: 6px;
 
-}
+} */
 
 
-.main {
+/* .main {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 1px;
     align-items: flex-start;
-}
+} */
 
 /* top-bar section */
-.top-bar {
+/* .top-bar {
     display: flex;
     width: 100%;
     max-width: 800px;
@@ -72,20 +72,20 @@ margin-bottom: 6px;
     align-items: center;
     gap:15px;
     padding-bottom: 15px;
-}
+} */
 
-.top-bar .search {
+/* .top-bar .search {
 width: 327px;
 height: 40px;
 padding: 1px 15px;
 border-radius: 40px;
 border: 1px solid #ccc;
-}
+} */
 
 
 
 /* top-bar buttons */
-.btn-New, .btn-PriceAsc, .btn-PriceDesc, .btn-Rating {
+/* .btn-New, .btn-PriceAsc, .btn-PriceDesc, .btn-Rating {
     padding: 10px 10px;
     border-radius: 10px;
     border: none;
@@ -94,26 +94,26 @@ border: 1px solid #ccc;
     color:#555;
     transition: opacity 0.2s ease;
     cursor: pointer;
-}
+} */
 
-.btn-New:hover{
+/* .btn-New:hover{
 opacity: 0.8;
-}
+} */
 
-.btn-New.active, .btn-PriceAsc.active, .btn-PriceDesc.active,
+/* .btn-New.active, .btn-PriceAsc.active, .btn-PriceDesc.active,
 .btn-Rating.active {
     background: #313131f4 ;
     color:#fffdfdbd
-}
-.no-results {
+} */
+/* .no-results {
 margin: 8px 0 12px 12px;
 max-width: 800px;
 width: 100%;
 
-}
+} */
 
 /* displays images in rows and columns */
-.product-grid {
+/* .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill,minmax(230px,1fr));
     gap:30px;
@@ -122,10 +122,10 @@ width: 100%;
     margin: 0 auto;
     justify-content: center;
 
-}
+} */
 
 /* container of each image */
-.item {
+/* .item {
 background: #FFFFFF;
 height: 100%;
 padding-bottom: 1px;
@@ -137,16 +137,16 @@ flex-direction: column;
 align-items: left;
 border: 1px solid #ddd;
 
-}
+} */
 /* image */
-.product-grid img {
+/* .product-grid img {
     width: 100%;
     height: auto;
     object-fit: cover;
     aspect-ratio: 1/1;
     border-radius: 1px;
-}
-/* living room header */
+} */
+/* living room header
 h1 {
 text-align: center;
 justify-content: center;
@@ -156,7 +156,7 @@ font-weight: 600;
 letter-spacing: 0px;
 
 }
-/* product information */
+product information
 h2 {
     text-align: left;
     font-size: 15px;
@@ -169,15 +169,15 @@ p {
     font-weight: bold;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+ */
 
-
-.side-bar h3 {
+/* .side-bar h3 {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: 300;
     margin-bottom: 4px;
-}
+} */
 
-.tags {
+/* .tags {
 display: flex;
 gap: 8px;
 flex-wrap: wrap;
@@ -187,25 +187,25 @@ flex-wrap: wrap;
 .tag {
 background-color: #F5F5F5;
 padding: 6px 12px;
-border-radius: 8px;
+border-radius: 8px; */
 /* font-size: medium; */
-display: inline-flex;
+/* display: inline-flex;
 align-items: center;
 gap: 8;
 transition: opacity 0.2s ease;
 cursor: pointer;
 
-}
+} */
 
 
-.tag .X {
+/* .tag .X {
     display: none;
     font-weight: bold;
     margin-left: 6px;
   
-}
+} */
 /* displays the cross when user selects keyword */
-input[type="checkbox"]:checked + label .X {
+/* input[type="checkbox"]:checked + label .X {
     display: inline;
 }
 
@@ -220,9 +220,9 @@ input[type="checkbox"]:checked + .tag:hover {
     font-size: 14px;
     opacity: 0.6;
 
-}
+} */
 
-.side-bar .price-wrap {
+/* .side-bar .price-wrap {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -234,10 +234,10 @@ input[type="checkbox"]:checked + .tag:hover {
   max-width: 250px;
   height: 40px;
   box-sizing: border-box;
-}
+} */
 
 /* To handle the slider thumbs */
-.price-slider input[type="range"] {
+/* .price-slider input[type="range"] {
   left: 0;
   top: 0;
   position: absolute;
@@ -273,10 +273,10 @@ input[type="checkbox"]:checked + .tag:hover {
     width: 100%;
     background: #ddd;
     z-index: 1;
-}
+} */
 /* the slider line of the price range */
-.range {
+/* .range {
   background: #2C2C2C;
   z-index: 2;
 
-}
+} */
