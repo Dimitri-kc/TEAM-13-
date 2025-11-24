@@ -1,13 +1,14 @@
 --Categories Table
 CREATE TABLE categories (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );
 
 --Products Table
 CREATE TABLE products (
+
 --PRIMARY KEY, a unique identifier for each product
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT AUTO_INCREMENT PRIMARY KEY,
 --Required field, max 100 characters for the name of products
     name VARCHAR(100) NOT NULL,
 --Products description, optional, has unlimited length
@@ -21,13 +22,13 @@ CREATE TABLE products (
 --Each product has an id that puts it with a category, required as all products will belong in a category
    category_id INT NOT NULL,
 --Creates a link to the category
-   FOREIGN KEY (category_id) REFERENCES categories(id)
+   FOREIGN KEY (category_id) REFERENCES categories(category_id)
 );
 
 --Returns Table 
 CREATE TABLE returns(
 --Primary KEY, a unique identifier for each return request
-   id INT AUTO_INCREMENT PRIMARY KEY,
+   return_id INT AUTO_INCREMENT PRIMARY KEY,
 --The specific item id number from the order being returned, also links to the order_items table
    order_item_id INT,
 --Shows user id that created return, links to user table
@@ -39,9 +40,9 @@ CREATE TABLE returns(
 --Creates a time stamp for when the return request was put through 
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 --Creates link to order_ items table and defines relationship
-  FOREIGN KEY (order_item_id) REFERENCES order_item(id),
+  FOREIGN KEY (order_item_id) REFERENCES order_items(order_item_id),
 --Creates link to users table and defines relationship
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (user_id) REFERENCES users(users_id)
 );
 --Updates status of returned products when they are confirmed to have been returned
    UPDATE returns
