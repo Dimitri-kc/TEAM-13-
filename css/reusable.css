@@ -2,15 +2,14 @@
 
 label {
     display:block;
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 16px;
     margin-bottom: 5px;
 }
 /* First name, last name and email and message field background*/
 input, textarea {
     background-color: rgb(255, 255, 255);
     width: 100%;
-    font-size: 15px;
+    font-size: 14px;
     padding: 16px 16px;
     border-radius: 10px;
     border-color: rgb(255, 255, 255);
@@ -43,7 +42,7 @@ button {
     border: none;
     border-radius: 10px;
     border-color: rgb(0, 0, 0);
-    font-size: 20px;
+    font-size: 16px;
     padding: 16px 16px;
     text-align:center;
     width: 100%;
