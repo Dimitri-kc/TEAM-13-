@@ -42,7 +42,7 @@ CREATE TABLE returns(
 --Creates link to order_ items table and defines relationship
   FOREIGN KEY (order_item_id) REFERENCES order_items(order_item_id),
 --Creates link to users table and defines relationship
-  FOREIGN KEY (user_id) REFERENCES users(users_id)
+  FOREIGN KEY (user_ID) REFERENCES users(users_ID)
 );
 --Updates status of returned products when they are confirmed to have been returned
    UPDATE returns
