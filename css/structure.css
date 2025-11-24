@@ -1,0 +1,23 @@
+.form-container {
+    background-color: rgba(135, 135, 135, 0.212);
+    width: 60%;
+    max-width: 720px;
+    margin: 0 auto 60px auto;
+    padding:40px 40px;
+    border-radius: 15px;
+    font-family:  sans-serif;
+}
+/* Screen size adjustment*/
+@media (max-width: 768px) {
+  .form-container {
+    width: 85%;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 26px;
+  }
+  label {
+    font-size: 16px;
+  }
+}
+ 
