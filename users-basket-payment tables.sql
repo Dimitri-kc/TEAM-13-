@@ -53,7 +53,7 @@ CREATE TABLE payments (
     address VARCHAR(255) NOT NULL, --shipping address
     payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, --auto timestamp for payment date
     total_sum DECIMAL(10, 2) NOT NULL, --total amount paid
-    FOREIGN KEY (order_ID) REFERENCES orders(order_ID), --fk linking payments to orders table
+    FOREIGN KEY (order_ID) REFERENCES orders(order_ID) ON DELETE CASCADE, --fk linking payments to orders table
     FOREIGN KEY (user_ID) REFERENCES users(user_ID) ON DELETE CASCADE -- if user is deleted, their payments are also deleted
 );
 
