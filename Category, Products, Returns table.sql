@@ -36,13 +36,13 @@ CREATE TABLE returns(
 --Optional text to explain reason  for return 
    reason TEXT,
 --Using ENUM for status changes instead of VARCHAR
-  status ENUM('Requested', 'Authorised', 'Received', 'Refunded', 'Denied')
+  status ENUM('Requested', 'Authorised', 'Received', 'Refunded', 'Denied') DEFAULT 'Requested',
 --Creates a time stamp for when the return request was put through 
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 --Creates link to orders table and defines relationship
   FOREIGN KEY (order_ID) REFERENCES orders(order_ID) ON DELETE CASCADE,
 --Creates link to users table and defines relationship
-  FOREIGN KEY (user_id) REFERENCES users(users_ID) ON DELETE CASCADE
+  FOREIGN KEY (user_ID) REFERENCES users(user_ID) ON DELETE CASCADE
 );
 
 --Return_items Table: Tracks the specific products included in the return requests
