@@ -68,25 +68,17 @@ h2 {
 
 }
 
-.left, .right {
-  flex: 1;
-  width: 50%;
-}
-
-
 .faq-section {
 max-width: 800px;
 margin: 40px auto;
 padding:  10px;
 text-align: center;
 font-family: 'Josefin Slab', serif;
-  /* font-family: 'Ibarra Real Nova', serif; */
 
 
 }
 
 .faq-section h2 {
-    /* font-family: 'Josefin Slab',serif; */
   padding: 5px;
   font-size: 2.2em;
   margin-bottom:30px;
@@ -98,14 +90,13 @@ font-family: 'Josefin Slab', serif;
   content: "";
   display: block;
   background: #cbc6c69c;
-  width: 450px;
+  width: 40%;
   height: 2.8px;
   margin: 10px auto 0;
   border-radius: 2px;
 
 }
 .faq-item {
-  /* font-family: 'Josefin Slab',serif; */
   background: #fff;
   border-radius: 12px;
   margin-bottom: 20px;
@@ -118,22 +109,19 @@ font-family: 'Josefin Slab', serif;
 }
 
 .faq-question {
-    /* font-family: 'Josefin Slab',serif; */
   padding: 15px 20px;
   font-weight: 700;
   font-size: 1.2rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   background: #cbc6c69c;
-  border-bottom: 1px solid #cbc6c674;
 }
 .faq-answer {
-    /* font-family: 'Josefin Slab',serif; */
-  padding:10px 20px 15px 20px;
+  padding:15px 20px;
   font-weight: 400;
   font-size: 1.2rem;
-  letter-spacing: 0.2px;
-  line-height: 1.5;
+  line-height: 1.6;
+  color: #333;
 }
 
 .faq-background {
@@ -173,9 +161,9 @@ font-family: 'Josefin Slab', serif;
     max-width: 500px;
     width: 100%;
   }
-  @media (max-width: 768px) {
+ }
+   @media (max-width: 768px) {
     .left p {
       font-size: 16px;
     }
   }
- }
