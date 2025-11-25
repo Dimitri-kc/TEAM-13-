@@ -4,7 +4,7 @@ CREATE TABLE categories (
     name VARCHAR(100) NOT NULL
 );
 
---Products Table(DIMITRI)
+--Products Table-- (DIMITRI)
 CREATE TABLE products (
 
 --PRIMARY KEY, a unique identifier for each product
