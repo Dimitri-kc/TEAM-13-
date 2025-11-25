@@ -35,16 +35,14 @@ CREATE TABLE returns(
    user_id INT NOT NULL,
 --Optional text to explain reason  for return 
    reason TEXT,
---Current status of the return set as "PENDING" by default
-   status VARCHAR(25) DEFAULT 'Pending', 
+--Using ENUM for status changes instead of VARCHAR
+  status ENUM('Requested', 'Authorised', 'Received', 'Refunded', 'Denied')
 --Creates a time stamp for when the return request was put through 
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---Creates link to order_ items table and defines relationship
-  FOREIGN KEY (order_item_id) REFERENCES order_items(order_item_id)
-  ON DELETE CASCADE,
+--Creates link to orders table and defines relationship
+  FOREIGN KEY (order_ID) REFERENCES orders(order_ID) ON DELETE CASCADE,
 --Creates link to users table and defines relationship
-  FOREIGN KEY (user_id) REFERENCES users(users_ID)
-  ON DELETE CASCADE
+  FOREIGN KEY (user_id) REFERENCES users(users_ID) ON DELETE CASCADE
 );
 
 --Return_items Table: Tracks the specific products included in the return requests
