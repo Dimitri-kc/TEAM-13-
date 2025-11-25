@@ -47,3 +47,15 @@ CREATE TABLE returns(
   ON DELETE CASCADE
 );
 
+--Return_items Table: Tracks the specific products included in the return requests
+CREATE TABLE return_items(
+--Primary KEY, a unique identifier for each return item
+   return_item_ID INT AUTO_INCREMENT PRIMARY KEY,
+   return_ID INT NOT NULL,
+   order_item_id INT NOT NULL
+--The specific quantity of this specific item being returned
+   quantity INT NOT NULL CHECK(quantity > 0),
+--Optional text to explain why this specific item is being returned
+   reason VARCHAR(255),
+   
+)
