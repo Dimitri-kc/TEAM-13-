@@ -30,9 +30,9 @@ CREATE TABLE returns(
 --Primary KEY, a unique identifier for each return request
    return_id INT AUTO_INCREMENT PRIMARY KEY,
 --The specific item id number from the order being returned, also links to the order_items table
-   order_item_id INT,
+   order_item_id INT NOT NULL,
 --Shows user id that created return, links to user table
-   user_id INT,
+   user_id INT NOT NULL,
 --Optional text to explain reason  for return 
    reason TEXT,
 --Current status of the return set as "PENDING" by default
@@ -40,11 +40,10 @@ CREATE TABLE returns(
 --Creates a time stamp for when the return request was put through 
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 --Creates link to order_ items table and defines relationship
-  FOREIGN KEY (order_item_id) REFERENCES order_items(order_item_id),
+  FOREIGN KEY (order_item_id) REFERENCES order_items(order_item_id)
+  ON DELETE CASCADE,
 --Creates link to users table and defines relationship
-  FOREIGN KEY (user_ID) REFERENCES users(users_ID)
+  FOREIGN KEY (user_id) REFERENCES users(users_ID)
+  ON DELETE CASCADE
 );
---Updates status of returned products when they are confirmed to have been returned
-   UPDATE returns
-   SET status = 'Returned'
-   WHERE id =1;
+
