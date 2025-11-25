@@ -1,10 +1,10 @@
---Categories Table
+--Categories Table(DIMITRI)
 CREATE TABLE categories (
     category_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );
 
---Products Table
+--Products Table(DIMITRI)
 CREATE TABLE products (
 
 --PRIMARY KEY, a unique identifier for each product
@@ -25,7 +25,7 @@ CREATE TABLE products (
    FOREIGN KEY (category_id) REFERENCES categories(category_id)
 );
 
---Returns Table 
+--Returns Table(DIMITRI)
 CREATE TABLE returns(
 --Primary KEY, a unique identifier for each return request
    return_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -45,7 +45,7 @@ CREATE TABLE returns(
   FOREIGN KEY (user_ID) REFERENCES users(user_ID) ON DELETE CASCADE
 );
 
---Return_items Table: Tracks the specific products included in the return requests
+--Return_items Table: Tracks the specific products included in the return requests(DIMITRI)
 CREATE TABLE return_items(
 --Primary KEY, a unique identifier for each return item
    return_item_ID INT AUTO_INCREMENT PRIMARY KEY,
