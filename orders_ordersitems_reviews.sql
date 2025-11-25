@@ -2,8 +2,8 @@
 
 CREATE TABLE reviews (
     review_ID INT AUTO_INCREMENT PRIMARY KEY,
-    product_ID INT NOT NULL, --Product being reviewed
     user_ID INT NOT NULL,-- User who wrote the review
+    product_ID INT NOT NULL, --Product being reviewed
     rating INT, -- Removed the inline CHECK constraint
     comment TEXT,-- Customer’s review text
     review_date DATETIME DEFAULT CURRENT_TIMESTAMP,  -- When review was created
@@ -28,9 +28,9 @@ CREATE TABLE orders (
 
 CREATE TABLE order_items (
     order_item_ID INT AUTO_INCREMENT PRIMARY KEY, -- Unique order item ID
-    order_ID INT NOT NULL,                       -- FK -> orders
     product_ID INT NOT NULL,                     -- FK -> products
     unit_price DECIMAL(10,2) NOT NULL,           -- Price when purchased
+    order_ID INT NOT NULL,                       -- FK -> orders
     FOREIGN KEY (order_ID) REFERENCES orders(order_ID),     -- Link to orders
     FOREIGN KEY (product_ID) REFERENCES products(product_ID)  -- Link to products
 );
