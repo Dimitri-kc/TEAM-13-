@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Living Room</title>
+<link rel="stylesheet" href="../css/livingroom-css/livingroom-base.css">
+<link rel="stylesheet" href="../css/livingroom-css/livingroom-structure.css">
+<link rel="stylesheet" href="../css/livingroom-css/livingroom-reusable.css">
+<link rel="stylesheet" href="../css/livingroom-css/livingroom-page.css">
+</head>
+<body>
+
+  <a href="../html/homepage.html">
+<h1>LIVING ROOM</h1>
+  </a>
+
+<div class="content-wrap">
+<aside class="side-bar">
+
+  <h3>Keywords</h3>
+  <div class="tags">
+<input type="checkbox" id="grey-tag" value="grey" hidden>
+<label for="grey-tag" class="tag"> Grey<span class="X">✕</span></label>
+
+<input type="checkbox" id="smart-tag" value="smart" hidden>
+<label for="smart-tag" class="tag">Smart <span class="X">✕</span></label>
+
+<input type="checkbox" id="modern-tag" value="modern" hidden>
+<label for="modern-tag" class="tag">Modern <span class="X">✕</span></label>
+
+
+  </div>
+
+  <h3>Categories</h3>
+
+  <label><input type="checkbox" class="category-filter" value="sofas" > Sofas </label>
+  <label><input type="checkbox" class="category-filter" value="throw pillows" > Throw pillows</label>
+  <label><input type="checkbox" class="category-filter" value="throw blankets" > Throw blankets</label>
+  <label><input type="checkbox" class="category-filter" value="rugs" > Rugs</label>
+  <label><input type="checkbox" class="category-filter" value="console tables"> Console tables</label>
+
+<h3> Price  </h3>
+<div class="price-wrap">
+  <label for="price" id="price-num">£0-295</label>
+<div class="price-slider">
+
+  <input type="range" id="price-min" min="0" max="295" value="0">
+  <input type="range" id="price-max"  min="0" max="295" value="295">
+  
+  <div class="track"></div>
+  <div class="range" id="range-display"></div>
+</div>
+
+<h3> Colour </h3>
+ <label><input type="checkbox" class="colour-filter" value="black"> Black </label>
+  <label><input type="checkbox" class="colour-filter" value="beige"> Beige </label>
+  <label><input type="checkbox" class="colour-filter" value="grey" > Grey </label>
+  <label><input type="checkbox" class="colour-filter" value="green" > Green </label>
+
+  <h3>  Size </h3>
+  <label><input type="checkbox" class="size-filter" value="one-size" > ONE SIZE </label>
+
+</aside>
+
+<div class="main">
+
+<div class="top-bar">
+
+  <input class="search" type="text" placeholder="Search..">
+ <button class="btn-New button-sort">New</button>
+ <button class="btn-PriceAsc button-sort">Price ascending</button>
+ <button class="btn-PriceDesc button-sort">Price descending</button>
+ <button class="btn-Rating button-sort">Rating</button>
+
+
+</div>
+   <!-- results for no match in search input -->
+<p id="no-results" style="display:none; font-size:20px; margin-top: 15px; padding-left: 48px; font-weight: 500;">
+    Uh oh! No products matched your search.
+</p>
+
+
+
+<div class="product-grid">
+    <div class="item" data-keywords="modern smart sofa" data-category="sofas" data-colour="beige"
+    data-new="true" data-price="295" data-rating="4" onclick="location.href='../html/sofa.html'">
+     <img src="../images/livingroom-images/sofa.jpg" alt="item 1"> 
+              <div class="product-text">
+            <h2> Sofa </h2>
+            <p> £295 </p>
+              </div>
+    </div>
+
+ <div class="item" data-keywords="grey smart modern pillow" data-category="throw pillows" data-colour="grey"
+ data-new="true" data-price="8" data-rating="3">
+         <img src="../images/livingroom-images/throwpillow3.jpg" alt="item 2">
+         <div class="product-text">
+            <h2> Throw Pillow</h2>
+            <p> £8 </p>
+         </div>
+    </div>
+
+      <div class="item" data-keywords="green blankets" data-category="throw blankets" data-colour="green"
+      data-new="true" data-price="20" data-rating="4">
+       <img src="../images/livingroom-images/throwblanket3.jpg" alt="item 3">
+                  <div class="product-text">
+            <h2> Throw Blanket</h2>
+            <p> £20 </p>
+    </div>
+      </div>
+
+  <div class="item" data-keywords="modern rug" data-category="rugs" data-colour="black"
+  data-new="true" data-price="70" data-rating="4">
+         <img src="../images/livingroom-images/rug.png" alt="item 4" >
+                  <div class="product-text">
+            <h2> Rug </h2>
+            <p> £70 </p>
+    </div>
+  </div>
+
+    <div class="item" data-keywords="smart modern console table" data-category="console tables" data-colour="green"
+         data-new="false" data-price="25" data-rating="5">
+
+         <img src="../images/livingroom-images/consoletable.png" alt="item 5" >
+                  <div class="product-text">
+            <h2> Console table </h2>
+            <p> £25 </p>
+        </div>
+    </div>
+</div>
+
+
+<script type="module" src="../javascript/livingroom-js/main.js"></script>
+
+
+</body>
+</html>
