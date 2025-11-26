@@ -8,12 +8,22 @@ const btnRating    = document.querySelector(".btn-Rating");
 const originalProducts    = [...productGrid.querySelectorAll(".item")];
 
 function resetGrid() {
-  // render(getProductsArray(), productGrid);
   productGrid.innerHTML ="";
-  originalProducts.forEach(p => productGrid.appendChild(p));
+  originalProducts.forEach(p => {
+    p.style.display ="block";
+    productGrid.appendChild(p);
+  }) 
+  
   document.querySelectorAll(".button-sort").forEach(b => b.classList.remove("active"));
 }
 
+function showAllProducts() {
+  getProductsArray().forEach(p => p.style.display = "block");
+}
+
+// function getVisibleProducts() {
+//   return getProductsArray().filter(p => p.style.display !== "none");
+// }
 btnNew.addEventListener("click", () => {
   if(btnNew.classList.contains("active")){
     resetGrid();
@@ -30,7 +40,10 @@ btnPriceAsc.addEventListener("click", () => {
     resetGrid();
   } else {
   setActiveButton(btnPriceAsc);
-  render(getProductsArray().sort((a, b) => Number(a.dataset.price) - Number(b.dataset.price)), productGrid);
+  showAllProducts();
+  const sorted = getProductsArray().sort(
+    (a, b) => Number(a.dataset.price) - Number(b.dataset.price));
+  render(sorted, productGrid);
 }
 });
 
@@ -40,7 +53,12 @@ btnPriceDesc.addEventListener("click", () => {
     resetGrid();
   } else {
   setActiveButton(btnPriceDesc);
-  render(getProductsArray().sort((a, b) => Number(b.dataset.price) - Number(a.dataset.price)), productGrid);
+  showAllProducts();
+  const sorted = getProductsArray().sort(
+    (a, b) => Number(b.dataset.price) - Number(a.dataset.price));
+
+  render(sorted, productGrid);
+
 }
 });
 
@@ -49,6 +67,11 @@ btnRating.addEventListener("click", () => {
     resetGrid();
   } else {
   setActiveButton(btnRating);
-  render(getProductsArray().sort((a, b) => Number(b.dataset.rating) - Number(a.dataset.rating)), productGrid);
+  showAllProducts();
+    const sorted = getProductsArray().sort(
+    (a, b) => Number(a.dataset.rating) - Number(b.dataset.rating));
+
+  render(sorted, productGrid);
+
   }
 });
