@@ -29,21 +29,23 @@ margin-bottom: 6px;
   top: 0;
   position: absolute;
   width: 100%;
-  pointer-events: none; 
+  pointer-events: none;
   -webkit-appearance: none;
+  appearance: none;
   background: none;
   z-index: 3;
 
 }
 
 .price-slider input[type="range"]::-webkit-slider-thumb {
-  pointer-events: all; 
+  pointer-events: auto; 
   width: 16px;
   height: 16px;
   border-radius: 50%;
   background: #2C2C2C;
   cursor: pointer;
   -webkit-appearance: none;
+  appearance: none;
   margin-top: 10px;
 
 }
@@ -54,6 +56,7 @@ margin-bottom: 6px;
   top: 50%;
   border-radius: 2px;
   transform: translateY(-50%);
+  pointer-events: none;
 
 }
 .track {
