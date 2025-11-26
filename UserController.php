@@ -60,4 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Login failed. Invalid email or password.";
     }
 }
+//check if setting session variables necessary here or in model as currently in both
+//confirm if register/login code needs to be inside class or outside as currently outside also separated or not
 ?>

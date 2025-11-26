@@ -29,4 +29,5 @@ class User {
         echo "Login failed. Invalid email or password.";
     }
 }
+//check if setting session variables necessary here or in controller as currently in both
 ?>
