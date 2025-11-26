@@ -50,11 +50,11 @@ CREATE TABLE return_items(
 --Primary KEY, a unique identifier for each return item
    return_item_ID INT AUTO_INCREMENT PRIMARY KEY,
    return_id INT NOT NULL,
-   order_item_id INT NOT NULL
+   order_item_ID INT NOT NULL,
 --The specific quantity of this specific item being returned
    quantity INT NOT NULL CHECK(quantity > 0),
 --Optional text to explain why this specific item is being returned
    reason VARCHAR(255),
    FOREIGN KEY (return_id) REFERENCES returns(return_id) ON DELETE CASCADE,
-   FOREIGN KEY (order_item_id) REFERENCES order_items(order_item_id)
+   FOREIGN KEY (order_item_ID) REFERENCES order_items(order_item_ID)ON DELETE CASCADE
 );
