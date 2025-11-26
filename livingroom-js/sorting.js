@@ -10,7 +10,11 @@ const originalProducts    = [...productGrid.querySelectorAll(".item")];
 function resetGrid() {
   productGrid.innerHTML ="";
   originalProducts.forEach(p => {
+
+    p.style.display = "none";
+
     p.style.display ="block";
+
     productGrid.appendChild(p);
   }) 
   
@@ -21,9 +25,6 @@ function showAllProducts() {
   getProductsArray().forEach(p => p.style.display = "block");
 }
 
-// function getVisibleProducts() {
-//   return getProductsArray().filter(p => p.style.display !== "none");
-// }
 btnNew.addEventListener("click", () => {
   if(btnNew.classList.contains("active")){
     resetGrid();
