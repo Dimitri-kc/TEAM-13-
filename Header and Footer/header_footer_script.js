@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuIconImg = document.getElementById('menu-icon-img');
 
     
-    const menuIconPath = "images/icon-menu.png";
-    const closeIconPath = "images/icon-close.png";
+    const menuIconPath = "header_footer_images/icon-menu.png";
+    const closeIconPath = "header_footer_images/icon-close.png";
 
     toggleBtn.addEventListener('click', (e) => {
         e.stopPropagation();
