@@ -1,0 +1,161 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #000;
+    min-width: 1024px; 
+    overflow-x: auto;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s;
+}
+
+a:hover {
+    opacity: 0.6;
+}
+
+ul {
+    list-style: none;
+}
+
+/* HEADER */
+.site-header {
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    position: relative;
+    height: 90px;
+    z-index: 1000;
+}
+
+.header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+
+/* 1. Menu Button */
+.menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* 2. Logo */
+.logo-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.main-logo {
+    height: 50px; 
+    display: block;
+}
+
+/* 3. Header Icons (Images) */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+/* Controls size of Heart, User, Basket, Menu Grid */
+.ui-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    display: block;
+}
+
+/* DROPDOWN MENU */
+.dropdown-panel {
+    position: absolute;
+    top: 90px;
+    left: 0;
+    width: 300px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    display: none;
+    z-index: 999;
+}
+
+.dropdown-panel.open {
+    display: block; 
+}
+
+.nav-links li {
+    margin-bottom: 20px;
+}
+
+.nav-links a {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+.nav-divider {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+/* FOOTER */
+.site-footer {
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    padding: 60px 0;
+    margin-top: auto;
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr; 
+    gap: 40px;
+}
+
+.footer-section h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #000;
+}
+
+.footer-section ul li {
+    margin-bottom: 15px;
+}
+
+.footer-section ul li a {
+    font-size: 14px;
+    color: #444;
+}
+
+/* Social Icon specific size */
+.social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.social-icon {
+    width: 20px; /* Slightly smaller than header icons */
+    height: 20px;
+    object-fit: contain;
+}
