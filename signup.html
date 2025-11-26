@@ -1,54 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign Up</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
 
-  <div class="form-container">
-    <h2>Create Account</h2>
-    <form id="signupForm">
-      <div class="input-group">
-        <label for="username">Username</label> 
-        <input type="text" id="username" placeholder="Enter your username" required>
-      </div>
+<body class="page-background">
 
-      <div class="input-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Enter your email" required>
-      </div>
+<main class="form-container">
+<section class="form-box">
+<h1 class="form-title">NEW HERE?</h1>
 
-      <div class="input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter your password" required>
-      </div>
+<form class="form-fields">
 
-      <button type="submit" class="btn">Sign Up</button>
+<div class="input-group">
+<span class="input-label">Name</span>
+<input type="text" required>
+</div>
 
-      <p class="switch-text">
-        Already have an account?
-        <a href="index.html">Login</a>
-      </p>
-    </form>
-  </div>
+<div class="input-group">
+<span class="input-label">Surname</span>
+<input type="text" required>
+</div>
 
-  <script>
-    document.getElementById('signupForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const username = document.getElementById('username').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
+<div class="input-group">
+<span class="input-label">Email</span>
+<input type="email" required>
+</div>
 
-      if (!username || !email || !password) {
-        alert("Please fill in all fields!");
-      } else {
-        alert("Sign up successful (front-end only demo)");
-      }
-    });
-  </script>
+<div class="input-group">
+<span class="input-label">Address</span>
+<input type="text">
+</div>
+
+<div class="input-group">
+<span class="input-label">Password</span>
+<input type="password" required>
+</div>
+
+<button type="submit" class="main-button">Submit</button>
+
+<p class="form-footer">
+Already have an account?
+<a href="signin.html" class="link-primary">Sign in</a>
+</p>
+
+</form>
+</section>
+</main>
 
 </body>
 </html>
