@@ -31,3 +31,7 @@ input[type="checkbox"] {
 input[type="range"] {
 accent-color: black;  
 }
+a{
+  text-decoration: none;
+  color: inherit;
+}
