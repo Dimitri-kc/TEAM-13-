@@ -1,7 +1,7 @@
 <?php //Controller: Users 
 
 session_start();
-//include database and user models so can controller can connect to database and use user methods
+//include database and user models so controller can connect to database and use user methods
 include_once '../../config/db_connect.php';//state file path
 include_once '../../models/userModel.php';
 
