@@ -2,64 +2,72 @@
 
 session_start();
 //include database and user models so can controller can connect to database and use user methods
-include_once 'backend/db_connect.php';//changed to explicity state path
-include_once 'backend/models/userModel.php';
-//path files/folder to be created 26/11/25
+include_once '../../config/db_connect.php';//state file path
+include_once '../../models/userModel.php';
 
 //Handling user-related operations
 class UserController {
+
     //method to register a new user
+    public function register() {
+
+        //collecting data from signup.hmtl form
+        $name = trim($_POST['name'] ?? ''); //trims to remove whitespace
+        $surname = trim($_POST['surname'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $address = trim($_POST['address'] ?? '');
+        $password = trim($_POST['password'] ?? '');
+
+        //register user - basic validation
+        if (!$name || !$surname || !$email || !$address || !$password) {
+            echo "All fields are required.";
+            exit;
+        }
+
+        //hashed password for security
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        //create User model instance
+        $userModel = new User(); //for database connection via user model User.php holding user class
+
+        //default role is customer
+        $role = 'customer';
+        $registrationSuccess = $userModel->register($name, $surname, $email, $address, $hashedPassword, $role);
+        if ($registrationSuccess) {
+            echo "Registration successful. You can now <a href='/signin.html'>login</a>.";//hyperlink to login page after registration
+            } else {
+                echo "Registration failed. Please try again.";
+            }
+ }
 
     //method to login a user  
-}
-
-//to check if form submitted for both register and login
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    $username = trim($_POST['name'] ?? ''); //trims to remove whitespace
-    $email = trim($_POST['email'] ?? '');
-    $password = trim($_POST['password'] ?? '');
+    public function login() {
     
-    //register user - basic validation
-    if (!$username || !$email || !$password) {
-        echo "All fields are required.";
-        exit;
-    }
-    //hashed password for security
-    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-    //create User model instance
-    $userModel = new User(); //for database connection via user model User.php holding user class - not yet made - create user
-    //default role is customer
-    $role = 'customer';
-    $registrationSuccess = $userModel->register($username, $email, $hashedPassword, $role);
-    if ($registrationSuccess) {
-        echo "Registration successful. You can now <a href='/login.html'>login</a>.";//hyperlink to login page after registration
-    } else {
-        echo "Registration failed. Please try again.";
-    }
-    
-    $email = trim($_POST['email'] ?? '');
-    $password = trim($_POST['password'] ?? ''); //remove spaces
+        $email = trim($_POST['email'] ?? '');
+        $password = trim($_POST['password'] ?? ''); //remove spaces
 
-    //login user - basic validation
-    if (!$email || !$password) {
-        echo "All fields are required.";
-        exit;
-    }
+        //login user - basic validation
+        if (!$email || !$password) {
+            echo "All fields are required.";
+            exit;
+        }
 
-    $user = $userModel->login($email, $hashedPassword);
-    if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_ID'] = $user['user_ID']; //store session userID
-        $_SESSION['username'] = $user['username']; //store sesion username
-        $_SESSION['role'] = $user['role']; //customer/admin
-        echo "Login successful. Welcome, " . htmlspecialchars($user['username']) . "!"; //also prevents XSS by stopping display of special characters in username
-        //redirect to homepage after login
-        header('Location: /Homepage.html');
-        exit;
-    } else {
-        echo "Login failed. Invalid email or password.";
+        //create User model instance
+        $userModel = new User(); //for database connection via user model User.php holding user class
+        $user = $userModel->login($email, $password);
+        
+        //verify password
+        if ($user && password_verify($password, $user['password'])) {
+            //setting session details
+            $_SESSION['user_ID'] = $user['user_ID']; //store session userID
+            $_SESSION['name'] = $user['name']; //store sesion name
+            $_SESSION['role'] = $user['role']; //customer/admin
+            //redirect to homepage after login
+            header('Location: /Homepage.html');
+            exit;
+        } else {
+            echo "Login failed. Invalid email or password.";
+        }
     }
 }
-//check if setting session variables necessary here or in model as currently in both
-//confirm if register/login code needs to be inside class or outside as currently outside also separated or not
+//removed the echo before header redirection to avoid header errors
 ?>

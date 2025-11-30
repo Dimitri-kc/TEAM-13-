@@ -8,7 +8,7 @@ class User {
     }
     
     //registration method to add new user
-    public function register($username, $email, $hashedPassword, $role) {
+    public function register($name, $surname, $email, $address, $hashedPassword, $role) {
         $stmt = $this->conn->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)"); // Using prepared statements to prevent SQL injection
         return $stmt->execute();
     }
