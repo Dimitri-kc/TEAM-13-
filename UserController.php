@@ -47,11 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $user = $userModel->login($email, $hashedpassword);
+    $user = $userModel->login($email, $hashedPassword);
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_ID'] = $user['user_ID']; //store session userID
         $_SESSION['username'] = $user['username']; //store sesion username
-        $_SESSSION['role'] = $user['role']; //customer/admin
+        $_SESSION['role'] = $user['role']; //customer/admin
         echo "Login successful. Welcome, " . htmlspecialchars($user['username']) . "!"; //also prevents XSS by stopping display of special characters in username
         //redirect to homepage after login
         header('Location: /Homepage.html');
