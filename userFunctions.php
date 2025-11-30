@@ -1,7 +1,7 @@
 <?php //All user functions
 
 //authentication and authorization related functions
-if(session_status() === PHP_SESSION_NONE) {
+if(session_status() === PHP_SESSION_NONE) { //start session if not already started
     session_start();
 }
 

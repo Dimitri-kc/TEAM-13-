@@ -10,6 +10,7 @@ CREATE TABLE users (
     --primary key - unique identifier for users
     user_ID INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR (50) NOT NULL,
+    surname VARCHAR (50) NOT NULL, --added surname field to reflect wireframe and html forms
     email VARCHAR (100) UNIQUE NOT NULL,
     password VARCHAR (255) NOT NULL, -- increased value for hashed password storage
     phone VARCHAR (20), --increased length for scalability (international numbers)
