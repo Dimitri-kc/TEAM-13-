@@ -1,4 +1,5 @@
-/* General Reset */
+/* This CSS file styles the product example page for a sofa */
+/* General */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -19,14 +20,14 @@ body {
     width: 100%;
 }
 
-/* --- TOP SECTION: PRODUCT --- */
+/* Top Section for Products */
 .product-wrapper {
     display: flex;
     gap: 50px;
     margin-bottom: 80px;
 }
 
-/* Product Image Side */
+/* Product Image */
 .product-image {
     flex: 1;
     position: relative;
@@ -153,7 +154,7 @@ select {
     color: #555;
 }
 
-/* --- BOTTOM SECTION: REVIEWS --- */
+/* Bottom Section: Reviews */
 .reviews-section h2 {
     font-size: 20px;
     margin-bottom: 20px;
