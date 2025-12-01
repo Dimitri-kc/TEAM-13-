@@ -18,31 +18,35 @@
 <section class="form-box">
 <h1 class="form-title">WELCOME BACK</h1>
 
-<form class="form-fields">
+<form class="form-fields" method="POST" action="/routes/userRoutes.php">
+    <input type="hidden" name="action" value="login">
 
-<label class="input-group">
-<span class="input-label">Email</span>
-<input type="email" required>
-</label>
+    <label class="input-group">
+        <span class="input-label">Email</span>
+        <input type="email" name="email" required>
+    </label>
 
-<label class="input-group">
-<span class="input-label">Password</span>
-<input type="password" required>
-</label>
+    <label class="input-group">
+        <span class="input-label">Password</span>
+        <input type="password" name="password" required>
+    </label>
 
-<button type="submit" class="main-button">Sign In</button>
+    <button type="submit" class="main-button">Sign In</button>
 
-<div class="form-links">
-<a href="#" class="link-secondary">Forgot password?</a>
-<a href="signup.html" class="link-primary">New here?</a>
-</div>
+    <div class="form-links">
+    
+        <span class="link-secondary">Forgot password?</span>
 
+        <a href="signup.html" class="link-primary">New here?</a>
+    </div>
 </form>
 </section>
 </main>
 
 </body>
 </html>
+
+
 
 
 
