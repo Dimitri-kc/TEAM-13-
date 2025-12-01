@@ -118,6 +118,15 @@ body {
     font-size: 20px;
 }
 
+.summary-box,
+.checkout-info {
+    border: 1px solid #D9D9D9;   /* light grey border */
+    border-radius: 12px;         /* rounded corners */
+    padding: 20px;               /* spacing inside box */
+    background: white;           /* white background */
+    margin-top: 20px;            /* space between boxes */
+}
+
 .checkout-btn {
     margin-top: 15px;
     padding: 12px;
