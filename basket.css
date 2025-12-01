@@ -1,0 +1,133 @@
+/* --- GENERAL PAGE LAYOUT --- */
+body {
+    font-family: "Ibarra Real Nova", serif;
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+}
+
+.basket-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.basket-title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 48px;
+    margin: 60px 0 40px;
+}
+
+/* --- MAIN GRID LAYOUT --- */
+.basket-layout {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 40px;
+}
+
+/* --- LEFT — ITEMS --- */
+.basket-item {
+    display: flex;
+    gap: 20px;
+    border: 1px solid #D9D9D9;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.item-image {
+    width: 260px;
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.item-details h3 {
+    margin: 0 0 10px;
+    font-size: 22px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 5px 0;
+}
+
+/* --- RIGHT COLUMN — SUMMARY BOXES --- */
+.basket-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.discount-box,
+.summary-box,
+.checkout-info {
+    border: 1px solid #D9D9D9;
+    border-radius: 12px;
+    padding: 20px;
+    background: #ffffff;
+}
+
+/* --- FORM ELEMENTS --- */
+.discount-box label {
+    font-size: 16px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.discount-box input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #D9D9D9;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.discount-btn {
+    padding: 10px 20px;
+    border: 1px solid #000;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+/* --- SUMMARY INFO --- */
+.summary-box h3,
+.checkout-info h3 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.checkout-btn {
+    margin-top: 15px;
+    padding: 12px;
+    width: 100%;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* --- PAYMENT BUTTONS --- */
+.pay-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pay-btn {
+    width: 100%;
+    height: auto;
+}
+
+/* --- RESPONSIVE FOR MOBILE --- */
+@media (max-width: 900px) {
+    .basket-layout {
+        grid-template-columns: 1fr;
+    }
+}
