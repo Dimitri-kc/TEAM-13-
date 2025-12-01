@@ -61,13 +61,29 @@ body {
     gap: 20px;
 }
 
-.discount-box,
+/* .discount-box,
 .summary-box,
 .checkout-info {
     border: 1px solid #D9D9D9;
     border-radius: 12px;
     padding: 20px;
     background: #ffffff;
+} */
+.discount-box {
+    border: 1px solid #D9D9D9;
+    border-radius: 12px;
+    padding: 20px;
+    background: white;
+}
+
+.discount-box input {
+    width: 100%;             /* makes it fit inside the box */
+    box-sizing: border-box;  /* prevents overflow */
+    padding: 12px 15px;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 16px;
 }
 
 /* --- FORM ELEMENTS --- */
@@ -114,7 +130,7 @@ body {
     cursor: pointer;
 }
 
-/* --- PAYMENT BUTTONS --- */
+/* --- PAYMENT BUTTONS ---
 .pay-buttons {
     display: flex;
     flex-direction: column;
@@ -124,7 +140,35 @@ body {
 .pay-btn {
     width: 100%;
     height: auto;
+} */
+
+.pay-buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px;             /* space between buttons */
+    margin-top: 20px;
 }
+
+.pay-btn {
+    width: 200px;          /* identical width */
+    height: 50px;          /* identical height */
+    object-fit: contain;   /* keeps the logo clean */
+    border-radius: 30px;   /* pill shape */
+    cursor: pointer;
+}
+
+/* Apple Pay: black button, no border */
+.pay-btn.apple {
+    border: none;
+    background: none;      /* prevents white box */
+}
+
+/* Google Pay: white button with grey border */
+.pay-btn.google {
+    border: 1px solid #D9D9D9;
+    background: white;
+}
+
 
 /* --- RESPONSIVE FOR MOBILE --- */
 @media (max-width: 900px) {
