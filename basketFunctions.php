@@ -1,3 +1,4 @@
+
 <?php //basket functions - > will also contain some helpers for checkout process in future
 
 if(session_status() === PHP_SESSION_NONE) { //start session if not already started
