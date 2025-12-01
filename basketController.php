@@ -60,7 +60,7 @@ class BasketController {
             return $basketModel->updateItemQuantity($basket_ID, $product_ID, $quantity);
         } else {
             //if guest user, update session basket
-            if (isset($_SESSION['basket'][$product_ID])) {
+            if (isset($_SESSION['guest_basket'][$product_ID])) {
                 $_SESSION['guest_basket'][$product_ID] = $quantity; //update quantity in session basket not user basket
             }
         }
@@ -106,7 +106,7 @@ class BasketController {
             return $basketModel->fetchBasketItems($basket_ID);
         } else {
             //if guest user, fetch session basket items
-            return getSessionBasketItems();
+            getSessionBasket();
         }
     }
 }
