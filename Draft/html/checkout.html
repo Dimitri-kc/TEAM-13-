@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout page</title>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- <link rel="stylesheet" href="../css/signup.style.css"> -->
+</head>
+
+
+<body>
+<main class="form-container">
+
+<!-- Left container with product items -->
+
+    <section class="product-item">
+        <div class="product-item">
+        <img src="../images/livingroom-images/sofa.jg" alt="Venice Cream Sofa"/>
+    <div class="product-info">
+        <p>Venice Cream Sofa</p>
+        <p class="price">£50</p>
+        <p class="quantity">Quantity: 1</p>
+</div>
+</div>
+    </section>
+
+
+<section class="review-box">
+<h1 class="form-title">REVIEW</h1>
+
+<form class="form-fields" method="POST" action="/routes/reviewRoutes.php">
+<label class="input-group">
+    <span class="input-label">Name</span>
+<input type="text" name="name" required> </label>
+
+<label class="input-group">
+    <span class="input-label">Email</span>
+<input type="email" name="email" required> </label>
+
+<label class="input-group">
+    <span class="input-label">Address</span>
+<textarea name="address" rows="3" required> </textarea>
+</label>
+
+   <button type="submit">Submit</button>
+</form>
+</section>
+
+<section class="payment-section">
+    <form>
+        <input type="text" placeholder="Card Number (16 Digits)" maxlength="16" required />
+          <input type="text" placeholder="Expiry Date (MM/YY)"required />
+            <input type="text" placeholder="CVV (3 Digits)" maxlength="3" required />
+<button type="submit">Submit</button>
+    </form>
+</section>
+
+<section class="payment-options">
+    <button>Checkout</button>
+     <button>Pay with Apple Pay</button>
+      <button>Pay with Google Pay</button>
+</section>
+</main>
+</body>
+</html>
+
+
+
+
+
