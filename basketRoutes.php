@@ -3,12 +3,12 @@
 session_start();
 
 include_once '../../controllers/basketController.php'; //path to basketContrller.php
-include_once '../../services/basketFunctions.php' //>guest specific
+include_once '../../services/basketFunctions.php'; //>guest specific
 
 $basketController = new BasketController();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
-    $action = $_POST['action'] ?? ''; //get action from input
+    $action = isset($_POST['action']) ? htmlspecialchars($_POST['action']) : ''; //get action from input
 
     //switch to call relevant controller method based on action in .html
     switch ($action) {
@@ -25,23 +25,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
 
         default:
-            echo "Invalid action.";
+            echo "Invalid action."; //more info in controller echo
             break;
     }
 
-} else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+} 
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     //if retrieving basket info
-    $action = $_GET['action']?? '';
+    $action = isset($_GET['action']) ? htmlspecialchars($_GET['action']) : '';
 
     switch ($action) {
         case 'view':
-            $items = $basketController->viewBasket();
+            $items = $basketController->viewBasket(); //return array for both users/guests
+            if (!empty($items)) {
+                $items = [];
+            }
+            echo json_encode(['success' => true, 'items' => $items]); 
             break;
 
-        default:
-        echo "Invalid action";
+            default:
+        echo json_encode(['success' => false, 'message' => 'Invalid action']); //unknown action
         break;
     }
 
 }
+//Note:confirm json as js to be implemented
+//for frontend path: href="../../routes/basketRoutes.php?action=view">View Basket
+
 ?>

@@ -12,9 +12,9 @@ function addToSessionBasket($product_ID, $quantity) { //add item to sesion baske
     }
    
     if (isset($_SESSION['guest_basket'][$product_ID])) {
-        $_SESSION['guset_basket'][$product_ID] += $quantity; //if items already in basket, update quantity
+        $_SESSION['guest_basket'][$product_ID] += $quantity; //if items already in basket, update quantity
     } else {
-        $_SESSION['guset_basket'][$product_ID] = $quantity; //otherwise add new product with quantity to session (user basket)
+        $_SESSION['guest_basket'][$product_ID] = $quantity; //otherwise add new product with quantity to session (user basket)
     }
 }
 

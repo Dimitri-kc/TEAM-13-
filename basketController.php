@@ -106,7 +106,7 @@ class BasketController {
             return $basketModel->fetchBasketItems($basket_ID);
         } else {
             //if guest user, fetch session basket items
-            getSessionBasket();
+            return getSessionBasket();
         }
     }
 }
