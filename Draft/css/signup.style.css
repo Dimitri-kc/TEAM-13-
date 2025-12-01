@@ -1,0 +1,137 @@
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:"Inter",sans-serif;
+  color:#111;
+}
+
+.page-background{
+  min-height:100vh;
+  background:#d9d6cf;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.form-container{
+  width:100%;
+  padding:40px 16px;
+  display:flex;
+  justify-content:center;
+}
+
+.form-box{
+  background:#fff;
+  padding:40px 48px 36px;
+  max-width:540px;
+  width:100%;
+  border-radius:8px;
+  box-shadow:0 10px 30px rgba(0,0,0,.06);
+}
+
+.form-title{
+  font-family:"Ibarra Real Nova",serif;
+  font-size:40px;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  text-align:center;
+  margin:0 0 28px;
+}
+
+.form-fields{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.input-group{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.input-label{
+  font-size:13px;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+
+.input-group input{
+  padding:10px 12px;
+  border-radius:4px;
+  border:1px solid #d9d9d9;
+  font-size:14px;
+  outline:0;
+  transition:.2s;
+}
+
+.input-group input::placeholder{
+  color:#b4b4b4;
+}
+
+.input-group input:focus{
+  border-color:#111;
+  box-shadow:0 0 0 1px #11111130;
+}
+
+.main-button{
+  margin-top:8px;
+  width:100%;
+  padding:10px 14px;
+  border-radius:4px;
+  border:0;
+  background:#111;
+  color:#fff;
+  font-size:14px;
+  font-weight:500;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.main-button:hover{
+  background:#000;
+}
+
+.main-button:active{
+  transform:translateY(1px);
+}
+
+.form-links{
+  margin-top:8px;
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+}
+
+.link-secondary{
+  color:#555;
+  text-decoration:none;
+}
+
+.link-secondary:hover{
+  text-decoration:underline;
+}
+
+.link-primary{
+  color:#000;
+  font-weight:500;
+  text-decoration:none;
+}
+
+.link-primary:hover{
+  text-decoration:underline;
+}
+
+.form-footer{
+  margin-top:10px;
+  text-align:center;
+  font-size:13px;
+}
