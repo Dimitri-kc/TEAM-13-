@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout page</title>
+
+
+<link rel="stylesheet" href="checkout.css" />
+
+</head>
+<body>
+
+    <!-- The header of the checkout page -->
+
+    <header class="checkout-header">
+        <h1>CHECKOUT</h1>
+    </header>
+
+<main class="checkout-layout">
+
+<!-- Left container with product items -->
+
+<aside class="product-column">
+
+        <div class="product-item">
+
+        <img src="sofa.jpg" alt="Venice Cream Sofa"/>
+
+    <div class="product-text">
+        <p>Venice Cream Sofa</p>
+        <p class="price"><strong>£295</p>
+        <p class="quantity">Quantity: 1</p>
+</div>
+</div>
+</aside>
+
+<!-- right section  -->
+ <section class="details-column">
+    
+<section class="review-box">
+<h1 class="form-title">REVIEW</h1>
+
+<form class="form-fields" method="POST" action="/routes/reviewRoutes.php">
+<label class="input-group">
+    <span class="input-label">Name</span>
+<input type="text" name="name" required> </label>
+
+<label class="input-group">
+    <span class="input-label">Email</span>
+<input type="email" name="email" required> </label>
+
+<label class="input-group">
+    <span class="input-label">Address</span>
+<textarea name="address" rows="3" required></textarea>
+</label>
+
+<div class="card-fields">
+<h2>Card Details</h2>
+
+        <input type="text" placeholder="Card Number (16 Digits)" maxlength="16" required />
+        <input type="text" placeholder="Expiry Date (MM/YY)"required />
+        <input type="text" placeholder="CVV (3 Digits)" maxlength="3" required />
+</div>
+            <button type="submit">Submit</button>
+    </form>
+</section>
+
+<section class="delivery-section">
+<p>Ready for Loft & Living in Your Home?</p>
+<p>Your Order will be dispatched using <strong> Standard Delivery</p>
+<p>Estimated Delivery:  <strong> 9th December 2025</p>
+
+    <section class="payment-options">
+    <button>Checkout</button>
+     <button>Pay with Apple Pay</button>
+      <button>Pay with Google Pay</button>
+</section>
+</section>
+</main>
+</body>
+</html>
+
+
+
+
+
