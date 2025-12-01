@@ -4,6 +4,7 @@ session_start();
 //include database and user models so controller can connect to database and use user methods
 include_once '../../config/db_connect.php';//state file path
 include_once '../../models/userModel.php';
+include_once '../../services/basketFunctions.php'; //for merger basket functions
 
 //Handling user-related operations
 class UserController {
@@ -61,6 +62,8 @@ class UserController {
             $_SESSION['user_ID'] = $user['user_ID']; //store session userID
             $_SESSION['name'] = $user['name']; //store sesion name
             $_SESSION['role'] = $user['role']; //customer/admin
+            //merge guest basket with user basket upon login
+            mergeBaskets($user['user_ID']);
             //redirect to homepage after login
             header('Location: /Homepage.html');
             exit;
