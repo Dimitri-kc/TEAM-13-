@@ -17,8 +17,9 @@ body {
 .row {
     display: flex;
     justify-content: center;
-    gap: 17px;              /* approximates your Left values spacing */
-    padding-top: 355px;     /* matches Top = 355px visually */
+    gap: 17px; 
+    margin-top: 18px;       /* approximates your Left values spacing */
+    padding-top: 0px;     /* matches Top = 355px visually */
 }
 
 /* ONE CATEGORY BLOCK */
@@ -108,14 +109,7 @@ body {
 
 
 /* body {
-    font-family: 'Josefin Slab',serif;
-    background-color: #fafafa;
-    color: #000000;
-    line-height: 1.6;
-    margin:0;
-    padding:0;
-    background: none; 
-} */
+    
 
 /* about us header */
 .left h1 {
