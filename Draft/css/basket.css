@@ -61,6 +61,35 @@ body {
     gap: 20px;
 }
 
+/* Discount Section */
+.discount-box {
+    border: 1px solid #D9D9D9;
+    border-radius: 12px;
+    padding: 20px;
+    background: #ffffff;
+}
+
+
+.discount-box label {
+    display: block;
+    margin-top: 5px;          /* pushes label upward */
+    margin-bottom: 15px;      /* adds space before input */
+    font-size: 16px;
+}
+
+
+.discount-box input {
+    width: 100%;              /* forces input inside the container */
+    box-sizing: border-box;   /* prevents overflow */
+    padding: 12px 15px;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;      /* space before button */
+}
+
+
+
 /* .discount-box,
 
 .discount-box {
@@ -86,6 +115,7 @@ body {
     display: block;
     margin-bottom: 10px;
 }
+
 
 .discount-box input {
     width: 100%;
@@ -118,8 +148,10 @@ body {
     border-radius: 12px;         /* rounded corners */
     padding: 20px;               /* spacing inside box */
     background: white;           /* white background */
-    margin-top: 20px;            /* space between boxes */
+    margin-top: 10px;            /* space between boxes */
 }
+
+
 
 .checkout-btn {
     margin-top: 15px;
@@ -133,24 +165,16 @@ body {
     cursor: pointer;
 }
 
-/* --- PAYMENT BUTTONS ---
-.pay-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
 
-.pay-btn {
-    width: 100%;
-    height: auto;
-} */
 
 .pay-buttons {
     display: flex;
     align-items: center;
-    gap: 20px;             /* space between buttons */
-    margin-top: 20px;
+    gap: 10px;             /* space between buttons */
+    margin-top: 10px;
 }
+
+
 
 .pay-btn {
     width: 200px;          /* identical width */
