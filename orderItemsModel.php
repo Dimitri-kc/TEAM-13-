@@ -20,7 +20,7 @@ class OrderItem {
         return $stmt->execute();
     }
 
-    // Get every item inside a specific order
+    // Get every item
     public function getItemsByOrder($order_ID) {
         $stmt = $this->conn->prepare("
             SELECT * FROM order_items WHERE order_ID = ?
