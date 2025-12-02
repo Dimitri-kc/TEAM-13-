@@ -1,8 +1,8 @@
 <?php
-// OrderModel.php - database class for orders
+// orderModel.php - Handles all database operations for orders
 include_once __DIR__ . '/../../config/db_connect.php';
 
-class Order {
+class OrderModel {
     private $conn;
 
     public function __construct() {
@@ -10,55 +10,63 @@ class Order {
         $this->conn = $conn;
     }
 
-    // Create a new order
-    public function createOrder($user_ID, $total_price, $address) {
+    /*
+     * Add a new order
+     */
+    public function addOrder($user_ID, $total_price, $address) {
         $stmt = $this->conn->prepare("
-            INSERT INTO orders (user_ID, total_price, address) 
+            INSERT INTO orders (user_ID, total_price, address)
             VALUES (?, ?, ?)
         ");
         $stmt->bind_param("ids", $user_ID, $total_price, $address);
+
         return $stmt->execute();
     }
 
-    // Get all orders for a user
+    /*
+     * Get all orders
+     */
+    public function getAllOrders() {
+        $query = "SELECT * FROM orders ORDER BY order_date DESC";
+        $result = $this->conn->query($query);
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /*
+     * Get all orders by a specific user
+     */
     public function getOrdersByUser($user_ID) {
         $stmt = $this->conn->prepare("
-            SELECT * FROM orders WHERE user_ID = ?
+            SELECT * FROM orders WHERE user_ID = ? ORDER BY order_date DESC
         ");
         $stmt->bind_param("i", $user_ID);
         $stmt->execute();
         $result = $stmt->get_result();
+
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    // Get one specific order
-    public function getOrderByID($order_ID) {
+    /*
+     * Update an order’s status (Pending → Shipped → Delivered)
+     */
+    public function updateOrderStatus($order_ID, $order_status) {
         $stmt = $this->conn->prepare("
-            SELECT * FROM orders WHERE order_ID = ?
+            UPDATE orders SET order_status = ? WHERE order_ID = ?
         ");
-        $stmt->bind_param("i", $order_ID);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_assoc();
-    }
+        $stmt->bind_param("si", $order_status, $order_ID);
 
-    // Update an existing order
-    public function updateOrder($order_ID, $total_price, $address) {
-        $stmt = $this->conn->prepare("
-            UPDATE orders 
-            SET total_price = ?, address = ?
-            WHERE order_ID = ?
-        ");
-        $stmt->bind_param("dsi", $total_price, $address, $order_ID);
         return $stmt->execute();
     }
 
-    // Delete an order
+    /*
+     Delete an order */
     public function deleteOrder($order_ID) {
         $stmt = $this->conn->prepare("
             DELETE FROM orders WHERE order_ID = ?
         ");
         $stmt->bind_param("i", $order_ID);
+
         return $stmt->execute();
     }
 }

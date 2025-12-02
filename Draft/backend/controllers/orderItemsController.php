@@ -1,46 +1,82 @@
 <?php
-include_once __DIR__ . '/db_connect.php';
+// orderItemsController.php - Handles order item API requests
 header('Content-Type: application/json');
 
+include_once __DIR__ . '/../models/orderItemModel.php';
+
+$orderItemModel = new OrderItemModel();
 $action = $_GET['action'] ?? '';
 
+/*
+ * INSERT ORDER ITEM
+ * URL: orderItemsController.php?action=insert
+ */
 if ($action === 'insert') {
-    $order_ID = $_POST['order_ID'] ?? 0;
+
+    $order_ID   = $_POST['order_ID'] ?? 0;
     $product_ID = $_POST['product_ID'] ?? 0;
     $unit_price = $_POST['unit_price'] ?? 0.00;
 
-    $stmt = $conn->prepare("INSERT INTO order_items (order_ID, product_ID, unit_price) VALUES (?, ?, ?)");
-    $stmt->bind_param("iid", $order_ID, $product_ID, $unit_price);
+    $success = $orderItemModel->addOrderItem($order_ID, $product_ID, $unit_price);
 
-    if ($stmt->execute()) {
-        echo json_encode(["status" => "success", "message" => "Order item added successfully"]);
-    } else {
-        echo json_encode(["status" => "error", "message" => $conn->error]);
-    }
-
-    $stmt->close();
+    echo json_encode([
+        "status"  => $success ? "success" : "error",
+        "message" => $success ? "Order item added successfully" : "Failed to add item"
+    ]);
 }
 
+/*
+ * FETCH ITEMS BY ORDER ID
+ * URL: orderItemsController.php?action=fetch&order_ID=12
+ */
 elseif ($action === 'fetch') {
+
     $order_ID = $_GET['order_ID'] ?? 0;
 
-    $stmt = $conn->prepare("SELECT * FROM order_items WHERE order_ID = ?");
-    $stmt->bind_param("i", $order_ID);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    $items = [];
-    while ($row = $result->fetch_assoc()) {
-        $items[] = $row;
-    }
-
+    $items = $orderItemModel->getItemsByOrder($order_ID);
     echo json_encode($items);
-    $stmt->close();
 }
 
+/*
+ * DELETE ORDER ITEM
+ * URL: orderItemsController.php?action=delete
+ */
+elseif ($action === 'delete') {
+
+    $order_item_ID = $_POST['order_item_ID'] ?? 0;
+
+    $success = $orderItemModel->deleteOrderItem($order_item_ID);
+
+    echo json_encode([
+        "status"  => $success ? "success" : "error",
+        "message" => $success ? "Order item deleted successfully" : "Failed to delete item"
+    ]);
+}
+
+/*
+ * UPDATE ORDER ITEM (unit price)
+ * URL: orderItemsController.php?action=update
+ */
+elseif ($action === 'update') {
+
+    $order_item_ID = $_POST['order_item_ID'] ?? 0;
+    $unit_price    = $_POST['unit_price'] ?? 0.00;
+
+    $success = $orderItemModel->updateOrderItem($order_item_ID, $unit_price);
+
+    echo json_encode([
+        "status"  => $success ? "success" : "error",
+        "message" => $success ? "Order item updated" : "Failed to update item"
+    ]);
+}
+
+/*
+ * INVALID ACTION
+ */
 else {
-    echo json_encode(["status" => "error", "message" => "Invalid or missing action"]);
+    echo json_encode([
+        "status"  => "error",
+        "message" => "Invalid or missing action"
+    ]);
 }
-
-$conn->close();
 ?>
