@@ -1,5 +1,5 @@
 <?php
-// orderModel.php - Handles all database operations for orders
+
 include_once __DIR__ . '/../../config/db_connect.php';
 
 class OrderModel {
@@ -9,10 +9,6 @@ class OrderModel {
         global $conn;
         $this->conn = $conn;
     }
-
-    /*
-     * Add a new order
-     */
     public function addOrder($user_ID, $total_price, $address) {
         $stmt = $this->conn->prepare("
             INSERT INTO orders (user_ID, total_price, address)
@@ -23,19 +19,12 @@ class OrderModel {
         return $stmt->execute();
     }
 
-    /*
-     * Get all orders
-     */
     public function getAllOrders() {
         $query = "SELECT * FROM orders ORDER BY order_date DESC";
         $result = $this->conn->query($query);
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-
-    /*
-     * Get all orders by a specific user
-     */
     public function getOrdersByUser($user_ID) {
         $stmt = $this->conn->prepare("
             SELECT * FROM orders WHERE user_ID = ? ORDER BY order_date DESC
@@ -47,9 +36,7 @@ class OrderModel {
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    /*
-     * Update an order’s status (Pending → Shipped → Delivered)
-     */
+   
     public function updateOrderStatus($order_ID, $order_status) {
         $stmt = $this->conn->prepare("
             UPDATE orders SET order_status = ? WHERE order_ID = ?
@@ -59,8 +46,7 @@ class OrderModel {
         return $stmt->execute();
     }
 
-    /*
-     Delete an order */
+    
     public function deleteOrder($order_ID) {
         $stmt = $this->conn->prepare("
             DELETE FROM orders WHERE order_ID = ?
