@@ -36,10 +36,10 @@ body {
 .pay-buttons {
   display: flex;
   /* align-items: left; */
-  gap: 20px;
-  justify-content: flex-end;
+  gap: 10px;
+  justify-content: center;
   width: 100%;
-margin-left: 15px;
+margin-top: 20px;
 
 
 

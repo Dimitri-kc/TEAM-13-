@@ -44,7 +44,7 @@
 <section class="review-box">
 <h1 class="form-title">REVIEW: </h1>
 
-<form class="form-fields" method="POST" action="/routes/reviewRoutes.php">
+<form class="form-fields" method="POST" action="../../routes/paymentRoutes.php">
 <label class="input-group">
     <span class="input-label">Name</span>
 <input type="text" name="name" required> </label>
@@ -65,6 +65,11 @@
         <input type="text" placeholder="Expiry Date (MM/YY)"required />
         <input type="text" placeholder="CVV (3 Digits)" maxlength="3" required />
       <button type="submit">Submit</button>
+
+          <div class="pay-buttons">
+                <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
+                <img src="../images/basket-images/googlepay.png" alt="Google Pay" class="pay-btn">
+    </div>
     </div>
           
     </form>
@@ -85,10 +90,7 @@
 </div>
 
 </main>
-    <div class="pay-buttons">
-                <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
-                <img src="../images/basket-images/googlepay.png" alt="Google Pay" class="pay-btn">
-    </div>
+
 </body>
 </html>
 
