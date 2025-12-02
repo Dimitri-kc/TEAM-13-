@@ -1,5 +1,5 @@
 <?php
-// orderItemsController.php - Handles order item API requests
+// Order items controller – handles item actions for orders
 header('Content-Type: application/json');
 
 include_once __DIR__ . '/../models/orderItemModel.php';
@@ -7,10 +7,7 @@ include_once __DIR__ . '/../models/orderItemModel.php';
 $orderItemModel = new OrderItemModel();
 $action = $_GET['action'] ?? '';
 
-/*
- * INSERT ORDER ITEM
- * URL: orderItemsController.php?action=insert
- */
+/* Add an item to an order */
 if ($action === 'insert') {
 
     $order_ID   = $_POST['order_ID'] ?? 0;
@@ -25,22 +22,14 @@ if ($action === 'insert') {
     ]);
 }
 
-/*
- * FETCH ITEMS BY ORDER ID
- * URL: orderItemsController.php?action=fetch&order_ID=12
- */
+/* Get all items for a specific order */
 elseif ($action === 'fetch') {
 
     $order_ID = $_GET['order_ID'] ?? 0;
-
-    $items = $orderItemModel->getItemsByOrder($order_ID);
-    echo json_encode($items);
+    echo json_encode($orderItemModel->getItemsByOrder($order_ID));
 }
 
-/*
- * DELETE ORDER ITEM
- * URL: orderItemsController.php?action=delete
- */
+/* Delete an order item */
 elseif ($action === 'delete') {
 
     $order_item_ID = $_POST['order_item_ID'] ?? 0;
@@ -53,10 +42,7 @@ elseif ($action === 'delete') {
     ]);
 }
 
-/*
- * UPDATE ORDER ITEM (unit price)
- * URL: orderItemsController.php?action=update
- */
+/* Update order item (unit price) */
 elseif ($action === 'update') {
 
     $order_item_ID = $_POST['order_item_ID'] ?? 0;
@@ -70,9 +56,7 @@ elseif ($action === 'update') {
     ]);
 }
 
-/*
- * INVALID ACTION
- */
+/* Invalid action */
 else {
     echo json_encode([
         "status"  => "error",

@@ -1,17 +1,13 @@
 <?php
-// orderController.php - Handles order-related API requests
+// Order controller – handles order actions
 header('Content-Type: application/json');
 
 include_once __DIR__ . '/../models/orderModel.php';
 
 $orderModel = new OrderModel();
-
 $action = $_GET['action'] ?? '';
 
-/*
- * INSERT ORDER
- * URL: orderController.php?action=insert
- */
+/* Add a new order */
 if ($action === 'insert') {
 
     $user_ID     = $_POST['user_ID'] ?? 0;
@@ -26,32 +22,20 @@ if ($action === 'insert') {
     ]);
 }
 
-/*
- * FETCH ALL ORDERS (ADMIN)
- * URL: orderController.php?action=fetch
- */
+/* Get all orders (admin) */
 elseif ($action === 'fetch') {
 
-    $orders = $orderModel->getAllOrders();
-    echo json_encode($orders);
+    echo json_encode($orderModel->getAllOrders());
 }
 
-/*
- * FETCH ORDERS BY USER
- * URL: orderController.php?action=user_orders&user_ID=5
- */
+/* Get orders for a specific user */
 elseif ($action === 'user_orders') {
 
     $user_ID = $_GET['user_ID'] ?? 0;
-
-    $orders = $orderModel->getOrdersByUser($user_ID);
-    echo json_encode($orders);
+    echo json_encode($orderModel->getOrdersByUser($user_ID));
 }
 
-/*
- * UPDATE ORDER STATUS
- * URL: orderController.php?action=update_status
- */
+/* Update order status */
 elseif ($action === 'update_status') {
 
     $order_ID     = $_POST['order_ID'] ?? 0;
@@ -65,10 +49,7 @@ elseif ($action === 'update_status') {
     ]);
 }
 
-/*
- * DELETE ORDER
- * URL: orderController.php?action=delete
- */
+/* Delete an order */
 elseif ($action === 'delete') {
 
     $order_ID = $_POST['order_ID'] ?? 0;
@@ -81,10 +62,7 @@ elseif ($action === 'delete') {
     ]);
 }
 
-
-/*
- * INVALID ACTION
- */
+/* Invalid action */
 else {
     echo json_encode([
         "status"  => "error",

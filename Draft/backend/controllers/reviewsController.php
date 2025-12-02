@@ -1,5 +1,5 @@
 <?php
-// reviewController.php - Handles review-related API requests
+// Review controller – handles review actions
 header('Content-Type: application/json');
 
 include_once __DIR__ . '/../models/reviewModel.php';
@@ -7,10 +7,7 @@ include_once __DIR__ . '/../models/reviewModel.php';
 $reviewModel = new ReviewModel();
 $action = $_GET['action'] ?? '';
 
-/*
- * INSERT A REVIEW
- * URL: reviewController.php?action=insert
- */
+/* Add a review */
 if ($action === 'insert') {
 
     $product_ID = $_POST['product_ID'] ?? 0;
@@ -26,22 +23,14 @@ if ($action === 'insert') {
     ]);
 }
 
-/*
- * FETCH REVIEWS FOR A PRODUCT
- * URL: reviewController.php?action=fetch&product_ID=3
- */
+/* Fetch reviews for a product */
 elseif ($action === 'fetch') {
 
     $product_ID = $_GET['product_ID'] ?? 0;
-
-    $reviews = $reviewModel->getReviewsByProduct($product_ID);
-    echo json_encode($reviews);
+    echo json_encode($reviewModel->getReviewsByProduct($product_ID));
 }
 
-/*
- * DELETE A REVIEW
- * URL: reviewController.php?action=delete
- */
+/* Delete a review */
 elseif ($action === 'delete') {
 
     $review_ID = $_POST['review_ID'] ?? 0;
@@ -54,10 +43,7 @@ elseif ($action === 'delete') {
     ]);
 }
 
-/*
- * UPDATE A REVIEW
- * URL: reviewController.php?action=update
- */
+/* Update a review */
 elseif ($action === 'update') {
 
     $review_ID = $_POST['review_ID'] ?? 0;
@@ -72,6 +58,7 @@ elseif ($action === 'update') {
     ]);
 }
 
+/* Invalid action */
 else {
     echo json_encode([
         "status"  => "error",
