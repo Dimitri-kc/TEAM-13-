@@ -24,9 +24,9 @@ body {
     padding: 12px;
     width: 20%;
     min-width: 120px;
-    background: #E3E3E3;
-    border: 1.5px solid #767676;
-    color: #000000;
+    background: #333;
+    border: 1.5px solid #333;
+    color: white;
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
@@ -40,8 +40,6 @@ body {
   justify-content: center;
   width: 100%;
 margin-top: 20px;
-
-
 
 }
 
@@ -239,6 +237,9 @@ label {
 .card-fields button {
   width: 100%;
   margin-top: 10px;
+  background-color: #e3e3e3;
+  border: 1px solid black;
+  color: black;
 }
 
 .card-fields {
@@ -257,7 +258,7 @@ label {
 .card-fields h2 {
   margin-bottom: 15px;
   font-size: 15px;
-  color: #333;
+  color: black;
 }
 
 .item {
