@@ -1,0 +1,6 @@
+/* asterisk next to required fields */
+.required {
+    color: rgb(63, 63, 63);
+    margin-left: 2px;
+
+}

@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | LOFT & LIVING</title>
+    <title>Contact | LOFT & LIVING</title>
 
     <link rel="stylesheet" href="../css/header_footer_style.css">
 
-    <link rel="stylesheet" href="../css/About-styles.css" />
+    <link rel="stylesheet" href="../css/contact-css/contact-base.css">
+    <link rel="stylesheet" href="../css/contact-css/contact-structure.css">
+    <link rel="stylesheet" href="../css/contact-css/contact-reusable.css">
+    <link rel="stylesheet" href="../css/contact-css/contact-page.css">
 </head>
 <body>
 
@@ -47,71 +50,36 @@
             </ul>
         </nav>
     </header>
-    <div class="split-page">
-        <div class="left">
-            <h1>ABOUT US</h1>
-            <p>
-            Welcome to Loft & Living, your new breakthrough in
-            modern and contemporary living. We are building a brand
-            dedicated to putting the customer first, offering products that
-            showcase a fresh way of living without breaking the bank.
-            Our goal is to help you transform houses into comfortable,
-            calm, and inspiring homes. We meticulously select every
-            item for both its practicality and beautiful design. From the
-            living room to the bedroom, and home offices to kitchens, Loft
-            & Living is here to help you create your dream space.
-            Established in 2025, our commitment since day one has been
-            to focus on exceptional design and quality while maintaining
-            an affordable cost.
-            </p>
-        </div>
+    <header id="main-header">
+        <h1 class="title">CONTACT US</h1>
+    </header>
 
-        <div class="right">
-            <div class="image-place">
-                <img src="../images/about-logo.png" alt="logo">
-            </div>
-        </div>
-    </div>
+    <main>
+        <section>
+            <div class="form-container">
+                <form id="contact-form" action="https://formspree.io/f/xzzlerol" method="POST">
+                    <input type="text" name="_gotcha" style="display: none;" />
+                    
+                    <label for="first">Name<span class="required">*</span> </label>
+                    <input type="text" id="first" name="first" placeholder="First Name" required>
+                    
+                    <label for="last">Surname<span class="required">*</span></label>
+                    <input type="text" id="last" name="last" placeholder="Last Name" required>
+                    
+                    <label for="email">Email<span class="required">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="Email Address" required>
 
-    <div class="faq-background">
-        <div class="faq-section">
-            <h2>Frequently Asked Questions:</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question">How can I place an order?</div>
-                <div class="faq-answer">To place an order, select a product
-                    from a category and add it to your basket or click checkout,
-                    you will be redirected to the checkout page where you can continue
-                    as a guest, sign up or sign in. Finally, you can enter your payment
-                    information and confirm the payment.</div>
-            </div>
+                    <label for="order">Order Number (If Applicable)</label>
+                    <input type="text" id="order" name="order" placeholder="Enter Order Number">
 
-            <div class="faq-item">
-                <div class="faq-question">How do I create a customer account?</div>
-                <div class="faq-answer">To create an account, click on the my account
-                    icon which is in the shape of a human. Click on sign up and enter your details and click on create account. </div>
-            </div>
+                    <label for="message">Message<span class="required">*</span></label>
+                    <textarea id="message" name="message" placeholder="Enter message or enquiry" required></textarea>
 
-            <div class="faq-item">
-                <div class="faq-question">Can I rate and review products I bought?</div>
-                <div class="faq-answer">Yes all customers who have purchased a product can
-                    leave a review and anyone can view the reviews on a product.</div>
+                    <button type="submit">Submit</button>
+                </form>
             </div>
-
-            <div class="faq-item">
-                <div class="faq-question">How can I update my account information?</div>
-                <div class="faq-answer">To update your account information, click on my account which
-                    is a human icon and click on my account settings. You can change your name, email address and password.</div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">How can I get help if I have an issue or a question?</div>
-                <div class="faq-answer">Click on the contact us page where you can enter your questions
-                    and report issues.
-                </div>
-            </div>
-        </div>
-    </div>
+        </section>
+    </main>
     <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-section social-links">

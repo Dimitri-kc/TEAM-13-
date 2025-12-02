@@ -75,12 +75,12 @@ body {
 
 /* Living room – #FFC8A5 30% */
 .living .image-box::after {
-    background-color: rgba(255, 200, 165, 0.30);
+    background-color: rgba(144, 138, 106, 0.30);
 }
 
 /* Kitchen – #FFB2BF 30% */
 .kitchen .image-box::after {
-    background-color: rgba(255, 178, 191, 0.30);
+    background-color: rgba(144, 138, 106, 0.30);
 }
 
 /* Office – #908A6A 30% */
@@ -90,14 +90,14 @@ body {
 
 /* Bathroom – #5287BC 36% */
 .bathroom .image-box::after {
-    background-color: rgba(82, 135, 188, 0.36);
+    background-color: rgba(144, 138, 106, 0.30);
 }
 
 /* Bedroom – #8758D6 36% */
 .bedroom .image-box::after {
-    background-color: rgba(135, 88, 214, 0.36);
+    background-color: rgba(144, 138, 106, 0.30);
 }
-
+/* SPACER BETWEEN SECTIONS */
 
 .section-spacer {
     height: 100px;

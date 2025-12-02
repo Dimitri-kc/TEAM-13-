@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => { // Ensure the DOM is fully
     const menuIconImg = document.getElementById('menu-icon-img');
 
     // Paths to the menu and close icons
-    const menuIconPath = "header_footer_images/icon-menu.png";
-    const closeIconPath = "header_footer_images/icon-close.png";
+    const menuIconPath = "../images/header_footer_images/icon-menu.png";
+    const closeIconPath = "../images/header_footer_images/icon-closed.png";
 
     // Toggle dropdown menu visibility and icon
     toggleBtn.addEventListener('click', (e) => {

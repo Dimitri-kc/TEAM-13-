@@ -42,6 +42,25 @@
 </form>
 </section>
 </main>
+<script>
+  const form = document.querySelector("form");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const email = document.querySelector('input[type="email"]').value.trim();
+    const password = document.querySelector('input[type="password"]').value.trim();
+
+    if (!email || !password) {
+      alert("Please fill in both fields.");
+      return;
+    }
+
+    if (email && password) {
+      window.location.href = "Homepage.html";
+    }
+  });
+</script>
 
 </body>
 </html>
