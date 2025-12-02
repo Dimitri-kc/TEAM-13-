@@ -1,61 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign Up</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="../css/signup.style.css">
+    <link rel="stylesheet" href="../css/signup.style.css">
 </head>
 
 <body class="page-background">
 
 <main class="form-container">
-<section class="form-box">
-<h1 class="form-title">NEW HERE?</h1>
+    <section class="form-box">
+        <h1 class="form-title">NEW HERE?</h1>
 
-<form method="POST" action="../../backend/routes/userRoutes.php" class="form-fields">
-  <input type="hidden" name="action" value="register">
+        <form id="signupForm">
 
-  <div class="input-group">
-    <span class="input-label">Name</span>
-    <input type="text" name="name" required>
-  </div>
+            <div class="input-group">
+                <span class="input-label">Name</span>
+                <input type="text" id="name" required>
+            </div>
 
-  <div class="input-group">
-    <span class="input-label">Surname</span>
-    <input type="text" name="surname" required>
-  </div>
+            <div class="input-group">
+                <span class="input-label">Surname</span>
+                <input type="text" id="surname" required>
+            </div>
 
-  <div class="input-group">
-    <span class="input-label">Email</span>
-    <input type="email" name="email" required>
-  </div>
+            <div class="input-group">
+                <span class="input-label">Email</span>
+                <input type="email" id="email" required>
+            </div>
 
-  <div class="input-group">
-    <span class="input-label">Address</span>
-    <input type="text" name="address">
-  </div>
+            <div class="input-group">
+                <span class="input-label">Address</span>
+                <input type="text" id="address" required>
+            </div>
 
-  <div class="input-group">
-    <span class="input-label">Password</span>
-    <input type="password" name="password" required>
-  </div>
+            <div class="input-group">
+                <span class="input-label">Password</span>
+                <input
+                    type="password"
+                    id="password"
+                    required
+                    minlength="8"
+                    pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}"
+                >
+            </div>
 
-  <button type="submit" class="main-button">Submit</button>
+            <div class="input-group">
+                <span class="input-label">Confirm Password</span>
+                <input type="password" id="confirmPassword" required>
+            </div>
 
-  <p class="form-footer">
-    Already have an account?
-    <a href="signin.html" class="link-primary">Sign in</a>
-  </p>
+            <button type="submit" class="main-button">Submit</button>
 
-</form>
-</section>
+            <p class="form-footer">
+                Already have an account?
+                <a href="signin.html" class="link-primary">Sign in</a>
+            </p>
+
+        </form>
+    </section>
 </main>
+
+<script>
+document.getElementById("signupForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name");
+    const surname = document.getElementById("surname");
+    const email = document.getElementById("email");
+    const address = document.getElementById("address");
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+
+    name.setCustomValidity("");
+    surname.setCustomValidity("");
+    email.setCustomValidity("");
+    address.setCustomValidity("");
+    password.setCustomValidity("");
+    confirmPassword.setCustomValidity("");
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+    let valid = true;
+
+  
+    if (!name.value.trim()) {
+        name.setCustomValidity("Please enter your name.");
+        valid = false;
+    }
+    if (!surname.value.trim()) {
+        surname.setCustomValidity("Please enter your surname.");
+        valid = false;
+    }
+
+    if (!email.value.trim() || !emailPattern.test(email.value.trim())) {
+        email.setCustomValidity("Please enter a valid email address.");
+        valid = false;
+    }
+
+    if (!address.value.trim()) {
+        address.setCustomValidity("Please enter your address.");
+        valid = false;
+    }
+
+    if (!password.value || !strongPassword.test(password.value)) {
+        password.setCustomValidity(
+            "Password must be 8+ characters with upper, lower, number & special character."
+        );
+        valid = false;
+    } else {
+        password.setCustomValidity("");
+    }
+
+    if (password.value !== confirmPassword.value) {
+        confirmPassword.setCustomValidity("Passwords do not match.");
+        valid = false;
+    } else {
+        confirmPassword.setCustomValidity("");
+    }
+
+    if (!valid) {
+        e.target.reportValidity();
+        return;
+    }
+
+    alert("Sign up successful!");
+    window.location.href = "signin.html";
+});
+</script>
 
 </body>
 </html>
+
