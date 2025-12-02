@@ -39,12 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 }
 //Notes:
-
 //htmlspecialchars used to prevent XSS attacks > converts special chars to HTML
 //signup.html path for form > ../../routes/userRoutes.php?action=register (POST) > input type hidden
 //signin.html path for form > ../../routes/userRoutes.php?action=login (POST)
 //logout as a href? >  ../../routes/userRoutes.php?action=logout 
-
-//html code for signup.html form:
-//<form method="POST" action="../../routes/userRoutes.php">
 ?>
