@@ -6,31 +6,43 @@
 <title>Checkout page</title>
 
 
-<link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/checkout.css" />
 
-<!-- <link rel="stylesheet" href="../css/signup.style.css"> -->
 </head>
-
-
 <body>
-<main class="form-container">
+
+    <!-- The header of the checkout page -->
+
+    <header class="checkout-header">
+        <h1>CHECKOUT</h1>
+    </header>
+
+<main class="checkout-layout">
 
 <!-- Left container with product items -->
 
-    <section class="product-item">
+<aside class="product-column">
+
         <div class="product-item">
-        <img src="../images/livingroom-images/sofa.jg" alt="Venice Cream Sofa"/>
-    <div class="product-info">
+
+        <img src="../images/basket-images/sofa.jpg" alt="Venice Cream Sofa"/>
+
+    <div class="product-text">
         <p>Venice Cream Sofa</p>
-        <p class="price">£50</p>
+        <p class="price">£295</p>
         <p class="quantity">Quantity: 1</p>
 </div>
 </div>
-    </section>
+</aside>
+
+<!-- right section  -->
 
 
+
+ <section class="details-column">
+    
 <section class="review-box">
-<h1 class="form-title">REVIEW</h1>
+<h1 class="form-title">REVIEW: </h1>
 
 <form class="form-fields" method="POST" action="/routes/reviewRoutes.php">
 <label class="input-group">
@@ -43,28 +55,40 @@
 
 <label class="input-group">
     <span class="input-label">Address</span>
-<textarea name="address" rows="3" required> </textarea>
+<textarea name="address" rows="3" required></textarea>
 </label>
 
-   <button type="submit">Submit</button>
-</form>
-</section>
+<div class="card-fields">
+<h2>Card Details</h2>
 
-<section class="payment-section">
-    <form>
         <input type="text" placeholder="Card Number (16 Digits)" maxlength="16" required />
-          <input type="text" placeholder="Expiry Date (MM/YY)"required />
-            <input type="text" placeholder="CVV (3 Digits)" maxlength="3" required />
-<button type="submit">Submit</button>
+        <input type="text" placeholder="Expiry Date (MM/YY)"required />
+        <input type="text" placeholder="CVV (3 Digits)" maxlength="3" required />
+      <button type="submit">Submit</button>
+    </div>
+          
     </form>
 </section>
 
-<section class="payment-options">
-    <button>Checkout</button>
-     <button>Pay with Apple Pay</button>
-      <button>Pay with Google Pay</button>
+<div class="delivery-section">
+<p>Ready for Loft & Living in Your Home?</p>
+<p>Your Order will be dispatched using Standard Delivery </p>
+<p>Estimated Delivery: 9th December 2025</p>
+
+<button class="checkout-btn" onclick="window.location.href='signup.html'">Checkout</button>
+
+
+</div>
+
+
 </section>
+</div>
+
 </main>
+    <div class="pay-buttons">
+                <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
+                <img src="../images/basket-images/googlepay.png" alt="Google Pay" class="pay-btn">
+    </div>
 </body>
 </html>
 
