@@ -2,8 +2,8 @@
 
 session_start();
 
-include_once '../../controllers/basketController.php'; //path to basketContrller.php
-include_once '../../services/basketFunctions.php'; //>guest specific
+require_once '../../controllers/basketController.php'; //path to basketContrller.php
+require_once '../../services/basketFunctions.php'; //>guest specific
 
 $basketController = new BasketController();
 
