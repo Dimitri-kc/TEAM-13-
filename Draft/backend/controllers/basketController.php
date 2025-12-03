@@ -2,8 +2,8 @@
 
 session_start();
 //included so controller can connect to database and relevant methods
-include_once '../../models/basketModel.php';//state file path
-include_once '../../services/userFucntions.php'; //for require_login() & require_role() & guest basket functions
+require_once '../../models/basketModel.php';//state file path
+require_once '../../services/userFucntions.php'; //for require_login() & require_role() & guest basket functions
 
 //Handling basket-related operations
 class BasketController {
