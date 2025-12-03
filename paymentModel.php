@@ -47,12 +47,13 @@ class Payment {
 
     //fetch payment via payment_ID
     public function fetchPaymentID($payment_ID) {
+        $stmt = $this->conn->prepare("SELECT * FROM payments WHERE payment_ID = ?");
 
     }
 
     //fetch all payments via user_ID
     public function fetchUserPayments($user_ID) {
-
+        $stmt = $this->conn->prepare("SELECT * FROM payments WHERE user_ID = ?");
     }
     
     //update order status (& reduce stock??)
