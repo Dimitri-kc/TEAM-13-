@@ -1,3 +1,4 @@
+
 <?php //paymentModel.php - database comms for payments
 //creates and retrieves payment records
 
@@ -29,28 +30,27 @@ class Payment {
     public function createPayment($order_ID, $user_ID, $address, $total_sum) {
         //add values to payments table
         $stmt = $this->conn->prepare("INSERT INTO payments (order_ID, user_ID, address, total_sum) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("i", $order_ID); //attach value prevent SQLinjection
-        $stmt->bind_param('i', $user_ID);
-        $stmt->bind_param("s", $address);
-        $stmt->bind_param("d", $total_sum);//double for decimal
-
-        return $stmt->execute($order_ID, $user_ID, $address, $total_sum);
+        //integer, string, double
+        $stmt->bind_param("iisd", $order_ID, $user_ID, $address, $total_sum); //attach value prevent SQLinjection
+        return $stmt->execute();
     }
 
     //fetches payment using order_ID
     public function fetchPaymentOrderId($order_ID) {
         $stmt = $this->conn->prepare("SELECT * FROM payments WHERE order_ID = ?");
         $stmt->bind_param("i", $order_ID);
-        $stmt->execute($order_ID);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        $result = $stmt->get_reult();
+        return $result->fetch_assoc();
     }
 
     //fetch payment via payment_ID
     public function fetchPaymentID($payment_ID) {
         $stmt = $this->conn->prepare("SELECT * FROM payments WHERE payment_ID = ?");
         $stmt->bind_param("i", $payment_ID);
-        $stmt->execute($payment_ID);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        $result = $stmt->get_reult();
+        return $result->fetch_assoc();
 
     }
 
@@ -58,25 +58,24 @@ class Payment {
     public function fetchUserPayments($user_ID) {
         $stmt = $this->conn->prepare("SELECT * FROM payments WHERE user_ID = ?");
         $stmt->bind_param("i", $user_ID);
-        $stmt->execute($user_ID);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);//return all rows
     }
     
-    //update order status (& reduce stock??)
-
     //store billing/shipping address info
-    public function storeAddress($paymentID, $address){
+    public function storeAddress($payment_ID, $address){
         $stmt = $this->conn->prepare("UPDATE payments SET address = ? WHERE payment_ID = ?");
 
-        $stmt->bind_param("s", $address);
-
-    }
+        $stmt->bind_param("si", $address, $payment_ID);
+        return $stmt->execute();
+;    }
 
     //delete payment > used by admin & for testing
     public function deletePayment($payment_ID) {
         $stmt = $this->conn->prepare("DELETE FROM payments WHERE payment_ID = ?");
         $stmt->bind_param("i", $payment_ID);
-        return $stmt->execute($payment_ID);
+        return $stmt->execute();
     }
     
 
@@ -90,5 +89,5 @@ class Payment {
 //TO DO:
 //add luhn algorithm for realism to fake validate card
 //may need to add created_at and status to payment sql and include in createPayment
-
+//possibly shared function needed for stock updates with products
 ?>
