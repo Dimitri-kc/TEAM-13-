@@ -48,18 +48,27 @@ class Payment {
     //fetch payment via payment_ID
     public function fetchPaymentID($payment_ID) {
         $stmt = $this->conn->prepare("SELECT * FROM payments WHERE payment_ID = ?");
+        $stmt->bind_param("i", $payment_ID);
+        $stmt->execute($payment_ID);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
 
     }
 
     //fetch all payments via user_ID
     public function fetchUserPayments($user_ID) {
         $stmt = $this->conn->prepare("SELECT * FROM payments WHERE user_ID = ?");
+        $stmt->bind_param("i", $user_ID);
+        $stmt->execute($user_ID);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
     //update order status (& reduce stock??)
 
     //store billing/shipping address info
     public function storeAddress($paymentID, $address){
+        $stmt = $this->conn->prepare("UPDATE payments SET address = ? WHERE payment_ID = ?");
+
+        $stmt->bind_param("s", $address);
 
     }
 
