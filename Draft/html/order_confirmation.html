@@ -1,98 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- '' This is the header and footer template for LOFT & LIVING '' -->
     <meta charset="UTF-8">
-    <title>LOFT & LIVING BIRMINGHAM</title>
-    <link rel="stylesheet" href="../css/header_footer_style.css">
-    </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation | LOFT & LIVING</title>
+    <link rel="stylesheet" href="../css/order_confirmation.css">
+</head>
+
 <body>
 
-    <!-- '' Site Header: This section contains the logo, navigation menu, and user action icons '' -->
-    <header class="site-header">
-        <div class="header-inner">
-            <button class="menu-btn" id="menu-toggle-btn">
-                <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img"> 
-            </button>
+    <main class="confirm-container">
 
-            <div class="logo-wrapper">
-                <a href="homepage.html">
-                    <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
-                </a>
-            </div>
+        <h1 class="confirm-title">ORDER CONFIRMED</h1>
 
-            <div class="header-actions">
-                <a href="favourites.html">
-                    <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
-                </a>
-                <a href="signin.html">
-                    <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
-                </a>
-                <a href="basket.html">
-                    <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
-                </a>
-            </div>
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="step completed"> Confirmed</div>
+            <div class="divider"></div>
+            <div class="step active"> Delivery</div>
+            <div class="divider"></div>
+            <div class="step"> Shipped</div>
         </div>
-<!-- 
-        '' Dropdown Navigation Menu: Here users can navigate to different product categories '' -->
-        <nav class="dropdown-panel" id="dropdown-nav">
-            <ul class="nav-links">
-                <li><a href="livingroom.html">Living Room</a></li>
-                <li><a href="bathroom.html">Bathroom</a></li>
-                <li><a href="bedroom.html">Bedroom</a></li>
-                <li><a href="office.html">Office</a></li>
-                <li><a href="kitchen.html">Kitchen</a></li>
-                <li class="nav-divider"><a href="signin.html">My Account</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main style="height: 600px; padding: 50px; text-align: center; background-color: #f9f9f9;">
-        <h1></h1>
+
+        <p class="confirm-text">
+           Thank you for your purchase! 
+
+            <!-- Your order is now being processed! -->
+        </p>
+
+        <!-- Order Box -->
+        <div class="order-box">
+
+            <h2 class="summary-title">ORDER SUMMARY</h2>
+
+            <div class="summary-row">
+                <span>Order Number:</span> <span>123456</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Date:</span> <span>08 Dec 2025</span>
+            </div>
+
+            <!-- Product Details -->
+            <div class="product-row">
+                <img src="../images/basket-images/sofa.jpg" class="product-img" alt="Venice Cream Sofa">
+
+                <div class="product-info">
+                    <h3>Venice Cream Sofa</h3>
+                    <p>Qty: 1</p>
+                    <p class="price">£295</p>
+                </div>
+            </div>
+
+            <div class="summary-row">
+                <span>Subtotal</span> <span>£295</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Delivery</span> <span>Free</span>
+            </div>
+
+            <div class="summary-row total">
+                <span>Total Paid</span> <span>£295</span>
+            </div>
+
+        </div>
+
     </main>
 
-<!-- '' Site Footer: This section contains social media links and additional navigation '' -->
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-section social-links">
-                <a href="#">
-                    <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon">
-                </a>
-                <a href="#">
-                    <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon">
-                </a>
-            </div>
-
-            <div class="footer-section">
-                <h4>Navigation</h4>
-                <ul>
-                    <li><a href="homepage.html">Homepage</a></li>
-                    <li><a href="signin.html">My Account</a></li>
-                    <li><a href="favourites.html">Favourites</a></li>
-                    <li><a href="basket.html">Basket</a></li>
-                </ul>
-            </div>
-
-            <!-- '' Categories Section: Links to different product categories '' -->
-            <div class="footer-section">
-                <h4>Categories</h4>
-                <ul>
-                    <li><a href="livingroom.html">Living Room</a></li>
-                    <li><a href="office.html">Offices</a></li>
-                    <li><a href="kitchen.html">Kitchen</a></li>
-                    <li><a href="bathroom.html">Bathrooms</a></li>
-                    <li><a href="bedroom.html">Bedrooms</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>More...</h4>
-                <ul>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-    <script src="../javascript/header_footer_script.js"></script>
 </body>
 </html>
