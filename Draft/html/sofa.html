@@ -1,32 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- <! Setting up meta tags and linking stylesheets and fonts -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venice Cream Sofa - Product Page</title>
+    <title>Venice Cream Sofa | LOFT & LIVING</title>
+
+    <link rel="stylesheet" href="../css/header_footer_style.css">
+
     <link rel="stylesheet" href="../css/sofa_style.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 
+
+
+    <style>
+        /* Reset the body to ensure Header, Main, and Footer stack vertically */
+        body {
+            display: flex !important;
+            flex-direction: column !important;
+            min-height: 100vh;
+        }
+
+        /* Ensures the Header sits on top of the images */
+        .site-header {
+            z-index: 1000 !important;
+            position: relative; 
+            background-color: #fff; /* Ensures content doesn't show through */
+        }
+
+        /* Push the Main content down so it doesn't hide behind the header */
+        main.container {
+            margin-top: 20px; 
+            flex: 1; 
+            width: 100%;
+            max-width: 1200px; 
+            align-self: center; 
+        }
+
+        /* Footer sticks to the bottom */
+        .site-footer {
+            width: 100%;
+            margin-top: auto;
+        }
+    </style>
 </head>
 <body>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <button class="menu-btn" id="menu-toggle-btn">
+                <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img"> 
+            </button>
+
+            <div class="logo-wrapper">
+                <a href="homepage.html">
+                    <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
+                </a>
+            </div>
+
+            <div class="header-actions">
+                <a href="favourites.html">
+                    <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
+                </a>
+                <a href="signin.html">
+                    <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
+                </a>
+                <a href="basket.html">
+                    <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+                </a>
+            </div>
+        </div>
+
+        <nav class="dropdown-panel" id="dropdown-nav">
+            <ul class="nav-links">
+                <li><a href="livingroom.html">Living Room</a></li>
+                <li><a href="bathroom.html">Bathroom</a></li>
+                <li><a href="bedroom.html">Bedroom</a></li>
+                <li><a href="office.html">Office</a></li>
+                <li><a href="kitchen.html">Kitchen</a></li>
+                <li class="nav-divider"><a href="signin.html">My Account</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <main class="container">
         
         <section class="product-wrapper">
             
-            <!-- <! Product Image Section including wishlist and zoom icons -- -->   
             <div class="product-image">
                 <div class="wishlist-icon">
                     <i class="fa-regular fa-heart"></i>
-                
                 </div>
                 <img src="../images/basket-images/sofa.jpg" alt="Venice Cream Sofa">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-              
+                <i class="fa-solid fa-magnifying-glass"></i>
             </div>
 
-            <!-- <! Product Information Section: Title, Price, Tagline, Selectors, Add to Basket Button, Description -- --> 
             <div class="product-info">
                 <h1>Venice Cream Sofa</h1>
                 <div class="price">£295</div>
@@ -49,8 +117,7 @@
                     </div>
                 </div>
 
-    <button class="add-to-basket" onclick="window.location.href='basket.html'">Add to Basket</button>
-
+                <button class="add-to-basket" onclick="window.location.href='basket.html'">Add to Basket</button>
 
                 <div class="description-box">
                     <div class="desc-header">
@@ -62,7 +129,6 @@
             </div>
         </section>
 
-        <!-- <! A class for the reviews section with a slider for user reviews -- --> 
         <section class="reviews-section">
             <h2>Latest reviews</h2>
             
@@ -115,14 +181,15 @@
                             </div>
                         </div>
                     </div>
-                                        <div class="review-card">
+                    
+                    <div class="review-card">
                         <div class="stars">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                         </div>
                         <h3>Very comfy and soft.</h3>
                         <p>Amazing sofa, I even slept in it!.</p>
                         <div class="reviewer">
-                            <img src="https://ui-avatars.com/api/?name=Manaal+A&background=random" alt="User">
+                            <img src="https://ui-avatars.com/api/?name=Navdeep+M&background=random" alt="User">
                             <div>
                                 <span class="name">Navdeep Malhi</span>
                                 <span class="date">18th November 2025</span>
@@ -137,6 +204,49 @@
 
     </main>
 
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-section social-links">
+                <a href="#">
+                    <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon">
+                </a>
+                <a href="#">
+                    <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon">
+                </a>
+            </div>
+
+            <div class="footer-section">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="homepage.html">Homepage</a></li>
+                    <li><a href="signin.html">My Account</a></li>
+                    <li><a href="favourites.html">Favourites</a></li>
+                    <li><a href="basket.html">Basket</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="livingroom.html">Living Room</a></li>
+                    <li><a href="office.html">Offices</a></li>
+                    <li><a href="kitchen.html">Kitchen</a></li>
+                    <li><a href="bathroom.html">Bathrooms</a></li>
+                    <li><a href="bedroom.html">Bedrooms</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>More...</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
     <script src="../javascript/sofa_script.js"></script>
+    <script src="../javascript/header_footer_script.js"></script>
 </body>
 </html>
