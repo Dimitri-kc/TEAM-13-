@@ -16,6 +16,7 @@ class UserController {
         $name = trim($_POST['name'] ?? ''); //trims to remove whitespace
         $surname = trim($_POST['surname'] ?? '');
         $email = trim($_POST['email'] ?? '');
+        $phone = trim($_POST['phone'] ?? '');
         $address = trim($_POST['address'] ?? '');
         $password = trim($_POST['password'] ?? '');
 
@@ -32,7 +33,7 @@ class UserController {
 
         //default role is customer
         $role = 'customer';
-        $registrationSuccess = $userModel->register($name, $surname, $email, $address, $hashedPassword, $role);
+        $registrationSuccess = $userModel->register($name, $surname, $email, $phone, $address, $hashedPassword, $role);
         if ($registrationSuccess) {
             echo "Registration successful. You can now <a href='/signin.html'>login</a>.";//hyperlink to login page after registration
             } else {
@@ -48,7 +49,7 @@ class UserController {
 
         //login user - basic validation
         if (!$email || !$password) {
-            echo "All fields are required.";
+            echo json_encode (['success' => false, 'message' => "All fields are required."]);
             exit;
         }
 
@@ -65,12 +66,12 @@ class UserController {
             //merge guest basket with user basket upon login
             mergeBaskets($user['user_ID']);
             //redirect to homepage after login
-            header('Location: /Homepage.html');
+            echo json_encode(['success' => true, 'message' => 'Login successful.', 'redirect' => '/Homepage.html' ]);
             exit;
         } else {
-            echo "Login failed. Invalid email or password.";
+            echo json_encode(['success' => true, 'message' => 'Login failed. Invalid email or password.']);
         }
     }
 }
-//removed the echo before header redirection to avoid header errors
+//added json for linking successful backend implementation
 ?>
