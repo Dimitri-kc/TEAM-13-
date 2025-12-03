@@ -49,7 +49,7 @@ class UserController {
 
         //login user - basic validation
         if (!$email || !$password) {
-            echo json_encode (['success' => false, 'message' => "All fields are required."]);
+            echo "All fields are required.";
             exit;
         }
 
@@ -66,12 +66,13 @@ class UserController {
             //merge guest basket with user basket upon login
             mergeBaskets($user['user_ID']);
             //redirect to homepage after login
-            echo json_encode(['success' => true, 'message' => 'Login successful.', 'redirect' => '/Homepage.html' ]);
+            header('Location: /Homepage.html');
             exit;
         } else {
-            echo json_encode(['success' => true, 'message' => 'Login failed. Invalid email or password.']);
+            echo  'Login failed. Invalid email or password.';
         }
     }
 }
-//added json for linking successful backend implementation
+//TO DO:
+//json for linking successful backend implementation if javascript coded to frontend
 ?>
