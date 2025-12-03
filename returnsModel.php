@@ -42,7 +42,7 @@ $stmt = $this->conn->prepare("UPDATE returns SET status=? WHERE return_ID=?");
 $stmt->bind_param("si", $status, $id);
 return $stmt->execute();
 }
-// Delete return
+// Delete return.
 public function delete($id) {
 $stmt = $this->conn->prepare("DELETE FROM returns WHERE return_ID = ?");
 $stmt->bind_param("i", $id);
