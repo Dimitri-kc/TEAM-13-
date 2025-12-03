@@ -6,9 +6,7 @@ class Payment {
     private $conn;
 
         public function __construct() {
-        include_once __DIR__ . '/../config/db_connect.php'; // database connection
-        include_once __DIR__ . '/../models/productModel.php'; //some overlap with product/order
-        include_once __DIR__ . '/../models/orderModel.php';
+        require_once __DIR__ . '/../config/db_connect.php'; // database connection
         $this->conn = $dbConnection;
     }
 
@@ -20,7 +18,7 @@ class Payment {
         if (!preg_match('/^[0-9]{3}$/', $cvv)) { //checks for 3 digits between 0-9
             return false;
         }
-        if(!preg_match('/^(0[1-9]|1[1-2])\/[0-9]{2}$/', $expiry)) { //expiry must be in MM/YY format
+        if(!preg_match('/^(0[1-9]|1[0-2])\/[0-9]{2}$/', $expiry)) { //expiry must be in MM/YY format
             return false;
         }
         return true;
@@ -30,7 +28,7 @@ class Payment {
     public function createPayment($order_ID, $user_ID, $address, $total_sum) {
         //add values to payments table
         $stmt = $this->conn->prepare("INSERT INTO payments (order_ID, user_ID, address, total_sum) VALUES (?, ?, ?, ?)");
-        //integer, string, double
+        //integer, integer, string, double
         $stmt->bind_param("iisd", $order_ID, $user_ID, $address, $total_sum); //attach value prevent SQLinjection
         return $stmt->execute();
     }
@@ -40,8 +38,8 @@ class Payment {
         $stmt = $this->conn->prepare("SELECT * FROM payments WHERE order_ID = ?");
         $stmt->bind_param("i", $order_ID);
         $stmt->execute();
-        $result = $stmt->get_reult();
-        return $result->fetch_assoc();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();//one payment per order
     }
 
     //fetch payment via payment_ID
@@ -49,8 +47,8 @@ class Payment {
         $stmt = $this->conn->prepare("SELECT * FROM payments WHERE payment_ID = ?");
         $stmt->bind_param("i", $payment_ID);
         $stmt->execute();
-        $result = $stmt->get_reult();
-        return $result->fetch_assoc();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc(); //one payment per id
 
     }
 
