@@ -1,7 +1,7 @@
 <?php //User routes - receives http requests frmo html and calls controller methods
 
 session_start();
-include_once '../../controllers/userController.php'; //path to userController.php
+incle_once '../../controllers/userController.php'; //path to userController.php
 
 $userController = new UserController(); //nstance of usercontroller
 //Define routes for user-related actions

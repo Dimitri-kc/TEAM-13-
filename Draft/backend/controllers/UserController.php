@@ -2,9 +2,9 @@
 
 session_start();
 //include database and user models so controller can connect to database and use user methods
-include_once '../../config/db_connect.php';//state file path
-include_once '../../models/userModel.php';
-include_once '../../services/basketFunctions.php'; //for merger basket functions
+require_once '../../config/db_connect.php';//state file path
+require_once '../../models/userModel.php';
+require_once '../../services/basketFunctions.php'; //for merger basket functions
 
 //Handling user-related operations
 class UserController {
