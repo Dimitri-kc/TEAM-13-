@@ -18,6 +18,7 @@ body {
 .form-title {
   font-family: 'Ibarra Real Nova', serif;
   font-size: 20px;
+  margin-bottom: 15px;
 }
 .checkout-btn {
     margin-top: 15px;
@@ -248,6 +249,7 @@ label {
   border-radius: 10px;
   border: 1px solid #D9D9D9;
   margin-bottom: 20px;
+  margin-top: -60px;
 }
 
 .card-fields input {
@@ -310,4 +312,41 @@ label {
     width: 100%;        
     min-width: unset;      
   }
+}
+
+.review-details p {
+  margin: 8px 0;
+  font-size: 15px;
+}
+
+.address-line p {
+  font-size:20px
+}
+.card-buttons {
+  position: relative;
+  top: -100px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; 
+    margin-bottom: 20px; 
+    width: 150px;
+    margin-left: auto;
+    margin-right: 0;
+  
+}
+
+.card-buttons button {
+    padding: 6 10px;
+    font-size: 15px;
+    border-radius: 6px;
+    width: 150px;
+    border: 1px solid #000;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.card-buttons button:hover {
+    background-color: #333;
 }
