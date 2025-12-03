@@ -1,71 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign In</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | LOFT & LIVING</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/header_footer_style.css">
+    <link rel="stylesheet" href="../css/signup.style.css">
 
-<link rel="stylesheet" href="../css/signup.style.css">
+    <style>
+        
+        body {
+            display: flex !important;
+            flex-direction: column !important;
+            min-height: 100vh;
+        }
+
+        .site-header {
+            position: relative !important; 
+            width: 100%;
+            background-color: #ffffff !important;
+            z-index: 1000;
+        }
+
+        .header-inner {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        main.form-container {
+            margin-top: 50px !important;
+            margin-bottom: 50px !important;
+            flex: 1;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .site-footer {
+            margin-top: auto;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body class="page-background">
 
-<main class="form-container">
-<section class="form-box">
-<h1 class="form-title">WELCOME BACK</h1>
+    <header class="site-header">
+        <div class="header-inner">
+            <button class="menu-btn" id="menu-toggle-btn">
+                <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img"> 
+            </button>
 
-<form class="form-fields" method="POST" action="/routes/userRoutes.php">
-    <input type="hidden" name="action" value="login">
+            <div class="logo-wrapper">
+                <a href="homepage.html">
+                    <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
+                </a>
+            </div>
 
-    <label class="input-group">
-        <span class="input-label">Email</span>
-        <input type="email" name="email" required>
-    </label>
+            <div class="header-actions">
+                <a href="favourites.html">
+                    <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
+                </a>
+                <a href="signin.html">
+                    <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
+                </a>
+                <a href="basket.html">
+                    <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+                </a>
+            </div>
+        </div>
 
-    <label class="input-group">
-        <span class="input-label">Password</span>
-        <input type="password" name="password" required>
-    </label>
+        <nav class="dropdown-panel" id="dropdown-nav">
+            <ul class="nav-links">
+                <li><a href="livingroom.html">Living Room</a></li>
+                <li><a href="bathroom.html">Bathroom</a></li>
+                <li><a href="bedroom.html">Bedroom</a></li>
+                <li><a href="office.html">Office</a></li>
+                <li><a href="kitchen.html">Kitchen</a></li>
+                <li class="nav-divider"><a href="signin.html">My Account</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <button type="submit" class="main-button">Sign In</button>
+    <main class="form-container">
+        <section class="form-box">
+            <h1 class="form-title">WELCOME BACK</h1>
 
-    <div class="form-links">
-    
-        <span class="link-secondary">Forgot password?</span>
+            <form class="form-fields" method="POST" action="/routes/userRoutes.php">
+                <input type="hidden" name="action" value="login">
 
-        <a href="signup.html" class="link-primary">New here?</a>
-    </div>
-</form>
-</section>
-</main>
-<script>
-  const form = document.querySelector("form");
+                <label class="input-group">
+                    <span class="input-label">Email</span>
+                    <input type="email" name="email" required>
+                </label>
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
+                <label class="input-group">
+                    <span class="input-label">Password</span>
+                    <input type="password" name="password" required>
+                </label>
 
-    const email = document.querySelector('input[type="email"]').value.trim();
-    const password = document.querySelector('input[type="password"]').value.trim();
+                <button type="submit" class="main-button">Sign In</button>
 
-    if (!email || !password) {
-      alert("Please fill in both fields.");
-      return;
-    }
+                <div class="form-links">
+                    <span class="link-secondary">Forgot password?</span>
+                    <a href="signup.html" class="link-primary">New here?</a>
+                </div>
+            </form>
+        </section>
+    </main>
 
-    if (email && password) {
-      window.location.href = "Homepage.html";
-    }
-  });
-</script>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-section social-links">
+                <a href="#"><img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon"></a>
+                <a href="#"><img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon"></a>
+            </div>
+            <div class="footer-section">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="homepage.html">Homepage</a></li>
+                    <li><a href="signin.html">My Account</a></li>
+                    <li><a href="favourites.html">Favourites</a></li>
+                    <li><a href="basket.html">Basket</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="livingroom.html">Living Room</a></li>
+                    <li><a href="office.html">Offices</a></li>
+                    <li><a href="kitchen.html">Kitchen</a></li>
+                    <li><a href="bathroom.html">Bathrooms</a></li>
+                    <li><a href="bedroom.html">Bedrooms</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>More...</h4>
+                <ul><li><a href="contact.html">Contact Us</a></li><li><a href="about.html">About Us</a></li></ul>
+            </div>
+        </div>
+    </footer>
 
+    <script>
+      const form = document.querySelector("form");
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const email = document.querySelector('input[type="email"]').value.trim();
+        const password = document.querySelector('input[type="password"]').value.trim();
+        if (!email || !password) { alert("Please fill in both fields."); return; }
+        if (email && password) { window.location.href = "homepage.html"; }
+      });
+    </script>
+    <script src="../javascript/header_footer_script.js"></script>
 </body>
 </html>
-
-
-
-
-
