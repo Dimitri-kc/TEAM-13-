@@ -3,140 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Sign Up | LOFT & LIVING</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="../css/header_footer_style.css">
     <link rel="stylesheet" href="../css/signup.style.css">
+
+    <style>
+       
+        body {
+            display: flex !important;
+            flex-direction: column !important;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #EAE8E4; 
+        }
+
+        
+        .site-header {
+            position: relative !important; 
+            width: 100%;
+            background-color: #ffffff !important;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-inner {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+       
+        main.form-container {
+            margin-top: 50px !important;
+            margin-bottom: 50px !important;
+            flex: 1;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        
+        .site-footer {
+            margin-top: auto;
+            width: 100%;
+            background-color: #fff;
+        }
+
+        
+        .input-group {
+            margin-bottom: 25px !important; 
+            display: flex;
+            flex-direction: column; 
+        }
+
+
+        .input-label {
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+    </style>
 </head>
 
 <body class="page-background">
 
-<main class="form-container">
-    <section class="form-box">
-        <h1 class="form-title">NEW HERE?</h1>
-
-        <form id="signupForm">
-
-            <div class="input-group">
-                <span class="input-label">Name</span>
-                <input type="text" id="name" required>
+    <header class="site-header">
+        <div class="header-inner">
+            <button class="menu-btn" id="menu-toggle-btn">
+                <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img"> 
+            </button>
+            <div class="logo-wrapper">
+                <a href="homepage.html">
+                    <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
+                </a>
             </div>
-
-            <div class="input-group">
-                <span class="input-label">Surname</span>
-                <input type="text" id="surname" required>
+            <div class="header-actions">
+                <a href="favourites.html">
+                    <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
+                </a>
+                <a href="signin.html">
+                    <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
+                </a>
+                <a href="basket.html">
+                    <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+                </a>
             </div>
+        </div>
+        <nav class="dropdown-panel" id="dropdown-nav">
+            <ul class="nav-links">
+                <li><a href="livingroom.html">Living Room</a></li>
+                <li><a href="bathroom.html">Bathroom</a></li>
+                <li><a href="bedroom.html">Bedroom</a></li>
+                <li><a href="office.html">Office</a></li>
+                <li><a href="kitchen.html">Kitchen</a></li>
+                <li class="nav-divider"><a href="signin.html">My Account</a></li>
+            </ul>
+        </nav>
+    </header>
 
-            <div class="input-group">
-                <span class="input-label">Email</span>
-                <input type="email" id="email" required>
+    <main class="form-container">
+        <section class="form-box">
+            <h1 class="form-title">NEW HERE?</h1>
+            <form id="signupForm">
+                <div class="input-group">
+                    <span class="input-label">Name</span>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="input-group">
+                    <span class="input-label">Surname</span>
+                    <input type="text" id="surname" required>
+                </div>
+                <div class="input-group">
+                    <span class="input-label">Email</span>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="input-group">
+                    <span class="input-label">Address</span>
+                    <input type="text" id="address" required>
+                </div>
+                <div class="input-group">
+                    <span class="input-label">Password</span>
+                    <input type="password" id="password" required minlength="8" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}">
+                </div>
+                <div class="input-group">
+                    <span class="input-label">Confirm Password</span>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="main-button">Submit</button>
+                <p class="form-footer">
+                    Already have an account?
+                    <a href="signin.html" class="link-primary">Sign in</a>
+                </p>
+            </form>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-section social-links">
+                <a href="#"><img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon"></a>
+                <a href="#"><img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon"></a>
             </div>
-
-            <div class="input-group">
-                <span class="input-label">Address</span>
-                <input type="text" id="address" required>
+            <div class="footer-section">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="homepage.html">Homepage</a></li>
+                    <li><a href="signin.html">My Account</a></li>
+                    <li><a href="favourites.html">Favourites</a></li>
+                    <li><a href="basket.html">Basket</a></li>
+                </ul>
             </div>
-
-            <div class="input-group">
-                <span class="input-label">Password</span>
-                <input
-                    type="password"
-                    id="password"
-                    required
-                    minlength="8"
-                    pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}"
-                >
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="livingroom.html">Living Room</a></li>
+                    <li><a href="office.html">Offices</a></li>
+                    <li><a href="kitchen.html">Kitchen</a></li>
+                    <li><a href="bathroom.html">Bathrooms</a></li>
+                    <li><a href="bedroom.html">Bedrooms</a></li>
+                </ul>
             </div>
-
-            <div class="input-group">
-                <span class="input-label">Confirm Password</span>
-                <input type="password" id="confirmPassword" required>
+            <div class="footer-section">
+                <h4>More...</h4>
+                <ul><li><a href="contact.html">Contact Us</a></li><li><a href="about.html">About Us</a></li></ul>
             </div>
+        </div>
+    </footer>
 
-            <button type="submit" class="main-button">Submit</button>
-
-            <p class="form-footer">
-                Already have an account?
-                <a href="signin.html" class="link-primary">Sign in</a>
-            </p>
-
-        </form>
-    </section>
-</main>
-
-<script>
-document.getElementById("signupForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const name = document.getElementById("name");
-    const surname = document.getElementById("surname");
-    const email = document.getElementById("email");
-    const address = document.getElementById("address");
-    const password = document.getElementById("password");
-    const confirmPassword = document.getElementById("confirmPassword");
-
-    name.setCustomValidity("");
-    surname.setCustomValidity("");
-    email.setCustomValidity("");
-    address.setCustomValidity("");
-    password.setCustomValidity("");
-    confirmPassword.setCustomValidity("");
-
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-
-    let valid = true;
-
-  
-    if (!name.value.trim()) {
-        name.setCustomValidity("Please enter your name.");
-        valid = false;
-    }
-    if (!surname.value.trim()) {
-        surname.setCustomValidity("Please enter your surname.");
-        valid = false;
-    }
-
-    if (!email.value.trim() || !emailPattern.test(email.value.trim())) {
-        email.setCustomValidity("Please enter a valid email address.");
-        valid = false;
-    }
-
-    if (!address.value.trim()) {
-        address.setCustomValidity("Please enter your address.");
-        valid = false;
-    }
-
-    if (!password.value || !strongPassword.test(password.value)) {
-        password.setCustomValidity(
-            "Password must be 8+ characters with upper, lower, number & special character."
-        );
-        valid = false;
-    } else {
-        password.setCustomValidity("");
-    }
-
-    if (password.value !== confirmPassword.value) {
-        confirmPassword.setCustomValidity("Passwords do not match.");
-        valid = false;
-    } else {
-        confirmPassword.setCustomValidity("");
-    }
-
-    if (!valid) {
-        e.target.reportValidity();
-        return;
-    }
-
-    alert("Sign up successful!");
-    window.location.href = "signin.html";
-});
-</script>
-
+    <script>
+    document.getElementById("signupForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        alert("Sign up successful!");
+        window.location.href = "signin.html";
+    });
+    </script>
+    <script src="../javascript/header_footer_script.js"></script>
 </body>
 </html>
-
