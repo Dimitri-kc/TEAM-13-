@@ -40,17 +40,15 @@ width: 100%;
 .item {
 background: #FFFFFF;
 height: 100%;
+padding-bottom: 1px;
 width: 250px;
-padding: 15px;
+padding: 10px;
 border-radius: 10px;
 display: flex;
 flex-direction: column;
 align-items: flex-start;
 border: 1px solid #ddd;
 cursor: pointer;
-padding-bottom: 15px;
-padding-right: 15px;
-padding-left: 15px;
 
 }
 /* image */
