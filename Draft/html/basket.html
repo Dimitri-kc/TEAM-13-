@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/header_footer_style.css">
 
     <link rel="stylesheet" href="../css/basket.css">
+
 </head>
 <body>
 
@@ -57,16 +58,21 @@
 
             <div class="basket-items">
 
-                <div class="basket-item">
+                <div class="basket-item" data-price="295">
                     <img src="../images/basket-images/sofa.jpg" alt="Sofa" class="item-image">
 
                     <div class="item-details">
-                        <h3 class="item-name">Modern Beige Sofa</h3>
+                        <h3 class="item-name">Venice Cream Sofa</h3>
                         <p class="price">£295</p>
-                        <p class="qty">Quantity: 1</p>
+                        <!-- <p class="qty">Quantity: 1</p> -->
+                         <div class="quant-controls">
+                            <button class="minus">-</button>
+                             <span class="quant-number">1</span>
+                              <button class="plus">+</button>
+                         
                     </div>
                 </div>
-
+                </div>
 
             </div>
 
@@ -91,13 +97,14 @@
                 <p>On the next page you’ll be asked to log in or sign up if
                 this is your first time, so you can confirm as a guest.</p>
                  <button class="checkout-btn" onclick="window.location.href='checkout.html'">Checkout</button>
-
-            </div>
-
-                <div class="pay-buttons">
+                                    <div class="pay-buttons">
+                                        
                     <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
                     <img src="../images/basket-images/googlepay.png" alt="Google Pay" class="pay-btn">
                 </div>
+            </div>
+
+
 
             </aside>
 
@@ -146,5 +153,7 @@
         </div>
     </footer>
     <script src="../javascript/header_footer_script.js"></script>
+    <script src="../javascript/basket-quantity.js"></script>
+
 </body>
 </html>
