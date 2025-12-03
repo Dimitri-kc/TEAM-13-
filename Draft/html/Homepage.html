@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    
+    <link rel="stylesheet" href="../css/header_footer_style.css">
+
+    <link rel="stylesheet" href="../css/homepage-css/homepage.css">
+    <link rel="stylesheet" href="../css/homepage-css/homepage-about.css">
+    <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <button class="menu-btn" id="menu-toggle-btn">
+                <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img"> 
+            </button>
+
+            <div class="logo-wrapper">
+                <a href="homepage.html">
+                    <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
+                </a>
+            </div>
+
+            <div class="header-actions">
+                <a href="favourites.html">
+                    <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
+                </a>
+                <a href="signin.html">
+                    <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
+                </a>
+                <a href="basket.html">
+                    <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+                </a>
+            </div>
+        </div>
+
+        <nav class="dropdown-panel" id="dropdown-nav">
+            <ul class="nav-links">
+                <li><a href="livingroom.html">Living Room</a></li>
+                <li><a href="bathroom.html">Bathroom</a></li>
+                <li><a href="bedroom.html">Bedroom</a></li>
+                <li><a href="office.html">Office</a></li>
+                <li><a href="kitchen.html">Kitchen</a></li>
+                <li class="nav-divider"><a href="signin.html">My Account</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="row">
+        <a class="category living" href="livingroom.html">
+            <div class="title-box">LIVING ROOM</div> 
+            <div class="image-box">
+                <img src="../images/homepage-images/livingroom.png" alt="Living Room">
+            </div>
+        </a>
+
+        <a class="category kitchen" href="kitchen.html">
+            <div class="title-box">KITCHEN</div>
+            <div class="image-box">
+                <img src="../images/homepage-images/kitchen.png" alt="Kitchen">
+            </div>
+        </a>
+
+        <a class="category office" href="office.html">
+            <div class="title-box">OFFICE</div>
+            <div class="image-box">
+                <img src="../images/homepage-images/office_final.png" alt="Office">
+            </div>
+        </a>
+
+        <a class="category bathroom" href="bathroom.html">
+            <div class="title-box">BATHROOM</div>
+            <div class="image-box">
+                <img src="../images/homepage-images/bathroom.png" alt="Bathroom">
+            </div>
+        </a>
+
+        <a class="category bedroom" href="bedroom.html">
+            <div class="title-box">BEDROOM</div>
+            <div class="image-box">
+                <img src="../images/homepage-images/bedroom.png" alt="Bedroom">
+            </div>
+        </a>
+    </div>
+
+    <div class="split-page">
+        <div class="left">
+            <h1>ABOUT US</h1>
+            <p>
+            Welcome to Loft & Living, your new breakthrough in
+            modern and contemporary living. We are building a brand
+            dedicated to putting the customer first, offering products that
+            showcase a fresh way of living without breaking the bank.
+            Our goal is to help you transform houses into comfortable,
+            calm, and inspiring homes. We meticulously select every
+            item for both its practicality and beautiful design. From the
+            living room to the bedroom, and home offices to kitchens, Loft
+            & Living is here to help you create your dream space.
+            Established in 2025, our commitment since day one has been
+            to focus on exceptional design and quality while maintaining
+            an affordable cost.
+            </p>
+        </div>
+
+        <div class="right">
+            <div class="image-place">
+                <img src="../images/about-logo.png" alt="logo">
+            </div>
+        </div>
+    </div>
+    
+    <header id="main-header">
+        <h1 class="title">CONTACT US</h1>
+    </header>
+
+    <main>
+        <section>
+            <div class="form-container">
+            <form id="contact-form" action="https://formspree.io/f/xzzlerol" method="POST">
+                <input type="text" name="_gotcha" style="display: none;" />
+            <!-- <form id="contact-form" onsubmit="return validateForm()"> -->
+                <label for="first">Name<span class="required">*</span> </label>
+                <input type="text" id="first" name="first" placeholder="First Name" required>
+                
+                <label for="last">Surname<span class="required">*</span></label>
+                <input type="text" id="last" name="last" placeholder="Last Name" required>
+                
+                <label for="email">Email<span class="required">*</span></label>
+                <input type="email" id="email" name="email" placeholder="Email Address" required>
+
+                <label for="order">Order Number (If Applicable)</label>
+                <input type="text" id="order" name="order" placeholder="Enter Order Number">
+
+                <label for="message">Message<span class="required">*</span></label>
+                <textarea id="message" name="message" placeholder="Enter message or enquiry" required></textarea>
+
+                <button type="submit">Submit</button>
+            </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-section social-links">
+                <a href="#">
+                    <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon">
+                </a>
+                <a href="#">
+                    <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon">
+                </a>
+            </div>
+
+            <div class="footer-section">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="homepage.html">Homepage</a></li>
+                    <li><a href="signin.html">My Account</a></li>
+                    <li><a href="favourites.html">Favourites</a></li>
+                    <li><a href="basket.html">Basket</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="livingroom.html">Living Room</a></li>
+                    <li><a href="office.html">Offices</a></li>
+                    <li><a href="kitchen.html">Kitchen</a></li>
+                    <li><a href="bathroom.html">Bathrooms</a></li>
+                    <li><a href="bedroom.html">Bedrooms</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>More...</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <script src="../javascript/header_footer_script.js"></script>
+</body>
+</html>

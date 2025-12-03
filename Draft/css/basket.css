@@ -1,0 +1,214 @@
+/* --- GENERAL PAGE LAYOUT --- */
+@import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+body {
+    font-family: "Ibarra Real Nova", serif;
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+}
+
+.basket-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.basket-title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 48px;
+    margin: 20px 0 10px;
+    margin-bottom: 30px;
+}
+
+/* --- MAIN GRID LAYOUT --- */
+.basket-layout {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 40px;
+}
+
+/* --- LEFT — ITEMS --- */
+.basket-item {
+    display: flex;
+    gap: 20px;
+    border: 1px solid #D9D9D9;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.item-image {
+    width: 260px;
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+}
+.item-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.item-details h3 {
+    margin: 0 0 10px;
+    font-size: 22px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 5px 0;
+}
+
+/* --- RIGHT COLUMN — SUMMARY BOXES --- */
+.basket-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Discount Section */
+.discount-box {
+    border: 1px solid #D9D9D9;
+    border-radius: 12px;
+    padding: 20px;
+    background: #ffffff;
+}
+
+
+.discount-box label {
+    display: block;
+    margin-top: 5px;          /* pushes label upward */
+    margin-bottom: 15px;      /* adds space before input */
+    font-size: 16px;
+}
+
+
+.discount-box input {
+    width: 100%;              /* forces input inside the container */
+    box-sizing: border-box;   /* prevents overflow */
+    padding: 12px 15px;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;      /* space before button */
+}
+
+
+
+/* .discount-box,
+
+.discount-box {
+    border: 1px solid #D9D9D9;
+    border-radius: 12px;
+    padding: 20px;
+    background: white;
+}
+
+
+
+.discount-btn {
+    padding: 10px 20px;
+    border: 1px solid #000;
+    background: #000;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+/* --- SUMMARY INFO --- */
+.summary-box h3,
+.checkout-info h3 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.summary-box,
+.checkout-info {
+    border: 1px solid #D9D9D9;   /* light grey border */
+    border-radius: 12px;         /* rounded corners */
+    padding: 20px;               /* spacing inside box */
+    background: white;           /* white background */
+    margin-top: 10px;            /* space between boxes */
+}
+
+
+
+.checkout-btn {
+    margin-top: 15px;
+    padding: 12px;
+    width: 100%;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+
+.pay-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;             /* space between buttons */
+    margin-top: 10px;
+}
+
+
+
+.pay-btn {
+    width: 200px;          /* identical width */
+    height: 50px;          /* identical height */
+    object-fit: contain;   /* keeps the logo clean */
+    border-radius: 30px;   /* pill shape */
+    cursor: pointer;
+}
+
+/* Apple Pay: black button, no border */
+.pay-btn.apple {
+    border: none;
+    background: none;      /* prevents white box */
+}
+
+/* Google Pay: white button with grey border */
+.pay-btn.google {
+    border: 1px solid #D9D9D9;
+    background: white;
+}
+
+
+/* --- RESPONSIVE FOR MOBILE --- */
+@media (max-width: 900px) {
+    .basket-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.quant-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;   
+    margin-top: 10px;
+}
+
+.quant-controls button.minus, .quant-controls button.plus {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #D9D9D9;
+    border-radius: 6px;
+    background: #f5f5f5;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.quant-controls button.minus:hover, .quant-controls button.plus:hover {
+    background: #e0e0e0;
+}
+
+.quant-number {
+    min-width: 24px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}

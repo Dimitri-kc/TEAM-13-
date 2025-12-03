@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | LOFT & LIVING</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/header_footer_style.css">
+    <link rel="stylesheet" href="../css/signup.style.css">
+
+    <style>
+        body {
+            display: flex !important;
+            flex-direction: column !important;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #EAE8E4; 
+        }
+
+        .site-header {
+            position: relative !important; 
+            width: 100%;
+            background-color: #ffffff !important;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-inner {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        main.form-container {
+            margin-top: 50px !important;
+            margin-bottom: 50px !important;
+            flex: 1;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .site-footer {
+            margin-top: auto;
+            width: 100%;
+            background-color: #fff;
+        }
+
+        .input-group {
+            margin-bottom: 25px !important; 
+            display: flex;
+            flex-direction: column; 
+        }
+
+        .input-label {
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .error-popup {
+            display: none;
+            margin-top: 10px;
+            padding: 10px 12px;
+            border-radius: 4px;
+            background-color: #ffffff;
+            border: 1px solid #f0b400;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+            font-size: 0.9rem;
+            line-height: 1.4;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .error-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 3px;
+            background-color: #ffa000;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .error-text {
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body class="page-background">
+
+    <header class="site-header">
+        <div class="header-inner">
+            <button class="menu-btn" id="menu-toggle-btn">
+                <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img"> 
+            </button>
+            <div class="logo-wrapper">
+                <a href="homepage.html">
+                    <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
+                </a>
+            </div>
+            <div class="header-actions">
+                <a href="favourites.html">
+                    <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
+                </a>
+                <a href="signin.html">
+                    <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
+                </a>
+                <a href="basket.html">
+                    <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+                </a>
+            </div>
+        </div>
+
+        <nav class="dropdown-panel" id="dropdown-nav">
+            <ul class="nav-links">
+                <li><a href="livingroom.html">Living Room</a></li>
+                <li><a href="bathroom.html">Bathroom</a></li>
+                <li><a href="bedroom.html">Bedroom</a></li>
+                <li><a href="office.html">Office</a></li>
+                <li><a href="kitchen.html">Kitchen</a></li>
+                <li class="nav-divider"><a href="signin.html">My Account</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="form-container">
+        <section class="form-box">
+            <h1 class="form-title">NEW HERE?</h1>
+
+            <form id="signupForm">
+
+                <div class="input-group">
+                    <span class="input-label">Name</span>
+                    <input type="text" id="name" required>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-label">Surname</span>
+                    <input type="text" id="surname" required>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-label">Email</span>
+                    <input type="email" id="email" required>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-label">Address</span>
+                    <input type="text" id="address" required>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-label">Password</span>
+                    <input type="password" id="password" required>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-label">Confirm Password</span>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+
+                <div id="errorPopup" class="error-popup">
+                    <div class="error-icon">!</div>
+                    <div class="error-text" id="errorText"></div>
+                </div>
+
+                <button type="submit" class="main-button">Submit</button>
+
+                <p class="form-footer">
+                    Already have an account?
+                    <a href="signin.html" class="link-primary">Sign in</a>
+                </p>
+
+            </form>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-section social-links">
+                <a href="#"><img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon"></a>
+                <a href="#"><img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon"></a>
+            </div>
+            <div class="footer-section">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="homepage.html">Homepage</a></li>
+                    <li><a href="signin.html">My Account</a></li>
+                    <li><a href="favourites.html">Favourites</a></li>
+                    <li><a href="basket.html">Basket</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="livingroom.html">Living Room</a></li>
+                    <li><a href="office.html">Offices</a></li>
+                    <li><a href="kitchen.html">Kitchen</a></li>
+                    <li><a href="bathroom.html">Bathrooms</a></li>
+                    <li><a href="bedroom.html">Bedrooms</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>More...</h4>
+                <ul><li><a href="contact.html">Contact Us</a></li><li><a href="about.html">About Us</a></li></ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    const form = document.getElementById("signupForm");
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function showPopup(message) {
+        const popup = document.getElementById("errorPopup");
+        const text = document.getElementById("errorText");
+        text.textContent = message;
+        popup.style.display = "flex";
+    }
+
+    function hidePopup() {
+        const popup = document.getElementById("errorPopup");
+        popup.style.display = "none";
+    }
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        hidePopup();
+
+        const nameField = document.getElementById("name");
+        const surnameField = document.getElementById("surname");
+        const emailField = document.getElementById("email");
+        const addressField = document.getElementById("address");
+        const passwordField = document.getElementById("password");
+        const confirmPasswordField = document.getElementById("confirmPassword");
+
+        const name = nameField.value.trim();
+        const surname = surnameField.value.trim();
+        const email = emailField.value.trim();
+        const address = addressField.value.trim();
+        const password = passwordField.value;
+        const confirmPassword = confirmPasswordField.value;
+
+        if (!name) {
+            showPopup("Please enter your name.");
+            nameField.focus();
+            return;
+        }
+
+        if (!surname) {
+            showPopup("Please enter your surname.");
+            surnameField.focus();
+            return;
+        }
+
+        if (!email || !emailPattern.test(email)) {
+            showPopup("Please enter a valid email address.");
+            emailField.focus();
+            return;
+        }
+
+        if (!address) {
+            showPopup("Please enter your address.");
+            addressField.focus();
+            return;
+        }
+
+        if (!password) {
+            showPopup("Please enter a password.");
+            passwordField.focus();
+            return;
+        }
+
+        if (!confirmPassword) {
+            showPopup("Please confirm your password.");
+            confirmPasswordField.focus();
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            showPopup("Passwords do not match.");
+            confirmPasswordField.focus();
+            return;
+        }
+
+        const hasMinLength = password.length >= 8;
+        const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
+
+        if (!hasMinLength || !hasSpecialChar) {
+            showPopup("Password must be at least 8 characters and include a special character.");
+            passwordField.focus();
+            return;
+        }
+
+        
+        alert("Sign up successful!");
+        window.location.href = "signin.html";
+    });
+    </script>
+
+    <script src="../javascript/header_footer_script.js"></script>
+</body>
+</html>
