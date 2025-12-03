@@ -41,7 +41,7 @@ class ReturnsModel {
         return $stmt->execute();
     }
 
-    // Delete return
+    // Delete returns
     public function delete($id) {
         $stmt = $this->conn->prepare("DELETE FROM returns WHERE return_ID = ?");
         $stmt->bind_param("i", $id);
@@ -50,3 +50,4 @@ class ReturnsModel {
 }
 
 ?>
+
