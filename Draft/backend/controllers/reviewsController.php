@@ -2,7 +2,7 @@
 // Review controller – handles review actions
 header('Content-Type: application/json');
 
-include_once __DIR__ . '/../models/reviewModel.php';
+include_once __DIR__ . '/../models/reviewsModel.php';
 
 $reviewModel = new ReviewModel();
 $action = $_GET['action'] ?? '';
