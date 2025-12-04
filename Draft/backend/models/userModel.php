@@ -3,14 +3,14 @@ class User {
     private $conn;
 
     public function __construct() {
-        include_once __DIR__ . '/../config/db_connect.php'; // Adjusted path to include db_connect.php
+        require_once __DIR__ . '/../config/db_connect.php'; // Adjusted path to include db_connect.php
         $this->conn = $dbConnection;
     }
     
     //registration method to register new user & insert details into database user table
-    public function register($name, $surname, $email, $address, $hashedPassword, $role) {
-        $stmt = $this->conn->prepare("INSERT INTO users (name, surname, email, password, address, role) VALUES (?, ?, ?, ?, ?, ?)"); // Using prepared statements to prevent SQL injection
-        return $stmt->execute([$name, $surname, $email, $hashedPassword, $address, $role]); //execute the statement with user details
+    public function register($name, $surname, $email, $phone, $address, $hashedPassword, $role) {
+        $stmt = $this->conn->prepare("INSERT INTO users (name, surname, email, phone, password, address, role) VALUES (?, ?, ?, ?, ?, ?)"); // Using prepared statements to prevent SQL injection
+        return $stmt->execute([$name, $surname, $email, $phone, $hashedPassword, $address, $role]); //execute the statement with user details
     }
     
     //login method to authenticate user

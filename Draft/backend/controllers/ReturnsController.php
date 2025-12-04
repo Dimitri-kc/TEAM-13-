@@ -17,7 +17,7 @@ return $model->getById($id);
 }
 
 // Create a new return request
-public function store($orderID, $userID, $productID, $reason, $status) {
+public function store($orderID, $userID, $reason, $status) {
 $model = new ReturnsModel();
 return $model->create($orderID, $userID, $productID, $reason, $status);
 }

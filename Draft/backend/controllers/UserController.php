@@ -2,9 +2,9 @@
 
 session_start();
 //include database and user models so controller can connect to database and use user methods
-include_once '../../config/db_connect.php';//state file path
-include_once '../../models/userModel.php';
-include_once '../../services/basketFunctions.php'; //for merger basket functions
+require_once '../../config/db_connect.php';//state file path
+require_once '../../models/userModel.php';
+require_once '../../services/basketFunctions.php'; //for merger basket functions
 
 //Handling user-related operations
 class UserController {
@@ -16,6 +16,7 @@ class UserController {
         $name = trim($_POST['name'] ?? ''); //trims to remove whitespace
         $surname = trim($_POST['surname'] ?? '');
         $email = trim($_POST['email'] ?? '');
+        $phone = trim($_POST['phone'] ?? '');
         $address = trim($_POST['address'] ?? '');
         $password = trim($_POST['password'] ?? '');
 
@@ -32,7 +33,7 @@ class UserController {
 
         //default role is customer
         $role = 'customer';
-        $registrationSuccess = $userModel->register($name, $surname, $email, $address, $hashedPassword, $role);
+        $registrationSuccess = $userModel->register($name, $surname, $email, $phone, $address, $hashedPassword, $role);
         if ($registrationSuccess) {
             echo "Registration successful. You can now <a href='/signin.html'>login</a>.";//hyperlink to login page after registration
             } else {
@@ -68,9 +69,10 @@ class UserController {
             header('Location: /Homepage.html');
             exit;
         } else {
-            echo "Login failed. Invalid email or password.";
+            echo  'Login failed. Invalid email or password.';
         }
     }
 }
-//removed the echo before header redirection to avoid header errors
+//TO DO:
+//json for linking successful backend implementation if javascript coded to frontend
 ?>
