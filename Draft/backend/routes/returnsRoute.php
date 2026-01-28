@@ -32,7 +32,7 @@ $items_to_return = isset($_POST['return_items']) ? $_POST['return_items'] : [];
 if ($orderID && $userID && !empty($items_to_return)) {
                                 
 // Create the main return header record
-$new_return_id = $returnsController->store($orderID, $userID, $reason, $status_default);
+$new_return_id = $ReturnController->store($orderID, $userID, $reason, $status_default);
                                 
 if ($new_return_id) {
                                         
