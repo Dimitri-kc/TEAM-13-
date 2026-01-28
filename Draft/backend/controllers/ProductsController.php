@@ -2,7 +2,7 @@
 
 include_once 'backend/models/ProductsModel.php';
 
-class ProductController {
+class ProductsController {
 
 // Get ALL products
 public function index() {
