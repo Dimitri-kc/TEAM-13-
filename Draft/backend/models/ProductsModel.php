@@ -26,7 +26,7 @@ return $stmt->get_result()->fetch_assoc();
 
 //get products by category name
 public function getProductsByCategory($category) {
-    $stmt = $this->conn->prepare("SELECT * FROM  products where category = ?");
+    $stmt = $this->conn->prepare("SELECT * FROM  products where category_id = ?");
     $stmt->bind_param("s", $category);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -36,7 +36,7 @@ public function getProductsByCategory($category) {
 // Create product
 public function create($name, $description, $price, $stock, $category, $image) {
 $stmt = $this->conn->prepare(
-    "INSERT INTO products (name, description, price, stock, category, image_path) 
+    "INSERT INTO products (name, description, price, stock, category_id, image) 
     VALUES (?, ?, ?, ?, ?, ?)"
 );
 $stmt->bind_param("ssdiss", $name, $description, $price, $stock, $category, $image);
@@ -47,7 +47,7 @@ return $stmt->execute();
 public function update($id, $name, $description, $price, $stock, $category, $image) {
     $stmt = $this->conn->prepare(
         "UPDATE products 
-            SET name=?, description=?, price=?, stock=?, category=?, image_path=? 
+            SET name=?, description=?, price=?, stock=?, category_id=?, image =? 
             WHERE product_id=?"
 );
 $stmt->bind_param("ssdissi", $name, $description, $price, $stock, $category, $image, $id);
