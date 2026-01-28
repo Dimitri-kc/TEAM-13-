@@ -33,6 +33,10 @@ public function destroy($id) {
 $model = new ProductModel();
 return $model->delete($id);
 }
+//Get product via category name
+public function getByCategory($category) {
+    return $this->productModel->getProductsByCategory($category);
+}
 }
 
 ?>
