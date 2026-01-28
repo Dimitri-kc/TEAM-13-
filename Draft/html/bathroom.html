@@ -1,242 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bathroom | LOFT & LIVING</title>
 
+  <!-- Header / Footer -->
   <link rel="stylesheet" href="../css/header_footer_style.css">
-  <link rel="stylesheet" href="../css/bathroom.css">
+
+  <!-- Living Room CSS (REQUIRED – correct files) -->
+  <link rel="stylesheet" href="../css/livingroom-css/livingroom-base.css">
+  <link rel="stylesheet" href="../css/livingroom-css/livingroom-structure.css">
+  <link rel="stylesheet" href="../css/livingroom-css/livingroom-reusable.css">
+  <link rel="stylesheet" href="../css/livingroom-css/livingroom-page.css">
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <button class="menu-btn" id="menu-toggle-btn">
-        <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
-      </button>
 
-      <div class="logo-wrapper">
-        <a href="Homepage.html">
-          <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
-        </a>
-      </div>
+<header class="site-header">
+  <div class="header-inner">
+    <button class="menu-btn" id="menu-toggle-btn">
+      <img src="../images/header_footer_images/icon-menu.png" class="ui-icon" alt="Menu">
+    </button>
 
-      <div class="header-actions">
-        <a href="favourites.html">
-          <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
-        </a>
-        <a href="signin.html">
-          <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
-        </a>
-        <a href="basket.html">
-          <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
-        </a>
-      </div>
+    <div class="logo-wrapper">
+      <a href="Homepage.html">
+        <img src="../images/header_footer_images/logo.png" class="main-logo" alt="LOFT & LIVING">
+      </a>
     </div>
 
-    <nav class="dropdown-panel" id="dropdown-nav">
-      <ul class="nav-links">
-        <li><a href="Categories.html">Living Room</a></li>
-        <li><a href="bathroom.html">Bathroom</a></li>
-        <li><a href="bedroom.html">Bedroom</a></li>
-        <li><a href="office.html">Office</a></li>
-        <li><a href="kitchen.html">Kitchen</a></li>
-        <li class="nav-divider"><a href="login.html">My Account</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <a href="../html/homepage.html" style="text-decoration: none; color: inherit;">
-    <h1 class="page-title">BATHROOM</h1>
-  </a>
-
-  <div class="content-wrap">
-    <aside class="side-bar">
-      <h3>Keywords</h3>
-      <div class="tags">
-        <input type="checkbox" id="grey-tag" value="grey" hidden>
-        <label for="grey-tag" class="tag">Grey <span class="X">✕</span></label>
-
-        <input type="checkbox" id="modern-tag" value="modern" hidden>
-        <label for="modern-tag" class="tag">Modern <span class="X">✕</span></label>
-
-        <input type="checkbox" id="soft-tag" value="soft" hidden>
-        <label for="soft-tag" class="tag">Soft <span class="X">✕</span></label>
-      </div>
-
-      <h3>Categories</h3>
-      <label><input type="checkbox" class="category-filter" value="mirrors"> Mirrors</label>
-      <label><input type="checkbox" class="category-filter" value="cabinets"> Cabinets</label>
-      <label><input type="checkbox" class="category-filter" value="shower curtains"> Shower Curtains</label>
-      <label><input type="checkbox" class="category-filter" value="towels"> Towels</label>
-      <label><input type="checkbox" class="category-filter" value="bathmats"> Bathmats</label>
-
-      <h3>Price</h3>
-      <div class="price-wrap">
-        <label for="price" id="price-num">£0-150</label>
-        <div class="price-slider">
-          <input type="range" id="price-min" min="0" max="150" value="0">
-          <input type="range" id="price-max" min="0" max="150" value="150">
-          <div class="track"></div>
-          <div class="range" id="range-display"></div>
-        </div>
-      </div>
-
-      <h3>Colour</h3>
-      <label><input type="checkbox" class="colour-filter" value="beige"> Beige</label>
-      <label><input type="checkbox" class="colour-filter" value="grey"> Grey</label>
-      <label><input type="checkbox" class="colour-filter" value="green"> Green</label>
-      <label><input type="checkbox" class="colour-filter" value="gold"> Gold</label>
-      <label><input type="checkbox" class="colour-filter" value="black"> Black</label>
-
-      <h3>Size</h3>
-      <label><input type="checkbox" class="size-filter" value="one-size"> ONE SIZE</label>
-    </aside>
-
-    <div class="main">
-      <div class="top-bar">
-        <input class="search" type="text" placeholder="Search..">
-        <button class="btn-New button-sort">New</button>
-        <button class="btn-PriceAsc button-sort">Price ascending</button>
-        <button class="btn-PriceDesc button-sort">Price descending</button>
-        <button class="btn-Rating button-sort">Rating</button>
-      </div>
-
-      <p id="no-results" style="display:none; font-size:20px; margin-top: 15px; padding-left: 48px; font-weight: 500;">
-        Uh oh! No products matched your search.
-      </p>
-
-      <div class="product-grid">
-
-        <!-- Mirror -->
-        <div class="item"
-             data-keywords="modern gold mirror"
-             data-category="mirrors"
-             data-colour="gold"
-             data-new="true"
-             data-price="35"
-             data-rating="5"
-             onclick="location.href='../html/mirror.html'">
-          <img src="../images/bathroom-images/mirror.png" alt="Round Wall Mirror">
-          <div class="product-text">
-            <h2>Round Wall Mirror</h2>
-            <p>£35</p>
-          </div>
-        </div>
-
-        <!-- Cabinet -->
-        <div class="item"
-             data-keywords="modern cabinet storage wood"
-             data-category="cabinets"
-             data-colour="beige"
-             data-new="true"
-             data-price="69"
-             data-rating="4"
-             onclick="location.href='../html/cabinet.html'">
-          <img src="../images/bathroom-images/cabinet.png" alt="Oak Bathroom Cabinet">
-          <div class="product-text">
-            <h2>Oak Bathroom Cabinet</h2>
-            <p>£69</p>
-          </div>
-        </div>
-
-        <!-- Shower Curtains -->
-        <div class="item"
-             data-keywords="shower curtains modern black"
-             data-category="shower curtains"
-             data-colour="black"
-             data-new="true"
-             data-price="12"
-             data-rating="4"
-             onclick="location.href='../html/shower-curtains.html'">
-          <img src="../images/bathroom-images/curtains.png" alt="Grid Shower Curtains">
-          <div class="product-text">
-            <h2>Grid Shower Curtains</h2>
-            <p>£12</p>
-          </div>
-        </div>
-
-        <!-- Towels -->
-        <div class="item"
-             data-keywords="soft towels green"
-             data-category="towels"
-             data-colour="green"
-             data-new="false"
-             data-price="18"
-             data-rating="5"
-             onclick="location.href='../html/towels.html'">
-          <img src="../images/bathroom-images/towel.png" alt="Soft Cotton Towels Set">
-          <div class="product-text">
-            <h2>Soft Cotton Towels Set</h2>
-            <p>£18</p>
-          </div>
-        </div>
-
-        <!-- Bathmat -->
-        <div class="item"
-             data-keywords="bathmat grey soft"
-             data-category="bathmats"
-             data-colour="grey"
-             data-new="false"
-             data-price="14"
-             data-rating="4"
-             onclick="location.href='../html/bathmat.html'">
-          <img src="../images/bathroom-images/bathmat.png" alt="Textured Bathmat">
-          <div class="product-text">
-            <h2>Textured Bathmat</h2>
-            <p>£14</p>
-          </div>
-        </div>
-
-      </div>
+    <div class="header-actions">
+      <a href="favourites.html"><img src="../images/header_footer_images/icon-heart.png" class="ui-icon"></a>
+      <a href="signin.html"><img src="../images/header_footer_images/icon-user.png" class="ui-icon"></a>
+      <a href="basket.html"><img src="../images/header_footer_images/icon-basket.png" class="ui-icon"></a>
     </div>
   </div>
 
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-section social-links">
-        <a href="#">
-          <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon">
-        </a>
-        <a href="#">
-          <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon">
-        </a>
-      </div>
+  <nav class="dropdown-panel" id="dropdown-nav">
+    <ul class="nav-links">
+      <li><a href="livingroom.html">Living Room</a></li>
+      <li><a href="bathroom.html">Bathroom</a></li>
+      <li><a href="bedroom.html">Bedroom</a></li>
+      <li><a href="office.html">Office</a></li>
+      <li><a href="kitchen.html">Kitchen</a></li>
+      <li class="nav-divider"><a href="login.html">My Account</a></li>
+    </ul>
+  </nav>
+</header>
 
-      <div class="footer-section">
-        <h4>Navigation</h4>
-        <ul>
-          <li><a href="Homepage.html">Homepage</a></li>
-          <li><a href="login.html">My Account</a></li>
-          <li><a href="favourites.html">Favourites</a></li>
-          <li><a href="Basket.html">Basket</a></li>
-        </ul>
-      </div>
+<h1 style="text-align:center; margin:20px 0;">BATHROOM</h1>
 
-      <div class="footer-section">
-        <h4>Categories</h4>
-        <ul>
-          <li><a href="livi.html">Living Room</a></li>
-          <li><a href="office.html">Offices</a></li>
-          <li><a href="kitchen.html">Kitchen</a></li>
-          <li><a href="bathroom.html">Bathrooms</a></li>
-          <li><a href="bedroom.html">Bedrooms</a></li>
-        </ul>
-      </div>
+<div class="content-wrap">
 
-      <div class="footer-section">
-        <h4>More...</h4>
-        <ul>
-          <li><a href="contact.html">Contact Us</a></li>
-          <li><a href="About.html">About Us</a></li>
-        </ul>
-      </div>
+  <!-- SIDEBAR -->
+  <aside class="side-bar">
+
+    <h3>Keywords</h3>
+    <div class="tags">
+      <input type="checkbox" id="grey-tag" hidden>
+      <label for="grey-tag" class="tag">Grey <span class="X">✕</span></label>
+
+      <input type="checkbox" id="modern-tag" hidden>
+      <label for="modern-tag" class="tag">Modern <span class="X">✕</span></label>
+
+      <input type="checkbox" id="soft-tag" hidden>
+      <label for="soft-tag" class="tag">Soft <span class="X">✕</span></label>
     </div>
-  </footer>
 
-  <!-- Keep your existing JS if it's the filtering/sorting logic -->
-  <script type="module" src="../javascript/livingroom-js/main.js"></script>
-  <script src="../javascript/header_footer_script.js"></script>
+    <h3>Categories</h3>
+    <label><input type="checkbox" class="category-filter" value="mirrors"> Mirrors</label>
+    <label><input type="checkbox" class="category-filter" value="cabinets"> Cabinets</label>
+    <label><input type="checkbox" class="category-filter" value="shower curtains"> Shower Curtains</label>
+    <label><input type="checkbox" class="category-filter" value="towels"> Towels</label>
+    <label><input type="checkbox" class="category-filter" value="bathmats"> Bathmats</label>
+
+    <h3>Price</h3>
+    <label id="price-num">£0 - 150</label>
+    <div class="price-slider">
+      <input type="range" id="price-min" min="0" max="150" value="0">
+      <input type="range" id="price-max" min="0" max="150" value="150">
+      <div class="track"></div>
+      <div class="range" id="range-display"></div>
+    </div>
+
+    <h3>Colour</h3>
+    <label><input type="checkbox" class="colour-filter" value="beige"> Beige</label>
+    <label><input type="checkbox" class="colour-filter" value="grey"> Grey</label>
+    <label><input type="checkbox" class="colour-filter" value="green"> Green</label>
+    <label><input type="checkbox" class="colour-filter" value="gold"> Gold</label>
+    <label><input type="checkbox" class="colour-filter" value="black"> Black</label>
+
+    <h3>Size</h3>
+    <label><input type="checkbox" class="size-filter" value="one-size"> ONE SIZE</label>
+
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="top-bar">
+      <input class="search" type="text" placeholder="Search..">
+      <button class="button-sort btn-New">New</button>
+      <button class="button-sort btn-PriceAsc">Price ascending</button>
+      <button class="button-sort btn-PriceDesc">Price descending</button>
+      <button class="button-sort btn-Rating">Rating</button>
+    </div>
+
+    <div class="product-grid">
+
+      <div class="item" data-keywords="modern gold mirror" data-category="mirrors" data-colour="gold" data-price="35">
+        <img src="../images/bathroom-images/mirror.png" alt="">
+        <div class="product-text">
+          <h2>Round Wall Mirror</h2>
+          <p>£35</p>
+        </div>
+      </div>
+
+      <div class="item" data-keywords="modern cabinet wood" data-category="cabinets" data-colour="beige" data-price="69">
+        <img src="../images/bathroom-images/cabinets.png" alt="">
+        <div class="product-text">
+          <h2>  Classic Bathroom Cabinet</h2>
+          <p>£69</p>
+        </div>
+      </div>
+
+      <div class="item" data-keywords="shower curtains black" data-category="shower curtains" data-colour="black" data-price="12">
+        <img src="../images/bathroom-images/curtains.png" alt="">
+        <div class="product-text">
+          <h2>Grid Shower Curtains</h2>
+          <p>£12</p>
+        </div>
+      </div>
+
+      <div class="item" data-keywords="soft towels green" data-category="towels" data-colour="green" data-price="18">
+        <img src="../images/bathroom-images/towel.png" alt="">
+        <div class="product-text">
+          <h2>Soft Cotton Towels Set</h2>
+          <p>£18</p>
+        </div>
+      </div>
+
+      <div class="item" data-keywords="bathmat grey soft" data-category="bathmats" data-colour="grey" data-price="14">
+        <img src="../images/bathroom-images/bathmat.png" alt="">
+        <div class="product-text">
+          <h2>Textured Bathmat</h2>
+          <p>£14</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</div> </div> <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-section social-links">
+                <a href="#">
+                    <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon">
+                </a>
+                <a href="#">
+                    <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon">
+                </a>
+            </div>
+
+            <div class="footer-section">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="Homepage.html">Homepage</a></li>
+                    <li><a href="login.html">My Account</a></li>
+                    <li><a href="favourites.html">Favourites</a></li>
+                    <li><a href="Basket.html">Basket</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="livi.html">Living Room</a></li>
+                    <li><a href="office.html">Offices</a></li>
+                    <li><a href="kitchen.html">Kitchen</a></li>
+                    <li><a href="bathroom.html">Bathrooms</a></li>
+                    <li><a href="bedroom.html">Bedrooms</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>More...</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="About.html">About Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <script type="module" src="../javascript/livingroom-js/main.js"></script>
+    <script src="../javascript/header_footer_script.js"></script>
 </body>
 </html>
