@@ -27,7 +27,7 @@ return $stmt->get_result()->fetch_assoc();
 //get products by category name
 public function getProductsByCategory($category) {
     $stmt = $this->conn->prepare("SELECT * FROM  products where category_id = ?");
-    $stmt->bind_param("s", $category);
+    $stmt->bind_param("i", $category);
     $stmt->execute();
     $result = $stmt->get_result();
     return $result->fetch_all(MYSQLI_ASSOC);
@@ -47,7 +47,7 @@ public function getProductsByCategory($category) {
 // }
 
 // Create product
-public function create($name, $description, $price, $stock, $category, $image) {
+public function create($name, $description, $price, $stock, $category_id, $image) {
 $stmt = $this->conn->prepare(
     "INSERT INTO products (name, description, price, stock, category_id, image) 
     VALUES (?, ?, ?, ?, ?, ?)"
