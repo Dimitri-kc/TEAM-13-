@@ -52,18 +52,18 @@ $stmt = $this->conn->prepare(
     "INSERT INTO products (name, description, price, stock, category_id, image) 
     VALUES (?, ?, ?, ?, ?, ?)"
 );
-$stmt->bind_param("ssdiss", $name, $description, $price, $stock, $category, $image);
+$stmt->bind_param("ssdiss", $name, $description, $price, $stock, $category_id, $image);
 return $stmt->execute();
 }
 
 // Update product
-public function update($id, $name, $description, $price, $stock, $category, $image) {
+public function update($id, $name, $description, $price, $stock, $category_id, $image) {
     $stmt = $this->conn->prepare(
         "UPDATE products 
             SET name=?, description=?, price=?, stock=?, category_id=?, image =? 
             WHERE product_id=?"
 );
-$stmt->bind_param("ssdissi", $name, $description, $price, $stock, $category, $image, $id);
+$stmt->bind_param("ssdissi", $name, $description, $price, $stock, $category_id, $image, $id);
 return $stmt->execute();
 }
 
