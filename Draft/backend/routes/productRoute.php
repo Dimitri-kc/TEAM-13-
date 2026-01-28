@@ -35,7 +35,8 @@ break;
 // Get a single product 
 case 'show': 
 if ($id) {
-$product = $productController->show($id);
+echo json_encode($productController->show($id));
+exit;
 // Output or render view with $product data
 } else {
 echo "Error: Product ID is required to view details.";
