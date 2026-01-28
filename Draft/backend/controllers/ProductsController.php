@@ -35,7 +35,8 @@ return $model->delete($id);
 }
 //Get product via category name
 public function getByCategory($category) {
-    return $this->productModel->getProductsByCategory($category);
+    $model = new ProductsModel();
+    return $this->ProductsModel->getProductsByCategory($category);
 }
 }
 
