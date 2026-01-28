@@ -1,6 +1,6 @@
 <?php
 
-class ProductsModel {
+class ProductModel {
 
 private $conn;
 
