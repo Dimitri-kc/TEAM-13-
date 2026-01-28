@@ -24,6 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 $action = isset($_GET['action']) ? htmlspecialchars($_GET['action']) : '';
 $id = getProductId();
 
+$category = isset($_GET['category']) ? htmlspecialchars($_GET['category']) : null;
+
 switch ($action) {
 // Get all products 
 case 'index': 
@@ -31,6 +33,14 @@ case 'index':
     exit;
 // Output or render view with $products data
 break;
+
+case 'byCategory':
+    if ($category) {
+        echo json_encode($productController->getByCategory($category));
+    } else {
+        echo json_encode([]);
+    }
+    exit;
 
 // Get a single product 
 case 'show': 
