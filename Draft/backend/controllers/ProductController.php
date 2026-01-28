@@ -1,6 +1,6 @@
 <?php
 
-include_once 'backend/models/productModel.php';
+include_once __DIR__ . '/../models/ProductModel.php';
 
 class ProductController {
 
@@ -32,6 +32,11 @@ return $model->update($id, $name, $desc, $price, $stock, $category, $image);
 public function destroy($id) {
 $model = new ProductModel();
 return $model->delete($id);
+}
+//Get product via category name
+public function getByCategory($category) {
+    $model = new ProductModel();
+    return $model ->getProductsByCategory($category);
 }
 }
 

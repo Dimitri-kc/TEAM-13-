@@ -8,7 +8,7 @@ if (session_status() == PHP_SESSION_NONE) {
 include_once '../../controllers/ReturnsController.php';
 include_once '../../controllers/ReturnItemController.php';
 
-$returnsController = new ReturnsController();
+$returnsController = new ReturnController();
 $returnItemController = new ReturnItemController(); 
 
 // (getProductId helper function remains the same)
