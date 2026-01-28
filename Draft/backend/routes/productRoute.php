@@ -1,5 +1,6 @@
 <?php
 // Product routes - handles HTTP requests for product management
+header("Content-Type: application/json");
 
 // Start session if not already started 
 if (session_status() == PHP_SESSION_NONE) {
