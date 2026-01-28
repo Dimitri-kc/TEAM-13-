@@ -33,6 +33,19 @@ public function getProductsByCategory($category) {
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
+// public function getProductsByCategoryName($category_name) {
+// $stmt = $this->conn->prepare("
+// SELECT p.*
+// FROM products p
+// JOIN categories c ON p.category_id = c.category_id
+// WHERE c.name = ?
+// ");
+// $stmt->bind_param("s", $category_name);
+// $stmt->execute();
+// $result = $stmt->get_result();
+// return $result->fetch_all(MYSQLI_ASSOC);
+// }
+
 // Create product
 public function create($name, $description, $price, $stock, $category, $image) {
 $stmt = $this->conn->prepare(
