@@ -2,7 +2,7 @@
 
 include_once 'backend/models/returnsModel.php';
 
-class ReturnsController {
+class ReturnController {
 
     // Get ALL returns
 public function index() {
