@@ -32,7 +32,6 @@ public function getProductsByCategory($category) {
     $result = $stmt->get_result();
     return $result->fetch_all(MYSQLI_ASSOC);
 }
-}
 
 // Create product
 public function create($name, $description, $price, $stock, $category, $image) {
@@ -40,7 +39,7 @@ $stmt = $this->conn->prepare(
     "INSERT INTO products (name, description, price, stock, category, image_path) 
     VALUES (?, ?, ?, ?, ?, ?)"
 );
-$stmt->bind_param("ssdiis", $name, $description, $price, $stock, $category, $image);
+$stmt->bind_param("ssdiss", $name, $description, $price, $stock, $category, $image);
 return $stmt->execute();
 }
 
@@ -51,7 +50,7 @@ public function update($id, $name, $description, $price, $stock, $category, $ima
             SET name=?, description=?, price=?, stock=?, category=?, image_path=? 
             WHERE product_ID=?"
 );
-$stmt->bind_param("ssdiisi", $name, $description, $price, $stock, $category, $image, $id);
+$stmt->bind_param("ssdissi", $name, $description, $price, $stock, $category, $image, $id);
 return $stmt->execute();
 }
 
