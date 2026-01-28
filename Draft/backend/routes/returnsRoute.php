@@ -8,8 +8,8 @@ if (session_status() == PHP_SESSION_NONE) {
 include_once '../../controllers/ReturnsController.php';
 include_once '../../controllers/ReturnItemController.php';
 
-$returnsController = new ReturnController();
-$returnItemController = new ReturnItemController(); 
+$ReturnController = new ReturnController();
+$ReturnItemController = new ReturnItemController();
 
 // (getProductId helper function remains the same)
 
@@ -32,7 +32,7 @@ $items_to_return = isset($_POST['return_items']) ? $_POST['return_items'] : [];
 if ($orderID && $userID && !empty($items_to_return)) {
                                 
 // Create the main return header record
-$new_return_id = $returnsController->store($orderID, $userID, $reason, $status_default);
+$new_return_id = $ReturnController->store($orderID, $userID, $reason, $productID, $status_default);
                                 
 if ($new_return_id) {
                                         
