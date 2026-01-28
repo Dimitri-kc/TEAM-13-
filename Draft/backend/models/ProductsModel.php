@@ -27,7 +27,7 @@ return $stmt->get_result()->fetch_assoc();
 //get products by category name
 public function getProductsByCategory($category) {
     $stmt = $this->conn->prepare("SELECT * FROM  products where category_id = ?");
-    $stmt->bind_param("s", $category);
+    $stmt->bind_param("i", $category);
     $stmt->execute();
     $result = $stmt->get_result();
     return $result->fetch_all(MYSQLI_ASSOC);
