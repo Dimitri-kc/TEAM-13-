@@ -19,7 +19,7 @@ return $result->fetch_all(MYSQLI_ASSOC);
 // Get ONE product
 public function getById($id) {
 $stmt = $this->conn->prepare("SELECT * FROM products WHERE product_ID = ?");
-$stmt->bind_param("i", $id);
+$stmt->bind_param("ssdiis", $name, $description, $price, $stock, $category, $image);
 $stmt->execute();
 return $stmt->get_result()->fetch_assoc();
 }
@@ -30,8 +30,8 @@ public function getProductsByCategory($category) {
     $stmt->bind_param("s", $category);
     $stmt->execute();
     $result = $stmt->get_result();
-
-    return $result->fetch_all(MYSQL_ASSOC);
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
 }
 
 // Create product
