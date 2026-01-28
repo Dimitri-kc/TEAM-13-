@@ -18,7 +18,7 @@ return $result->fetch_all(MYSQLI_ASSOC);
 
 // Get ONE product
 public function getById($id) {
-$stmt = $this->conn->prepare("SELECT * FROM products WHERE product_ID = ?");
+$stmt = $this->conn->prepare("SELECT * FROM products WHERE product_id= ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 return $stmt->get_result()->fetch_assoc();
@@ -48,7 +48,7 @@ public function update($id, $name, $description, $price, $stock, $category, $ima
     $stmt = $this->conn->prepare(
         "UPDATE products 
             SET name=?, description=?, price=?, stock=?, category=?, image_path=? 
-            WHERE product_ID=?"
+            WHERE product_id=?"
 );
 $stmt->bind_param("ssdissi", $name, $description, $price, $stock, $category, $image, $id);
 return $stmt->execute();
@@ -56,7 +56,7 @@ return $stmt->execute();
 
 // Delete product
 public function delete($id) {
-$stmt = $this->conn->prepare("DELETE FROM products WHERE product_ID = ?");
+$stmt = $this->conn->prepare("DELETE FROM products WHERE product_id = ?");
 $stmt->bind_param("i", $id);
 return $stmt->execute();
 }
