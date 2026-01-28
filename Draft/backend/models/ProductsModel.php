@@ -47,7 +47,7 @@ public function getProductsByCategory($category) {
 // }
 
 // Create product
-public function create($name, $description, $price, $stock, $category, $image) {
+public function create($name, $description, $price, $stock, $category_id, $image) {
 $stmt = $this->conn->prepare(
     "INSERT INTO products (name, description, price, stock, category_id, image) 
     VALUES (?, ?, ?, ?, ?, ?)"
