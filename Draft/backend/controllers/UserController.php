@@ -1,6 +1,7 @@
 <?php //Controller: Users 
+//header('Content-Type: application/json');
+//session_start();
 
-session_start();
 //include database and user models so controller can connect to database and use user methods
 require_once '../../config/db_connect.php';//state file path
 require_once '../../models/userModel.php';
@@ -10,20 +11,24 @@ require_once '../../services/basketFunctions.php'; //for merger basket functions
 class UserController {
 
     //method to register a new user
-    public function register() {
+    public function register($data) {
 
         //collecting data from signup.hmtl form
-        $name = trim($_POST['name'] ?? ''); //trims to remove whitespace
-        $surname = trim($_POST['surname'] ?? '');
-        $email = trim($_POST['email'] ?? '');
-        $phone = trim($_POST['phone'] ?? '');
-        $address = trim($_POST['address'] ?? '');
-        $password = trim($_POST['password'] ?? '');
+        $name = trim($data['name'] ?? ''); //trims to remove whitespace
+        $surname = trim($data['surname'] ?? '');
+        $email = trim($data['email'] ?? '');
+        $phone = trim($data['phone'] ?? '');
+        $address = trim($data['address'] ?? '');
+        $password = trim($data['password'] ?? '');
 
         //register user - basic validation
         if (!$name || !$surname || !$email || !$address || !$password) {
-            echo "All fields are required.";
-            exit;
+            echo json_encode([
+                "success" => false,
+                "message" => "All fields are required."
+            ]);
+            //echo "All fields are required.";
+            return;
         }
 
         //hashed password for security
@@ -34,28 +39,44 @@ class UserController {
         //default role is customer
         $role = 'customer';
         $registrationSuccess = $userModel->register($name, $surname, $email, $phone, $address, $hashedPassword, $role);
-        if ($registrationSuccess) {
-            echo "Registration successful. You can now <a href='/signin.html'>login</a>.";//hyperlink to login page after registration
+        if ($registrationSuccess) { //if registration successful
+            echo json_encode([
+            "success" => true,    
+            "message" => "Registration successful. You can now login."
+            ]);
+            return;
+        } else { //if registration failure
+            echo json_encode([
+                "success" => false,
+                "message" => "Registration failed. Please try again."
+            ]);
+            return;
+        }
+            /*echo "Registration successful. You can now <a href='/signin.html'>login</a>.";//hyperlink to login page after registration
             } else {
                 echo "Registration failed. Please try again.";
-            }
+            }*/
  }
 
     //method to login a user  
-    public function login() {
-    
-        $email = trim($_POST['email'] ?? '');
-        $password = trim($_POST['password'] ?? ''); //remove spaces
+    public function login($data) {
+
+        $email = trim($data['email'] ?? '');
+        $password = trim($data['password'] ?? ''); //remove spaces
 
         //login user - basic validation
         if (!$email || !$password) {
-            echo "All fields are required.";
-            exit;
+            echo json_encode([
+            "success" => false,
+            "message" => "All fields are required."
+            ]);
+            //echo "All fields are required.";
+            return;
         }
 
         //create User model instance
         $userModel = new User(); //for database connection via user model User.php holding user class
-        $user = $userModel->login($email, $password);
+        $user = $userModel->login($email); //fetches user data by email only
         
         //verify password
         if ($user && password_verify($password, $user['password'])) {
@@ -66,13 +87,29 @@ class UserController {
             //merge guest basket with user basket upon login
             mergeBaskets($user['user_ID']);
             //redirect to homepage after login
-            header('Location: /Homepage.html');
-            exit;
+            //header('Location: /Homepage.html');
+            echo json_encode([ //successful login json response
+                "success" => true,
+                "user" => [
+                    "user_ID" => $user['user_ID'],
+                    "name" => $user['name'],
+                    "role" => $user['role']
+                ]
+            ]);
+            return;
         } else {
-            echo  'Login failed. Invalid email or password.';
+            echo json_encode([ //failed login json response
+            "success" => false,
+            "message" => "Login failed. Invalid email or password."
+            ]);
+            return;
+            //echo  'Login failed. Invalid email or password.';
         }
     }
 }
 //TO DO:
 //json for linking successful backend implementation if javascript coded to frontend
+//added json encoding for registration and login response
+//logout handled in routes via session destruction
+//changed POST data retrieval in register method to paramerer $data for better error handling/testing to make fetch-compatbile
 ?>
