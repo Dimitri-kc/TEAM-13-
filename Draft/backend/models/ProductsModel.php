@@ -24,6 +24,16 @@ $stmt->execute();
 return $stmt->get_result()->fetch_assoc();
 }
 
+//get products by category name
+public function getProductsByCategory($category) {
+    $stmt = $this->conn->prepare("SELECT * FROM  products where category = ?");
+    $stmt->bind_param("s", $category);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    return $result->fetch_all(MYSQL_ASSOC);
+}
+
 // Create product
 public function create($name, $description, $price, $stock, $category, $image) {
 $stmt = $this->conn->prepare(
