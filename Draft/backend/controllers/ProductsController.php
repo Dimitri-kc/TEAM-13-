@@ -1,6 +1,6 @@
 <?php
 
-include_once 'backend/models/productModel.php';
+include_once 'backend/models/ProductsModel.php';
 
 class ProductController {
 
