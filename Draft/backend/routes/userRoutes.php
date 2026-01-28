@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 session_start();
 include_once '../../controllers/userController.php'; //path to userController.php
 
-$userController = new UserController(); //nstance of usercontroller
+$userController = new UserController(); //instance of usercontroller
 //Define routes for user-related actions
 //if POST request then check action (register/login/logout)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
