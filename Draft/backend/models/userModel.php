@@ -9,9 +9,18 @@ class User {
     
     //registration method to register new user & insert details into database user table
     public function register($name, $surname, $email, $phone, $address, $hashedPassword, $role) {
-        $stmt = $this->conn->prepare("INSERT INTO users (name, surname, email, phone, password, address, role) VALUES (?, ?, ?, ?, ?, ?)"); // Using prepared statements to prevent SQL injection
+        try { //check if email already exists in database
+            $check = $this->conn->prepare("SELECT user_ID FROM users WHERE email = ?");
+            $check->execute([$email]);
+            if ($check->fetch()) {
+                return false; //if email exits, registration fails
+            }
+        $stmt = $this->conn->prepare("INSERT INTO users (name, surname, email, phone, password, address, role) VALUES (?, ?, ?, ?, ?, ?,  ?)"); // Using prepared statements to prevent SQL injection
         return $stmt->execute([$name, $surname, $email, $phone, $hashedPassword, $address, $role]); //execute the statement with user details
-    }
+        } catch (PDOException $e) {
+            return false; //log error
+        }
+    } 
     
     //login method to authenticate user
     public function login($email) {
