@@ -27,7 +27,8 @@ $id = getProductId();
 switch ($action) {
 // Get all products 
 case 'index': 
-$products = $productController->index();
+    echo json_encode($productController->index());
+    exit;
 // Output or render view with $products data
 break;
 
