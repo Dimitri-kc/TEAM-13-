@@ -20,5 +20,7 @@ class User {
         return $stmt->fetch(PDO::FETCH_ASSOC); //fetch user data
         //password verification handled in controller
     }
+
+    //logout handled in routes via session destruction
 }
 ?>
