@@ -3,10 +3,56 @@ import "./sorting.js";
 import "./price-range.js";
 import "./search.js";
 
-//added for fetch API
-import { loadProducts } from "./products.js";
+const categoryName = document.body.dataset.category; // "livingroom"
+const productGrid = document.querySelector(".product-grid");
 
-document.addEventListener("DOMContentLoaded", () => {
-    const category = document.body.dataset.category;
-    loadProducts(category);
-});
+// fetch(`https://cs2team13.cs2410-web01pvm.aston.ac.uk/TEAM-13-/Draft/backend/routes/productRoute.php?action=byCategory&category=${categoryName}`)
+fetch(`https://cs2team13.cs2410-web01pvm.aston.ac.uk/TEAM-13-/Draft/backend/routes/productRoute.php?action=byCategory&category=${categoryName}`)
+  .then(res => res.json())
+  .then(products => {
+    console.log(products); // check if data is coming through
+    if (products.length === 0) {
+      document.getElementById("no-results").style.display = "block";
+    } else {
+      products.forEach(product => {
+        const div = document.createElement("div");
+        div.classList.add("item");
+        div.setAttribute("data-category", product.category_id);
+        div.innerHTML = `
+          <img src="../images/livingroom-images/${product.image}" alt="${product.name}">
+          <div class="product-text">
+            <h2>${product.name}</h2>
+            <p>£${product.price}</p>
+          </div>
+        `;
+        productGrid.appendChild(div);
+      });
+    }
+  })
+  .catch(err => {
+    console.error("Error fetching products:", err);
+  });
+
+//   const categoryId = 1; // Living Room
+
+// fetch(`https://cs2team13.cs2410-web01pvm.aston.ac.uk/TEAM-13-/Draft/backend/routes/productRoute.php?action=byCategory&category=${categoryId}`)
+//   .then(res => res.json())
+//   .then(products => console.log(products))
+//   .catch(err => console.error(err));
+
+
+  //added for fetch API
+// import { loadProducts } from "./products.js";
+
+// document.addEventListener("DOMContentLoaded", () => {
+//     const category = document.body.dataset.category;
+//     loadProducts(category);
+// });
+
+// const category = document.body.dataset.category;
+
+// fetchfetch(`../backend/routes/productRoute.php?action=byCategory&category=${category}`)
+//   .then(res => res.json())
+//   .then(products => {
+//     console.log(products);
+//   });
