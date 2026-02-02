@@ -44,5 +44,6 @@ class User {
         //password verification handled in controller
     }
     //logout handled in routes via session destruction
+    //used sqli prepared statements to prevent SQL injection and match with database
 }
 ?>

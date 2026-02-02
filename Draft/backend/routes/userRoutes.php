@@ -15,11 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //switch to call relevant controller method based on action in .html
     switch ($action) {
         case 'register': //register action called from signup.html
-            $userController->register();//call register method in controller
+            $userController->register($data);//call register method in controller
             break;
 
         case 'login': //login action called from signin.html
-            $userController->login(); //calling login method in controller
+            $userController->login($data); //calling login method in controller
             break;
 
         default:
