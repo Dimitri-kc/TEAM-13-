@@ -58,17 +58,79 @@ fetch(`https://cs2team13.cs2410-web01pvm.aston.ac.uk/TEAM-13-/Draft/backend/rout
 //   });
 
 //Basket icon section
-const basketButtons = document.querySelectorAll('.add-to-basket');
-const basketCountEl = document.getElementById('basket-count');
-let basketCount = 0;
+// const basketButtons = document.querySelectorAll('.add-to-basket');
+// const basketCountEl = document.getElementById('basket-count');
+// let basketCount = 0;
 
-// Add click to each button
+// // Add click to each button
+// basketButtons.forEach(button => {
+//     button.addEventListener('click', (event) => {
+//         event.stopPropagation(); 
+//         basketCount++;
+//         basketCountEl.textContent = basketCount;
+//         //changes button style to show it was added
+//         button.classList.add('added');
+//     });
+// });
+// // ---------- BASKET PERSISTENCE ----------
+// const basketCountEl = document.getElementById('basket-count');
+
+// // Load basket count from localStorage, default to 0
+// let basketCount = parseInt(localStorage.getItem('basketCount')) || 0;
+// if (basketCountEl) basketCountEl.textContent = basketCount;
+
+// // Function to add a product to the basket
+// function addToBasket(button) {
+//     basketCount++;
+//     basketCountEl.textContent = basketCount;
+
+//     // Save count to localStorage
+//     localStorage.setItem('basketCount', basketCount);
+
+//     // optional: add visual feedback
+//     button.classList.add('added');
+// }
+
+// // ---------- ADD EVENT LISTENERS ----------
+// const basketButtons = document.querySelectorAll('.add-to-basket');
+
+// basketButtons.forEach(button => {
+//     button.addEventListener('click', (event) => {
+//         event.stopPropagation(); // prevent going to product page
+//         addToBasket(button);
+//     });
+// });
+
+const basketCountEl = document.getElementById('basket-count');
+//page loads at 0
+let basketCount = 0;
+if (basketCountEl) basketCountEl.textContent = basketCount;
+
+// Basket modals
+const basketModal = document.getElementById('basket-modal');
+const continueBtn = document.getElementById('continue-shopping');
+const goToBasketBtn = document.getElementById('go-to-basket');
+
+
+function addToBasket(button) {
+    basketCount++;
+    basketCountEl.textContent = basketCount;
+    button.classList.add('added'); 
+
+    basketModal.style.display ='flex';
+}
+continueBtn.addEventListener('click', () => {
+    basketModal.style.display = 'none'; // closes modal
+});
+
+goToBasketBtn.addEventListener('click', () => {
+    window.location.href = 'basket.html'; // redirects to the basket
+});
+
+const basketButtons = document.querySelectorAll('.add-to-basket');
 basketButtons.forEach(button => {
     button.addEventListener('click', (event) => {
-        event.stopPropagation(); 
-        basketCount++;
-        basketCountEl.textContent = basketCount;
-        //changes button style to show it was added
-        button.classList.add('added');
+        event.stopPropagation(); // prevent navigating to product page
+        addToBasket(button);
     });
 });

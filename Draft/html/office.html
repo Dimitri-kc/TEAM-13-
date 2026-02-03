@@ -33,8 +33,9 @@
                 <a href="signin.html">
                     <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
                 </a>
-                <a href="basket.html">
+                <a href="basket.html" class="basket-icon">
                     <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+                    <span id="basket-count">0</span>
                 </a>
             </div>
         </div>
@@ -223,5 +224,16 @@
     </footer>
     <script type="module" src="../javascript/livingroom-js/main.js"></script>
     <script src="../javascript/header_footer_script.js"></script>
+    <!-- Basket -->
+    <div id="basket-modal" class="basket-modal">
+    <div class="basket-modal-content">
+        <p>Item added to basket!</p>
+        <div class="basket-modal-buttons">
+            <button id="go-to-basket">Proceed to Basket</button>
+            <button id="continue-shopping">Continue Shopping</button>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>
