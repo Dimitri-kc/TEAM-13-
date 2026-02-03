@@ -56,3 +56,19 @@ fetch(`https://cs2team13.cs2410-web01pvm.aston.ac.uk/TEAM-13-/Draft/backend/rout
 //   .then(products => {
 //     console.log(products);
 //   });
+
+//Basket icon section
+const basketButtons = document.querySelectorAll('.add-to-basket');
+const basketCountEl = document.getElementById('basket-count');
+let basketCount = 0;
+
+// Add click to each button
+basketButtons.forEach(button => {
+    button.addEventListener('click', (event) => {
+        event.stopPropagation(); 
+        basketCount++;
+        basketCountEl.textContent = basketCount;
+        //changes button style to show it was added
+        button.classList.add('added');
+    });
+});
