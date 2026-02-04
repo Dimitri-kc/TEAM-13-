@@ -3,11 +3,9 @@ import "./sorting.js";
 import "./price-range.js";
 import "./search.js";
 
-const categoryName = document.body.dataset.category; // "livingroom"
-const productGrid = document.querySelector(".product-grid");
+// Get the product grid container
+const productGrid = document.getElementById('product-grid');
 
-// const categoryId = 1; // Living Room
-// fetch(`../php/productRoute.php?action=byCategory&category=${categoryId}`)
 
 const categoryMap = {
   livingroom: 1,
@@ -18,45 +16,86 @@ const categoryMap = {
 };
 
 
-const categoryId = categoryMap[categoryName.toLowerCase()];
+const categoryName = document.body.dataset.category; // "livingroom"
+const categoryId = categoryMap[categoryName?.toLowerCase()] || 1;
+// const productGrid = document.querySelector(".product-grid");
 
-fetch(`../php/productRoute.php?action=byCategory&category=${categoryId}`)
+// Fetch products from PHP API
+async function fetchProducts() {
+    try {
+        const response = await fetch(`../backend/routes/productRoute.php?action=byCategory&category=${categoryId}`);
+        const products = await response.json();
 
-
-.then(res => res.json())
-  .then(products => {
-    console.log(products); // check if data is coming through
-    if (products.length === 0) {
-      document.getElementById("no-results").style.display = "block";
-    } else {
-      products.forEach(product => {
-        const div = document.createElement("div");
-        div.classList.add("item");
-        div.setAttribute("data-category", product.category_id);
-        div.innerHTML = `
-          <img src="${product.image}" alt="${product.name}">
-          <div class="product-text">
-            <h2>${product.name}</h2>
-            <p>£${product.price}</p>
-          </div>
-        `;
-        productGrid.appendChild(div);
-      });
+        renderProducts(products);
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        productGrid.innerHTML = '<p>Failed to load products.</p>';
     }
-  })
-  .catch(err => {
-    console.error("Error fetching products:", err);
+}
+
+// fetch(`../php/productRoute.php?action=byCategory&category=${categoryId}`)
+// .then(res => res.json())
+//   .then(products => {
+//     console.log(products); // check if data is coming through
+//     if (products.length === 0) {
+//       document.getElementById("no-results").style.display = "block";
+//     } else {
+//       products.forEach(product => {
+//         const div = document.createElement("div");
+//         div.classList.add("item");
+//         div.setAttribute("data-category", product.category_id);
+//         div.innerHTML = `
+//           <img src="${product.image}" alt="${product.name}">
+//           <div class="product-text">
+//             <h2>${product.name}</h2>
+//             <p>£${product.price}</p>
+//           </div>
+//         `;
+//         productGrid.appendChild(div);
+//       });
+//     }
+//   })
+//   .catch(err => {
+//     console.error("Error fetching products:", err);
+//   });
+
+
+  // Render products into the grid
+function renderProducts(products) {
+    productGrid.innerHTML = '';
+
+    if (!products.length) {
+        productGrid.innerHTML = '<p id="no-results">Uh oh! No products available.</p>';
+        return;
+    }
+
+      products.forEach(product => {
+    const div = document.createElement('div');
+    div.classList.add('item');
+    div.setAttribute("data-category", product.category_id);
+    div.innerHTML = `
+    <img src="${product.image}" alt="${product.name}">
+      <div class="product-text">
+        <h2>${product.name}</h2>
+        <p>£${product.price}</p>
+      </div>
+      <button class="add-to-basket" aria-label="Add to basket">
+        <img src="../images/add-button-icon.png" alt="Add to basket">
+      </button>
+    `;
+    productGrid.appendChild(div);
+            // Added basket event listener after button is created
+        const button = div.querySelector('.add-to-basket');
+        button.addEventListener('click', (event) => {
+            event.stopPropagation();
+            addToBasket(button);
+        });
   });
 
+}
 
-
-
-
-
-
-
-
-
+// Initial fetch
+fetchProducts();
 
 
 
@@ -158,8 +197,8 @@ fetch(`../php/productRoute.php?action=byCategory&category=${categoryId}`)
 // });
 
 const basketCountEl = document.getElementById('basket-count');
-//page loads at 0
-let basketCount = 0;
+
+let basketCount = parseInt(localStorage.getItem('basketCount')) || 0;
 if (basketCountEl) basketCountEl.textContent = basketCount;
 
 // Basket modals
@@ -174,19 +213,33 @@ function addToBasket(button) {
     button.classList.add('added'); 
 
     basketModal.style.display ='flex';
+    localStorage.setItem('basketCount', basketCount);
+
 }
-continueBtn.addEventListener('click', () => {
-    basketModal.style.display = 'none'; // closes modal
-});
+// continueBtn.addEventListener('click', () => {
+//     basketModal.style.display = 'none'; // closes modal
+// });
 
-goToBasketBtn.addEventListener('click', () => {
-    window.location.href = 'basket.html'; // redirects to the basket
-});
-
-const basketButtons = document.querySelectorAll('.add-to-basket');
-basketButtons.forEach(button => {
-    button.addEventListener('click', (event) => {
-        event.stopPropagation(); // prevent navigating to product page
-        addToBasket(button);
+// goToBasketBtn.addEventListener('click', () => {
+//     window.location.href = 'basket.html'; // redirects to the basket
+// });
+if (continueBtn) {
+    continueBtn.addEventListener('click', () => {
+        basketModal.style.display = 'none'; // closes modal
     });
-});
+}
+
+if (goToBasketBtn) {
+    goToBasketBtn.addEventListener('click', () => {
+        window.location.href = 'basket.html'; // redirects to the basket
+    });
+}
+
+
+// const basketButtons = document.querySelectorAll('.add-to-basket');
+// basketButtons.forEach(button => {
+//     button.addEventListener('click', (event) => {
+//         event.stopPropagation(); // prevent navigating to product page
+//         addToBasket(button);
+//     });
+// });
