@@ -33,8 +33,9 @@
                 <a href="signin.html">
                     <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
                 </a>
-                <a href="basket.html">
+                <a href="basket.html" class="basket-icon">
                     <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+                    <span id="basket-count">0</span>
                 </a>
             </div>
         </div>
@@ -121,6 +122,10 @@
                         <h2> Oval Stainless Steel Pedal Bin</h2>
                         <p> £20 </p>
                     </div>
+                               <!--Add to basket button -->
+            <button class="add-to-basket" aria-label="Add to basket">
+                    <img src="../images/add-button-icon.png" alt="Add to basket">
+                </button>
                 </div>
 
                 <div class="item" data-keywords="grey smart modern dining chairs" data-category="dining chairs" data-colour="beige"
@@ -130,6 +135,10 @@
                         <h2> Oakwood Set of 2 Dining Chairs</h2>
                         <p> £30 </p>
                     </div>
+                               <!--Add to basket button -->
+            <button class="add-to-basket" aria-label="Add to basket">
+                    <img src="../images/add-button-icon.png" alt="Add to basket">
+                </button>
                 </div>
 
                 <div class="item" data-keywords="gold cutlery" data-category="cutlery" data-colour="gold"
@@ -139,6 +148,10 @@
                         <h2> Gold 18 Piece Cutlery Set</h2>
                         <p> £20 </p>
                     </div>
+                               <!--Add to basket button -->
+            <button class="add-to-basket" aria-label="Add to basket">
+                    <img src="../images/add-button-icon.png" alt="Add to basket">
+                </button>
                 </div>
 
                 <div class="item" data-keywords="modern pans" data-category="pans" data-colour="grey"
@@ -148,6 +161,10 @@
                         <h2> Stainless Steel 5 Piece Pan Set </h2>
                         <p> £50 </p>
                     </div>
+                               <!--Add to basket button -->
+            <button class="add-to-basket" aria-label="Add to basket">
+                    <img src="../images/add-button-icon.png" alt="Add to basket">
+                </button>
                 </div>
 
                 <div class="item" data-keywords="smart modern dining table" data-category="dining tables" data-colour="beige"
@@ -157,6 +174,10 @@
                         <h2> Stone Dining Table </h2>
                         <p> £150 </p>
                     </div>
+                               <!--Add to basket button -->
+            <button class="add-to-basket" aria-label="Add to basket">
+                    <img src="../images/add-button-icon.png" alt="Add to basket">
+                </button>
                 </div>
             </div>
 
@@ -203,5 +224,17 @@
     </footer>
     <script type="module" src="../javascript/livingroom-js/main.js"></script>
     <script src="../javascript/header_footer_script.js"></script>
+
+    <!-- Basket -->
+    <div id="basket-modal" class="basket-modal">
+    <div class="basket-modal-content">
+        <p>Item added to basket!</p>
+        <div class="basket-modal-buttons">
+            <button id="go-to-basket">Proceed to Basket</button>
+            <button id="continue-shopping">Continue Shopping</button>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>

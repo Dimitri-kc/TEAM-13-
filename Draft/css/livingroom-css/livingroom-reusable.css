@@ -38,6 +38,7 @@ width: 100%;
 
 /* container of each image */
 .item {
+position: relative;
 background: #FFFFFF;
 height: 100%;
 padding-bottom: 1px;
@@ -51,7 +52,66 @@ align-items: flex-start;
 border: 1px solid #ddd;
 cursor: pointer;
 
+   transition: 
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease,
+        border-color 0.25s ease;
+
 }
+
+ .item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+    /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
+
+}
+
+.add-to-basket {
+    position: absolute;
+    bottom: 12px;   /* distance from bottom */
+    right: 12px;    /* distance from right */
+    background-color: #fffffff4; /* optional: dark neutral */
+    border: none;
+    border-radius: 50%; /* circular button */
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    padding: 0;
+}
+/* icon for the basket */
+.add-to-basket img {
+    width: 15px;  
+    height: 15px;
+}
+
+/* hover effect for basket */
+.add-to-basket:hover {
+    background-color: #d2d2c1; 
+    transform: scale(1.1);
+}
+/* basket icon that updates in the header  */
+.basket-icon {
+    position: relative;
+    display: inline-block;
+}
+/* basket product counter  */
+#basket-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff6f61;  
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 6px;
+}
+
 /* image */
 .product-grid img {
     width: 100%;

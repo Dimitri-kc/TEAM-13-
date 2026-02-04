@@ -32,7 +32,9 @@
     <div class="header-actions">
       <a href="favourites.html"><img src="../images/header_footer_images/icon-heart.png" class="ui-icon" alt="Favourites"></a>
       <a href="signin.html"><img src="../images/header_footer_images/icon-user.png" class="ui-icon" alt="My Account"></a>
-      <a href="basket.html"><img src="../images/header_footer_images/icon-basket.png" class="ui-icon" alt="Basket"></a>
+      <a href="basket.html" class="basket-icon"><img src="../images/header_footer_images/icon-basket.png" class="ui-icon" alt="Basket">
+      <span id="basket-count">0</span>
+    </a>
     </div>
   </div>
 
@@ -125,6 +127,10 @@
           <h2>Upholstered Bed Frame</h2>
           <p>£499</p>
         </div>
+                   <!--Add to basket button -->
+            <button class="add-to-basket" aria-label="Add to basket">
+                    <img src="../images/add-button-icon.png" alt="Add to basket">
+                </button>
       </div>
 
       <!-- Mattress -->
@@ -141,6 +147,10 @@
           <h2>Luxury Comfort Mattress</h2>
           <p>£269</p>
         </div>
+                   <!--Add to basket button -->
+            <button class="add-to-basket" aria-label="Add to basket">
+                    <img src="../images/add-button-icon.png" alt="Add to basket">
+                </button>
       </div>
 
       <!-- Duvet -->
@@ -157,6 +167,10 @@
           <h2>All-Season Duvet</h2>
           <p>£25</p>
         </div>
+                   <!--Add to basket button -->
+            <button class="add-to-basket" aria-label="Add to basket">
+                    <img src="../images/add-button-icon.png" alt="Add to basket">
+                </button>
       </div>
 
       <!-- Pillow -->
@@ -173,6 +187,10 @@
           <h2>Medium Support Pillow</h2>
           <p>£20</p>
         </div>
+                   <!--Add to basket button -->
+            <button class="add-to-basket" aria-label="Add to basket">
+                    <img src="../images/add-button-icon.png" alt="Add to basket">
+                </button>
       </div>
 
       <!-- Side Table -->
@@ -189,6 +207,10 @@
           <h2>Modern Side Table</h2>
           <p>£79</p>
         </div>
+                   <!--Add to basket button -->
+            <button class="add-to-basket" aria-label="Add to basket">
+                    <img src="../images/add-button-icon.png" alt="Add to basket">
+                </button>
       </div>
 
     </div>
@@ -243,5 +265,16 @@
 <script type="module" src="../javascript/livingroom-js/main.js"></script>
 <script src="../javascript/header_footer_script.js"></script>
 
+<!-- Basket -->
+    <div id="basket-modal" class="basket-modal">
+    <div class="basket-modal-content">
+        <p>Item added to basket!</p>
+        <div class="basket-modal-buttons">
+            <button id="go-to-basket">Proceed to Basket</button>
+            <button id="continue-shopping">Continue Shopping</button>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>

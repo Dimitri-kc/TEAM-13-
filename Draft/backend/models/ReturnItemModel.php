@@ -4,35 +4,45 @@ class ReturnItemModel {
     private $db;
 
 public function __construct() {
-        
-$this->db = new PDO("mysql:host=localhost;dbname=cs2team13_db", "root", "");
-}
+$this->db = new mysqli("localhost", "root", "", "cs2team13_db");
 
+if ($this->db->connect_error) {
+die("Connection failed: " . $this->db->connect_error);
+}
+}
 
 public function createMultiple($returnID, $items) {
-ry {
-$query = "INSERT INTO return_items (return_id, product_id, quantity, condition_note) 
-VALUES (:return_id, :product_id, :quantity, :condition)";
+        
+$query = "INSERT INTO return_items (return_id, product_id, quantity, condition_note) VALUES (?, ?, ?, ?)";
 $stmt = $this->db->prepare($query);
 
+if (!$stmt) return false;
+
 foreach ($items as $item) {
-$stmt->execute([
-':return_id' => $returnID,
-':product_id' => $item['product_id'],
-':quantity'   => $item['quantity'],
-':condition'  => $item['condition'] ?? 'Good'
-]);
-}
-return true;
-} catch (PDOException $e) {
+$productID = $item['product_id'];
+$quantity = $item['quantity'];
+$condition = $item['condition'] ?? 'Good';
+
+$stmt->bind_param("iiis", $returnID, $productID, $quantity, $condition);
+if (!$stmt->execute()) {
 return false;
 }
 }
+$stmt->close();
+return true;
+}
 
 public function getByReturnId($returnID) {
-$query = "SELECT * FROM return_items WHERE return_id = :return_id";
+$query = "SELECT * FROM return_items WHERE return_id = ?";
 $stmt = $this->db->prepare($query);
-$stmt->execute([':return_id' => $returnID]);
-return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+        
+if (!$stmt) return [];
+$stmt->bind_param("i", $returnID);
+$stmt->execute();
+$result = $stmt->get_result();
+$data = $result->fetch_all(MYSQLI_ASSOC);
+        
+$stmt->close();
+return $data;
+    }
 }
