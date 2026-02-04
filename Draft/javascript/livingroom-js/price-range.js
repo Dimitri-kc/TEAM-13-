@@ -2,7 +2,8 @@ const minSlider = document.getElementById("price-min");
 const maxSlider = document.getElementById("price-max");
 const label  = document.getElementById("price-num");
 const rangeDisplay = document.getElementById("range-display");
-const products =document.querySelectorAll(".item");
+// const products =document.querySelectorAll(".item");
+const products = getProductsArray();
 
 
 function fixThumbOverlap() {
@@ -18,6 +19,8 @@ function fixThumbOverlap() {
 
 
 function updatePrice() {
+  const products =document.querySelectorAll(".item");
+  
     let min = Number(minSlider.value);
     let max = Number(maxSlider.value);
 

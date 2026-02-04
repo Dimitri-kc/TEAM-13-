@@ -1,10 +1,12 @@
 const keywordCheckboxes = document.querySelectorAll(".tags input[type='checkbox']");
 const categoryCheckboxes = document.querySelectorAll(".category-filter");
 const colourCheckboxes = document.querySelectorAll(".colour-filter");
-const products = document.querySelectorAll(".item");
+// const products = document.querySelectorAll(".item");
 const productGrid = document.querySelector(".product-grid");
 
 function applyFilters() {
+  const products = document.querySelectorAll(".item");
+  
   const activeKeywords = [...keywordCheckboxes].filter(cb => cb.checked).map(cb => cb.value);
   const activeCategories = [...categoryCheckboxes].filter(cb => cb.checked).map(cb => cb.value);
   const activeColours = [...colourCheckboxes].filter(cb => cb.checked).map(cb => cb.value);

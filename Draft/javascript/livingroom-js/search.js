@@ -1,8 +1,10 @@
 const searchInput = document.querySelector(".search");
-const allProducts = document.querySelectorAll(".item");
+// const allProducts = document.querySelectorAll(".item");
 const noResults = document.getElementById("no-results");
 
 searchInput.addEventListener("input", () => {
+  const allProducts = document.querySelectorAll(".item");
+  
   const query = searchInput.value.toLowerCase().trim();
   let anyVisible = false;
 
