@@ -48,7 +48,7 @@ class UserController {
         } else { //if registration failure
             echo json_encode([
                 "success" => false,
-                "message" => "Registration failed. Please try again."
+                "message" => "Registration failed. Email already exists."
             ]);
             return;
         }
