@@ -1,43 +1,39 @@
-<?php //User routes - receives http requests frmo html and calls controller methods
+<?php //User routes - receives http requests from html and calls controller methods
+
+header('Content-Type: application/json');
 
 session_start();
-include_once '../../controllers/userController.php'; //path to userController.php
+require_once '../../controllers/userController.php'; //path to userController.php
 
 $userController = new UserController(); //instance of usercontroller
 //Define routes for user-related actions
 //if POST request then check action (register/login/logout)
-if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
-    //checking for any hidden input
-    $action = isset($_POST['action']) ? htmlspecialchars($_POST['action']) : ''; //get action from form input
-    //included the htmlspecialchars for XSS
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') { 
+    echo json_encode(["success" => false, "message" => "Invalid request method"]);
+    return;
+}    
     //switch to call relevant controller method based on action in .html
-    switch ($action) {
+    switch ($data['action']) {
         case 'register': //register action called from signup.html
-            $userController->register();//call register method in controller
+            $userController->register($data);//call register method in controller
             break;
 
         case 'login': //login action called from signin.html
-            $userController->login(); //calling login method in controller
+            $userController->login($data); //calling login method in controller
+            break;
+
+        case 'logout': //logout action called
+            session_unset(); //unset all session variables
+            session_destroy(); //destroy the session
+            echo json_encode ([ "success" => true, "message" => "Logged out successfully"]);
             break;
 
         default:
-            echo "Invalid action.";
+            echo json_encode (["success" => false, "message"=> "Invalid action."]);
             break;
     }
 
-} else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    //checking for any hidden input
-    $action = isset($_GET['action']) ? htmlspecialchars($_GET['action']) : '';
 
-    if ($action === 'logout') { //if logout action called from any page with logout link
-            session_unset(); //clear session data
-            session_destroy(); //destroy session > no logout method
-            header('Location: /Homepage.html'); //auto redirect to homepage after logout
-            exit; //ensure script stops here
-            break; //end logout case
-    }
-
-}
 //Notes:
 //htmlspecialchars used to prevent XSS attacks > converts special chars to HTML
 //signup.html path for form > ../../routes/userRoutes.php?action=register (POST) > input type hidden

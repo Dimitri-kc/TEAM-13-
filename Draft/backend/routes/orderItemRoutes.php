@@ -1,13 +1,21 @@
 <?php
-/**
- * Order Item Routes
- */
+// orderItemRoutes.php
+header('Content-Type: application/json');
+require_once __DIR__ . '/orderItemsController.php';
 
-// Set JSON response header
-header("Content-Type: application/json");
+$controller = new OrderItemsController();
+$method = $_SERVER['REQUEST_METHOD'];
 
-// Load the Order Items Controller
-// The controller handles insert, fetch, delete, and update via ?action=
-include_once __DIR__ . '/../controllers/orderItemsController.php';
-
-?>
+if ($method === 'GET') {
+    $action = $_GET['action'] ?? '';
+    if ($action === 'fetch') {
+        $controller->fetchByOrder();
+    }
+} elseif ($method === 'POST') {
+    $action = $_POST['action'] ?? '';
+    if ($action === 'insert') {
+        $controller->insert();
+    } else {
+        echo json_encode(["status" => "error", "message" => "Invalid POST action"]);
+    }
+}

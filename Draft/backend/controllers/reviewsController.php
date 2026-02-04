@@ -1,68 +1,65 @@
 <?php
-// Review controller – handles review actions
+// reviewsController.php
 header('Content-Type: application/json');
 
-include_once __DIR__ . '/../models/reviewsModel.php';
+require_once __DIR__ . '/reviewsModel.php';
 
-$reviewModel = new ReviewModel();
-$action = $_GET['action'] ?? '';
+class ReviewsController {
 
-/* Add a review */
-if ($action === 'insert') {
+    private $model;
 
-    $product_ID = $_POST['product_ID'] ?? 0;
-    $user_ID    = $_POST['user_ID'] ?? 0;
-    $rating     = $_POST['rating'] ?? 0;
-    $comment    = $_POST['comment'] ?? '';
+    public function __construct() {
+        $this->model = new Review();
+    }
 
-    $success = $reviewModel->addReview($product_ID, $user_ID, $rating, $comment);
+    // POST: add review
+    public function insert() {
 
-    echo json_encode([
-        "status"  => $success ? "success" : "error",
-        "message" => $success ? "Review added successfully" : "Failed to add review"
-    ]);
+        $product_ID = $_POST['product_ID'] ?? null;
+        $user_ID    = $_POST['user_ID'] ?? null;
+        $rating     = $_POST['rating'] ?? null;
+        $comment    = $_POST['comment'] ?? null;
+
+        if (!$product_ID || !$user_ID || !$rating || !$comment) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "Missing required fields"
+            ]);
+            return;
+        }
+
+        $success = $this->model->addReview(
+            $product_ID,
+            $user_ID,
+            $rating,
+            $comment
+        );
+
+        echo json_encode(
+            $success
+                ? ["status" => "success", "message" => "Review added"]
+                : ["status" => "error", "message" => "Failed to add review"]
+        );
+    }
+
+    // GET: fetch reviews by product
+    public function fetchByProduct() {
+
+        $product_ID = $_GET['product_ID'] ?? null;
+
+        if (!$product_ID) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "Product ID required"
+            ]);
+            return;
+        }
+
+        $reviews = $this->model->getReviewsByProduct($product_ID);
+
+        echo json_encode([
+            "status" => "success",
+            "data" => $reviews
+        ]);
+    }
 }
-
-/* Fetch reviews for a product */
-elseif ($action === 'fetch') {
-
-    $product_ID = $_GET['product_ID'] ?? 0;
-    echo json_encode($reviewModel->getReviewsByProduct($product_ID));
-}
-
-/* Delete a review */
-elseif ($action === 'delete') {
-
-    $review_ID = $_POST['review_ID'] ?? 0;
-
-    $success = $reviewModel->deleteReview($review_ID);
-
-    echo json_encode([
-        "status"  => $success ? "success" : "error",
-        "message" => $success ? "Review deleted successfully" : "Failed to delete review"
-    ]);
-}
-
-/* Update a review */
-elseif ($action === 'update') {
-
-    $review_ID = $_POST['review_ID'] ?? 0;
-    $rating    = $_POST['rating'] ?? 0;
-    $comment   = $_POST['comment'] ?? '';
-
-    $success = $reviewModel->updateReview($review_ID, $rating, $comment);
-
-    echo json_encode([
-        "status"  => $success ? "success" : "error",
-        "message" => $success ? "Review updated successfully" : "Failed to update review"
-    ]);
-}
-
-/* Invalid action */
-else {
-    echo json_encode([
-        "status"  => "error",
-        "message" => "Invalid or missing action"
-    ]);
-}
-?>

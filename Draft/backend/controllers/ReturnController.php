@@ -2,7 +2,7 @@
 
 include_once 'backend/models/returnsModel.php';
 
-class ReturnsController {
+class ReturnController {
 
     // Get ALL returns
 public function index() {
@@ -17,7 +17,7 @@ return $model->getById($id);
 }
 
 // Create a new return request
-public function store($orderID, $userID, $reason, $status) {
+public function store($orderID, $userID, $reason,$productID, $status) {
 $model = new ReturnsModel();
 return $model->create($orderID, $userID, $productID, $reason, $status);
 }

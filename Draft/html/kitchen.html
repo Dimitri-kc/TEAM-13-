@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Living Room | LOFT & LIVING</title>
+    <title>Kitchen | LOFT & LIVING</title>
 
     <link rel="stylesheet" href="../css/header_footer_style.css">
 
@@ -12,8 +12,7 @@
     <link rel="stylesheet" href="../css/livingroom-css/livingroom-reusable.css">
     <link rel="stylesheet" href="../css/livingroom-css/livingroom-page.css">
 </head>
-<!-- <body> -->
-    <body data-category="livingroom">
+<body>
 
     <header class="site-header">
         <div class="header-inner">
@@ -36,7 +35,7 @@
                 </a>
                 <a href="basket.html" class="basket-icon">
                     <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
-                       <span id="basket-count">0</span>
+                    <span id="basket-count">0</span>
                 </a>
             </div>
         </div>
@@ -53,7 +52,7 @@
         </nav>
     </header>
     <a href="../html/homepage.html" style="text-decoration: none; color: inherit;">
-        <h1 style="text-align: center; margin-top: 20px;">LIVING ROOM</h1>
+        <h1 style="text-align: center; margin-top: 20px;">KITCHEN</h1>
     </a>
 
     <div class="content-wrap">
@@ -73,28 +72,28 @@
             </div>
 
             <h3>Categories</h3>
-            <label><input type="checkbox" class="category-filter" value="sofas" > Sofas </label>
-            <label><input type="checkbox" class="category-filter" value="throw pillows" > Throw pillows</label>
-            <label><input type="checkbox" class="category-filter" value="throw blankets" > Throw blankets</label>
-            <label><input type="checkbox" class="category-filter" value="rugs" > Rugs</label>
-            <label><input type="checkbox" class="category-filter" value="console tables"> Console tables</label>
+            <label><input type="checkbox" class="category-filter" value="bins" > Bins </label>
+            <label><input type="checkbox" class="category-filter" value="dining tables" > Dining Tables </label>
+            <label><input type="checkbox" class="category-filter" value="dining chairs" > Dining Chairs</label>
+            <label><input type="checkbox" class="category-filter" value="pans" > Pots and Pans</label>
+            <label><input type="checkbox" class="category-filter" value="cutlery"> Cutlery </label>
 
             <h3> Price </h3>
             <div class="price-wrap">
-                <label for="price" id="price-num">£0-295</label>
+                <label for="price" id="price-num">£0-150</label>
                 <div class="price-slider">
-                    <input type="range" id="price-min" min="0" max="295" value="0">
-                    <input type="range" id="price-max" min="0" max="295" value="295">
+                    <input type="range" id="price-min" min="0" max="150" value="0">
+                    <input type="range" id="price-max" min="0" max="150" value="150">
                     <div class="track"></div>
                     <div class="range" id="range-display"></div>
                 </div>
             </div>
 
             <h3> Colour </h3>
-            <label><input type="checkbox" class="colour-filter" value="black"> Black </label>
             <label><input type="checkbox" class="colour-filter" value="beige"> Beige </label>
             <label><input type="checkbox" class="colour-filter" value="grey" > Grey </label>
             <label><input type="checkbox" class="colour-filter" value="green" > Green </label>
+            <label><input type="checkbox" class="colour-filter" value="gold" > Gold </label>
 
             <h3> Size </h3>
             <label><input type="checkbox" class="size-filter" value="one-size" > ONE SIZE </label>
@@ -116,73 +115,70 @@
             </p>
 
             <div class="product-grid">
-    <!--REMOVED FOR THE API  -->
-    
-                <div class="item" data-keywords="modern smart sofa" data-category="sofas" data-colour="beige"
-                data-new="true" data-price="295" data-rating="4" onclick="location.href='../html/sofa.html'">
-                    <img src="../images/livingroom-images/sofa.jpg" alt="item 1"> 
+                <div class="item" data-keywords="modern smart bin" data-category="bins" data-colour="green"
+                data-new="true" data-price="20" data-rating="4" onclick="location.href='../html/bin.html'">
+                    <img src="../images/kitchen-images/bin.webp" alt="item 1"> 
                     <div class="product-text">
-                        <h2> Venice Cream Sofa </h2>
-                        <p> £295 </p>
-                    </div>
-            <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-                </div>
-
-                <div class="item" data-keywords="grey smart modern pillow" data-category="throw pillows" data-colour="grey"
-                data-new="true" data-price="8" data-rating="3" onclick="location.href='../html/throwpillow.html'">
-                    <img src="../images/livingroom-images/throwpillow3.jpg" alt="item 2">
-                    <div class="product-text">
-                        <h2> Oxford Throw Pillow</h2>
-                        <p> £8 </p>
-                    </div>
-                                <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-                </div>
-
-                <div class="item" data-keywords="green blankets" data-category="throw blankets" data-colour="green"
-                data-new="true" data-price="20" data-rating="4"onclick="location.href='../html/throwblanket.html'">
-                    <img src="../images/livingroom-images/throwblanket3.jpg" alt="item 3">
-                    <div class="product-text">
-                        <h2> Rusted Throw Blanket</h2>
+                        <h2> Oval Stainless Steel Pedal Bin</h2>
                         <p> £20 </p>
                     </div>
-                                <!--Add to basket button -->
+                               <!--Add to basket button -->
             <button class="add-to-basket" aria-label="Add to basket">
                     <img src="../images/add-button-icon.png" alt="Add to basket">
                 </button>
                 </div>
 
-                <div class="item" data-keywords="modern rug" data-category="rugs" data-colour="black"
-                data-new="true" data-price="70" data-rating="4" onclick="location.href='../html/rug.html'">
-                    <img src="../images/livingroom-images/rug.png" alt="item 4" >
+                <div class="item" data-keywords="grey smart modern dining chairs" data-category="dining chairs" data-colour="beige"
+                data-new="true" data-price="30" data-rating="3">
+                    <img src="../images/kitchen-images/chairs.webp" alt="item 2">
                     <div class="product-text">
-                        <h2> Faux Fur Rug </h2>
-                        <p> £70 </p>
+                        <h2> Oakwood Set of 2 Dining Chairs</h2>
+                        <p> £30 </p>
                     </div>
-                                <!--Add to basket button -->
+                               <!--Add to basket button -->
             <button class="add-to-basket" aria-label="Add to basket">
                     <img src="../images/add-button-icon.png" alt="Add to basket">
                 </button>
                 </div>
 
-                <div class="item" data-keywords="smart modern console table" data-category="console tables" data-colour="green"
-                data-new="false" data-price="25" data-rating="5" onclick="location.href='../html/consoltable.html'">
-                    <img src="../images/livingroom-images/consoletable.png" alt="item 5" >
+                <div class="item" data-keywords="gold cutlery" data-category="cutlery" data-colour="gold"
+                data-new="true" data-price="20" data-rating="4">
+                    <img src="../images/kitchen-images/cutlery.webp" alt="item 3">
                     <div class="product-text">
-                        <h2> NY Console table </h2>
-                        <p> £25 </p>
+                        <h2> Gold 18 Piece Cutlery Set</h2>
+                        <p> £20 </p>
                     </div>
-                                              <!--Add to basket button -->
+                               <!--Add to basket button -->
             <button class="add-to-basket" aria-label="Add to basket">
                     <img src="../images/add-button-icon.png" alt="Add to basket">
                 </button>
                 </div>
-  
+
+                <div class="item" data-keywords="modern pans" data-category="pans" data-colour="grey"
+                data-new="true" data-price="50" data-rating="4">
+                    <img src="../images/kitchen-images/pans.webp" alt="item 4" >
+                    <div class="product-text">
+                        <h2> Stainless Steel 5 Piece Pan Set </h2>
+                        <p> £50 </p>
+                    </div>
+                               <!--Add to basket button -->
+            <button class="add-to-basket" aria-label="Add to basket">
+                    <img src="../images/add-button-icon.png" alt="Add to basket">
+                </button>
+                </div>
+
+                <div class="item" data-keywords="smart modern dining table" data-category="dining tables" data-colour="beige"
+                data-new="false" data-price="150" data-rating="5">
+                    <img src="../images/kitchen-images/table.webp" alt="item 5" >
+                    <div class="product-text">
+                        <h2> Stone Dining Table </h2>
+                        <p> £150 </p>
+                    </div>
+                               <!--Add to basket button -->
+            <button class="add-to-basket" aria-label="Add to basket">
+                    <img src="../images/add-button-icon.png" alt="Add to basket">
+                </button>
+                </div>
             </div>
 
         </div> </div> <footer class="site-footer">
@@ -209,7 +205,7 @@
             <div class="footer-section">
                 <h4>Categories</h4>
                 <ul>
-                    <li><a href="livingroom.html">Living Room</a></li>
+                    <li><a href="livi.html">Living Room</a></li>
                     <li><a href="office.html">Offices</a></li>
                     <li><a href="kitchen.html">Kitchen</a></li>
                     <li><a href="bathroom.html">Bathrooms</a></li>
@@ -229,7 +225,7 @@
     <script type="module" src="../javascript/livingroom-js/main.js"></script>
     <script src="../javascript/header_footer_script.js"></script>
 
-<!-- Basket -->
+    <!-- Basket -->
     <div id="basket-modal" class="basket-modal">
     <div class="basket-modal-content">
         <p>Item added to basket!</p>

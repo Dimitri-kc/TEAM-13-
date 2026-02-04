@@ -1,5 +1,6 @@
 <?php
 // Product routes - handles HTTP requests for product management
+header("Content-Type: application/json");
 
 // Start session if not already started 
 if (session_status() == PHP_SESSION_NONE) {
@@ -23,17 +24,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 $action = isset($_GET['action']) ? htmlspecialchars($_GET['action']) : '';
 $id = getProductId();
 
+$category = isset($_GET['category']) ? htmlspecialchars($_GET['category']) : null;
+
 switch ($action) {
 // Get all products 
 case 'index': 
-$products = $productController->index();
+    echo json_encode($productController->index());
+    exit;
 // Output or render view with $products data
 break;
+
+case 'byCategory':
+    if ($category) {
+        echo json_encode($productController->getByCategory($category));
+    } else {
+        echo json_encode([]);
+    }
+    exit;
 
 // Get a single product 
 case 'show': 
 if ($id) {
-$product = $productController->show($id);
+echo json_encode($productController->show($id));
+exit;
 // Output or render view with $product data
 } else {
 echo "Error: Product ID is required to view details.";
