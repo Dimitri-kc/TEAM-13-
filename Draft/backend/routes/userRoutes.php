@@ -7,6 +7,11 @@ require_once '../../controllers/userController.php'; //path to userController.ph
 
 $userController = new UserController(); //instance of usercontroller
 //Define routes for user-related actions
+$data = json_decode(file_get_contents("php://input"), true); //get JSON input data
+if(!$data || !isset($data['action'])){ //if no data/action provided then return error
+    echo json_encode(["success" => false, "message" => "No action specified"]); 
+    return;
+}
 //if POST request then check action (register/login/logout)
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') { 
     echo json_encode(["success" => false, "message" => "Invalid request method"]);
@@ -32,11 +37,4 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             echo json_encode (["success" => false, "message"=> "Invalid action."]);
             break;
     }
-
-
-//Notes:
-//htmlspecialchars used to prevent XSS attacks > converts special chars to HTML
-//signup.html path for form > ../../routes/userRoutes.php?action=register (POST) > input type hidden
-//signin.html path for form > ../../routes/userRoutes.php?action=login (POST)
-//logout as a href? >  ../../routes/userRoutes.php?action=logout 
 ?>
