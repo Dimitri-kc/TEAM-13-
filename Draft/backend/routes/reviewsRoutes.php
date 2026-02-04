@@ -1,13 +1,21 @@
 <?php
-/**
- * Reviews Routes
- */
-
-// Correct header syntax
+// reviewsRoutes.php
 header('Content-Type: application/json');
+require_once __DIR__ . '/reviewsController.php';
 
-// Load the Reviews Controller (matches the actual filename)
-include_once __DIR__ . '/../controllers/reviewsController.php';
+$controller = new ReviewsController();
+$method = $_SERVER['REQUEST_METHOD'];
 
-// Controller handles: ?action=insert, fetch, update, delete
-?>
+if ($method === 'GET') {
+    $action = $_GET['action'] ?? '';
+    if ($action === 'fetch') {
+        $controller->fetchByProduct();
+    }
+} elseif ($method === 'POST') {
+    $action = $_POST['action'] ?? '';
+    if ($action === 'insert') {
+        $controller->insert();
+    } else {
+        echo json_encode(["status" => "error", "message" => "Invalid POST action"]);
+    }
+}

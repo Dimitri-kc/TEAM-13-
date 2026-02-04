@@ -1,72 +1,52 @@
 <?php
-// Order controller – handles order actions
-header('Content-Type: application/json');
+require_once __DIR__ . '/orderModel.php';
 
-include_once __DIR__ . '/../models/orderModel.php';
+class OrderController {
 
-$orderModel = new OrderModel();
-$action = $_GET['action'] ?? '';
+    private $orderModel;
 
-/* Add a new order */
-if ($action === 'insert') {
+    public function __construct() {
+        $this->orderModel = new Order();
+    }
 
-    $user_ID     = $_POST['user_ID'] ?? 0;
-    $total_price = $_POST['total_price'] ?? 0.00;
-    $address     = $_POST['address'] ?? '';
+    // POST: create order
+    public function insert() {
+        $user_ID = $_POST['user_ID'] ?? null;
+        $total_price = $_POST['total_price'] ?? null;
+        $address = $_POST['address'] ?? null;
 
-    $success = $orderModel->addOrder($user_ID, $total_price, $address);
+        if (!$user_ID || !$total_price || !$address) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "Missing required fields"
+            ]);
+            return;
+        }
 
-    echo json_encode([
-        "status"  => $success ? "success" : "error",
-        "message" => $success ? "Order added successfully" : "Failed to add order"
-    ]);
+        $success = $this->orderModel->createOrder($user_ID, $total_price, $address);
+
+        echo json_encode([
+            "status" => $success ? "success" : "error"
+        ]);
+    }
+
+    // GET: fetch orders for user
+    public function fetchByUser() {
+        $user_ID = $_GET['user_ID'] ?? null;
+
+        if (!$user_ID) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "User ID required"
+            ]);
+            return;
+        }
+
+        $orders = $this->orderModel->getOrdersByUser($user_ID);
+
+        echo json_encode([
+            "status" => "success",
+            "data" => $orders
+        ]);
+    }
 }
-
-/* Get all orders (admin) */
-elseif ($action === 'fetch') {
-
-    echo json_encode($orderModel->getAllOrders());
-}
-
-/* Get orders for a specific user */
-elseif ($action === 'user_orders') {
-
-    $user_ID = $_GET['user_ID'] ?? 0;
-    echo json_encode($orderModel->getOrdersByUser($user_ID));
-}
-
-/* Update order status */
-elseif ($action === 'update_status') {
-
-    $order_ID     = $_POST['order_ID'] ?? 0;
-    $order_status = $_POST['order_status'] ?? 'Pending';
-
-    $success = $orderModel->updateOrderStatus($order_ID, $order_status);
-
-    echo json_encode([
-        "status"  => $success ? "success" : "error",
-        "message" => $success ? "Order status updated" : "Failed to update status"
-    ]);
-}
-
-/* Delete an order */
-elseif ($action === 'delete') {
-
-    $order_ID = $_POST['order_ID'] ?? 0;
-
-    $success = $orderModel->deleteOrder($order_ID);
-
-    echo json_encode([
-        "status"  => $success ? "success" : "error",
-        "message" => $success ? "Order deleted successfully" : "Failed to delete order"
-    ]);
-}
-
-/* Invalid action */
-else {
-    echo json_encode([
-        "status"  => "error",
-        "message" => "Invalid or missing action"
-    ]);
-}
-?>
