@@ -115,9 +115,9 @@
                 Uh oh! No products matched your search.
             </p>
 
-            <div class="product-grid">
+            <div class="product-grid" id="product-grid">
     <!--REMOVED FOR THE API  -->
-    
+<!--     
                 <div class="item" data-keywords="modern smart sofa" data-category="sofas" data-colour="beige"
                 data-new="true" data-price="295" data-rating="4" onclick="location.href='../html/sofa.html'">
                     <img src="../images/livingroom-images/sofa.jpg" alt="item 1"> 
@@ -125,7 +125,7 @@
                         <h2> Venice Cream Sofa </h2>
                         <p> £295 </p>
                     </div>
-            <!--Add to basket button -->
+            --Add to basket button --
             <button class="add-to-basket" aria-label="Add to basket">
                     <img src="../images/add-button-icon.png" alt="Add to basket">
                 </button>
@@ -138,7 +138,7 @@
                         <h2> Oxford Throw Pillow</h2>
                         <p> £8 </p>
                     </div>
-                                <!--Add to basket button -->
+                                !--Add to basket button --
             <button class="add-to-basket" aria-label="Add to basket">
                     <img src="../images/add-button-icon.png" alt="Add to basket">
                 </button>
@@ -151,7 +151,7 @@
                         <h2> Rusted Throw Blanket</h2>
                         <p> £20 </p>
                     </div>
-                                <!--Add to basket button -->
+                                Add to basket button 
             <button class="add-to-basket" aria-label="Add to basket">
                     <img src="../images/add-button-icon.png" alt="Add to basket">
                 </button>
@@ -164,7 +164,7 @@
                         <h2> Faux Fur Rug </h2>
                         <p> £70 </p>
                     </div>
-                                <!--Add to basket button -->
+                                Add to basket button 
             <button class="add-to-basket" aria-label="Add to basket">
                     <img src="../images/add-button-icon.png" alt="Add to basket">
                 </button>
@@ -177,7 +177,7 @@
                         <h2> NY Console table </h2>
                         <p> £25 </p>
                     </div>
-                                              <!--Add to basket button -->
+                                              --Add to basket button 
             <button class="add-to-basket" aria-label="Add to basket">
                     <img src="../images/add-button-icon.png" alt="Add to basket">
                 </button>
@@ -185,7 +185,8 @@
   
             </div>
 
-        </div> </div> <footer class="site-footer">
+        </div> -->
+    </div> <footer class="site-footer"> 
         <div class="footer-inner">
             <div class="footer-section social-links">
                 <a href="#">
@@ -240,5 +241,55 @@
         </div>
     </div>
 </div>
+
+<!-- //Added script to fetch API -->
+
+<script>
+// Get the product grid container
+const productGrid = document.getElementById('product-grid');
+
+// Category ID for Living Room
+const categoryId = 1; // matches your database
+
+// Fetch products from PHP API
+async function fetchProducts() {
+    try {
+        const response = await fetch(`../php/productRoute.php?action=byCategory&category=${categoryId}`);
+        const products = await response.json();
+
+        renderProducts(products);
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        productGrid.innerHTML = '<p>Failed to load products.</p>';
+    }
+}
+
+// Render products into the grid
+function renderProducts(products) {
+    productGrid.innerHTML = '';
+
+    if (!products.length) {
+        productGrid.innerHTML = '<p id="no-results">Uh oh! No products available.</p>';
+        return;
+    }
+
+    products.forEach(product => {
+        const div = document.createElement('div');
+        div.classList.add('item');
+        div.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <div class="product-text">
+                <h2>${product.name}</h2>
+                <p>£${product.price}</p>
+            </div>
+        `;
+        productGrid.appendChild(div);
+    });
+}
+
+// Initial load
+fetchProducts();
+</script>
+
 </body>
 </html>

@@ -6,9 +6,24 @@ import "./search.js";
 const categoryName = document.body.dataset.category; // "livingroom"
 const productGrid = document.querySelector(".product-grid");
 
-// fetch(`https://cs2team13.cs2410-web01pvm.aston.ac.uk/TEAM-13-/Draft/backend/routes/productRoute.php?action=byCategory&category=${categoryName}`)
-fetch(`https://cs2team13.cs2410-web01pvm.aston.ac.uk/TEAM-13-/Draft/backend/routes/productRoute.php?action=byCategory&category=${categoryName}`)
-  .then(res => res.json())
+// const categoryId = 1; // Living Room
+// fetch(`../php/productRoute.php?action=byCategory&category=${categoryId}`)
+
+const categoryMap = {
+  livingroom: 1,
+  kitchen: 2,
+  office: 3,
+  bathroom: 4,
+  bedroom: 5
+};
+
+
+const categoryId = categoryMap[categoryName.toLowerCase()];
+
+fetch(`../php/productRoute.php?action=byCategory&category=${categoryId}`)
+
+
+.then(res => res.json())
   .then(products => {
     console.log(products); // check if data is coming through
     if (products.length === 0) {
@@ -19,7 +34,7 @@ fetch(`https://cs2team13.cs2410-web01pvm.aston.ac.uk/TEAM-13-/Draft/backend/rout
         div.classList.add("item");
         div.setAttribute("data-category", product.category_id);
         div.innerHTML = `
-          <img src="../images/livingroom-images/${product.image}" alt="${product.name}">
+          <img src="${product.image}" alt="${product.name}">
           <div class="product-text">
             <h2>${product.name}</h2>
             <p>£${product.price}</p>
@@ -32,6 +47,47 @@ fetch(`https://cs2team13.cs2410-web01pvm.aston.ac.uk/TEAM-13-/Draft/backend/rout
   .catch(err => {
     console.error("Error fetching products:", err);
   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+// fetch(`https://cs2team13.cs2410-web01pvm.aston.ac.uk/TEAM-13-/Draft/backend/routes/productRoute.php?action=byCategory&category=${categoryName}`)
+
+// fetch(`../php/productRoute.php?action=byCategory&category=${filters.category}`)
+
+//   .then(res => res.json())
+//   .then(products => {
+//     console.log(products); // check if data is coming through
+//     if (products.length === 0) {
+//       document.getElementById("no-results").style.display = "block";
+//     } else {
+//       products.forEach(product => {
+//         const div = document.createElement("div");
+//         div.classList.add("item");
+//         div.setAttribute("data-category", product.category_id);
+//         div.innerHTML = `
+//           <img src="../images/livingroom-images/${product.image}" alt="${product.name}">
+//           <div class="product-text">
+//             <h2>${product.name}</h2>
+//             <p>£${product.price}</p>
+//           </div>
+//         `;
+//         productGrid.appendChild(div);
+//       });
+//     }
+//   })
+//   .catch(err => {
+//     console.error("Error fetching products:", err);
+//   });
 
 //   const categoryId = 1; // Living Room
 
