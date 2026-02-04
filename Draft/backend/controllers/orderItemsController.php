@@ -1,66 +1,63 @@
 <?php
-// Order items controller – handles item actions for orders
+// orderItemsController.php
 header('Content-Type: application/json');
 
-include_once __DIR__ . '/../models/orderItemModel.php';
+require_once __DIR__ . '/orderItemsModel.php';
 
-$orderItemModel = new OrderItemModel();
-$action = $_GET['action'] ?? '';
+class OrderItemsController {
 
-/* Add an item to an order */
-if ($action === 'insert') {
+    private $model;
 
-    $order_ID   = $_POST['order_ID'] ?? 0;
-    $product_ID = $_POST['product_ID'] ?? 0;
-    $unit_price = $_POST['unit_price'] ?? 0.00;
+    public function __construct() {
+        $this->model = new OrderItem();
+    }
 
-    $success = $orderItemModel->addOrderItem($order_ID, $product_ID, $unit_price);
+    // POST: add item to order
+    public function insert() {
 
-    echo json_encode([
-        "status"  => $success ? "success" : "error",
-        "message" => $success ? "Order item added successfully" : "Failed to add item"
-    ]);
+        $order_ID   = $_POST['order_ID'] ?? null;
+        $product_ID = $_POST['product_ID'] ?? null;
+        $unit_price = $_POST['unit_price'] ?? null;
+
+        if (!$order_ID || !$product_ID || !$unit_price) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "Missing required fields"
+            ]);
+            return;
+        }
+
+        $success = $this->model->addOrderItem(
+            $order_ID,
+            $product_ID,
+            $unit_price
+        );
+
+        echo json_encode(
+            $success
+                ? ["status" => "success", "message" => "Order item added"]
+                : ["status" => "error", "message" => "Failed to add order item"]
+        );
+    }
+
+    // GET: fetch items by order
+    public function fetchByOrder() {
+
+        $order_ID = $_GET['order_ID'] ?? null;
+
+        if (!$order_ID) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "Order ID required"
+            ]);
+            return;
+        }
+
+        $items = $this->model->getItemsByOrder($order_ID);
+
+        echo json_encode([
+            "status" => "success",
+            "data" => $items
+        ]);
+    }
 }
-
-/* Get all items for a specific order */
-elseif ($action === 'fetch') {
-
-    $order_ID = $_GET['order_ID'] ?? 0;
-    echo json_encode($orderItemModel->getItemsByOrder($order_ID));
-}
-
-/* Delete an order item */
-elseif ($action === 'delete') {
-
-    $order_item_ID = $_POST['order_item_ID'] ?? 0;
-
-    $success = $orderItemModel->deleteOrderItem($order_item_ID);
-
-    echo json_encode([
-        "status"  => $success ? "success" : "error",
-        "message" => $success ? "Order item deleted successfully" : "Failed to delete item"
-    ]);
-}
-
-/* Update order item (unit price) */
-elseif ($action === 'update') {
-
-    $order_item_ID = $_POST['order_item_ID'] ?? 0;
-    $unit_price    = $_POST['unit_price'] ?? 0.00;
-
-    $success = $orderItemModel->updateOrderItem($order_item_ID, $unit_price);
-
-    echo json_encode([
-        "status"  => $success ? "success" : "error",
-        "message" => $success ? "Order item updated" : "Failed to update item"
-    ]);
-}
-
-/* Invalid action */
-else {
-    echo json_encode([
-        "status"  => "error",
-        "message" => "Invalid or missing action"
-    ]);
-}
-?>
