@@ -1,3 +1,8 @@
+function getProductsArray() {
+    return document.querySelectorAll(".item");
+}
+// section added above 
+
 const keywordCheckboxes = document.querySelectorAll(".tags input[type='checkbox']");
 const categoryCheckboxes = document.querySelectorAll(".category-filter");
 const colourCheckboxes = document.querySelectorAll(".colour-filter");
@@ -18,7 +23,7 @@ function applyFilters() {
     const categoryMatch = activeCategories.length === 0 || activeCategories.includes(productCategory);
     const keywordMatch = activeKeywords.length === 0 || activeKeywords.some(k => productKeywords.includes(k));
     const colourMatch = activeColours.length === 0 || activeColours.some(c => productColours.includes(c));
-    product.style.display = categoryMatch && keywordMatch && colourMatch ? "block" : "none";
+    product.style.display = categoryMatch && keywordMatch && colourMatch ? "" : "none";
   });
 }
 

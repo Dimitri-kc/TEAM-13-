@@ -1,14 +1,18 @@
+<?php include '../config/db_connect.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- '' This is the header and footer template for LOFT & LIVING '' -->
     <meta charset="UTF-8">
-    <title>LOFT & LIVING BIRMINGHAM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Basket | LOFT & LIVING</title>
+
     <link rel="stylesheet" href="../css/header_footer_style.css">
-    </head>
+
+    <link rel="stylesheet" href="../css/basket.css">
+
+</head>
 <body>
 
-    <!-- '' Site Header: This section contains the logo, navigation menu, and user action icons '' -->
     <header class="site-header">
         <div class="header-inner">
             <button class="menu-btn" id="menu-toggle-btn">
@@ -16,7 +20,7 @@
             </button>
 
             <div class="logo-wrapper">
-                <a href="homepage.html">
+                <a href="Homepage.html">
                     <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
                 </a>
             </div>
@@ -33,24 +37,81 @@
                 </a>
             </div>
         </div>
-<!-- 
-        '' Dropdown Navigation Menu: Here users can navigate to different product categories '' -->
+
         <nav class="dropdown-panel" id="dropdown-nav">
             <ul class="nav-links">
-                <li><a href="livingroom.html">Living Room</a></li>
+                <li><a href="Categories.html">Living Room</a></li>
                 <li><a href="bathroom.html">Bathroom</a></li>
                 <li><a href="bedroom.html">Bedroom</a></li>
                 <li><a href="office.html">Office</a></li>
                 <li><a href="kitchen.html">Kitchen</a></li>
-                <li class="nav-divider"><a href="signin.html">My Account</a></li>
+                <li class="nav-divider"><a href="login.html">My Account</a></li>
             </ul>
         </nav>
     </header>
-    <main style="height: 600px; padding: 50px; text-align: center; background-color: #f9f9f9;">
-        <h1></h1>
-    </main>
+    <main class="basket-container">
 
-<!-- '' Site Footer: This section contains social media links and additional navigation '' -->
+                
+
+        <h1 class="basket-title">YOUR BASKET</h1>
+
+        <section class="basket-layout">
+
+            <div class="basket-items">
+
+                <div class="basket-item" data-price="295">
+                    <img src="../images/basket-images/sofa.jpg" alt="Sofa" class="item-image">
+
+                    <div class="item-details">
+                        <h3 class="item-name">Venice Cream Sofa</h3>
+                        <p class="price">£295</p>
+                        <!-- <p class="qty">Quantity: 1</p> -->
+                         <div class="quant-controls">
+                            <button class="minus">-</button>
+                             <span class="quant-number">1</span>
+                              <button class="plus">+</button>
+                         
+                    </div>
+                </div>
+                </div>
+
+            </div>
+
+            <aside class="basket-summary">
+
+                <div class="discount-box">
+                    <label>Any Discount or Promotional Codes?</label>
+                    <input type="text" placeholder="Enter code">
+                    <button class="discount-btn">Add Discount</button>
+                </div>
+
+                <div class="summary-box">
+                    <h3>Your Basket Total</h3>
+                    <p>Basket: £295</p>
+                    <p>Discount: £0</p>
+                    <p><strong>Total: £295</strong></p>
+                   
+                </div>
+
+            <div class="checkout-info">
+                <h3>Ready To Checkout?</h3>
+                <p>On the next page you’ll be asked to log in or sign up if
+                this is your first time, so you can confirm as a guest.</p>
+                 <button class="checkout-btn" onclick="window.location.href='signin.html'">Checkout</button>
+                                    <div class="pay-buttons">
+
+                    <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
+                    <img src="../images/basket-images/googlepay.png" alt="Google Pay" class="pay-btn">
+                </div>
+            </div>
+
+
+
+            </aside>
+
+        </section>
+
+    </main>
     <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-section social-links">
@@ -65,14 +126,13 @@
             <div class="footer-section">
                 <h4>Navigation</h4>
                 <ul>
-                    <li><a href="homepage.html">Homepage</a></li>
-                    <li><a href="signin.html">My Account</a></li>
+                    <li><a href="Homepage.html">Homepage</a></li>
+                    <li><a href="login.html">My Account</a></li>
                     <li><a href="favourites.html">Favourites</a></li>
-                    <li><a href="basket.html">Basket</a></li>
+                    <li><a href="Basket.html">Basket</a></li>
                 </ul>
             </div>
 
-            <!-- '' Categories Section: Links to different product categories '' -->
             <div class="footer-section">
                 <h4>Categories</h4>
                 <ul>
@@ -88,11 +148,13 @@
                 <h4>More...</h4>
                 <ul>
                     <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="About.html">About Us</a></li>
                 </ul>
             </div>
         </div>
     </footer>
     <script src="../javascript/header_footer_script.js"></script>
+    <script src="../javascript/basket-quantity.js"></script>
+
 </body>
 </html>

@@ -1,3 +1,4 @@
+<?php include '../config/db_connect.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,19 +21,19 @@
             </button>
 
             <div class="logo-wrapper">
-                <a href="homepage.html">
+                <a href="homepage.php">
                     <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
                 </a>
             </div>
 
             <div class="header-actions">
-                <a href="favourites.html">
+                <a href="favourites.php">
                     <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
                 </a>
-                <a href="signin.html">
+                <a href="signin.php">
                     <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
                 </a>
-                <a href="basket.html">
+                <a href="basket.php">
                     <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
                 </a>
             </div>
@@ -40,45 +41,45 @@
 
         <nav class="dropdown-panel" id="dropdown-nav">
             <ul class="nav-links">
-                <li><a href="livingroom.html">Living Room</a></li>
-                <li><a href="bathroom.html">Bathroom</a></li>
-                <li><a href="bedroom.html">Bedroom</a></li>
-                <li><a href="office.html">Office</a></li>
-                <li><a href="kitchen.html">Kitchen</a></li>
-                <li class="nav-divider"><a href="signin.html">My Account</a></li>
+                <li><a href="livingroom.php">Living Room</a></li>
+                <li><a href="bathroom.php">Bathroom</a></li>
+                <li><a href="bedroom.php">Bedroom</a></li>
+                <li><a href="office.php">Office</a></li>
+                <li><a href="kitchen.php">Kitchen</a></li>
+                <li class="nav-divider"><a href="signin.php">My Account</a></li>
             </ul>
         </nav>
     </header>
     <div class="row">
-        <a class="category living" href="livingroom.html">
+        <a class="category living" href="livingroom.php">
             <div class="title-box">LIVING ROOM</div> 
             <div class="image-box">
                 <img src="../images/homepage-images/livingroom.png" alt="Living Room">
             </div>
         </a>
 
-        <a class="category kitchen" href="kitchen.html">
+        <a class="category kitchen" href="kitchen.php">
             <div class="title-box">KITCHEN</div>
             <div class="image-box">
                 <img src="../images/homepage-images/kitchen.png" alt="Kitchen">
             </div>
         </a>
 
-        <a class="category office" href="office.html">
+        <a class="category office" href="office.php">
             <div class="title-box">OFFICE</div>
             <div class="image-box">
                 <img src="../images/homepage-images/office_final.png" alt="Office">
             </div>
         </a>
 
-        <a class="category bathroom" href="bathroom.html">
+        <a class="category bathroom" href="bathroom.php">
             <div class="title-box">BATHROOM</div>
             <div class="image-box">
                 <img src="../images/homepage-images/bathroom.png" alt="Bathroom">
             </div>
         </a>
 
-        <a class="category bedroom" href="bedroom.html">
+        <a class="category bedroom" href="bedroom.php">
             <div class="title-box">BEDROOM</div>
             <div class="image-box">
                 <img src="../images/homepage-images/bedroom.png" alt="Bedroom">
@@ -157,29 +158,29 @@
             <div class="footer-section">
                 <h4>Navigation</h4>
                 <ul>
-                    <li><a href="Homepage.html">Homepage</a></li>
-                    <li><a href="signin.html">My Account</a></li>
-                    <li><a href="favourites.html">Favourites</a></li>
-                    <li><a href="basket.html">Basket</a></li>
+                    <li><a href="Homepage.php">Homepage</a></li>
+                    <li><a href="signin.php">My Account</a></li>
+                    <li><a href="favourites.php">Favourites</a></li>
+                    <li><a href="basket.php">Basket</a></li>
                 </ul>
             </div>
 
             <div class="footer-section">
                 <h4>Categories</h4>
                 <ul>
-                    <li><a href="livingroom.html">Living Room</a></li>
-                    <li><a href="office.html">Offices</a></li>
-                    <li><a href="kitchen.html">Kitchen</a></li>
-                    <li><a href="bathroom.html">Bathrooms</a></li>
-                    <li><a href="bedroom.html">Bedrooms</a></li>
+                    <li><a href="livingroom.php">Living Room</a></li>
+                    <li><a href="office.php">Offices</a></li>
+                    <li><a href="kitchen.php">Kitchen</a></li>
+                    <li><a href="bathroom.php">Bathrooms</a></li>
+                    <li><a href="bedroom.php">Bedrooms</a></li>
                 </ul>
             </div>
 
             <div class="footer-section">
                 <h4>More...</h4>
                 <ul>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.php">Contact Us</a></li>
+                    <li><a href="about.php">About Us</a></li>
                 </ul>
             </div>
         </div>

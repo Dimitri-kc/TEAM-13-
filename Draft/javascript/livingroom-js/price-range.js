@@ -2,9 +2,11 @@ const minSlider = document.getElementById("price-min");
 const maxSlider = document.getElementById("price-max");
 const label  = document.getElementById("price-num");
 const rangeDisplay = document.getElementById("range-display");
-// const products =document.querySelectorAll(".item");
-const products = getProductsArray();
 
+// Replace the getProductsArray line with this to grab your PHP items:
+function getProductsArray() {
+    return document.querySelectorAll(".item");
+}
 
 function fixThumbOverlap() {
     if (parseInt(minSlider.value) >= parseInt(maxSlider.value) - 5) {
@@ -37,12 +39,11 @@ function updatePrice() {
 
 products.forEach(product =>{
   const price = Number(product.dataset.price);
-  if(price>= min && price <=max) {
-    product.style.display ="block";
-  
-  } else {
+if(price >= min && price <= max) {
+    product.style.display = ""; // Change "block" to ""
+} else {
     product.style.display = "none";
-  }
+}
 });
 fixThumbOverlap();
 }
