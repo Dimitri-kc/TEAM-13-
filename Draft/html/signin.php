@@ -1,9 +1,10 @@
+<?php include '../config/db_connect.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up | LOFT & LIVING</title>
+  <title>Sign In | LOFT & LIVING</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,8 +18,6 @@
       display: flex !important;
       flex-direction: column !important;
       min-height: 100vh;
-      margin: 0;
-      background-color: #EAE8E4;
     }
 
     .site-header {
@@ -26,7 +25,6 @@
       width: 100%;
       background-color: #ffffff !important;
       z-index: 1000;
-      padding: 15px 0;
     }
 
     .header-inner {
@@ -50,23 +48,11 @@
     .site-footer {
       margin-top: auto;
       width: 100%;
-      background-color: #fff;
-    }
-
-    .input-group {
-      margin-bottom: 25px !important;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .input-label {
-      margin-bottom: 8px;
-      font-weight: 500;
     }
 
     .error-popup {
       display: none;
-      margin-top: 10px;
+      margin-top: 12px;
       padding: 10px 12px;
       border-radius: 4px;
       background-color: #ffffff;
@@ -95,6 +81,16 @@
     .error-text {
       flex: 1;
     }
+
+    .form-links a {
+      color: #000000;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .form-links a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 
@@ -105,11 +101,13 @@
     <button class="menu-btn" id="menu-toggle-btn">
       <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
     </button>
+
     <div class="logo-wrapper">
       <a href="homepage.html">
         <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
       </a>
     </div>
+
     <div class="header-actions">
       <a href="favourites.html"><img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon"></a>
       <a href="signin.html"><img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon"></a>
@@ -131,55 +129,30 @@
 
 <main class="form-container">
   <section class="form-box">
-    <h1 class="form-title">NEW HERE?</h1>
+    <h1 class="form-title">WELCOME BACK</h1>
 
-    <form id="signupForm">
-      <div class="input-group">
-        <span class="input-label">Name</span>
-        <input type="text" id="name" name="name" required>
-      </div>
-
-      <div class="input-group">
-        <span class="input-label">Surname</span>
-        <input type="text" id="surname" name="surname" required>
-      </div>
-
-      <div class="input-group">
+    <form class="form-fields" id="signinForm">
+      <label class="input-group">
         <span class="input-label">Email</span>
-        <input type="email" id="email" name="email" required>
-      </div>
+        <input type="email" name="email" required>
+      </label>
 
-      <div class="input-group">
-        <span class="input-label">Phone Number</span>
-        <input type="tel" id="phone" name="phone" required>
-      </div>
-
-      <div class="input-group">
-        <span class="input-label">Address</span>
-        <input type="text" id="address" name="address" required>
-      </div>
-
-      <div class="input-group">
+      <label class="input-group">
         <span class="input-label">Password</span>
-        <input type="password" id="password" name="password" required>
-      </div>
-
-      <div class="input-group">
-        <span class="input-label">Confirm Password</span>
-        <input type="password" id="confirmPassword" name="confirmPassword" required>
-      </div>
+        <input type="password" name="password" required>
+      </label>
 
       <div id="errorPopup" class="error-popup">
         <div class="error-icon">!</div>
         <div class="error-text" id="errorText"></div>
       </div>
 
-      <button type="submit" class="main-button">Submit</button>
+      <button type="submit" class="main-button">Sign In</button>
 
-      <p class="form-footer">
-        Already have an account?
-        <a href="signin.html" class="link-primary">Sign in</a>
-      </p>
+      <div class="form-links">
+        <a href="forgotpassword.html" class="link-secondary">Forgot password?</a>
+        <a href="signup.html" class="link-primary">New here?</a>
+      </div>
     </form>
   </section>
 </main>
@@ -190,6 +163,7 @@
       <a href="#"><img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon"></a>
       <a href="#"><img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon"></a>
     </div>
+
     <div class="footer-section">
       <h4>Navigation</h4>
       <ul>
@@ -199,6 +173,7 @@
         <li><a href="basket.html">Basket</a></li>
       </ul>
     </div>
+
     <div class="footer-section">
       <h4>Categories</h4>
       <ul>
@@ -209,23 +184,24 @@
         <li><a href="bedroom.html">Bedrooms</a></li>
       </ul>
     </div>
+
     <div class="footer-section">
       <h4>More...</h4>
-      <ul><li><a href="contact.html">Contact Us</a></li><li><a href="about.html">About Us</a></li></ul>
+      <ul>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="about.html">About Us</a></li>
+      </ul>
     </div>
   </div>
 </footer>
 
 <script>
   const API_URL = "/Team-13-/Draft/backend/routes/userRoutes.php";
-  const form = document.getElementById("signupForm");
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const form = document.getElementById("signinForm");
 
   function showPopup(message) {
-    const popup = document.getElementById("errorPopup");
-    const text = document.getElementById("errorText");
-    text.textContent = message;
-    popup.style.display = "flex";
+    document.getElementById("errorText").textContent = message;
+    document.getElementById("errorPopup").style.display = "flex";
   }
 
   function hidePopup() {
@@ -236,57 +212,34 @@
     e.preventDefault();
     hidePopup();
 
-    const nameField = document.getElementById("name");
-    const surnameField = document.getElementById("surname");
-    const emailField = document.getElementById("email");
-    const phoneField = document.getElementById("phone");
-    const addressField = document.getElementById("address");
-    const passwordField = document.getElementById("password");
-    const confirmPasswordField = document.getElementById("confirmPassword");
+    const email = form.querySelector('input[name="email"]').value.trim();
+    const password = form.querySelector('input[name="password"]').value.trim();
 
-    const name = nameField.value.trim();
-    const surname = surnameField.value.trim();
-    const email = emailField.value.trim();
-    const phone = phoneField.value.trim();
-    const address = addressField.value.trim();
-    const password = passwordField.value;
-    const confirmPassword = confirmPasswordField.value;
-
-    if (!name) { showPopup("Please enter your name."); nameField.focus(); return; }
-    if (!surname) { showPopup("Please enter your surname."); surnameField.focus(); return; }
-    if (!email || !emailPattern.test(email)) { showPopup("Please enter a valid email address."); emailField.focus(); return; }
-    if (!phone) { showPopup("Please enter your phone number."); phoneField.focus(); return; }
-    if (!address) { showPopup("Please enter your address."); addressField.focus(); return; }
-    if (!password) { showPopup("Please enter a password."); passwordField.focus(); return; }
-    if (!confirmPassword) { showPopup("Please confirm your password."); confirmPasswordField.focus(); return; }
-    if (password !== confirmPassword) { showPopup("Passwords do not match."); confirmPasswordField.focus(); return; }
-
-    const hasMinLength = password.length >= 8;
-    const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
-    if (!hasMinLength || !hasSpecialChar) {
-      showPopup("Password must be at least 8 characters and include a special character.");
-      passwordField.focus();
+    if (!email || !password) {
+      showPopup("Please fill in both fields.");
       return;
     }
 
     const formData = new FormData(form);
-    formData.append("action", "register");
-    formData.delete("confirmPassword"); 
+    formData.append("action", "login");
 
     try {
       const res = await fetch(API_URL, { method: "POST", body: formData });
-      const text = await res.text();
+      const text = (await res.text()).trim();
       const lower = text.toLowerCase();
 
-      if (lower.includes("registration successful")) {
-        window.location.href = "signin.html";
+      if (text === "CHANGE_PASSWORD_REQUIRED") {
+        window.location.href = "changepassword.html";
         return;
       }
 
-      showPopup(text || "Registration failed. Please try again.");
+      if (lower.includes("login failed") || lower.includes("invalid") || lower.includes("all fields are required")) {
+        showPopup(text);
+        return;
+      }
 
-    } catch (err) {
-      console.error(err);
+      window.location.href = "homepage.html";
+    } catch {
       showPopup("Server error. Please try again.");
     }
   });

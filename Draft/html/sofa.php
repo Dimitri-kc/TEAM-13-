@@ -1,34 +1,45 @@
+<?php 
+include '../backend/config/db_connect.php'; 
+
+// Get the ID from the URL link
+$product_id = isset($_GET['id']) ? mysqli_real_escape_string($conn, $_GET['id']) : 0;
+
+// Fetch only the product that was clicked
+$query = "SELECT * FROM products WHERE product_id = '$product_id'";
+$result = mysqli_query($conn, $query);
+$product = mysqli_fetch_assoc($result);
+
+// If the product isn't found, go back to the living room
+if (!$product) {
+    header("Location: livingroom.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venice Cream Sofa | LOFT & LIVING</title>
+    <title><?php echo $product['name']; ?> | LOFT & LIVING</title>
 
     <link rel="stylesheet" href="../css/header_footer_style.css">
-
     <link rel="stylesheet" href="../css/sofa_style.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 
 
-
     <style>
-        /* Reset the body to ensure Header, Main, and Footer stack vertically */
         body {
             display: flex !important;
             flex-direction: column !important;
             min-height: 100vh;
         }
-
-        /* Ensures the Header sits on top of the images */
         .site-header {
             z-index: 1000 !important;
             position: relative; 
-            background-color: #fff; /* Ensures content doesn't show through */
+            background-color: #fff;
         }
-
-        /* Push the Main content down so it doesn't hide behind the header */
         main.container {
             margin-top: 20px; 
             flex: 1; 
@@ -36,8 +47,6 @@
             max-width: 1200px; 
             align-self: center; 
         }
-
-        /* Footer sticks to the bottom */
         .site-footer {
             width: 100%;
             margin-top: auto;
@@ -53,19 +62,19 @@
             </button>
 
             <div class="logo-wrapper">
-                <a href="homepage.html">
+                <a href="homepage.php">
                     <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
                 </a>
             </div>
 
             <div class="header-actions">
-                <a href="favourites.html">
+                <a href="favourites.php">
                     <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
                 </a>
-                <a href="signin.html">
+                <a href="signin.php">
                     <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
                 </a>
-                <a href="basket.html">
+                <a href="basket.php">
                     <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
                 </a>
             </div>
@@ -73,31 +82,29 @@
 
         <nav class="dropdown-panel" id="dropdown-nav">
             <ul class="nav-links">
-                <li><a href="livingroom.html">Living Room</a></li>
-                <li><a href="bathroom.html">Bathroom</a></li>
-                <li><a href="bedroom.html">Bedroom</a></li>
-                <li><a href="office.html">Office</a></li>
-                <li><a href="kitchen.html">Kitchen</a></li>
-                <li class="nav-divider"><a href="signin.html">My Account</a></li>
+                <li><a href="livingroom.php">Living Room</a></li>
+                <li><a href="bathroom.php">Bathroom</a></li>
+                <li><a href="bedroom.php">Bedroom</a></li>
+                <li><a href="office.php">Office</a></li>
+                <li><a href="kitchen.php">Kitchen</a></li>
+                <li class="nav-divider"><a href="signin.php">My Account</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="container">
-        
         <section class="product-wrapper">
-            
             <div class="product-image">
                 <div class="wishlist-icon">
                     <i class="fa-regular fa-heart"></i>
                 </div>
-                <img src="../images/basket-images/sofa.jpg" alt="Venice Cream Sofa">
+                <img src="../images/<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>
 
             <div class="product-info">
-                <h1>Venice Cream Sofa</h1>
-                <div class="price">£295</div>
+                <h1><?php echo $product['name']; ?></h1>
+                <div class="price">£<?php echo $product['price']; ?></div>
                 <p class="tagline">Bold, Modern, Elegant</p>
 
                 <div class="selectors">
@@ -117,26 +124,23 @@
                     </div>
                 </div>
 
-                <button class="add-to-basket" onclick="window.location.href='basket.html'">Add to Basket</button>
+                <button class="add-to-basket" onclick="window.location.href='basket.php'">Add to Basket</button>
 
                 <div class="description-box">
                     <div class="desc-header">
                         <span>About this Item</span>
                         <i class="fa-solid fa-chevron-up"></i>
                     </div>
-                    <p>Add a touch of Italian fashion to your Living Space with this Modern Lounge Sofa in a stunning Cream colour, with duck feather filling, and a stunning chenille design, this sofa is sure to be the centre of attraction in your room.</p>
+                    <p><?php echo $product['description']; ?></p>
                 </div>
             </div>
         </section>
 
         <section class="reviews-section">
             <h2>Latest reviews</h2>
-            
             <div class="reviews-slider-wrapper">
                 <button class="nav-btn prev-btn" onclick="scrollReviews('left')"><i class="fa-solid fa-chevron-left"></i></button>
-                
                 <div class="reviews-container" id="reviewsContainer">
-                    
                     <div class="review-card">
                         <div class="stars">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
@@ -151,7 +155,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="review-card">
                         <div class="stars">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
@@ -166,81 +169,42 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="review-card">
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
-                        </div>
-                        <h3>Smaller than Expected.</h3>
-                        <p>Great Sofa, but looks bigger online.</p>
-                        <div class="reviewer">
-                            <img src="https://ui-avatars.com/api/?name=Manaal+A&background=random" alt="User">
-                            <div>
-                                <span class="name">Manaal Aouttah</span>
-                                <span class="date">18th November 2025</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="review-card">
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <h3>Very comfy and soft.</h3>
-                        <p>Amazing sofa, I even slept in it!.</p>
-                        <div class="reviewer">
-                            <img src="https://ui-avatars.com/api/?name=Navdeep+M&background=random" alt="User">
-                            <div>
-                                <span class="name">Navdeep Malhi</span>
-                                <span class="date">18th November 2025</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
                 <button class="nav-btn next-btn" onclick="scrollReviews('right')"><i class="fa-solid fa-chevron-right"></i></button>
             </div>
         </section>
-
     </main>
 
     <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-section social-links">
-                <a href="#">
-                    <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon">
-                </a>
-                <a href="#">
-                    <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon">
-                </a>
+                <a href="#"><img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon"></a>
+                <a href="#"><img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon"></a>
             </div>
-
             <div class="footer-section">
                 <h4>Navigation</h4>
                 <ul>
-                    <li><a href="homepage.html">Homepage</a></li>
-                    <li><a href="signin.html">My Account</a></li>
-                    <li><a href="favourites.html">Favourites</a></li>
-                    <li><a href="basket.html">Basket</a></li>
+                    <li><a href="homepage.php">Homepage</a></li>
+                    <li><a href="signin.php">My Account</a></li>
+                    <li><a href="favourites.php">Favourites</a></li>
+                    <li><a href="basket.php">Basket</a></li>
                 </ul>
             </div>
-
             <div class="footer-section">
                 <h4>Categories</h4>
                 <ul>
-                    <li><a href="livingroom.html">Living Room</a></li>
-                    <li><a href="office.html">Offices</a></li>
-                    <li><a href="kitchen.html">Kitchen</a></li>
-                    <li><a href="bathroom.html">Bathrooms</a></li>
-                    <li><a href="bedroom.html">Bedrooms</a></li>
+                    <li><a href="livingroom.php">Living Room</a></li>
+                    <li><a href="office.php">Offices</a></li>
+                    <li><a href="kitchen.php">Kitchen</a></li>
+                    <li><a href="bathroom.php">Bathrooms</a></li>
+                    <li><a href="bedroom.php">Bedrooms</a></li>
                 </ul>
             </div>
-
             <div class="footer-section">
                 <h4>More...</h4>
                 <ul>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.php">Contact Us</a></li>
+                    <li><a href="about.php">About Us</a></li>
                 </ul>
             </div>
         </div>

@@ -1,3 +1,4 @@
+<?php include '../config/db_connect.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,10 +10,10 @@
   <link rel="stylesheet" href="../css/header_footer_style.css">
 
   <!-- Living Room CSS (REQUIRED – correct files) -->
-  <link rel="stylesheet" href="../css/livingroom-css/livingroom-base.css">
-  <link rel="stylesheet" href="../css/livingroom-css/livingroom-structure.css">
-  <link rel="stylesheet" href="../css/livingroom-css/livingroom-reusable.css">
-  <link rel="stylesheet" href="../css/livingroom-css/livingroom-page.css">
+  <link rel="stylesheet" href="../css/category-css/livingroom-base.css">
+  <link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
+  <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">
+  <link rel="stylesheet" href="../css/category-css/livingroom-page.css">
 </head>
 
 <body>

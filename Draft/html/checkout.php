@@ -1,16 +1,14 @@
+<?php include '../backend/config/db_connect.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact | LOFT & LIVING</title>
+    <title>Checkout page</title>
 
     <link rel="stylesheet" href="../css/header_footer_style.css">
 
-    <link rel="stylesheet" href="../css/contact-css/contact-base.css">
-    <link rel="stylesheet" href="../css/contact-css/contact-structure.css">
-    <link rel="stylesheet" href="../css/contact-css/contact-reusable.css">
-    <link rel="stylesheet" href="../css/contact-css/contact-page.css">
+    <link rel="stylesheet" href="../css/checkout.css" />
 </head>
 <body>
 
@@ -41,44 +39,78 @@
 
         <nav class="dropdown-panel" id="dropdown-nav">
             <ul class="nav-links">
-                <li><a href="Categories.html">Living Room</a></li>
+                <li><a href="Categories.php">Living Room</a></li>
                 <li><a href="bathroom.html">Bathroom</a></li>
                 <li><a href="bedroom.html">Bedroom</a></li>
                 <li><a href="office.html">Office</a></li>
                 <li><a href="kitchen.html">Kitchen</a></li>
-                <li class="nav-divider"><a href="login.html">My Account</a></li>
+                <li class="nav-divider"><a href="signin.php">My Account</a></li>
             </ul>
         </nav>
     </header>
-    <header id="main-header">
-        <h1 class="title">CONTACT US</h1>
+    <header class="checkout-header">
+        <h1>CHECKOUT</h1>
     </header>
 
-    <main>
-        <section>
-            <div class="form-container">
-                <form id="contact-form" action="https://formspree.io/f/xzzlerol" method="POST">
-                    <input type="text" name="_gotcha" style="display: none;" />
-                    
-                    <label for="first">Name<span class="required">*</span> </label>
-                    <input type="text" id="first" name="first" placeholder="First Name" required>
-                    
-                    <label for="last">Surname<span class="required">*</span></label>
-                    <input type="text" id="last" name="last" placeholder="Last Name" required>
-                    
-                    <label for="email">Email<span class="required">*</span></label>
-                    <input type="email" id="email" name="email" placeholder="Email Address" required>
+    <main class="checkout-layout">
 
-                    <label for="order">Order Number (If Applicable)</label>
-                    <input type="text" id="order" name="order" placeholder="Enter Order Number">
-
-                    <label for="message">Message<span class="required">*</span></label>
-                    <textarea id="message" name="message" placeholder="Enter message or enquiry" required></textarea>
-
-                    <button type="submit">Submit</button>
-                </form>
+        <aside class="product-column">
+            <div class="product-item">
+                <img src="../images/basket-images/sofa.jpg" alt="Venice Cream Sofa"/>
+                <div class="product-text">
+                    <p>Venice Cream Sofa</p>
+                    <p class="price">£295</p>
+                    <p class="quantity">Quantity: 1</p>
+                </div>
             </div>
+        </aside>
+
+        <section class="details-column">
+            
+     <section class="review-box">
+    <h1 class="form-title">REVIEW:</h1>
+
+    <div class="review-details">
+        <p><strong>Name:</strong> Emma Smith</p>
+        <p><strong>Email:</strong> emma.smith@example.com</p>
+        <p><strong>Address:</strong></p>
+        <p class="address-line">Aston University,</p>
+        <p class="address-line">Aston St,</p>
+        <p class="address-line">Birmigham,</p>
+        <p class="address-line">B4 7ET</p>
+    </div>
+</section>
+
+<div class="card-buttons">
+    <button class="edit-btn">Edit Details</button>
+    <button class="address-btn">Change Address</button>
+</div>
+
+
+                    <div class="card-fields">
+                        <h2>Card Details</h2>
+
+                        <input type="text" placeholder="Card Number (16 Digits)" maxlength="16" required />
+                        <input type="text" placeholder="Expiry Date (MM/YY)" required />
+                        <input type="text" placeholder="CVV (3 Digits)" maxlength="3" required />
+                        <button type="submit">Submit</button>
+
+                        <div class="pay-buttons">
+                            <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
+                            <img src="../images/basket-images/googlepay.png" alt="Google Pay" class="pay-btn">
+                        </div>
+                    </div>
+
+            <div class="delivery-section">
+                <p>Ready for Loft & Living in Your Home?</p>
+                <p>Your Order will be dispatched using Standard Delivery </p>
+                <p>Estimated Delivery: 9th December 2025</p>
+
+                <button class="checkout-btn" onclick="window.location.href='order_confirmation.html'">Checkout</button>
+            </div>
+
         </section>
+        
     </main>
     <footer class="site-footer">
         <div class="footer-inner">
