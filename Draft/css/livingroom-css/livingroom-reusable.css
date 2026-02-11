@@ -170,4 +170,39 @@ input[type="checkbox"]:checked + .tag:hover {
     font-size: 14px;
     opacity: 0.6;
 
+}  
+
+/* ================================
+   FAVOURITES ICON (TOP LEFT)
+================================ */
+
+.fav-icon-btn {
+    position: absolute;
+    top: 20px;     
+    left: 20px;
+
+    background: rgba(0,0,0,0.08);   
+    border: none;
+    border-radius: 50%;
+
+    width: auto;        
+    height: auto;
+
+    cursor: pointer;
+    z-index: 6;
+    padding: 4px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+/* heart icon image */
+.fav-icon-btn img {
+    width: 15px;
+    height: 15px;
+    display: block; 
+}
+
+/* hover effect */
+.fav-icon-btn:hover {
+    background-color: #d2d2c1;
+    transform: scale(1.1);
 }

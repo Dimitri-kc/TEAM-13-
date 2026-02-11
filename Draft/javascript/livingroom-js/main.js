@@ -134,3 +134,11 @@ basketButtons.forEach(button => {
         addToBasket(button);
     });
 });
+
+document.addEventListener("click", function (e) {
+  const favBtn = e.target.closest(".fav-icon-btn");
+  if (!favBtn) return;
+
+  e.preventDefault();
+  e.stopPropagation(); // stops product navigation
+});
