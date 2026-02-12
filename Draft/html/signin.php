@@ -103,26 +103,26 @@
     </button>
 
     <div class="logo-wrapper">
-      <a href="homepage.html">
+      <a href="homepage.php">
         <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
       </a>
     </div>
 
     <div class="header-actions">
-      <a href="favourites.html"><img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon"></a>
-      <a href="signin.html"><img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon"></a>
-      <a href="basket.html"><img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon"></a>
+      <a href="favourites.php"><img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon"></a>
+      <a href="signin.php"><img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon"></a>
+      <a href="basket.php"><img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon"></a>
     </div>
   </div>
 
   <nav class="dropdown-panel" id="dropdown-nav">
     <ul class="nav-links">
-      <li><a href="livingroom.html">Living Room</a></li>
-      <li><a href="bathroom.html">Bathroom</a></li>
-      <li><a href="bedroom.html">Bedroom</a></li>
-      <li><a href="office.html">Office</a></li>
-      <li><a href="kitchen.html">Kitchen</a></li>
-      <li class="nav-divider"><a href="signin.html">My Account</a></li>
+      <li><a href="livingroom.php">Living Room</a></li>
+      <li><a href="bathroom.php">Bathroom</a></li>
+      <li><a href="bedroom.php">Bedroom</a></li>
+      <li><a href="office.php">Office</a></li>
+      <li><a href="kitchen.php">Kitchen</a></li>
+      <li class="nav-divider"><a href="signin.php">My Account</a></li>
     </ul>
   </nav>
 </header>
@@ -150,8 +150,8 @@
       <button type="submit" class="main-button">Sign In</button>
 
       <div class="form-links">
-        <a href="forgotpassword.html" class="link-secondary">Forgot password?</a>
-        <a href="signup.html" class="link-primary">New here?</a>
+        <a href="forgotpassword.php" class="link-secondary">Forgot password?</a>
+        <a href="signup.php" class="link-primary">New here?</a>
       </div>
     </form>
   </section>
@@ -167,29 +167,29 @@
     <div class="footer-section">
       <h4>Navigation</h4>
       <ul>
-        <li><a href="homepage.html">Homepage</a></li>
-        <li><a href="signin.html">My Account</a></li>
-        <li><a href="favourites.html">Favourites</a></li>
-        <li><a href="basket.html">Basket</a></li>
+        <li><a href="homepage.php">Homepage</a></li>
+        <li><a href="signin.php">My Account</a></li>
+        <li><a href="favourites.php">Favourites</a></li>
+        <li><a href="basket.php">Basket</a></li>
       </ul>
     </div>
 
     <div class="footer-section">
       <h4>Categories</h4>
       <ul>
-        <li><a href="livingroom.html">Living Room</a></li>
-        <li><a href="office.html">Offices</a></li>
-        <li><a href="kitchen.html">Kitchen</a></li>
-        <li><a href="bathroom.html">Bathrooms</a></li>
-        <li><a href="bedroom.html">Bedrooms</a></li>
+        <li><a href="livingroom.php">Living Room</a></li>
+        <li><a href="office.php">Offices</a></li>
+        <li><a href="kitchen.php">Kitchen</a></li>
+        <li><a href="bathroom.php">Bathrooms</a></li>
+        <li><a href="bedroom.php">Bedrooms</a></li>
       </ul>
     </div>
 
     <div class="footer-section">
       <h4>More...</h4>
       <ul>
-        <li><a href="contact.html">Contact Us</a></li>
-        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.php">Contact Us</a></li>
+        <li><a href="about.php">About Us</a></li>
       </ul>
     </div>
   </div>
@@ -208,38 +208,51 @@
     document.getElementById("errorPopup").style.display = "none";
   }
 
+  async function readJsonSafely(res) {
+    const ct = (res.headers.get("content-type") || "").toLowerCase();
+    const raw = await res.text();
+    if (ct.includes("application/json")) {
+      try { return JSON.parse(raw); } catch {}
+    }
+    return { success: false, message: raw || "Server error. Please try again." };
+  }
+
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     hidePopup();
 
     const email = form.querySelector('input[name="email"]').value.trim();
-    const password = form.querySelector('input[name="password"]').value.trim();
+    const password = form.querySelector('input[name="password"]').value;
 
     if (!email || !password) {
       showPopup("Please fill in both fields.");
       return;
     }
 
-    const formData = new FormData(form);
-    formData.append("action", "login");
+    const payload = { action: "login", email, password };
 
     try {
-      const res = await fetch(API_URL, { method: "POST", body: formData });
-      const text = (await res.text()).trim();
-      const lower = text.toLowerCase();
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
 
-      if (text === "CHANGE_PASSWORD_REQUIRED") {
-        window.location.href = "changepassword.html";
+      const data = await readJsonSafely(res);
+
+      if (data.code === "CHANGE_PASSWORD_REQUIRED") {
+        window.location.href = data.redirect || "changepassword.php";
         return;
       }
 
-      if (lower.includes("login failed") || lower.includes("invalid") || lower.includes("all fields are required")) {
-        showPopup(text);
+      if (data.success) {
+        window.location.href = data.redirect || "homepage.php";
         return;
       }
 
-      window.location.href = "homepage.html";
-    } catch {
+      showPopup(data.message || "Login failed. Invalid email or password.");
+    } catch (err) {
+      console.error(err);
       showPopup("Server error. Please try again.");
     }
   });
@@ -248,3 +261,4 @@
 <script src="../javascript/header_footer_script.js"></script>
 </body>
 </html>
+

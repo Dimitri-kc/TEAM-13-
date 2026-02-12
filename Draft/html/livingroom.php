@@ -25,7 +25,7 @@
             </button>
 
             <div class="logo-wrapper">
-                <a href="Homepage.php">
+                <a href="homepage.php">
                     <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
                 </a>
             </div>
@@ -48,12 +48,12 @@
 
         <nav class="dropdown-panel" id="dropdown-nav">
             <ul class="nav-links">
-                <li><a href="Categories.php">Living Room</a></li>
+                <li><a href="categories.php">Living Room</a></li>
                 <li><a href="bathroom.php">Bathroom</a></li>
                 <li><a href="bedroom.php">Bedroom</a></li>
                 <li><a href="office.php">Office</a></li>
                 <li><a href="kitchen.php">Kitchen</a></li>
-                <li class="nav-divider"><a href="login.html">My Account</a></li>
+                <li class="nav-divider"><a href="signin.php">My Account</a></li>
             </ul>
         </nav>
     </header>
@@ -185,10 +185,10 @@
             <div class="footer-section">
                 <h4>Navigation</h4>
                 <ul>
-                    <li><a href="Homepage.php">Homepage</a></li>
+                    <li><a href="homepage.php">Homepage</a></li>
                     <li><a href="login.php">My Account</a></li>
                     <li><a href="favourites.php">Favourites</a></li>
-                    <li><a href="Basket.php">Basket</a></li>
+                    <li><a href="basket.php">Basket</a></li>
                 </ul>
             </div>
 
@@ -207,7 +207,7 @@
                 <h4>More...</h4>
                 <ul>
                     <li><a href="contact.php">Contact Us</a></li>
-                    <li><a href="About.php">About Us</a></li>
+                    <li><a href="about.php">About Us</a></li>
                 </ul>
             </div>
         </div>

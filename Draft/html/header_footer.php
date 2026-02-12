@@ -66,10 +66,10 @@
             <div class="footer-section">
                 <h4>Navigation</h4>
                 <ul>
-                    <li><a href="homepage.html">Homepage</a></li>
-                    <li><a href="signin.html">My Account</a></li>
-                    <li><a href="favourites.html">Favourites</a></li>
-                    <li><a href="basket.html">Basket</a></li>
+                    <li><a href="homepage.php">Homepage</a></li>
+                    <li><a href="signin.php">My Account</a></li>
+                    <li><a href="favourites.php">Favourites</a></li>
+                    <li><a href="basket.php">Basket</a></li>
                 </ul>
             </div>
 
@@ -77,19 +77,19 @@
             <div class="footer-section">
                 <h4>Categories</h4>
                 <ul>
-                    <li><a href="livingroom.html">Living Room</a></li>
-                    <li><a href="office.html">Offices</a></li>
-                    <li><a href="kitchen.html">Kitchen</a></li>
-                    <li><a href="bathroom.html">Bathrooms</a></li>
-                    <li><a href="bedroom.html">Bedrooms</a></li>
+                    <li><a href="livingroom.php">Living Room</a></li>
+                    <li><a href="office.php">Offices</a></li>
+                    <li><a href="kitchen.php">Kitchen</a></li>
+                    <li><a href="bathroom.php">Bathrooms</a></li>
+                    <li><a href="bedroom.php">Bedrooms</a></li>
                 </ul>
             </div>
 
             <div class="footer-section">
                 <h4>More...</h4>
                 <ul>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.php">Contact Us</a></li>
+                    <li><a href="about.php">About Us</a></li>
                 </ul>
             </div>
         </div>

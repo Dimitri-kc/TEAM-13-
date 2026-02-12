@@ -1,6 +1,6 @@
 <?php
 // categoryRoutes.php
-include_once '../../controllers/CategoryController.php';
+include_once '../../controllers/categoryController.php';
 
 $categoryController = new CategoryController();
 

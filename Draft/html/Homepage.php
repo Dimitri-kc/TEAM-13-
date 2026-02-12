@@ -161,7 +161,7 @@ session_start();
             <div class="footer-section">
                 <h4>Navigation</h4>
                 <ul>
-                    <li><a href="Homepage.php">Homepage</a></li>
+                    <li><a href="homepage.php">Homepage</a></li>
                     <li><a href="signin.php">My Account</a></li>
                     <li><a href="favourites.php">Favourites</a></li>
                     <li><a href="basket.php">Basket</a></li>
