@@ -208,38 +208,51 @@
     document.getElementById("errorPopup").style.display = "none";
   }
 
+  async function readJsonSafely(res) {
+    const ct = (res.headers.get("content-type") || "").toLowerCase();
+    const raw = await res.text();
+    if (ct.includes("application/json")) {
+      try { return JSON.parse(raw); } catch {}
+    }
+    return { success: false, message: raw || "Server error. Please try again." };
+  }
+
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     hidePopup();
 
     const email = form.querySelector('input[name="email"]').value.trim();
-    const password = form.querySelector('input[name="password"]').value.trim();
+    const password = form.querySelector('input[name="password"]').value;
 
     if (!email || !password) {
       showPopup("Please fill in both fields.");
       return;
     }
 
-    const formData = new FormData(form);
-    formData.append("action", "login");
+    const payload = { action: "login", email, password };
 
     try {
-      const res = await fetch(API_URL, { method: "POST", body: formData });
-      const text = (await res.text()).trim();
-      const lower = text.toLowerCase();
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
 
-      if (text === "CHANGE_PASSWORD_REQUIRED") {
-        window.location.href = "changepassword.html";
+      const data = await readJsonSafely(res);
+
+      if (data.code === "CHANGE_PASSWORD_REQUIRED") {
+        window.location.href = data.redirect || "changepassword.html";
         return;
       }
 
-      if (lower.includes("login failed") || lower.includes("invalid") || lower.includes("all fields are required")) {
-        showPopup(text);
+      if (data.success) {
+        window.location.href = data.redirect || "homepage.html";
         return;
       }
 
-      window.location.href = "homepage.html";
-    } catch {
+      showPopup(data.message || "Login failed. Invalid email or password.");
+    } catch (err) {
+      console.error(err);
       showPopup("Server error. Please try again.");
     }
   });
@@ -248,3 +261,4 @@
 <script src="../javascript/header_footer_script.js"></script>
 </body>
 </html>
+

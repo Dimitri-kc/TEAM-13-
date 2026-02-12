@@ -234,6 +234,15 @@
     document.getElementById("errorPopup").style.display = "none";
   }
 
+  async function readJsonSafely(res) {
+    const ct = (res.headers.get("content-type") || "").toLowerCase();
+    const raw = await res.text();
+    if (ct.includes("application/json")) {
+      try { return JSON.parse(raw); } catch {}
+    }
+    return { success: false, message: raw || "Server error. Please try again." };
+  }
+
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     hidePopup();
@@ -271,22 +280,31 @@
       return;
     }
 
-    const formData = new FormData(form);
-    formData.append("action", "register");
-    formData.delete("confirmPassword"); 
+    const payload = {
+      action: "register",
+      name,
+      surname,
+      email,
+      phone,
+      address,
+      password
+    };
 
     try {
-      const res = await fetch(API_URL, { method: "POST", body: formData });
-      const text = await res.text();
-      const lower = text.toLowerCase();
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
 
-      if (lower.includes("registration successful")) {
-        window.location.href = "signin.html";
+      const data = await readJsonSafely(res);
+
+      if (data.success) {
+        window.location.href = data.redirect || "signin.html";
         return;
       }
 
-      showPopup(text || "Registration failed. Please try again.");
-
+      showPopup(data.message || "Registration failed. Please try again.");
     } catch (err) {
       console.error(err);
       showPopup("Server error. Please try again.");
@@ -297,3 +315,4 @@
 <script src="../javascript/header_footer_script.js"></script>
 </body>
 </html>
+
