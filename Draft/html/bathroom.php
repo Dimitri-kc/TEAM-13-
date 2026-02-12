@@ -232,7 +232,7 @@
                 <h4>More...</h4>
                 <ul>
                     <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="About.html">About Us</a></li>
+                    <li><a href="about.html">About Us</a></li>
                 </ul>
             </div>
         </div>
