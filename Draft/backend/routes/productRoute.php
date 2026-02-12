@@ -28,7 +28,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // Path to ProductController.php - added . __DIR__
-include_once __DIR__ . '/../controllers/ProductController.php'; 
+include_once __DIR__ . '/../controllers/productController.php'; 
 $productController = new ProductController();
 
 // Helper function to safely get integer IDs
