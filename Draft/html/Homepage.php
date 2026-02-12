@@ -1,4 +1,7 @@
-<?php include '../config/db_connect.php'; ?>
+<?php
+session_start();
+ include '../db_connect.php';
+  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
