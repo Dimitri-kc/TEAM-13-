@@ -108,25 +108,25 @@
       <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
     </button>
     <div class="logo-wrapper">
-      <a href="homepage.html">
+      <a href="homepage.php">
         <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
       </a>
     </div>
     <div class="header-actions">
-      <a href="favourites.html"><img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon"></a>
-      <a href="signin.html"><img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon"></a>
-      <a href="basket.html"><img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon"></a>
+      <a href="favourites.php"><img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon"></a>
+      <a href="signin.php"><img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon"></a>
+      <a href="basket.php"><img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon"></a>
     </div>
   </div>
 
   <nav class="dropdown-panel" id="dropdown-nav">
     <ul class="nav-links">
-      <li><a href="livingroom.html">Living Room</a></li>
-      <li><a href="bathroom.html">Bathroom</a></li>
-      <li><a href="bedroom.html">Bedroom</a></li>
-      <li><a href="office.html">Office</a></li>
-      <li><a href="kitchen.html">Kitchen</a></li>
-      <li class="nav-divider"><a href="signin.html">My Account</a></li>
+      <li><a href="livingroom.php">Living Room</a></li>
+      <li><a href="bathroom.php">Bathroom</a></li>
+      <li><a href="bedroom.php">Bedroom</a></li>
+      <li><a href="office.php">Office</a></li>
+      <li><a href="kitchen.php">Kitchen</a></li>
+      <li class="nav-divider"><a href="signin.php">My Account</a></li>
     </ul>
   </nav>
 </header>
@@ -180,7 +180,7 @@
 
       <p class="form-footer">
         Already have an account?
-        <a href="signin.html" class="link-primary">Sign in</a>
+        <a href="signin.php" class="link-primary">Sign in</a>
       </p>
     </form>
   </section>
@@ -195,25 +195,25 @@
     <div class="footer-section">
       <h4>Navigation</h4>
       <ul>
-        <li><a href="homepage.html">Homepage</a></li>
-        <li><a href="signin.html">My Account</a></li>
-        <li><a href="favourites.html">Favourites</a></li>
-        <li><a href="basket.html">Basket</a></li>
+        <li><a href="homepage.php">Homepage</a></li>
+        <li><a href="signin.php">My Account</a></li>
+        <li><a href="favourites.php">Favourites</a></li>
+        <li><a href="basket.php">Basket</a></li>
       </ul>
     </div>
     <div class="footer-section">
       <h4>Categories</h4>
       <ul>
-        <li><a href="livingroom.html">Living Room</a></li>
-        <li><a href="office.html">Offices</a></li>
-        <li><a href="kitchen.html">Kitchen</a></li>
-        <li><a href="bathroom.html">Bathrooms</a></li>
-        <li><a href="bedroom.html">Bedrooms</a></li>
+        <li><a href="livingroom.php">Living Room</a></li>
+        <li><a href="office.php">Offices</a></li>
+        <li><a href="kitchen.php">Kitchen</a></li>
+        <li><a href="bathroom.php">Bathrooms</a></li>
+        <li><a href="bedroom.php">Bedrooms</a></li>
       </ul>
     </div>
     <div class="footer-section">
       <h4>More...</h4>
-      <ul><li><a href="contact.html">Contact Us</a></li><li><a href="about.html">About Us</a></li></ul>
+      <ul><li><a href="contact.php">Contact Us</a></li><li><a href="about.php">About Us</a></li></ul>
     </div>
   </div>
 </footer>
@@ -281,7 +281,7 @@
       const lower = text.toLowerCase();
 
       if (lower.includes("registration successful")) {
-        window.location.href = "signin.html";
+        window.location.href = "signin.php";
         return;
       }
 

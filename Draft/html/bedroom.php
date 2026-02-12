@@ -25,15 +25,15 @@
     </button>
 
     <div class="logo-wrapper">
-      <a href="homepage.html">
+      <a href="homepage.php">
         <img src="../images/header_footer_images/logo.png" class="main-logo" alt="LOFT & LIVING">
       </a>
     </div>
 
     <div class="header-actions">
-      <a href="favourites.html"><img src="../images/header_footer_images/icon-heart.png" class="ui-icon" alt="Favourites"></a>
-      <a href="signin.html"><img src="../images/header_footer_images/icon-user.png" class="ui-icon" alt="My Account"></a>
-      <a href="basket.html" class="basket-icon"><img src="../images/header_footer_images/icon-basket.png" class="ui-icon" alt="Basket">
+      <a href="favourites.php"><img src="../images/header_footer_images/icon-heart.png" class="ui-icon" alt="Favourites"></a>
+      <a href="signin.php"><img src="../images/header_footer_images/icon-user.png" class="ui-icon" alt="My Account"></a>
+      <a href="basket.php" class="basket-icon"><img src="../images/header_footer_images/icon-basket.png" class="ui-icon" alt="Basket">
       <span id="basket-count">0</span>
     </a>
     </div>
@@ -41,12 +41,12 @@
 
   <nav class="dropdown-panel" id="dropdown-nav">
     <ul class="nav-links">
-      <li><a href="livingroom.html">Living Room</a></li>
-      <li><a href="bathroom.html">Bathroom</a></li>
-      <li><a href="bedroom.html">Bedroom</a></li>
-      <li><a href="office.html">Office</a></li>
-      <li><a href="kitchen.html">Kitchen</a></li>
-      <li class="nav-divider"><a href="login.html">My Account</a></li>
+      <li><a href="livingroom.php">Living Room</a></li>
+      <li><a href="bathroom.php">Bathroom</a></li>
+      <li><a href="bedroom.php">Bedroom</a></li>
+      <li><a href="office.php">Office</a></li>
+      <li><a href="kitchen.php">Kitchen</a></li>
+      <li class="nav-divider"><a href="login.php">My Account</a></li>
     </ul>
   </nav>
 </header>
@@ -122,7 +122,7 @@
            data-new="true"
            data-price="499"
            data-rating="5"
-           onclick="location.href='../html/bed-frame.html'">
+           onclick="location.href='../html/bed-frame.php'">
         <img src="../images/bedroom-images/Bed Frame.png" alt="Upholstered Bed Frame">
 
         <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
@@ -146,7 +146,7 @@
            data-new="true"
            data-price="269"
            data-rating="4"
-           onclick="location.href='../html/mattress.html'">
+           onclick="location.href='../html/mattress.php'">
         <img src="../images/bedroom-images/Mattress.png" alt="Luxury Comfort Mattress">
 
         <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
@@ -170,7 +170,7 @@
            data-new="false"
            data-price="25"
            data-rating="4"
-           onclick="location.href='../html/duvet.html'">
+           onclick="location.href='../html/duvet.php'">
         <img src="../images/bedroom-images/Duvet.png" alt="All-Season Duvet">
 
         <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
@@ -194,7 +194,7 @@
            data-new="false"
            data-price="20"
            data-rating="5"
-           onclick="location.href='../html/pillow.html'">
+           onclick="location.href='../html/pillow.php'">
         <img src="../images/bedroom-images/Pillow.png" alt="Medium Support Pillow">
 
         <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
@@ -218,7 +218,7 @@
            data-new="false"
            data-price="79"
            data-rating="4"
-           onclick="location.href='../html/side-table.html'">
+           onclick="location.href='../html/side-table.php'">
         <img src="../images/bedroom-images/Side table.png" alt="Modern Side Table">
 
         <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
@@ -253,29 +253,29 @@
     <div class="footer-section">
       <h4>Navigation</h4>
       <ul>
-        <li><a href="homepage.html">Homepage</a></li>
-        <li><a href="login.html">My Account</a></li>
-        <li><a href="favourites.html">Favourites</a></li>
-        <li><a href="Basket.html">Basket</a></li>
+        <li><a href="homepage.php">Homepage</a></li>
+        <li><a href="login.php">My Account</a></li>
+        <li><a href="favourites.php">Favourites</a></li>
+        <li><a href="basket.php">Basket</a></li>
       </ul>
     </div>
 
     <div class="footer-section">
       <h4>Categories</h4>
       <ul>
-        <li><a href="livingroom.html">Living Room</a></li>
-        <li><a href="office.html">Office</a></li>
-        <li><a href="kitchen.html">Kitchen</a></li>
-        <li><a href="bathroom.html">Bathroom</a></li>
-        <li><a href="bedroom.html">Bedroom</a></li>
+        <li><a href="livingroom.php">Living Room</a></li>
+        <li><a href="office.php">Office</a></li>
+        <li><a href="kitchen.php">Kitchen</a></li>
+        <li><a href="bathroom.php">Bathroom</a></li>
+        <li><a href="bedroom.php">Bedroom</a></li>
       </ul>
     </div>
 
     <div class="footer-section">
       <h4>More...</h4>
       <ul>
-        <li><a href="contact.html">Contact Us</a></li>
-        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.php">Contact Us</a></li>
+        <li><a href="about.php">About Us</a></li>
       </ul>
     </div>
 
