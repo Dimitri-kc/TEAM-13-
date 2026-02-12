@@ -15,27 +15,28 @@ class User {
             $check->execute();
             $check->store_result();
 
-            if ($check->fetch()) {
+            if ($check->fetch()) { 
                 return false; //if email exits, registration fails
             }
         $stmt = $this->conn->prepare("INSERT INTO users (name, surname, email, phone, password, address, role) VALUES (?, ?, ?, ?, ?, ?, ?)"); // Using prepared statements to prevent SQL injection
 
         $stmt->bind_param("sssssss", $name, $surname, $email, $phone, $hashedPassword, $address, $role);
-        return $stmt->execute([$name, $surname, $email, $phone, $hashedPassword, $address, $role]); //execute the statement with user details
+        $registrationSuccess = $stmt->execute();
+        $stmt->close();
+        return $registrationSuccess; //return true if registration successful
+
         } catch (Exception $e) {
             return false; //registration failed due to errors
         }
 
-        $registrationSuccess = $stmt->execute();
-        $stmt->close();
-        return $registrationSuccess; //return true if registration successful
+
     } 
     
     //login method to authenticate user
     public function login($email) {
         $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?"); //search for user via email
         $stmt->bind_param("s", $email);
-        $stmt->execute([$email]); //
+        $stmt->execute(); 
 
         $result=$stmt->get_result();
         $user=$result->fetch_assoc(); //fetch the user data as an associative array
@@ -44,6 +45,7 @@ class User {
         //password verification handled in controller
     }
     //logout handled in routes via session destruction
-    //used sqli prepared statements to prevent SQL injection and match with database
+    //SECURITY NOTE:
+    //SQL queries pre-compiled, user data treated as a parameter (not executable code), preventing SQL injections
 }
 ?>
