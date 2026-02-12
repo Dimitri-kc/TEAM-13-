@@ -22,7 +22,7 @@
             </button>
 
             <div class="logo-wrapper">
-                <a href="Homepage.html">
+                <a href="homepage.html">
                     <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
                 </a>
             </div>
@@ -95,7 +95,7 @@
             <div class="footer-section">
                 <h4>Navigation</h4>
                 <ul>
-                    <li><a href="Homepage.html">Homepage</a></li>
+                    <li><a href="homepage.html">Homepage</a></li>
                     <li><a href="login.html">My Account</a></li>
                     <li><a href="favourites.html">Favourites</a></li>
                     <li><a href="Basket.html">Basket</a></li>
