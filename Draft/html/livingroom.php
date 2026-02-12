@@ -48,12 +48,12 @@
 
         <nav class="dropdown-panel" id="dropdown-nav">
             <ul class="nav-links">
-                <li><a href="Categories.php">Living Room</a></li>
+                <li><a href="categories.php">Living Room</a></li>
                 <li><a href="bathroom.php">Bathroom</a></li>
                 <li><a href="bedroom.php">Bedroom</a></li>
                 <li><a href="office.php">Office</a></li>
                 <li><a href="kitchen.php">Kitchen</a></li>
-                <li class="nav-divider"><a href="login.html">My Account</a></li>
+                <li class="nav-divider"><a href="signin.php">My Account</a></li>
             </ul>
         </nav>
     </header>
@@ -188,7 +188,7 @@
                     <li><a href="homepage.php">Homepage</a></li>
                     <li><a href="login.php">My Account</a></li>
                     <li><a href="favourites.php">Favourites</a></li>
-                    <li><a href="Basket.php">Basket</a></li>
+                    <li><a href="basket.php">Basket</a></li>
                 </ul>
             </div>
 

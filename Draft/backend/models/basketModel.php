@@ -59,4 +59,8 @@ class Basket {
 //updates item quantity in table
 //removes items from " "
 //fetches user basket items from " "
+//PDO prepared statements used to secure database interactions and prevent SQL injections
+//Design allows for one basket per user, with multiple items in each basket, and supports both logged in users and guests via session management in controller and services
+//Although PDO is more secure and flexible, as MySQLi was used in db_connect.php, prepared statements will need to be changed to reflect this for consistency and funcitonality.
+//This ensures secure consistency, compatability, funcitonality and maintainability across the platform.
 ?>
