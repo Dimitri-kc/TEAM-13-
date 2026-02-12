@@ -241,12 +241,12 @@
       const data = await readJsonSafely(res);
 
       if (data.code === "CHANGE_PASSWORD_REQUIRED") {
-        window.location.href = data.redirect || "changepassword.html";
+        window.location.href = data.redirect || "changepassword.php";
         return;
       }
 
       if (data.success) {
-        window.location.href = data.redirect || "homepage.html";
+        window.location.href = data.redirect || "homepage.php";
         return;
       }
 

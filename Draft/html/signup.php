@@ -300,7 +300,7 @@
       const data = await readJsonSafely(res);
 
       if (data.success) {
-        window.location.href = data.redirect || "signin.html";
+        window.location.href = data.redirect || "signin.php";
         return;
       }
 
