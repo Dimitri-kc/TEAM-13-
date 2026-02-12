@@ -207,7 +207,7 @@
                 <h4>More...</h4>
                 <ul>
                     <li><a href="contact.php">Contact Us</a></li>
-                    <li><a href="About.php">About Us</a></li>
+                    <li><a href="about.php">About Us</a></li>
                 </ul>
             </div>
         </div>
