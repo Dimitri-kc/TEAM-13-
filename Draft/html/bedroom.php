@@ -123,7 +123,7 @@
            data-price="499"
            data-rating="5"
            onclick="location.href='../html/bed-frame.php'">
-        <img src="../images/bedroom-images/Bed Frame.png" alt="Upholstered Bed Frame">
+        <img src="../images/bedroom-images/bed-frame.png" alt="Upholstered Bed Frame">
 
         <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
         <img src="../images/header_footer_images/icon-heart.png" alt="">
@@ -147,7 +147,7 @@
            data-price="269"
            data-rating="4"
            onclick="location.href='../html/mattress.php'">
-        <img src="../images/bedroom-images/Mattress.png" alt="Luxury Comfort Mattress">
+        <img src="../images/bedroom-images/mattress.png" alt="Luxury Comfort Mattress">
 
         <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
         <img src="../images/header_footer_images/icon-heart.png" alt="">
@@ -171,7 +171,7 @@
            data-price="25"
            data-rating="4"
            onclick="location.href='../html/duvet.php'">
-        <img src="../images/bedroom-images/Duvet.png" alt="All-Season Duvet">
+        <img src="../images/bedroom-images/duvet.png" alt="All-Season Duvet">
 
         <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
         <img src="../images/header_footer_images/icon-heart.png" alt="">
@@ -195,7 +195,7 @@
            data-price="20"
            data-rating="5"
            onclick="location.href='../html/pillow.php'">
-        <img src="../images/bedroom-images/Pillow.png" alt="Medium Support Pillow">
+        <img src="../images/bedroom-images/pillow.png" alt="Medium Support Pillow">
 
         <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
         <img src="../images/header_footer_images/icon-heart.png" alt="">
@@ -219,7 +219,7 @@
            data-price="79"
            data-rating="4"
            onclick="location.href='../html/side-table.php'">
-        <img src="../images/bedroom-images/Side table.png" alt="Modern Side Table">
+        <img src="../images/bedroom-images/side-table.png" alt="Modern Side Table">
 
         <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
         <img src="../images/header_footer_images/icon-heart.png" alt="">
