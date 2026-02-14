@@ -46,7 +46,7 @@
       <li><a href="bedroom.php">Bedroom</a></li>
       <li><a href="office.php">Office</a></li>
       <li><a href="kitchen.php">Kitchen</a></li>
-      <li class="nav-divider"><a href="login.php">My Account</a></li>
+      <li class="nav-divider"><a href="signin.php">My Account</a></li>
     </ul>
   </nav>
 </header>
@@ -254,7 +254,7 @@
       <h4>Navigation</h4>
       <ul>
         <li><a href="homepage.php">Homepage</a></li>
-        <li><a href="login.php">My Account</a></li>
+        <li><a href="signin.php">My Account</a></li>
         <li><a href="favourites.php">Favourites</a></li>
         <li><a href="basket.php">Basket</a></li>
       </ul>
