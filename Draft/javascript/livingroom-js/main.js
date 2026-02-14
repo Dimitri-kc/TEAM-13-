@@ -105,30 +105,37 @@ function addToBasket(button) {
 
 }
 
+// if (continueBtn) {
+//     continueBtn.addEventListener('click', () => {
+//         basketModal.style.display = 'none'; // closes modal
+//     });
+// }
+
+// if (goToBasketBtn) {
+//     goToBasketBtn.addEventListener('click', () => {
+//         window.location.href = 'basket.html'; // redirects to the basket
+//     });
+// }
+
 if (continueBtn) {
     continueBtn.addEventListener('click', () => {
-        basketModal.style.display = 'none'; // closes modal
+        basketModal.style.display = 'none';
     });
-<<<<<<< HEAD
-});
+}
+
+if (goToBasketBtn) {
+    goToBasketBtn.addEventListener('click', () => {
+        window.location.href = 'basket.html';
+    });
+}
 
 document.addEventListener("click", function (e) {
   const favBtn = e.target.closest(".fav-icon-btn");
   if (!favBtn) return;
 
   e.preventDefault();
-  e.stopPropagation(); // stops product navigation
+  e.stopPropagation();
 });
-=======
-}
-
-if (goToBasketBtn) {
-    goToBasketBtn.addEventListener('click', () => {
-        window.location.href = 'basket.html'; // redirects to the basket
-    });
-}
 
 
 
-
->>>>>>> 5f1ce884f75f1a1d75b3caee90df60a37c03f94c
