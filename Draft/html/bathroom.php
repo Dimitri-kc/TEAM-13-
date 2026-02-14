@@ -1,4 +1,5 @@
-<?php include '../config/db_connect.php'; ?>
+<?php 
+ include '../backend/config/db_connect.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
