@@ -1,5 +1,6 @@
-
 <?php //basket functions - > will also contain some helpers for checkout process 
+
+require_once __DIR__ . '/../models/basketModel.php'; //include basketModel for user's basket interactions 
 
 if(session_status() === PHP_SESSION_NONE) { //start session if not already started
     session_start();
