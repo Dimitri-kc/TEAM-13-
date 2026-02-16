@@ -4,7 +4,7 @@ class User {
 
     public function __construct() {
         require_once __DIR__ . '/../config/db_connect.php'; // Adjusted path to include db_connect.php
-        $this->conn = $dbConnection;
+        $this->conn = $conn;
     }
     
     //registration method to register new user & insert details into database user table
