@@ -4,6 +4,7 @@ class User {
 
     public function __construct() {
         require_once __DIR__ . '/../config/db_connect.php'; // Adjusted path to include db_connect.php
+        global $conn; //variable from db_connect.php for database connection
         $this->conn = $conn;
     }
     
