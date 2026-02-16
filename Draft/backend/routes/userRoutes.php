@@ -3,7 +3,7 @@
 header('Content-Type: application/json');
 
 session_start();
-require_once '../../controllers/userController.php'; //path to userController.php
+require_once '/../controllers/userController.php'; //path to userController.php
 
 $userController = new UserController(); //instance of usercontroller
 //Define routes for user-related actions
