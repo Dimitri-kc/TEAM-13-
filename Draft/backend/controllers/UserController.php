@@ -52,10 +52,7 @@ class UserController {
             ]);
             return;
         }
-            /*echo "Registration successful. You can now <a href='/signin.html'>login</a>.";//hyperlink to login page after registration
-            } else {
-                echo "Registration failed. Please try again.";
-            }*/
+
  }
 
     //method to login a user  
