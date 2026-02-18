@@ -17,17 +17,20 @@ class User {
             $check->store_result();
 
             if ($check->fetch()) { 
-                return false; //if email exits, registration fails
+                return ["success" => false, "error" => "exists"]; //if email exits, registration fails
             }
+            
         $stmt = $this->conn->prepare("INSERT INTO users (name, surname, email, phone, password, address, role) VALUES (?, ?, ?, ?, ?, ?, ?)"); // Using prepared statements to prevent SQL injection
 
         $stmt->bind_param("sssssss", $name, $surname, $email, $phone, $hashedPassword, $address, $role);
         $registrationSuccess = $stmt->execute();
+        //if new user then redirect to changepassword.php
+        
         $stmt->close();
-        return $registrationSuccess; //return true if registration successful
-
+        return ["success" => $registrationSuccess]; //return success status
+        
         } catch (Exception $e) {
-            return false; //registration failed due to errors
+            return ["success" => false, "error" => $e->getMessage()]; //return error message if exception occurs
         }
 
 

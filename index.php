@@ -1,5 +1,10 @@
 cs2team13.cs2410-web01pvm.aston.ac.uk
-<!DOCTYPE html>
+<?php
+// Redirect to homepage
+header("Location: /TEAM-13-/Draft/html/homepage.php");
+exit;
+?>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="refresh" content="0; URL='TEAM-13-/Draft/html/homepage.php'" />
@@ -9,3 +14,4 @@ cs2team13.cs2410-web01pvm.aston.ac.uk
     <p>If you are not redirected automatically, <a href="TEAM-13-/Draft/html/homepage.php">click here</a>.</p>
   </body>
 </html>
+ -->
