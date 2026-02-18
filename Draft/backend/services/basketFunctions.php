@@ -46,11 +46,11 @@ function clearSessionBasket() {
 function mergeBaskets($user_ID) {
     $basketModel = new Basket(); //create Basket
     $userBasket = $basketModel->fetchUserBasket($user_ID); //fetch user basket from database
-    
+
     if (!$userBasket || empty($userBasket)) { //if no basket exists for user, then fetch new basket details from one created in basketModel.php fetchUserBasket
     return; //added for error handling - if basket creation/fetching fails then exit merging process - user can still shop, add items to session basket -> merge upon next login/register
     }
-    $basket_ID = $userBasket['basket_ID']; //get basket ID
+    $basket_ID = (int)$userBasket['basket_ID']; //int prevents SQL injection, ensures correct data type by forcfully converting ID to int
 
     $sessionBasket = getSessionBasket(); //get guest basket from session
 
