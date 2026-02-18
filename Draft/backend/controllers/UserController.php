@@ -104,8 +104,7 @@ class UserController {
         }
     }
 }
-//TO DO:
-//json for linking successful backend implementation if javascript coded to frontend
+//Notes:
 //added json encoding for registration and login response
 //logout handled in routes via session destruction
 //changed POST data retrieval in register method to paramerer $data for better error handling/testing to make fetch-compatbile
