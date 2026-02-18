@@ -45,7 +45,7 @@
 
         <nav class="dropdown-panel" id="dropdown-nav">
             <ul class="nav-links">
-                <li><a href="Categories.php">Living Room</a></li>
+                <li><a href="livingroom.php">Living Room</a></li>
                 <li><a href="bathroom.php">Bathroom</a></li>
                 <li><a href="bedroom.php">Bedroom</a></li>
                 <li><a href="office.php">Office</a></li>
@@ -133,7 +133,7 @@
                  data-keywords="<?php echo $row['keywords']; ?>" 
                  data-colour="<?php echo $row['colour']; ?>">
                  
-                 <a href="product_details.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
+                 <a href="sofa.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
                      <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
                      <div class="product-text">
                          <h2><?php echo $row['name']; ?></h2>
