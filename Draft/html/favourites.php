@@ -116,7 +116,7 @@ error_reporting(E_ALL);
     </nav>
 </header>
 
-         <div style="height: 1px; background-color: #ddd; margin-bottom: 0px;"></div>
+         <!-- <div style="height: 1px; background-color: #ddd; margin-bottom: 0px;"></div> -->
 
 <!-- Main Favourites Content -->
 <main style="padding: 50px; min-height: 600px;">
