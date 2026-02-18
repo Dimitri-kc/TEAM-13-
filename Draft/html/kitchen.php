@@ -120,8 +120,7 @@
             <!-- link added to connect to database -->
  <div class="product-grid" id="product-grid">
     <?php
-    // We use category_id = 2 for Kitchen. 
-    // If your database uses a different number, change the '2' below.
+    // category_id = 2 for Kitchen. 
     $query = "SELECT * FROM products WHERE category_id = 2";
     $result = mysqli_query($conn, $query);
 
