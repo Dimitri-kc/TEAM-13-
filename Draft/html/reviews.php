@@ -10,20 +10,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name = trim($_POST['name']);
     $rating = (int)$_POST['rating'];
     $comment = trim($_POST['comment']);
+    $category = $_POST['category'] ?? null;
+    $product_name = $_POST['product'] ?? null;
 
-    // If product review, validate product exists
+    // Optional: validate product exists if product_id is given
     if ($product_id) {
         $check = $conn->prepare("SELECT product_ID FROM products WHERE product_ID = ?");
         $check->bind_param("i", $product_id);
         $check->execute();
         $check->store_result();
-
         if ($check->num_rows === 0) {
             die("Invalid product.");
         }
         $check->close();
     } else {
-        // Service review
         $product_id = NULL;
     }
 
@@ -38,11 +38,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $stmt = $conn->prepare("
             INSERT INTO reviews 
-            (user_ID, product_ID, rating, comment, review_date) 
-            VALUES (?, ?, ?, ?, NOW())
+            (user_name, product_ID, category, product_name, rating, comment, review_date) 
+            VALUES (?, ?, ?, ?, ?, ?, NOW())
         ");
-
-        $stmt->bind_param("siis", $name, $product_id, $rating, $comment);
+        $stmt->bind_param("sissis", $name, $product_id, $category, $product_name, $rating, $comment);
 
         if ($stmt->execute()) {
             $message = "Review submitted successfully!";
@@ -53,8 +52,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->close();
     }
 }
-?>
 
+// Fetch all reviews
+$reviews = $conn->query("SELECT * FROM reviews ORDER BY review_date DESC")->fetch_all(MYSQLI_ASSOC);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,104 +64,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <title>Leave a Review | LOFT & LIVING</title>
     <link rel="stylesheet" href="../css/header_footer_style.css">
     <style>
-@import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
-
-
-    /* <!-- font-family: 'Josefin Slab',serif;
-  font-family: 'Ibarra Real Nova', serif; --> */
+        body { font-family: Arial, sans-serif; background: #d9d6cf; color:#111; }
         .review-container {
-            width: 540px;
-            margin: 40px auto;
-            background: white;
-            padding: 35px;
-            border-radius: 8px;
+            width: 540px; margin: 40px auto;
+            background: white; padding: 35px; border-radius: 8px;
             box-shadow: 0 3px 8px rgba(0,0,0,0.1);
         }
-        .review-container h2 {
-            text-align: center;
-            font-family:  'Ibarra Real Nova', serif;
-            font-size: 1.7rem;
-            margin-bottom: 15px;
+        .review-container h2 { text-align:center; font-size:1.7rem; margin-bottom:15px; }
+        .review-container form { display:flex; flex-direction:column; }
+        .review-container input, .review-container textarea, select {
+            width:100%; padding:10px; margin-bottom:15px; font-size:14px;
+            border:1px solid #ccc; border-radius:4px; box-sizing:border-box;
         }
-        .review-container form {
-            display: flex;
-            flex-direction: column;
-        }
-        .review-container input,
-        .review-container textarea {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 10px;
-            margin-bottom: 15px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .review-container textarea {
-            resize: none;
-            height: 120px;
-        }
-        .review-container button {
-            padding: 10px;
-            background-color: #2C2C2C;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 15px;
-        }
-        .review-container button:hover {
-            background-color: #1a5ec8;
-        }
-        .message {
-            text-align: center;
-            margin-bottom: 15px;
-            color: green;
-        }
+        .review-container textarea { resize:none; height:120px; }
+        .review-container button { padding:10px; background:#2C2C2C; color:white; border:none; cursor:pointer; font-size:15px; }
+        .review-container button:hover { background:#1a5ec8; }
+        .message { text-align:center; margin-bottom:15px; color:green; }
+        .review-card { background:#fff; border:1px solid #ccc; padding:15px; margin-bottom:15px; border-radius:6px; }
+        .review-card small { color:#666; }
     </style>
 </head>
 <body>
 
 <header class="site-header">
-    <div class="header-inner">
-        <button class="menu-btn" id="menu-toggle-btn">
-            <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon">
-        </button>
-
-        <div class="logo-wrapper">
-            <a href="homepage.php">
-                <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
-            </a>
-        </div>
-
-        <div class="header-actions">
-            <a href="favourites.php">
-                <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
-            </a>
-            <a href="signin.php">
-                <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
-            </a>
-            <a href="basket.php">
-                <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
-            </a>
-        </div>
-    </div>
-
-    <nav class="dropdown-panel" id="dropdown-nav">
-        <ul class="nav-links">
-            <li><a href="livingroom.php">Living Room</a></li>
-            <li><a href="bathroom.php">Bathroom</a></li>
-            <li><a href="bedroom.php">Bedroom</a></li>
-            <li><a href="office.php">Office</a></li>
-            <li><a href="kitchen.php">Kitchen</a></li>
-            <li class="nav-divider"><a href="signin.php">My Account</a></li>
-        </ul>
-    </nav>
+    <!-- LOFT & LIVING header HTML here (same as your previous code) -->
 </header>
 
-<main style="padding: 50px; background-color: #d9d6cf;; min-height: 600px;">
-
+<main style="padding:50px; min-height:600px;">
     <div class="review-container">
         <h2>Leave a Review</h2>
 
@@ -169,74 +99,85 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <?php endif; ?>
 
         <form method="POST">
-            <input 
-                type="text" 
-                name="name" 
-                placeholder="Your Name" 
-                maxlength="100"
-                required
-            >
+            <label for="category">Select Category:</label>
+            <select name="category" id="category" required>
+                <option value="">-- Select Category --</option>
+                <option value="livingroom">Living Room</option>
+                <option value="kitchen">Kitchen</option>
+                <option value="bedroom">Bedroom</option>
+                <option value="bathroom">Bathroom</option>
+                <option value="office">Office</option>
+            </select>
 
-            <input 
-                type="number" 
-                name="rating" 
-                min="1" 
-                max="5" 
-                value="5"
-                required
-            >
+            <label for="product">Select Item:</label>
+            <select name="product" id="product">
+                <option value="">-- Select Item --</option>
+            </select>
 
-            <textarea 
-                name="comment" 
-                placeholder="Write your review here..."
-                maxlength="500"
-                required
-            ></textarea>
-
+            <input type="text" name="name" placeholder="Your Name" maxlength="100" required>
+            <input type="number" name="rating" min="1" max="5" value="5" required>
+            <textarea name="comment" placeholder="Write your review here..." maxlength="500" required></textarea>
             <button type="submit">Submit Review</button>
         </form>
     </div>
 
+    <!-- Display all reviews -->
+    <div style="width: 540px; margin:40px auto;">
+        <h3>Reviews</h3>
+        <?php if(empty($reviews)): ?>
+            <p>No reviews yet. Be the first to leave one!</p>
+        <?php else: ?>
+            <?php foreach($reviews as $r): ?>
+                <div class="review-card">
+                    <strong><?php echo htmlspecialchars($r['user_name']); ?></strong> 
+                    <span style="float:right;">Rating: <?php echo $r['rating']; ?>/5</span>
+                    <p style="margin-top:8px;"><?php echo nl2br(htmlspecialchars($r['comment'])); ?></p>
+                    <small>
+                        <?php 
+                            echo $r['category'] ? ucfirst($r['category']) : 'Service';
+                            echo $r['product_name'] ? ' - '.$r['product_name'] : '';
+                        ?>
+                        | <?php echo date("M d, Y H:i", strtotime($r['review_date'])); ?>
+                    </small>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
 </main>
 
 <footer class="site-footer">
-    <div class="footer-inner">
-        <div class="footer-section social-links">
-            <a href="#"><img src="../images/header_footer_images/icon-twitter.png" class="social-icon"></a>
-            <a href="#"><img src="../images/header_footer_images/icon-instagram.png" class="social-icon"></a>
-        </div>
-
-        <div class="footer-section">
-            <h4>Navigation</h4>
-            <ul>
-                <li><a href="homepage.php">Homepage</a></li>
-                <li><a href="signin.php">My Account</a></li>
-                <li><a href="favourites.php">Favourites</a></li>
-                <li><a href="basket.php">Basket</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-section">
-            <h4>Categories</h4>
-            <ul>
-                <li><a href="livingroom.php">Living Room</a></li>
-                <li><a href="office.php">Office</a></li>
-                <li><a href="kitchen.php">Kitchen</a></li>
-                <li><a href="bathroom.php">Bathroom</a></li>
-                <li><a href="bedroom.php">Bedroom</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-section">
-            <h4>More...</h4>
-            <ul>
-                <li><a href="contact.php">Contact Us</a></li>
-                <li><a href="about.php">About Us</a></li>
-            </ul>
-        </div>
-    </div>
+    <!-- LOFT & LIVING footer HTML here -->
 </footer>
 
-<script src="../javascript/header_footer_script.js"></script>
+<script>
+// Example products for each category
+const productsByCategory = {
+    livingroom: ["Modern Grey Sofa", "Velvet Throw Pillow", "Chunky Knit Throw Blanket"],
+    kitchen: ["Stainless Steel Knife Set", "Non-stick Frying Pan", "Coffee Maker"],
+    bedroom: ["Queen Bed Frame", "Memory Foam Mattress", "Nightstand Lamp"],
+    bathroom: ["Bath Towel Set", "Shower Caddy", "Soap Dispenser"],
+    office: ["Ergonomic Chair", "Standing Desk", "LED Desk Lamp"]
+};
+
+// Update products when category changes
+const categorySelect = document.getElementById('category');
+const productSelect = document.getElementById('product');
+
+categorySelect.addEventListener('change', function() {
+    const category = this.value;
+    productSelect.innerHTML = '<option value="">-- Select Item --</option>';
+    if(category && productsByCategory[category]) {
+        productsByCategory[category].forEach(item => {
+            const option = document.createElement('option');
+            option.value = item;
+            option.textContent = item;
+            productSelect.appendChild(option);
+        });
+        productSelect.disabled = false;
+    } else {
+        productSelect.disabled = true;
+    }
+});
+</script>
 </body>
 </html>
