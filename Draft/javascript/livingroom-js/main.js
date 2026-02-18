@@ -79,7 +79,7 @@ function renderProducts(products) {
       });
       }
 // Initial fetch
-fetchProducts();
+// fetchProducts();
 
 // fetch(`https://cs2team13.cs2410-web01pvm.aston.ac.uk/TEAM-13-/Draft/backend/routes/productRoute.php?action=byCategory&category=${categoryName}`)
 // fetch(`../php/productRoute.php?action=byCategory&category=${filters.category}`)
