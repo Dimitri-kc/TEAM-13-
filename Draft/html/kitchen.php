@@ -133,7 +133,7 @@
                  data-keywords="<?php echo $row['keywords']; ?>" 
                  data-colour="<?php echo $row['colour']; ?>">
                  
-                 <a href="product_details.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
+                 <a href="sofa.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
                      <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
                      <div class="product-text">
                          <h2><?php echo $row['name']; ?></h2>
