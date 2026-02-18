@@ -117,92 +117,42 @@
                 Uh oh! No products matched your search.
             </p>
 
-            <div class="product-grid">
-                <div class="item" data-keywords="modern smart bookshelf" data-category="bookshelves" data-colour="brown"
-                data-new="true" data-price="210" data-rating="4" onclick="location.href='../html/bookshelf.php'">
-                    <img src="../images/office-images/bookshelf.webp" alt="item 1"> 
+           <!-- link added to connect to database -->
+ <div class="product-grid" id="product-grid">
+    <?php
+    // category_id = 3 for office
+    $query = "SELECT * FROM products WHERE category_id = 3";
+    $result = mysqli_query($conn, $query);
 
-                    <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-                    <div class="product-text">
-                        <h2> Oak Tall Bookshelf </h2>
-                        <p> £210 </p>
-                    </div>
-                               <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-                </div>
+    if ($result && mysqli_num_rows($result) > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+            ?>
+            <div class="item" 
+                 data-price="<?php echo $row['price']; ?>" 
+                 data-category="<?php echo $row['category_id']; ?>" 
+                 data-keywords="<?php echo $row['keywords']; ?>" 
+                 data-colour="<?php echo $row['colour']; ?>">
+                 
+                 <a href="product_details.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
+                     <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
+                     <div class="product-text">
+                         <h2><?php echo $row['name']; ?></h2>
+                         <p>£<?php echo $row['price']; ?></p>
+                     </div>
+                 </a>
 
-                <div class="item" data-keywords="smart modern office chairs" data-category="chairs" data-colour="brown"
-                data-new="true" data-price="120" data-rating="3">
-                    <img src="../images/office-images/chair.webp" alt="item 2">
-
-                    <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-                    <div class="product-text">
-                        <h2> Brown Faux Leather Office Chair </h2>
-                        <p> £120 </p>
-                    </div>
-                               <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-                </div>
-
-                <div class="item" data-keywords="grey desk" data-category="desks" data-colour="grey"
-                data-new="true" data-price="95" data-rating="4">
-                    <img src="../images/office-images/desk.webp" alt="item 3">
-
-                    <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-                    <div class="product-text">
-                        <h2> Grey Study Desk</h2>
-                        <p> £95 </p>
-                    </div>
-                               <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-                </div>
-
-                <div class="item" data-keywords="lamps" data-category="lamps" data-colour="black"
-                data-new="true" data-price="15" data-rating="4">
-                    <img src="../images/office-images/lamp.webp" alt="item 4" >
-
-                    <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-                    <div class="product-text">
-                        <h2> Metal Adjustable Desk Lamp </h2>
-                        <p> £15 </p>
-                    </div>
-                               <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-                </div>
-
-                <div class="item" data-keywords="smart modern plant" data-category="plants" data-colour="green"
-                data-new="false" data-price="45" data-rating="5">
-                    <img src="../images/office-images/plant.webp" alt="item 5" >
-
-                    <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-                    <div class="product-text">
-                        <h2> Kentia House Plant </h2>
-                        <p> £45 </p>
-                    </div>
-                               <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-                </div>
+                 <button class="add-to-basket" aria-label="Add to basket">
+                     <img src="../images/add-button-icon.png" alt="Add to basket">
+                 </button>
             </div>
+            <?php
+        }
+    } else {
+        echo "<p style='padding: 20px;'>No kitchen products found in the database.</p>";
+    }
+    ?>
+</div>
+
 
         </div> </div> <footer class="site-footer">
         <div class="footer-inner">

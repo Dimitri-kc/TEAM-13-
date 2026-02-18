@@ -110,92 +110,42 @@
       <button class="button-sort btn-Rating">Rating</button>
     </div>
 
-    <div class="product-grid">
+               <!-- link added to connect to database -->
+ <div class="product-grid" id="product-grid">
+    <?php
+    // category id = 4 for bathroom
+    $query = "SELECT * FROM products WHERE category_id = 4";
+    $result = mysqli_query($conn, $query);
 
-      <div class="item" data-keywords="modern gold mirror" data-category="mirrors" data-colour="gold" data-price="35">
-        <img src="../images/bathroom-images/mirror.png" alt="">
+    if ($result && mysqli_num_rows($result) > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+            ?>
+            <div class="item" 
+                 data-price="<?php echo $row['price']; ?>" 
+                 data-category="<?php echo $row['category_id']; ?>" 
+                 data-keywords="<?php echo $row['keywords']; ?>" 
+                 data-colour="<?php echo $row['colour']; ?>">
+                 
+                 <a href="product_details.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
+                     <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
+                     <div class="product-text">
+                         <h2><?php echo $row['name']; ?></h2>
+                         <p>£<?php echo $row['price']; ?></p>
+                     </div>
+                 </a>
 
-        <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-        <div class="product-text">
-          <h2>Round Wall Mirror</h2>
-          <p>£35</p>
-        </div>
-                   <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-      </div>
-
-      <div class="item" data-keywords="modern cabinet wood" data-category="cabinets" data-colour="beige" data-price="69">
-        <img src="../images/bathroom-images/cabinets.png" alt="">
-
-        <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-        <div class="product-text">
-          <h2>  Oak Bathroom Cabinet</h2>
-          <p>£69</p>
-        </div>
-                   <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-      </div>
-
-      <div class="item" data-keywords="shower curtains black" data-category="shower curtains" data-colour="black" data-price="12">
-        <img src="../images/bathroom-images/curtains.png" alt="">
-
-        <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-
-        <div class="product-text">
-          <h2>Grid Shower Curtains</h2>
-          <p>£12</p>
-        </div>
-                   <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-      </div>
-
-      <div class="item" data-keywords="soft towels green" data-category="towels" data-colour="green" data-price="18">
-        <img src="../images/bathroom-images/towel.png" alt="">
-
-        <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-        <div class="product-text">
-          <h2>Soft Cotton Towels Set</h2>
-          <p>£18</p>
-        </div>
-                   <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-      </div>
-
-      <div class="item" data-keywords="bathmat grey soft" data-category="bathmats" data-colour="grey" data-price="14">
-        <img src="../images/bathroom-images/bathmat.png" alt="">
-
-        <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-        <div class="product-text">
-          <h2>Textured Bathmat</h2>
-          <p>£14</p>
-        </div>
-                   <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-      </div>
-
-    </div>
-  </div>
+                 <button class="add-to-basket" aria-label="Add to basket">
+                     <img src="../images/add-button-icon.png" alt="Add to basket">
+                 </button>
+            </div>
+            <?php
+        }
+    } else {
+        echo "<p style='padding: 20px;'>No kitchen products found in the database.</p>";
+    }
+    ?>
 </div>
+
 
 </div> </div> <footer class="site-footer">
         <div class="footer-inner">

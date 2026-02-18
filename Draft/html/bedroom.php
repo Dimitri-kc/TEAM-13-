@@ -114,130 +114,39 @@
       Uh oh! No products matched your search.
     </p>
 
-    <div class="product-grid">
+<div class="product-grid" id="product-grid">
+    <?php
+    //bedroom category = 5
+    $query = "SELECT * FROM products WHERE category_id = 5";
+    $result = mysqli_query($conn, $query);
 
-      <!-- Bed Frame -->
-      <div class="item"
-           data-keywords="bed frame beige modern"
-           data-category="bed frames"
-           data-colour="beige"
-           data-new="true"
-           data-price="499"
-           data-rating="5"
-           onclick="location.href='../html/bed-frame.php'">
-        <img src="../images/bedroom-images/bed-frame.png" alt="Upholstered Bed Frame">
+    if ($result && mysqli_num_rows($result) > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+            ?>
+            <div class="item" 
+                 data-price="<?php echo $row['price']; ?>" 
+                 data-category="<?php echo $row['category_id']; ?>" 
+                 data-keywords="<?php echo $row['keywords']; ?>" 
+                 data-colour="<?php echo $row['colour']; ?>">
+                 
+                 <a href="product_details.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
+                     <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
+                     <div class="product-text">
+                         <h2><?php echo $row['name']; ?></h2>
+                         <p>£<?php echo $row['price']; ?></p>
+                     </div>
+                 </a>
 
-        <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-        <div class="product-text">
-          <h2>Upholstered Bed Frame</h2>
-          <p>£499</p>
-        </div>
-                   <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-      </div>
-
-      <!-- Mattress -->
-      <div class="item"
-           data-keywords="mattress comfort sleep"
-           data-category="mattresses"
-           data-colour="white"
-           data-new="true"
-           data-price="269"
-           data-rating="4"
-           onclick="location.href='../html/mattress.php'">
-        <img src="../images/bedroom-images/mattress.png" alt="Luxury Comfort Mattress">
-
-        <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-        <div class="product-text">
-          <h2>Luxury Comfort Mattress</h2>
-          <p>£269</p>
-        </div>
-                   <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-      </div>
-
-      <!-- Duvet -->
-      <div class="item"
-           data-keywords="duvet soft bedding"
-           data-category="duvets"
-           data-colour="white"
-           data-new="false"
-           data-price="25"
-           data-rating="4"
-           onclick="location.href='../html/duvet.php'">
-        <img src="../images/bedroom-images/duvet.png" alt="All-Season Duvet">
-
-        <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-        <div class="product-text">
-          <h2>All-Season Duvet</h2>
-          <p>£25</p>
-        </div>
-                   <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-      </div>
-
-      <!-- Pillow -->
-      <div class="item"
-           data-keywords="pillow comfort sleep"
-           data-category="pillows"
-           data-colour="white"
-           data-new="false"
-           data-price="20"
-           data-rating="5"
-           onclick="location.href='../html/pillow.php'">
-        <img src="../images/bedroom-images/pillow.png" alt="Medium Support Pillow">
-
-        <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-        <div class="product-text">
-          <h2>Medium Support Pillow</h2>
-          <p>£20</p>
-        </div>
-                   <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-      </div>
-
-      <!-- Side Table -->
-      <div class="item"
-           data-keywords="side table wood modern"
-           data-category="side tables"
-           data-colour="wood"
-           data-new="false"
-           data-price="79"
-           data-rating="4"
-           onclick="location.href='../html/side-table.php'">
-        <img src="../images/bedroom-images/side-table.png" alt="Modern Side Table">
-
-        <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-        <div class="product-text">
-          <h2>Modern Side Table</h2>
-          <p>£79</p>
-        </div>
-                   <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-      </div>
-
-    </div>
-  </div>
+                 <button class="add-to-basket" aria-label="Add to basket">
+                     <img src="../images/add-button-icon.png" alt="Add to basket">
+                 </button>
+            </div>
+            <?php
+        }
+    } else {
+        echo "<p style='padding: 20px;'>No bedroom products found in the database.</p>";
+    }
+    ?>
 </div>
 
 <footer class="site-footer">
