@@ -151,7 +151,7 @@
                     echo "<p>No products found in the database.</p>";
                 }
                 ?>
-            </div> </div> </div> ```
+            </div> </div> </div>
 
 
     
