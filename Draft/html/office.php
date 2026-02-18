@@ -45,7 +45,7 @@
 
         <nav class="dropdown-panel" id="dropdown-nav">
             <ul class="nav-links">
-                <li><a href="Categories.php">Living Room</a></li>
+                <li><a href="livingroom.php">Living Room</a></li>
                 <li><a href="bathroom.php">Bathroom</a></li>
                 <li><a href="bedroom.php">Bedroom</a></li>
                 <li><a href="office.php">Office</a></li>
