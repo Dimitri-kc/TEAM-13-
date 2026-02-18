@@ -1,3 +1,6 @@
+
+<?php include '../backend/config/db_connect.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,23 +117,42 @@
                 Uh oh! No products matched your search.
             </p>
 
-            <div class="product-grid">
-                <div class="item" data-keywords="modern smart bin" data-category="bins" data-colour="green"
-                data-new="true" data-price="20" data-rating="4" onclick="location.href='../html/bin.php'">
-                    <img src="../images/kitchen-images/bin.webp" alt="item 1"> 
+            <!-- link added to connect to database -->
+ <div class="product-grid" id="product-grid">
+    <?php
+    // We use category_id = 2 for Kitchen. 
+    // If your database uses a different number, change the '2' below.
+    $query = "SELECT * FROM products WHERE category_id = 2";
+    $result = mysqli_query($conn, $query);
 
-                    <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
-                    <div class="product-text">
-                        <h2> Oval Stainless Steel Pedal Bin</h2>
-                        <p> £20 </p>
-                    </div>
-                               <!--Add to basket button -->
-            <button class="add-to-basket" aria-label="Add to basket">
-                    <img src="../images/add-button-icon.png" alt="Add to basket">
-                </button>
-                </div>
+    if ($result && mysqli_num_rows($result) > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+            ?>
+            <div class="item" 
+                 data-price="<?php echo $row['price']; ?>" 
+                 data-category="<?php echo $row['category_id']; ?>" 
+                 data-keywords="<?php echo $row['keywords']; ?>" 
+                 data-colour="<?php echo $row['colour']; ?>">
+                 
+                 <a href="product_details.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
+                     <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
+                     <div class="product-text">
+                         <h2><?php echo $row['name']; ?></h2>
+                         <p>£<?php echo $row['price']; ?></p>
+                     </div>
+                 </a>
+
+                 <button class="add-to-basket" aria-label="Add to basket">
+                     <img src="../images/add-button-icon.png" alt="Add to basket">
+                 </button>
+            </div>
+            <?php
+        }
+    } else {
+        echo "<p style='padding: 20px;'>No kitchen products found in the database.</p>";
+    }
+    ?>
+</div>
 
                 <div class="item" data-keywords="grey smart modern dining chairs" data-category="dining chairs" data-colour="beige"
                 data-new="true" data-price="30" data-rating="3">
