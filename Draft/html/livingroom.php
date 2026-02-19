@@ -132,6 +132,11 @@
      data-category="<?php echo $row['categories']; ?>" 
      data-keywords="<?php echo $row['keywords']; ?>" 
      data-colour="<?php echo $row['colour']; ?>">
+
+                         <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
+        <img src="../images/header_footer_images/icon-heart.png" alt="">
+    </button>
+
      
      <a href="product.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
          <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
@@ -153,8 +158,6 @@
                 ?>
             </div> </div> </div>
 
-
-    
 
     <!-- <script type="module" src="../javascript/livingroom-js/main.js"></script>
     <script src="../javascript/header_footer_script.js"></script> -->
