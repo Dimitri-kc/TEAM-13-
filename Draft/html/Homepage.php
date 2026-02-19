@@ -10,6 +10,7 @@ session_start();
     <title>Home</title>
     
     <link rel="stylesheet" href="../css/header_footer_style.css">
+    <link rel="stylesheet" href="../css/reviews.css">
 
     <link rel="stylesheet" href="../css/homepage-css/homepage.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-about.css">
