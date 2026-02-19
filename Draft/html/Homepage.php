@@ -90,6 +90,49 @@ session_start();
         </a>
     </div>
 
+ <section class="reviews-section">
+    <div class="reviews-header">
+        <h2>Latest Reviews</h2>
+        <button class="add-review-btn"></button>
+    </div>
+
+    <div class="reviews-slider-wrapper">
+        <button class="nav-btn prev-btn" onclick="scrollReviews(-1)">&#10094;</button>
+
+        <div class="reviews-container" id="reviewsContainer">
+
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <h3>Love It.</h3>
+                <p>Happy with the quality.</p>
+                <div class="reviewer">
+                    <img src="https://ui-avatars.com/api/?name=Bibi+Alaradi&background=random" alt="User">
+                    <div>
+                        <span class="name">Bibi Alaradi</span>
+                        <span class="date">1 November 2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <h3>The Beige Colour is Beautiful</h3>
+                <p>An excellent pop of colour.</p>
+                <div class="reviewer">
+                    <img src="https://ui-avatars.com/api/?name=Amatullaah+S&background=random" alt="User">
+                    <div>
+                        <span class="name">Amatullaah Stevenson</span>
+                        <span class="date">13 November 2025</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <button class="nav-btn next-btn" onclick="scrollReviews(1)">&#10095;</button>
+    </div>
+</section>
+
     <div class="split-page">
         <div class="left">
             <h1>ABOUT US</h1>
@@ -191,3 +234,226 @@ session_start();
     <script src="../javascript/header_footer_script.js"></script>
 </body>
 </html>
+
+/* =========================
+   REVIEWS SECTION
+========================= */
+
+<style>
+
+.reviews-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: none;
+}
+
+.reviews-header h2 {
+    font-size: 22px;
+    font-weight: 700;     /* bold */
+    text-transform: uppercase;  /* caps */
+    letter-spacing: 1px;  /* optional: makes it look cleaner */
+}
+
+.add-review-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: transparent;      /* no background */
+    background-image: url('../images/plus.png');
+    background-size: 60%;               /* adjust icon size */
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;                       /* remove border */
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+}
+
+
+
+/* Tooltip */
+.add-review-btn::after {
+    content: "Add Review";
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: black;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+/* Tooltip arrow */
+.add-review-btn::before {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+/* Show tooltip on hover */
+.add-review-btn:hover::after,
+.add-review-btn:hover::before {
+    opacity: 1;
+}
+
+
+.add-review-btn:hover {
+    background-color: #d3d3d3;
+}
+
+/* Slider Wrapper */
+.reviews-slider-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;          /* ensures full width */
+    overflow: visible;
+    /* keeps cards inside frame */
+}
+
+/* Horizontal Scroll Container */
+.reviews-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    padding: 10px 0;
+
+    /* hide scrollbar */
+    scrollbar-width: none;
+}
+
+.reviews-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Review Card */
+.review-card {
+    min-width: 260px;
+    max-width: 260px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    flex-shrink: 0;       /* prevents collapsing */
+    transition: transform 0.2s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-4px);
+}
+
+.stars {
+    font-size: 28px;
+    color: #373737;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #555, #222);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.review-card h3 {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.review-card p {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* Reviewer */
+.reviewer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.reviewer img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.name {
+    display: block;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.date {
+    font-size: 11px;
+    color: #777;
+}
+
+/* Arrows */
+.nav-btn {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    background: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 2;
+}
+
+.nav-btn:hover {
+    background: black;
+    color: white;
+}
+
+.prev-btn {
+    left: 5px;     /* inside the container */
+}
+
+.next-btn {
+    right: 5px;    /* inside the container */
+}
+
+
+.reviews-section {
+    background-color: #B6B6B6;
+    padding: 25px 30px;
+    margin: 90px auto 90px auto;   /* top, left/right, bottom */
+    border-radius: 25px;
+    max-width: 1100px;
+    width: 100%;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+}
+
+
+
+/* Mobile */
+@media (max-width: 768px) {
+    .review-card {
+        min-width: 220px;
+        max-width: 220px;
+    }
+
+
+
+}
+</style>
