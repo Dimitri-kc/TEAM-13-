@@ -23,6 +23,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $userController->register($data);//call register method in controller
             break;
 
+        case 'changePassword': //changePassword action called from change changepassword.php
+            $userController->changePassword($data); //call changePassword method in controller
+            break;
+
+        case 'reroute': //reroute action called from changepassword.php to redirect to homepage after password change
+            echo json_encode(["success" => true, "redirect" => "homepage.php"]);
+            break;
+
         case 'login': //login action called from signin.html
             $userController->login($data); //calling login method in controller
             break;

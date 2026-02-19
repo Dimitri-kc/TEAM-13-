@@ -22,7 +22,7 @@ class UserController {
         $password = trim($data['password'] ?? '');
 
         //register user - basic validation
-        if (!$name || !$surname || !$email || !$address || !$password) {
+        if (!$name || !$surname || !$email || !$phone || !$address || !$password) {
             echo json_encode([
                 "success" => false,
                 "message" => "All fields are required."
@@ -40,11 +40,19 @@ class UserController {
         $role = 'customer';
         $registrationSuccess = $userModel->register($name, $surname, $email, $phone, $address, $hashedPassword, $role);
         if ($registrationSuccess) { //if registration successful
+
+         $_SESSION['user_ID'] = $registrationSuccess['user_ID'];
+         $_SESSION['name'] = $name;
+         $_SESSION['role'] = $role;
+         $_SESSION['must_change_password'] = 1; //flag to force password change on first login
+         
             echo json_encode([
-            "success" => true,    
+            "success" => true,   
+            "redirect" => "changepassword.php", //redirect to change password page after registration 
             "message" => "Registration successful. You can now login."
             ]);
             return;
+
         } else { //if registration failure
             echo json_encode([
                 "success" => false,
