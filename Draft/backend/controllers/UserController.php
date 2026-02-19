@@ -87,32 +87,19 @@ class UserController {
         mergeBaskets($user['user_ID']);
 
         if (!empty($user['must_change_password'])) { //force password change on first login for security
-            echo json_encode([
-                "success" => true,
-                "redirect" => "changepassword.php", //redirect to change password page after login
-                "message" => "Login successful. Please change your password before proceeding."
-            ]);
+            echo json_encode(["success" => true, "redirect" => "changepassword.php", //redirect to change password page after login
+                "message" => "Login successful. Please change your password before proceeding."]);
             return;
         }
             //redirect to homepage after login
-            //header('Location: /Homepage.html');
-            echo json_encode([ //successful login json response
-                "success" => true,
-                "redirect" => "homepage.php", //redirect to homepage after login
-                "user" => [
-                    "user_ID" => $user['user_ID'],
-                    "name" => $user['name'],
-                    "role" => $user['role']
-                ]
+            echo json_encode([
+                "success" => true, "redirect" => "homepage.php", "user" => ["user_ID" => $user['user_ID'], "name" => $user['name'], "role" => $user['role']]
             ]);
             return;
         } else {
             echo json_encode([ //failed login json response
-            "success" => false,
-            "message" => "Login failed. Invalid email or password."
-            ]);
+            "success" => false, "message" => "Login failed. Invalid email or password."]);
             return;
-            //echo  'Login failed. Invalid email or password.';
         }
     }
 
@@ -120,10 +107,7 @@ class UserController {
         $user_ID = $_SESSION['user_ID']; //get user ID from session
         $newPassword = trim($data['newPassword'] ?? ''); //get new password from input, trim whitespace
         if (!$newPassword) { //check valid input
-            echo json_encode([
-                "success" => false,
-                "message" => "New password is required."
-            ]);
+            echo json_encode([ "success" => false, "message" => "New password is required."]);
             return;
         }
 
@@ -151,10 +135,7 @@ class UserController {
             ]);
             return;
         } else {
-            echo json_encode([
-                "success" => false,
-                "message" => "Failed to change password. Please try again."
-            ]);
+            echo json_encode(["success" => false, "message" => "Failed to change password. Please try again."]);
             return;
         }
         
