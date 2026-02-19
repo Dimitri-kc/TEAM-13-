@@ -16,18 +16,29 @@ class User {
             $check->execute();
             $check->store_result();
 
-            if ($check->fetch()) { 
-                return false; //if email exits, registration fails
+            if ($check->num_rows > 0) { 
+                $check->close();
+                return ["success" => false, "error" => "exists"]; //if email exits, registration fails
             }
-        $stmt = $this->conn->prepare("INSERT INTO users (name, surname, email, phone, password, address, role) VALUES (?, ?, ?, ?, ?, ?, ?)"); // Using prepared statements to prevent SQL injection
+            $check->close();//if email doesn't exist, proceed with registration 
+            
+            //insert new user in database
+            $stmt = $this->conn->prepare("INSERT INTO users (name, surname, email, phone, password, address, role) VALUES (?, ?, ?, ?, ?, ?, ?)"); // Using prepared statements to prevent SQL injection
+            
+            $stmt->bind_param("sssssss", $name, $surname, $email, $phone, $hashedPassword, $address, $role);
+            $registrationSuccess = $stmt->execute();
+            //if new user then redirect to changepassword.php
+            $newUserID = $registrationSuccess ? $this->conn->insert_id : null; //retreive id of newly registered user, create session and password change redirection
+            $stmt->close(); //close after execution freeing resources
 
-        $stmt->bind_param("sssssss", $name, $surname, $email, $phone, $hashedPassword, $address, $role);
-        $registrationSuccess = $stmt->execute();
-        $stmt->close();
-        return $registrationSuccess; //return true if registration successful
-
+            if ($registrationSuccess) {
+                return ["success" => true, "user_ID" => $newUserID];
+            } else {
+                return ["success" => false];
+            }
+            
         } catch (Exception $e) {
-            return false; //registration failed due to errors
+            return ["success" => false, "error" => $e->getMessage()]; //return error message if exception occurs
         }
 
 
