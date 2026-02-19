@@ -40,15 +40,9 @@ class UserController {
         $role = 'customer';
         $registrationSuccess = $userModel->register($name, $surname, $email, $phone, $address, $hashedPassword, $role);
         if ($registrationSuccess) { //if registration successful
-
-         $_SESSION['user_ID'] = $registrationSuccess['user_ID'];
-         $_SESSION['name'] = $name;
-         $_SESSION['role'] = $role;
-         $_SESSION['must_change_password'] = 1; //flag to force password change on first login
-         
             echo json_encode([
             "success" => true,   
-            "redirect" => "changepassword.php", //redirect to change password page after registration 
+            "redirect" => "signin.php", //redirect to signin page after registration 
             "message" => "Registration successful. You can now login."
             ]);
             return;
@@ -91,10 +85,20 @@ class UserController {
             $_SESSION['role'] = $user['role']; //customer/admin
             //merge guest basket with user basket upon login
             mergeBaskets($user['user_ID']);
+
+            if (!empty($user['must_change_password'])) { //force password change on first login for security
+                echo json_encode([
+                    "success" => true,
+                    "redirect" => "changepassword.php", //redirect to change password page after login
+                    "message" => "Login successful. Please change your password before proceeding."
+                ]);
+                return;
+            }
             //redirect to homepage after login
             //header('Location: /Homepage.html');
             echo json_encode([ //successful login json response
                 "success" => true,
+                "redirect" => "homepage.php", //redirect to homepage after login
                 "user" => [
                     "user_ID" => $user['user_ID'],
                     "name" => $user['name'],
