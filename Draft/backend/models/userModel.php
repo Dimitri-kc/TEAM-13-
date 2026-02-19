@@ -56,8 +56,16 @@ class User {
         return $user;
         //password verification handled in controller
     }
-    //logout handled in routes via session destruction
-    //SECURITY NOTE:
-    //SQL queries pre-compiled, user data treated as a parameter (not executable code), preventing SQL injections
+
+    public function changePassword($user_ID, $hashedPassword) {
+        $stmt = $this->conn->prepare("UPDATE users SET password = ?, must_change_password = 0 WHERE user_ID = ?"); //update password and set must_change_password to false after password change
+        $stmt->bind_param("si", $hashedPassword, $user_ID);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    }
+//logout handled in routes via session destruction
+//SECURITY NOTE:
+//SQL queries pre-compiled, user data treated as a parameter (not executable code), preventing SQL injections
 }
 ?>

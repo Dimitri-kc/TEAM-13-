@@ -27,6 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $userController->login($data); //calling login method in controller
             break;
 
+        case 'changePassword': //change password action called from changePassword.php
+            $userController->changePassword($data); //calling changePassword method in controller
+            break;
+
         case 'logout': //logout action called
             session_unset(); //unset all session variables
             session_destroy(); //destroy the session
