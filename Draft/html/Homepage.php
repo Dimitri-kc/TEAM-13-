@@ -16,6 +16,45 @@ session_start();
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
 </head>
 <body>
+<!-- Review Form Modal -->
+<div id="reviewModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Leave a Review</h2>
+
+        <form method="POST" action="../html/review_submit.php"> <!-- Optional: move PHP processing here -->
+            <label>Select Service:</label>
+            <select name="category" required>
+                <option value="">-- Select Service Type --</option>
+                <option value="delivery">Interior Design Consultation</option>
+                <option value="installation">Returns</option>
+                <option value="customer_support">Customer Support</option>
+                <option value="product_quality">Product Quality</option>
+                <option value="overall_experience">Overall Experience</option>
+            </select>
+
+            <input type="text" name="name" placeholder="Your Name" maxlength="100" required>
+            <input type="hidden" name="user_ID" value="<?php echo $_SESSION['user_ID'] ?? 0; ?>">
+
+
+            <div class="rating-row">
+                <label>Rating:</label>
+                <div class="star-rating">
+                    <input type="hidden" name="rating" id="modal-rating-value" required>
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                </div>
+            </div>
+
+            <textarea name="comment" placeholder="Write your review here..." maxlength="500" required></textarea>
+
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+</div>
 
     <header class="site-header">
         <div class="header-inner">
@@ -232,12 +271,52 @@ session_start();
         </div>
     </footer>
     <script src="../javascript/header_footer_script.js"></script>
+    
+
+<script>
+    // Open modal when plus button clicked
+const addReviewBtn = document.querySelector('.add-review-btn');
+const modal = document.getElementById('reviewModal');
+const closeBtn = document.querySelector('.close-btn');
+
+addReviewBtn.addEventListener('click', () => {
+    modal.style.display = 'block';
+});
+
+// Close modal when X clicked or outside modal clicked
+closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
+window.addEventListener('click', (e) => {
+    if (e.target == modal) modal.style.display = 'none';
+});
+
+// Star rating inside modal
+const stars = document.querySelectorAll('#reviewModal .star');
+const ratingInput = document.getElementById('modal-rating-value');
+
+stars.forEach(star => {
+    star.addEventListener('click', function () {
+        const value = this.getAttribute('data-value');
+        ratingInput.value = value;
+        stars.forEach(s => {
+            s.classList.remove('active');
+            if (s.getAttribute('data-value') <= value) {
+                s.classList.add('active');
+            }
+        });
+    });
+});
+
+</script>
+
 </body>
 </html>
 
-/* =========================
+
+<!-- /* =========================
    REVIEWS SECTION
-========================= */
+========================= */ -->
 
 <style>
 
@@ -456,4 +535,60 @@ session_start();
 
 
 }
+
+
+/* Modal overlay */
+.modal {
+    display: none;               /* Hidden by default */
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5); /* semi-transparent background */
+}
+
+/* Modal content box */
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 340px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+/* Close button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Compact form inside modal */
+.modal-content input,
+.modal-content textarea,
+.modal-content select,
+.modal-content button {
+    width: 100%;
+    margin-bottom: 8px;
+    font-size: 12px;
+    padding: 6px;
+}
+.modal-content button {
+    background: #2C2C2C;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+.modal-content button:hover {
+    background: #1a5ec8;
+}
+
 </style>
