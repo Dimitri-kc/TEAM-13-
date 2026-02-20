@@ -179,16 +179,17 @@ session_start();
         <h2>Add a Review</h2>
 
         <form id="reviewForm">
-            <label>Stars:</label>
+    
 <label>Stars:</label>
-<div class="star-rating" id="starRating">
-    <span data-value="5">&#9733;</span>
-    <span data-value="4">&#9733;</span>
-    <span data-value="3">&#9733;</span>
-    <span data-value="2">&#9733;</span>
-    <span data-value="1">&#9733;</span>
+<div class="star-rating">
+    <span data-value="1">★</span>
+    <span data-value="2">★</span>
+    <span data-value="3">★</span>
+    <span data-value="4">★</span>
+    <span data-value="5">★</span>
 </div>
-<input type="hidden" id="reviewStars" value="5">
+
+<input type="hidden" id="reviewStars" name="stars">
 
 
             <label>Title:</label>
@@ -347,7 +348,7 @@ function addReviewToDOM(review) {
     card.classList.add("review-card");
 
     card.innerHTML = `
-        <div class="stars">${review.stars}</div>
+        <div class="stars">${"★".repeat(review.stars)}</div>
         <h3>${review.title}</h3>
         <p>${review.text}</p>
         <div class="reviewer">
@@ -375,15 +376,29 @@ function loadReviews() {
 }
 
 loadReviews();
+
+
+// ---------- STAR RATING CLICK LOGIC ----------
+document.querySelectorAll(".star-rating span").forEach(star => {
+    star.addEventListener("click", () => {
+        const value = star.getAttribute("data-value");
+        document.getElementById("reviewStars").value = value;
+
+        // Update UI
+        document.querySelectorAll(".star-rating span").forEach(s => {
+            s.classList.toggle("active", s.getAttribute("data-value") <= value);
+        });
+    });
+});
 </script>
 
 </body>
 </html>
 
 
-<!-- /* =========================
-   REVIEWS SECTION
-========================= */ -->
+
+   <!-- REVIEWS SECTION -->
+
 
 <style>
 
@@ -396,21 +411,21 @@ loadReviews();
 
 .reviews-header h2 {
     font-size: 22px;
-    font-weight: 700;     /* bold */
-    text-transform: uppercase;  /* caps */
-    letter-spacing: 1px;  /* optional: makes it look cleaner */
+    font-weight: 700;   
+    text-transform: uppercase;  
+    letter-spacing: 1px;  
 }
 
 .add-review-btn {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: transparent;      /* no background */
+    background-color: transparent;     
     background-image: url('../images/plus.png');
-    background-size: 60%;               /* adjust icon size */
+    background-size: 60%;               
     background-repeat: no-repeat;
     background-position: center;
-    border: none;                       /* remove border */
+    border: none;                     
     cursor: pointer;
     padding: 0;
     position: relative;
@@ -466,9 +481,9 @@ loadReviews();
     position: relative;
     display: flex;
     align-items: center;
-    width: 100%;          /* ensures full width */
+    width: 100%;         
     overflow: visible;
-    /* keeps cards inside frame */
+   
 }
 
 /* Horizontal Scroll Container */
@@ -599,10 +614,9 @@ loadReviews();
         max-width: 220px;
     }
 
-
-
 }
 
+/* modal section  */
 
 .review-modal {
     display: none;
@@ -612,63 +626,100 @@ loadReviews();
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.45);
 }
 
 .modal-content {
     background: #fff;
-    width: 90%;
-    max-width: 400px;
-    margin: 10% auto;
-    padding: 20px;
-    border-radius: 10px;
+    width: 88%;
+    max-width: 300px;       
+    margin: 3% auto;       
+    padding: 10px 14px;    
+    border-radius: 14px;    
+    box-shadow: 0 8px 28px rgba(0,0,0,0.15); 
 }
 
+.modal-content h2 {
+    margin: 10 0 8px 0;  
+    font-size: 22px;    
+    font-weight: 700;
+}
+
+
+/* Close button */
 .close-modal {
     float: right;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+.close-modal:hover {
+    opacity: 1;
 }
 
+/* Labels */
+#reviewForm label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2px;
+    display: block;
+}
+
+/* Inputs */
 #reviewForm input,
-#reviewForm textarea,
-#reviewForm select {
+#reviewForm textarea {
     width: 100%;
-    margin-bottom: 12px;
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+    margin-bottom: 6px;
+    padding: 6px 8px;
+    border-radius: 8px;          
+    border: 1px solid #ddd;
+    font-size: 13px;
+    background: #f7f7f7;       
 }
 
+/* Shorter textarea */
+#reviewForm textarea {
+    height: 55px;
+    resize: vertical;
+}
+
+/* Submit button */
 .submit-review-btn {
     width: 100%;
-    padding: 10px;
-    background: black;
+    padding: 8px;
+    background: #111;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 4px;
+    transition: background 0.2s;
+}
+.submit-review-btn:hover {
+    background: #000;
 }
 
+/* Star rating */
 .star-rating {
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-start;
-    gap: 4px;
-    font-size: 28px;
+    gap: 3px;
+    font-size: 22px;       
     cursor: pointer;
+    margin-bottom: 8px;
 }
 
 .star-rating span {
     color: #ccc;
-    transition: color 0.2s;
+    transition: color 0.2s, transform 0.15s;
 }
 
-.star-rating span.selected,
-.star-rating span:hover,
-.star-rating span:hover ~ span {
-    color: gold;
-}
+.star-rating span.active {
+    color: #111;            
+    transform: scale(1.1);  
 
 
 </style>
