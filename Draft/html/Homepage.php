@@ -17,6 +17,45 @@ session_start();
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
 </head>
 <body>
+<!-- Review Form Modal -->
+<!-- <div id="reviewModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Leave a Review</h2>
+
+        <form method="POST" action="../html/review_submit.php">
+            <label>Select Service:</label>
+            <select name="category" required>
+                <option value="">-- Select Service Type --</option>
+                <option value="delivery">Interior Design Consultation</option>
+                <option value="installation">Returns</option>
+                <option value="customer_support">Customer Support</option>
+                <option value="product_quality">Product Quality</option>
+                <option value="overall_experience">Overall Experience</option>
+            </select>
+
+            <input type="text" name="name" placeholder="Your Name" maxlength="100" required>
+            <input type="hidden" name="user_ID" value="<?php echo $_SESSION['user_ID'] ?? 0; ?>">
+
+
+            <div class="rating-row">
+                <label>Rating:</label>
+                <div class="star-rating">
+                    <input type="hidden" name="rating" id="modal-rating-value" required>
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                </div>
+            </div>
+
+            <textarea name="comment" placeholder="Write your review here..." maxlength="500" required></textarea>
+
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+</div> -->
 
     <header class="site-header">
         <div class="header-inner">
@@ -134,6 +173,40 @@ session_start();
     </div>
 </section>
 
+<!-- Add Review Modal -->
+<div id="reviewModal" class="review-modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Add a Review</h2>
+
+        <form id="reviewForm">
+    
+<label>Stars:</label>
+<div class="star-rating">
+    <span data-value="1">★</span>
+    <span data-value="2">★</span>
+    <span data-value="3">★</span>
+    <span data-value="4">★</span>
+    <span data-value="5">★</span>
+</div>
+
+<input type="hidden" id="reviewStars" name="stars">
+
+
+            <label>Title:</label>
+            <input type="text" id="reviewTitle" required>
+
+            <label>Review:</label>
+            <textarea id="reviewText" required></textarea>
+
+            <label>Your Name:</label>
+            <input type="text" id="reviewName" required>
+
+            <button type="submit" class="submit-review-btn">Submit Review</button>
+        </form>
+    </div>
+</div>
+
     <div class="split-page">
         <div class="left">
             <h1>ABOUT US</h1>
@@ -233,12 +306,100 @@ session_start();
         </div>
     </footer>
     <script src="../javascript/header_footer_script.js"></script>
+    
+
+<script>
+// ---------- Modal Controls ----------
+const modal = document.getElementById("reviewModal");
+const addBtn = document.querySelector(".add-review-btn");
+const closeModal = document.querySelector(".close-modal");
+
+addBtn.onclick = () => modal.style.display = "block";
+closeModal.onclick = () => modal.style.display = "none";
+window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
+
+// ---------- Add Review ----------
+document.getElementById("reviewForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const stars = document.getElementById("reviewStars").value;
+    const title = document.getElementById("reviewTitle").value;
+    const text = document.getElementById("reviewText").value;
+    const name = document.getElementById("reviewName").value;
+    const date = new Date().toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+
+    const review = { stars, title, text, name, date };
+
+    addReviewToDOM(review);
+    saveReview(review);
+
+    modal.style.display = "none";
+    this.reset();
+});
+
+// ---------- Add Review to DOM ----------
+function addReviewToDOM(review) {
+    const container = document.getElementById("reviewsContainer");
+
+    const card = document.createElement("div");
+    card.classList.add("review-card");
+
+    card.innerHTML = `
+        <div class="stars">${"★".repeat(review.stars)}</div>
+        <h3>${review.title}</h3>
+        <p>${review.text}</p>
+        <div class="reviewer">
+            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(review.name)}&background=random" alt="User">
+            <div>
+                <span class="name">${review.name}</span>
+                <span class="date">${review.date}</span>
+            </div>
+        </div>
+    `;
+
+    container.appendChild(card);
+}
+
+// ---------- LocalStorage ----------
+function saveReview(review) {
+    const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+    reviews.push(review);
+    localStorage.setItem("reviews", JSON.stringify(reviews));
+}
+
+function loadReviews() {
+    const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+    reviews.forEach(addReviewToDOM);
+}
+
+loadReviews();
+
+
+// ---------- STAR RATING CLICK LOGIC ----------
+document.querySelectorAll(".star-rating span").forEach(star => {
+    star.addEventListener("click", () => {
+        const value = star.getAttribute("data-value");
+        document.getElementById("reviewStars").value = value;
+
+        // Update UI
+        document.querySelectorAll(".star-rating span").forEach(s => {
+            s.classList.toggle("active", s.getAttribute("data-value") <= value);
+        });
+    });
+});
+</script>
+
 </body>
 </html>
 
-<!-- /* ========================= -->
+
+
    <!-- REVIEWS SECTION -->
-<!-- ========================= */ -->
+
 
 <style>
 
@@ -251,21 +412,21 @@ session_start();
 
 .reviews-header h2 {
     font-size: 22px;
-    font-weight: 700;     /* bold */
-    text-transform: uppercase;  /* caps */
-    letter-spacing: 1px;  /* optional: makes it look cleaner */
+    font-weight: 700;   
+    text-transform: uppercase;  
+    letter-spacing: 1px;  
 }
 
 .add-review-btn {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: transparent;      /* no background */
+    background-color: transparent;     
     background-image: url('../images/plus.png');
-    background-size: 60%;               /* adjust icon size */
+    background-size: 60%;               
     background-repeat: no-repeat;
     background-position: center;
-    border: none;                       /* remove border */
+    border: none;                     
     cursor: pointer;
     padding: 0;
     position: relative;
@@ -321,9 +482,9 @@ session_start();
     position: relative;
     display: flex;
     align-items: center;
-    width: 100%;          /* ensures full width */
+    width: 100%;         
     overflow: visible;
-    /* keeps cards inside frame */
+   
 }
 
 /* Horizontal Scroll Container */
@@ -454,7 +615,112 @@ session_start();
         max-width: 220px;
     }
 
-
-
 }
+
+/* modal section  */
+
+.review-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+}
+
+.modal-content {
+    background: #fff;
+    width: 88%;
+    max-width: 300px;       
+    margin: 3% auto;       
+    padding: 10px 14px;    
+    border-radius: 14px;    
+    box-shadow: 0 8px 28px rgba(0,0,0,0.15); 
+}
+
+.modal-content h2 {
+    margin: 10 0 8px 0;  
+    font-size: 22px;    
+    font-weight: 700;
+}
+
+
+/* Close button */
+.close-modal {
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+.close-modal:hover {
+    opacity: 1;
+}
+
+/* Labels */
+#reviewForm label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2px;
+    display: block;
+}
+
+/* Inputs */
+#reviewForm input,
+#reviewForm textarea {
+    width: 100%;
+    margin-bottom: 6px;
+    padding: 6px 8px;
+    border-radius: 8px;          
+    border: 1px solid #ddd;
+    font-size: 13px;
+    background: #f7f7f7;       
+}
+
+/* Shorter textarea */
+#reviewForm textarea {
+    height: 55px;
+    resize: vertical;
+}
+
+/* Submit button */
+.submit-review-btn {
+    width: 100%;
+    padding: 8px;
+    background: #111;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 4px;
+    transition: background 0.2s;
+}
+.submit-review-btn:hover {
+    background: #000;
+}
+
+/* Star rating */
+.star-rating {
+    display: flex;
+    gap: 3px;
+    font-size: 22px;       
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+
+.star-rating span {
+    color: #ccc;
+    transition: color 0.2s, transform 0.15s;
+}
+
+.star-rating span.active {
+    color: #111;            
+    transform: scale(1.1);  
+
+
 </style>
