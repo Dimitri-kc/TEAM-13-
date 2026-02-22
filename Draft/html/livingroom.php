@@ -129,7 +129,7 @@
                         <!-- line added for better filtering due to php -->
 <div class="item" 
      data-price="<?php echo $row['price']; ?>" 
-    
+     data-rating="<?php echo $row['rating']; ?>"     
      data-keywords="<?php echo $row['keywords']; ?>" 
      data-colour="<?php echo $row['colour']; ?>">
 
