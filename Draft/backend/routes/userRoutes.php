@@ -16,7 +16,8 @@ if(!$data || !isset($data['action'])){ //if no data/action provided then return 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') { 
     echo json_encode(["success" => false, "message" => "Invalid request method"]);
     return;
-}    
+}    //POST prevents unintended data exposure via GET even if JSON input expected. Prevents CSRF attacks too
+
     //switch to call relevant controller method based on action in .html
     switch ($data['action']) {
         case 'register': //register action called from signup.html
@@ -41,4 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             echo json_encode (["success" => false, "message"=> "Invalid action."]);
             break;
     }
+    file_put_contents(__DIR__ . '/_changePasswordDebug.log', date('c') . 'RAW=' . file_get_contents('php://input') . 'DATA=' . print_r($data, true) . PHP_EOL, FILE_APPEND); 
+    //temp debug log for change password action to trace issues with JSON input and data handling
 ?>
