@@ -17,45 +17,6 @@ session_start();
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
 </head>
 <body>
-<!-- Review Form Modal -->
-<!-- <div id="reviewModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h2>Leave a Review</h2>
-
-        <form method="POST" action="../html/review_submit.php">
-            <label>Select Service:</label>
-            <select name="category" required>
-                <option value="">-- Select Service Type --</option>
-                <option value="delivery">Interior Design Consultation</option>
-                <option value="installation">Returns</option>
-                <option value="customer_support">Customer Support</option>
-                <option value="product_quality">Product Quality</option>
-                <option value="overall_experience">Overall Experience</option>
-            </select>
-
-            <input type="text" name="name" placeholder="Your Name" maxlength="100" required>
-            <input type="hidden" name="user_ID" value="<?php echo $_SESSION['user_ID'] ?? 0; ?>">
-
-
-            <div class="rating-row">
-                <label>Rating:</label>
-                <div class="star-rating">
-                    <input type="hidden" name="rating" id="modal-rating-value" required>
-                    <span class="star" data-value="1">&#9733;</span>
-                    <span class="star" data-value="2">&#9733;</span>
-                    <span class="star" data-value="3">&#9733;</span>
-                    <span class="star" data-value="4">&#9733;</span>
-                    <span class="star" data-value="5">&#9733;</span>
-                </div>
-            </div>
-
-            <textarea name="comment" placeholder="Write your review here..." maxlength="500" required></textarea>
-
-            <button type="submit">Submit Review</button>
-        </form>
-    </div>
-</div> -->
 
     <header class="site-header">
         <div class="header-inner">
@@ -139,36 +100,7 @@ session_start();
     <div class="reviews-slider-wrapper">
         <button class="nav-btn prev-btn" onclick="scrollReviews(-1)">&#10094;</button>
 
-        <div class="reviews-container" id="reviewsContainer">
-
-            <div class="review-card">
-                <div class="stars">★★★★★</div>
-                <h3>Love It.</h3>
-                <p>Happy with the quality.</p>
-                <div class="reviewer">
-                    <img src="https://ui-avatars.com/api/?name=Bibi+Alaradi&background=random" alt="User">
-                    <div>
-                        <span class="name">Bibi Alaradi</span>
-                        <span class="date">1 November 2025</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="review-card">
-                <div class="stars">★★★★★</div>
-                <h3>The Beige Colour is Beautiful</h3>
-                <p>An excellent pop of colour.</p>
-                <div class="reviewer">
-                    <img src="https://ui-avatars.com/api/?name=Amatullaah+S&background=random" alt="User">
-                    <div>
-                        <span class="name">Amatullaah Stevenson</span>
-                        <span class="date">13 November 2025</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
+        <div class="reviews-container" id="reviewsContainer"></div>
         <button class="nav-btn next-btn" onclick="scrollReviews(1)">&#10095;</button>
     </div>
 </section>
@@ -318,7 +250,7 @@ addBtn.onclick = () => modal.style.display = "block";
 closeModal.onclick = () => modal.style.display = "none";
 window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
 
-// ---------- Add Review ----------
+
 document.getElementById("reviewForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
@@ -326,83 +258,87 @@ document.getElementById("reviewForm").addEventListener("submit", function(e) {
     const title = document.getElementById("reviewTitle").value;
     const text = document.getElementById("reviewText").value;
     const name = document.getElementById("reviewName").value;
-    const date = new Date().toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric"
+
+    fetch("../html/submit_review.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `stars=${stars}&title=${encodeURIComponent(title)}&text=${encodeURIComponent(text)}&name=${encodeURIComponent(name)}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        if (data.trim() === "success") {
+            loadReviewsFromDB();
+            modal.style.display = "none";
+            document.getElementById("reviewForm").reset();
+            document.querySelectorAll(".star-rating span").forEach(s => s.classList.remove("active"));
+        } else {
+            alert("Error saving review");
+        }
     });
-
-    const review = { stars, title, text, name, date };
-
-    addReviewToDOM(review);
-    saveReview(review);
-
-    modal.style.display = "none";
-    this.reset();
 });
 
-// ---------- Add Review to DOM ----------
-function addReviewToDOM(review) {
-    const container = document.getElementById("reviewsContainer");
+function loadReviewsFromDB() {
+    fetch("../html/get_reviews.php")
+    .then(response => response.json())
+    .then(reviews => {
+        const container = document.getElementById("reviewsContainer");
+        container.innerHTML = "";
 
-    const card = document.createElement("div");
-    card.classList.add("review-card");
+        reviews.forEach(review => {
+            const card = document.createElement("div");
+            card.classList.add("review-card");
 
-    card.innerHTML = `
-        <div class="stars">${"★".repeat(review.stars)}</div>
-        <h3>${review.title}</h3>
-        <p>${review.text}</p>
-        <div class="reviewer">
-            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(review.name)}&background=random" alt="User">
-            <div>
-                <span class="name">${review.name}</span>
-                <span class="date">${review.date}</span>
-            </div>
-        </div>
-    `;
+            const date = new Date(review.created_at).toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            });
 
-    container.appendChild(card);
+            card.innerHTML = `
+                <div class="stars">${"★".repeat(review.stars)}</div>
+                <h3>${review.title}</h3>
+                <p>${review.review_text}</p>
+                <div class="reviewer">
+                    <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(review.name)}&background=random" alt="User">
+                    <div>
+                        <span class="name">${review.name}</span>
+                        <span class="date">${date}</span>
+                    </div>
+                </div>
+            `;
+
+            container.appendChild(card);
+        });
+    });
 }
-
-// ---------- LocalStorage ----------
-function saveReview(review) {
-    const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
-    reviews.push(review);
-    localStorage.setItem("reviews", JSON.stringify(reviews));
-}
-
-function loadReviews() {
-    const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
-    reviews.forEach(addReviewToDOM);
-}
-
-loadReviews();
-
+loadReviewsFromDB();
 
 // ---------- STAR RATING CLICK LOGIC ----------
 document.querySelectorAll(".star-rating span").forEach(star => {
     star.addEventListener("click", () => {
         const value = star.getAttribute("data-value");
         document.getElementById("reviewStars").value = value;
-
         // Update UI
         document.querySelectorAll(".star-rating span").forEach(s => {
             s.classList.toggle("active", s.getAttribute("data-value") <= value);
         });
     });
 });
-</script>
 
+function scrollReviews(direction) {
+    const container = document.getElementById("reviewsContainer");
+    const scrollAmount = 280; // width of one card + gap
+    container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+}
+</script>
 </body>
 </html>
 
 
-
    <!-- REVIEWS SECTION -->
-
-
 <style>
-
 .reviews-header {
     display: flex;
     justify-content: space-between;
@@ -431,8 +367,6 @@ document.querySelectorAll(".star-rating span").forEach(star => {
     padding: 0;
     position: relative;
 }
-
-
 
 /* Tooltip */
 .add-review-btn::after {
@@ -471,7 +405,6 @@ document.querySelectorAll(".star-rating span").forEach(star => {
 .add-review-btn:hover::before {
     opacity: 1;
 }
-
 
 .add-review-btn:hover {
     background-color: #d3d3d3;
@@ -595,7 +528,6 @@ document.querySelectorAll(".star-rating span").forEach(star => {
     right: 5px;    /* inside the container */
 }
 
-
 .reviews-section {
     background-color: #B6B6B6;
     padding: 25px 30px;
@@ -605,8 +537,6 @@ document.querySelectorAll(".star-rating span").forEach(star => {
     width: 100%;
     box-shadow: 0 4px 18px rgba(0,0,0,0.08);
 }
-
-
 
 /* Mobile */
 @media (max-width: 768px) {
@@ -618,7 +548,6 @@ document.querySelectorAll(".star-rating span").forEach(star => {
 }
 
 /* modal section  */
-
 .review-modal {
     display: none;
     position: fixed;
@@ -721,6 +650,6 @@ document.querySelectorAll(".star-rating span").forEach(star => {
 .star-rating span.active {
     color: #111;            
     transform: scale(1.1);  
-
+            }
 
 </style>
