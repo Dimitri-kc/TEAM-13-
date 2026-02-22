@@ -39,7 +39,7 @@ class UserController {
         //default role is customer
         $role = 'customer';
         $registrationSuccess = $userModel->register($name, $surname, $email, $phone, $address, $hashedPassword, $role);
-        if ($registrationSuccess) { //if registration successful
+        if (!empty($registrationSuccess['success'])) { //if registration successful
             echo json_encode([
             "success" => true,   
             "redirect" => "signin.php", //redirect to signin page after registration 
@@ -105,6 +105,10 @@ class UserController {
 
     public function changePassword($data) { //change user password upon first login only 
         $user_ID = $_SESSION['user_ID']; //get user ID from session
+        if (empty($_SESSION['user_ID'])) { //check if user logged in
+            echo json_encode(["success" => false, "message" => "Please login."]);
+            return;
+        }
         $newPassword = trim($data['newPassword'] ?? ''); //get new password from input, trim whitespace
         if (!$newPassword) { //check valid input
             echo json_encode([ "success" => false, "message" => "New password is required."]);
@@ -112,9 +116,11 @@ class UserController {
         }
 
         $minLength = strlen($newPassword) >=8; //minimum length must be longer than 8
-        $caseNumbers = preg_match('/[A-Za-z0-9]/', $newPassword); //must contain uppercase, lowercase & numbers
+        $uppercase = preg_match('/[A-Z]/', $newPassword); //uppercase required
+        $lowercase = preg_match('/[a-z]/', $newPassword); //lowercase required
+        $numbers = preg_match('/[0-9]/', $newPassword); //must contain numbers
         $specialChar = preg_match('/[!@#$%^&*()]/', $newPassword); //must contain special characters such as !@#$%^&*()
-        if (!$minLength || !$caseNumbers || !$specialChar) {
+        if (!$minLength || !$uppercase || !$lowercase || !$numbers || !$specialChar) {
             echo json_encode([
                 "success" => false,
                 "message" => "Password must be atleast 8 characters long and contain uppercase, lowercase, numbers and special characters."
