@@ -3,7 +3,8 @@
 session_start();
 //included so controller can connect to database and relevant methods
 require_once '../../models/basketModel.php';//state file path
-require_once '../../services/userFucntions.php'; //for require_login() & require_role() & guest basket functions
+require_once '../../services/basketFunctions.php'; //for session-based guest basket functions
+require_once '../../services/userFunctions.php'; //for require_login() & require_role() & guest basket functions
 
 //Handling basket-related operations
 class BasketController {
@@ -29,8 +30,9 @@ class BasketController {
             //fetch or create user basket
             $basket = $basketModel->fetchUserBasket($user_ID);
             $basket_ID = $basket['basket_ID']; //get basket ID
-            return $basketModel->addItemToBasket($basket_ID, $product_ID, $quantity);//adds item into database basket
             echo "Item added to basket.";
+            return $basketModel->addItemToBasket($basket_ID, $product_ID, $quantity);//adds item into database basket
+            
         } else {
             //guest user - use session-based basket
             addToSessionBasket($product_ID, $quantity); 
@@ -57,14 +59,16 @@ class BasketController {
             $basketModel = new Basket();
             $basket = $basketModel->fetchUserBasket($user_ID); //fetch user basket
             $basket_ID = $basket['basket_ID'];
+            echo "Quantity updated in basket.";
             return $basketModel->updateItemQuantity($basket_ID, $product_ID, $quantity);
         } else {
             //if guest user, update session basket
             if (isset($_SESSION['guest_basket'][$product_ID])) {
                 $_SESSION['guest_basket'][$product_ID] = $quantity; //update quantity in session basket not user basket
             }
+            echo "Quantity updated in guest basket.";
         }
-        echo "Quantity updated.";
+
     }
 
     public function removeItem() {
@@ -84,12 +88,14 @@ class BasketController {
             $basketModel = new Basket();
             $basket = $basketModel->fetchUserBasket($user_ID); //fetch user basket
             $basket_ID = $basket['basket_ID']; //get basket ID
+            echo "Item removed from basket.";
             return $basketModel->removeItemFromBasket($basket_ID, $product_ID);//remove item by calling model method
         } else {
             //if guest user, remove from session basket
             removeFromSessionBasket($product_ID);
+            echo "Item removed from guest basket.";
         }
-        echo "Item removed from basket.";
+
     }
 
     //view basket contents

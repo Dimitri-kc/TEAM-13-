@@ -39,7 +39,7 @@ class UserController {
         //default role is customer
         $role = 'customer';
         $registrationSuccess = $userModel->register($name, $surname, $email, $phone, $address, $hashedPassword, $role);
-        if ($registrationSuccess) { //if registration successful
+        if (!empty($registrationSuccess['success'])) { //if registration successful
             echo json_encode([
             "success" => true,   
             "redirect" => "signin.php", //redirect to signin page after registration 
@@ -83,54 +83,45 @@ class UserController {
         $_SESSION['user_ID'] = $user['user_ID']; //store session userID
         $_SESSION['name'] = $user['name']; //store sesion name
         $_SESSION['role'] = $user['role']; //customer/admin
+        $_SESSION['must_change_password'] = (int)($user['must_change_password'] ?? 0); //stores flag in session at login > force password change on first login
         //merge guest basket with user basket upon login
         mergeBaskets($user['user_ID']);
 
         if (!empty($user['must_change_password'])) { //force password change on first login for security
-            echo json_encode([
-                "success" => true,
-                "redirect" => "changepassword.php", //redirect to change password page after login
-                "message" => "Login successful. Please change your password before proceeding."
-            ]);
+            echo json_encode(["success" => true, "redirect" => "changepassword.php", //redirect to change password page after login
+                "message" => "Login successful. Please change your password before proceeding."]);
             return;
         }
             //redirect to homepage after login
-            //header('Location: /Homepage.html');
-            echo json_encode([ //successful login json response
-                "success" => true,
-                "redirect" => "homepage.php", //redirect to homepage after login
-                "user" => [
-                    "user_ID" => $user['user_ID'],
-                    "name" => $user['name'],
-                    "role" => $user['role']
-                ]
+            echo json_encode([
+                "success" => true, "redirect" => "homepage.php", "user" => ["user_ID" => $user['user_ID'], "name" => $user['name'], "role" => $user['role']]
             ]);
             return;
         } else {
             echo json_encode([ //failed login json response
-            "success" => false,
-            "message" => "Login failed. Invalid email or password."
-            ]);
+            "success" => false, "message" => "Login failed. Invalid email or password."]);
             return;
-            //echo  'Login failed. Invalid email or password.';
         }
     }
 
     public function changePassword($data) { //change user password upon first login only 
+        if (empty($_SESSION['user_ID'])) { //check if user logged in
+            echo json_encode(["success" => false, "message" => "Please login."]);
+            return;
+        }
         $user_ID = $_SESSION['user_ID']; //get user ID from session
         $newPassword = trim($data['newPassword'] ?? ''); //get new password from input, trim whitespace
         if (!$newPassword) { //check valid input
-            echo json_encode([
-                "success" => false,
-                "message" => "New password is required."
-            ]);
+            echo json_encode([ "success" => false, "message" => "New password is required."]);
             return;
         }
 
         $minLength = strlen($newPassword) >=8; //minimum length must be longer than 8
-        $caseNumbers = preg_match('/[A-Za-z0-9]/', $newPassword); //must contain uppercase, lowercase & numbers
+        $uppercase = preg_match('/[A-Z]/', $newPassword); //uppercase required
+        $lowercase = preg_match('/[a-z]/', $newPassword); //lowercase required
+        $numbers = preg_match('/[0-9]/', $newPassword); //must contain numbers
         $specialChar = preg_match('/[!@#$%^&*()]/', $newPassword); //must contain special characters such as !@#$%^&*()
-        if (!$minLength || !$caseNumbers || !$specialChar) {
+        if (!$minLength || !$uppercase || !$lowercase || !$numbers || !$specialChar) {
             echo json_encode([
                 "success" => false,
                 "message" => "Password must be atleast 8 characters long and contain uppercase, lowercase, numbers and special characters."
@@ -144,6 +135,7 @@ class UserController {
         $changeSuccess = $userModel->changePassword((int)$_SESSION['user_ID'], $hashedPassword); //call changePassword method in model to update password in database
 
         if ($changeSuccess) {
+            $_SESSION['must_change_password'] = 0; //syncs session flag with DB after successful forced password change
             echo json_encode([
                 "success" => true,
                 "redirect" => "homepage.php", //redirect to homepage after successful password change
@@ -151,14 +143,26 @@ class UserController {
             ]);
             return;
         } else {
-            echo json_encode([
-                "success" => false,
-                "message" => "Failed to change password. Please try again."
-            ]);
+            echo json_encode(["success" => false, "message" => "Failed to change password. Please try again."]);
             return;
         }
-        
     }
+
+    public function logout() { //logout user by destroying session
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start(); //start if not already
+        }
+        $_SESSION = []; //clear session array > free all variables
+        if (ini_get("session.use_cookies")) { //clear any cookies
+            $params = session_get_cookie_params(); //if cookies, get params & set cookie to expire from past > security constraint to prevent
+            setcookie(session_name(), '', time() -42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+        } 
+        session_destroy(); //destroy/clear session
+        echo json_encode(["success" => true, "redirect" => "homepage.php", "message" => "Logged out successfully."]);
+        return;
+
+    }
+        
 }
 //Notes:
 //added json encoding for registration and login response

@@ -41,7 +41,6 @@ class User {
             return ["success" => false, "error" => $e->getMessage()]; //return error message if exception occurs
         }
 
-
     } 
     
     //login method to authenticate user
