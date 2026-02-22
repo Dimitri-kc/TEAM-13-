@@ -12,10 +12,9 @@ session_start();
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/header_footer_style.css">
-    <link rel="stylesheet" href="../css/reviews.css">
 
     <link rel="stylesheet" href="../css/homepage-css/homepage.css">
-    <link rel="stylesheet" href="../css/homepage-css/homepage-about.css">
+    <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
 </head>
 <body>
@@ -160,11 +159,10 @@ session_start();
             </p>
         </div>
 
-        <div class="right">
-            <div class="image-place">
-                <img src="../images/about-logo.png" alt="logo">
-            </div>
-        </div>
+<div class="right">
+    <img src="../images/about-logo.png" alt="logo">
+</div>
+
     </div>
     
     <header id="main-header">
