@@ -10,147 +10,251 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+  <!-- Keep same order -->
   <link rel="stylesheet" href="../css/header_footer_style.css">
   <link rel="stylesheet" href="../css/signup.style.css">
 
   <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background-color: #EAE8E4;
-    }
-
-    .card {
-      background: #ffffff;
+    /* Force page layout so header/footer are full width */
+    html, body {
       width: 100%;
-      max-width: 420px;
-      padding: 28px;
-      border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      margin: 0;
+      padding: 0;
     }
 
-    h1 {
+    body.page-background {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important; /* overrides signup page centering */
+      align-items: stretch !important;         /* THIS fixes narrow header/footer */
+      min-height: 100vh !important;
+      width: 100% !important;
+      margin: 0 !important;
+    }
+
+    /* Make top and bottom sections span full page */
+    .site-header,
+    .site-footer {
+      width: 100% !important;
+      max-width: none !important;
+      flex-shrink: 0;
+      align-self: stretch !important;
+    }
+
+    /* Center only the password card */
+    main.form-container {
+      flex: 1;
+      width: 100% !important;
+      max-width: none !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      padding: 60px 16px;
+      margin: 0 !important;
+      box-sizing: border-box;
+      align-self: stretch !important;
+    }
+
+    .helper-text {
       text-align: center;
-      margin-bottom: 10px;
+      font-size: 0.95rem;
+      margin-top: -6px;
+      margin-bottom: 16px;
+      opacity: 0.8;
     }
 
-    p {
-      text-align: center;
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 20px;
-    }
-
-    .form-group {
-      margin-bottom: 14px;
-    }
-
-    label {
-      font-size: 14px;
-      margin-bottom: 6px;
-      display: block;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 6px;
-      background-color: #111;
-      color: #fff;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .message {
-      margin-top: 14px;
-      padding: 10px;
-      border-radius: 6px;
-      font-size: 14px;
+    .error-popup {
       display: none;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 4px;
+      background: #fff;
+      border: 1px solid #f0b400;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+      font-size: 0.9rem;
+      line-height: 1.4;
+      align-items: flex-start;
+      gap: 8px;
     }
 
-    .message.error {
-      background: #fdecec;
-      color: #8b1d1d;
-      border: 1px solid #f4bcbc;
+    .error-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+      background: #ffa000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .error-text {
+      flex: 1;
     }
   </style>
 </head>
 
-<body>
+<body class="page-background">
 
-<div class="card">
-  <h1>Change Password</h1>
-  <p>You must change your password before continuing.</p>
+<header class="site-header">
+  <div class="header-inner">
+    <button class="menu-btn" id="menu-toggle-btn">
+      <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
+    </button>
 
-  <form id="changePasswordForm">
-    <div class="form-group">
-      <label>New Password</label>
-      <input type="password" id="newPassword" required>
+    <div class="logo-wrapper">
+      <a href="Homepage.php">
+        <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
+      </a>
     </div>
 
-    <div class="form-group">
-      <label>Confirm New Password</label>
-      <input type="password" id="confirmPassword" required>
+    <div class="header-actions">
+      <a href="favourites.php"><img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon"></a>
+      <a href="signin.php"><img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon"></a>
+      <a href="basket.php"><img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon"></a>
+    </div>
+  </div>
+
+  <nav class="dropdown-panel" id="dropdown-nav">
+    <ul class="nav-links">
+      <li><a href="livingroom.php">Living Room</a></li>
+      <li><a href="bathroom.php">Bathroom</a></li>
+      <li><a href="bedroom.php">Bedroom</a></li>
+      <li><a href="office.php">Office</a></li>
+      <li><a href="kitchen.php">Kitchen</a></li>
+      <li class="nav-divider"><a href="signin.php">My Account</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="form-container">
+  <section class="form-box">
+    <h1 class="form-title">CHANGE PASSWORD</h1>
+    <p class="helper-text">You must change your password before continuing.</p>
+
+    <form class="form-fields" id="changePasswordForm">
+      <label class="input-group">
+        <span class="input-label">New Password</span>
+        <input type="password" name="newPassword" required>
+      </label>
+
+      <label class="input-group">
+        <span class="input-label">Confirm New Password</span>
+        <input type="password" name="confirmPassword" required>
+      </label>
+
+      <div id="errorPopup" class="error-popup">
+        <div class="error-icon">!</div>
+        <div class="error-text" id="errorText"></div>
+      </div>
+
+      <button type="submit" class="main-button">Update Password</button>
+    </form>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-section social-links">
+      <a href="#"><img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon"></a>
+      <a href="#"><img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon"></a>
     </div>
 
-    <button type="submit">Update Password</button>
-  </form>
+    <div class="footer-section">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="Homepage.php">Homepage</a></li>
+        <li><a href="signin.php">My Account</a></li>
+        <li><a href="favourites.php">Favourites</a></li>
+        <li><a href="basket.php">Basket</a></li>
+      </ul>
+    </div>
 
-  <div id="msg" class="message error"></div>
-</div>
+    <div class="footer-section">
+      <h4>Categories</h4>
+      <ul>
+        <li><a href="livingroom.php">Living Room</a></li>
+        <li><a href="office.php">Offices</a></li>
+        <li><a href="kitchen.php">Kitchen</a></li>
+        <li><a href="bathroom.php">Bathrooms</a></li>
+        <li><a href="bedroom.php">Bedrooms</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>More...</h4>
+      <ul>
+        <li><a href="contact.php">Contact Us</a></li>
+        <li><a href="about.php">About Us</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
 
 <script>
-  const API_URL = "/Team-13-/Draft/backend/routes/userRoutes.php";
+  const API_URL = "../backend/routes/userRoutes.php";
   const form = document.getElementById("changePasswordForm");
-  const msg = document.getElementById("msg");
 
-  form.addEventListener("submit", async function (e) {
-    e.preventDefault();
-    msg.style.display = "none";
+  function showPopup(message){
+    document.getElementById("errorText").textContent = message;
+    document.getElementById("errorPopup").style.display = "flex";
+  }
 
-    const p1 = document.getElementById("newPassword").value;
-    const p2 = document.getElementById("confirmPassword").value;
+  function hidePopup(){
+    document.getElementById("errorPopup").style.display = "none";
+  }
 
-    if (p1 !== p2) {
-      msg.textContent = "Passwords do not match.";
-      msg.style.display = "block";
-      return;
+  async function readJsonSafely(res){
+    const ct = (res.headers.get("content-type") || "").toLowerCase();
+    const raw = await res.text();
+    if (ct.includes("application/json")){
+      try { return JSON.parse(raw); } catch {}
     }
+    return { success:false, message: raw || "Server error. Please try again." };
+  }
 
-    const formData = new FormData();
-    formData.append("action", "change_password");
-    formData.append("newPassword", p1);
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hidePopup();
 
-    try {
-      const res = await fetch(API_URL, { method: "POST", body: formData });
-      const text = (await res.text()).trim();
+    const newPassword = form.querySelector('input[name="newPassword"]').value;
+    const confirmPassword = form.querySelector('input[name="confirmPassword"]').value;
 
-      if (text.toLowerCase().includes("success")) {
-        window.location.href = "homepage.php";
+    if (!newPassword || !confirmPassword) return showPopup("Please fill in both fields.");
+    if (newPassword !== confirmPassword) return showPopup("Passwords do not match.");
+
+    try{
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "change_password",
+          newPassword,
+          confirmPassword
+        })
+      });
+
+      const data = await readJsonSafely(res);
+
+      if (data.success){
+        window.location.href = data.redirect || "Homepage.php";
         return;
       }
 
-      msg.textContent = text || "Failed to update password.";
-      msg.style.display = "block";
-    } catch {
-      msg.textContent = "Server error. Please try again.";
-      msg.style.display = "block";
+      showPopup(data.message || "Failed to update password.");
+    } catch (err){
+      console.error(err);
+      showPopup("Server error. Please try again.");
     }
   });
 </script>
 
+<script src="../javascript/header_footer_script.js"></script>
 </body>
 </html>
+
+
 
