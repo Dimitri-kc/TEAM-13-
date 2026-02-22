@@ -5,10 +5,12 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/header_footer_style.css">
     <link rel="stylesheet" href="../css/reviews.css">
 
@@ -93,15 +95,15 @@ session_start();
 
  <section class="reviews-section">
     <div class="reviews-header">
-        <h2>Latest Reviews</h2>
+        <h2>LATEST REVIEWS</h2>
         <button class="add-review-btn"></button>
     </div>
 
     <div class="reviews-slider-wrapper">
-        <button class="nav-btn prev-btn" onclick="scrollReviews(-1)">&#10094;</button>
+        <button class="nav-btn prev-btn" onclick="scrollReviews(-1)">‹</button>
 
         <div class="reviews-container" id="reviewsContainer"></div>
-        <button class="nav-btn next-btn" onclick="scrollReviews(1)">&#10095;</button>
+        <button class="nav-btn next-btn" onclick="scrollReviews(1)">›</button>
     </div>
 </section>
 
@@ -347,9 +349,9 @@ function scrollReviews(direction) {
 }
 
 .reviews-header h2 {
+    font-family: 'Playfair Display', serif;
     font-size: 22px;
     font-weight: 700;   
-    text-transform: uppercase;  
     letter-spacing: 1px;  
 }
 
@@ -502,22 +504,29 @@ function scrollReviews(direction) {
 /* Arrows */
 .nav-btn {
     position: absolute;
-    top: 45%;
+    top: 50%;
     transform: translateY(-50%);
     background: white;
+    color: black;
     border: none;
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     cursor: pointer;
-    font-size: 16px;
+    font-size: 22px;
+    font-weight: bold;
+
+    display: flex;              /* center arrow */
+    align-items: center;
+    justify-content: center;
+
     z-index: 2;
 }
 
 .nav-btn:hover {
-    background: black;
-    color: white;
+    transform: translateY(-50%) scale(1.08);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
 
 .prev-btn {
