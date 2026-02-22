@@ -105,11 +105,11 @@ class UserController {
     }
 
     public function changePassword($data) { //change user password upon first login only 
-        $user_ID = $_SESSION['user_ID']; //get user ID from session
         if (empty($_SESSION['user_ID'])) { //check if user logged in
             echo json_encode(["success" => false, "message" => "Please login."]);
             return;
         }
+        $user_ID = $_SESSION['user_ID']; //get user ID from session
         $newPassword = trim($data['newPassword'] ?? ''); //get new password from input, trim whitespace
         if (!$newPassword) { //check valid input
             echo json_encode([ "success" => false, "message" => "New password is required."]);
@@ -146,8 +146,23 @@ class UserController {
             echo json_encode(["success" => false, "message" => "Failed to change password. Please try again."]);
             return;
         }
-        
     }
+
+    public function logout() { //logout user by destroying session
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start(); //start if not already
+        }
+        $_SESSION = []; //clear session array > free all variables
+        if (ini_get("session.use_cookies")) { //clear any cookies
+            $params = session_get_cookie_params(); //if cookies, get params & set cookie to expire from past > security constraint to prevent
+            setcookie(session_name(), '', time() -42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+        } 
+        session_destroy(); //destroy/clear session
+        echo json_encode(["success" => true, "redirect" => "homepage.php", "message" => "Logged out successfully."]);
+        return;
+
+    }
+        
 }
 //Notes:
 //added json encoding for registration and login response
