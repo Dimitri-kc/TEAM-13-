@@ -83,6 +83,7 @@ class UserController {
         $_SESSION['user_ID'] = $user['user_ID']; //store session userID
         $_SESSION['name'] = $user['name']; //store sesion name
         $_SESSION['role'] = $user['role']; //customer/admin
+        $_SESSION['must_change_password'] = (int)($user['must_change_password'] ?? 0); //stores flag in session at login > force password change on first login
         //merge guest basket with user basket upon login
         mergeBaskets($user['user_ID']);
 
@@ -134,6 +135,7 @@ class UserController {
         $changeSuccess = $userModel->changePassword((int)$_SESSION['user_ID'], $hashedPassword); //call changePassword method in model to update password in database
 
         if ($changeSuccess) {
+            $_SESSION['must_change_password'] = 0; //syncs session flag with DB after successful forced password change
             echo json_encode([
                 "success" => true,
                 "redirect" => "homepage.php", //redirect to homepage after successful password change
