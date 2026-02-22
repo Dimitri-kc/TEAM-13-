@@ -11,7 +11,7 @@ $raw = file_get_contents("php://input"); //get raw POST data (JSON expected fron
 $data = json_decode($raw, true); //get JSON input data and decode
 
 //debug log to trace session & user input data for troubleshooting
-$log = [
+/* $log = [
     'time' => date('c'), //exact current date/time
     'session' => $_SESSION, //current session data
     'role' => $_SESSION['role'] ?? 'none', //user role set
@@ -19,9 +19,9 @@ $log = [
     'data' => $data, //JSON data from POST
     'json_error' => json_last_error_msg()
 ]; //debug log array
-file_put_contents(__DIR__ . '/userDebug.log',
+file_put_contents(__DIR__ . '/../debug/userDebug.log',
  print_r($log, true) .  str_repeat('-', 50) . PHP_EOL, FILE_APPEND); //print_r converts array to readable string (added -50 for clarity)
-
+ */
 if(!$data || !isset($data['action'])){ //if no data/action provided then return error
     echo json_encode(["success" => false, "message" => "No action specified"]); 
     return;
