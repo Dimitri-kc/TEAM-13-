@@ -88,59 +88,84 @@ class BasketController {
     }
 
     //update quantity of specific item in basket
-    public function updateItem() {
+    public function updateItem(array $data): void {
 
-        //get session details 
-        $product_ID = trim($_POST['product_ID'] ?? '');
-        $quantity = trim($_POST['quantity'] ?? '');
+        //validate/convert to int, default to 0 otherwise
+        $product_ID = $this->requireInt($data['product_ID'] ?? '');
+        $quantity = $this->requireInt($data['quantity'] ?? '');
 
-        if (!$product_ID || !$quantity) { //check valid input
-            echo "Invalid request.";
-            exit;
+        if ($product_ID <=0) { //check valid input
+            $this->jsonSuccess(false, "Invalid product ID.", null, 400); //400=bad request > product_ID is required
+            return;
         }
+
         //if user logged in, update database basket
         if(isset($_SESSION['user_ID'])) {
-            $user_ID = $_SESSION['user_ID'];
+            $user_ID = (int)$_SESSION['user_ID'];
 
             $basketModel = new Basket();
             $basket = $basketModel->fetchUserBasket($user_ID); //fetch user basket
-            $basket_ID = $basket['basket_ID'];
-            echo "Quantity updated in basket.";
-            return $basketModel->updateItemQuantity($basket_ID, $product_ID, $quantity);
-        } else {
-            //if guest user, update session basket
-            if (isset($_SESSION['guest_basket'][$product_ID])) {
-                $_SESSION['guest_basket'][$product_ID] = $quantity; //update quantity in session basket not user basket
+            
+            //if no basket found, return error > error hadling as also in model
+            if (!$basket || empty($basket['basket_ID'])) {
+                $this->jsonSuccess(false, "Failed to fetch or create basket for user.", null, 500); //500=server error
+                return;
             }
-            echo "Quantity updated in guest basket.";
+
+            $basket_ID = (int)$basket['basket_ID'];
+            if ($quantity <=0) {
+                $removeItemSuccess = $basketModel->removeItemFromBasket($basket_ID, $product_ID);
+                $this->jsonSuccess((bool)$removeItemSuccess, $removeItemSuccess ? "Item removed from basket." : "Failed to remove item from basket.", null, $removeItemSuccess ? 200 : 500); //200=success, 500=server error
+                return;
+            }
+
+            $updateSuccess = $basketModel->updateItemQuantity($basket_ID, $product_ID, $quantity);
+            $this->jsonSuccess((bool)$updateSuccess, $updateSuccess ? "Item quantity updated." : "Failed to update item quantity.", null, $updateSuccess ? 200 : 500); //200=success, 500=server error
+            return;
+        } 
+        //if guest user, update session basket
+        if ($quantity <=0) { //if quantity invalid, remove item from session basket
+            removeFromSessionBasket($product_ID);
+            $this->jsonSuccess(true, "Item removed from guest basket.", null, 200);
+            return;
         }
-
+        updateSessionBasket($product_ID, $quantity); //update quantity in session basket not user basket
+        $this->jsonSuccess(true, "Quantity updated in guest basket.", null, 200);
+        return;
     }
+    
+    //POST request to remove item from basket
+    public function removeItem(array $data): void {
 
-    public function removeItem() {
+        //validate/convert to int, default to 0 otherwise
+        $product_ID = $this->requireInt($data['product_ID'] ?? '');
 
-        //get session details 
-        $product_ID = trim($_POST['product_ID'] ?? '');
-
-        if (!$product_ID) {//validate product ID
-            echo "This item doesn't exist.";
-            exit;
+        if ($product_ID <=0) {//validate product ID
+            $this->jsonSuccess(false, "Invalid product ID.", null, 400); //400=bad request > product_ID is required
+            return;
         }
 
         //if user logged in, remove from database basket
         if (isset($_SESSION['user_ID'])) {
-            $user_ID = $_SESSION['user_ID'];
+            $user_ID = (int)$_SESSION['user_ID'];
 
             $basketModel = new Basket();
             $basket = $basketModel->fetchUserBasket($user_ID); //fetch user basket
-            $basket_ID = $basket['basket_ID']; //get basket ID
-            echo "Item removed from basket.";
-            return $basketModel->removeItemFromBasket($basket_ID, $product_ID);//remove item by calling model method
-        } else {
-            //if guest user, remove from session basket
-            removeFromSessionBasket($product_ID);
-            echo "Item removed from guest basket.";
+            //if no basket found, return error
+            if (!$basket || empty($basket['basket_ID'])) {
+                $this->jsonSuccess(false, "Failed to fetch or createbasket for user.", null, 500); //500=server error
+                return;
+            }
+            
+            $basket_ID = (int)$basket['basket_ID']; //get basket ID
+            $removeItemSuccess = $basketModel->removeItemFromBasket($basket_ID, $product_ID);//remove item by calling model method
+            $this->jsonSuccess((bool)$removeItemSuccess, $removeItemSuccess ? "Item removed from basket." : "Failed to remove item from basket.", null, $removeItemSuccess ? 200 : 500); //200=success, 500=server error
+            return;
         }
+        
+        //if guest user, remove from session basket
+        removeFromSessionBasket($product_ID);
+        $this->jsonSuccess(true, "Item removed from guest basket.", null, 200);
 
     }
 
