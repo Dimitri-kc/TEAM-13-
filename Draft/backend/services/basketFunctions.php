@@ -56,7 +56,13 @@ function clearSessionBasket(): void {
 //-Helpers for checkout process- Some also used in basketController.php
 
 //merge basket function (userID and basketModel) > upon login/register during checkout
-function mergeBaskets($user_ID) {
+function mergeBaskets($user_ID): void {
+    //security constraints
+    $user_ID = (int)$user_ID; //int security
+    if ($user_ID <=0) return; //invalid user Id so exit
+    $sessionBasket = getSessionBasket();
+    if (empty($sessionBasket)) return; //if no items to merge then exit
+
     $basketModel = new Basket(); //create Basket
     $userBasket = $basketModel->fetchUserBasket($user_ID); //fetch user basket from database
 
