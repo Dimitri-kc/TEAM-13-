@@ -37,7 +37,6 @@ h2 {
     overflow: hidden;
     box-shadow: 0 12px 35px rgba(0,0,0,0.08);
     border: 3px solid #B6B6B6;
-    /* align-items: flex-start; prevents forced equal height */
 }
 
 .left, .right {

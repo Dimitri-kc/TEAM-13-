@@ -92,6 +92,34 @@ session_start();
         </a>
     </div>
 
+<!-- New Grey Container Section -->
+<section class="grey-section">
+    <div class="grey-inner">
+        <h2>OUR FAVOURITES</h2>
+
+        <div class="collection-cards">
+            <div class="card">
+                <a href="product.php?id=1"> <!-- Replace 1 with actual product_id of sofa -->
+                    <img src="../images/livingroom-images/sofa.jpg" alt="Sofa">
+                    <h3>VENICE CREAM SOFA</h3>
+                </a>
+            </div>
+            <div class="card">
+                <a href="product.php?id=5"> <!-- Replace 2 with actual product_id of console table -->
+                    <img src="../images/livingroom-images/consoletable.png" alt="Console Table">
+                    <h3>NY CONSOLE TABLE</h3>
+                </a>
+            </div>
+            <div class="card">
+                <a href="product.php?id=2"> <!-- Replace 3 with actual product_id of throw pillow -->
+                    <img src="../images/livingroom-images/throwpillow3.jpg" alt="Throw Pillow">
+                    <h3>OXFORD THROW PILLOW</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
  <section class="reviews-section">
     <div class="reviews-header">
         <h2>LATEST REVIEWS</h2>
@@ -659,4 +687,61 @@ function scrollReviews(direction) {
     transform: scale(1.1);  
             }
 
+/* OUR FAVOURITES SECTION */
+.grey-section {
+    background-color: #B6B6B6;  /* same grey as reviews */
+    padding: 25px 30px;
+    margin: 60px auto;          /* space above and below */
+    border-radius: 25px;
+    max-width: 1100px;
+    width: 100%;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+}
+
+.grey-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.grey-section p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Collections cards */
+.collection-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.collection-cards .card {
+    background: #B6B6B6;
+    border-radius: 10px;
+    padding: 10px;
+    flex: 1 1 calc(33% - 20px); /* 3 cards per row */
+    text-align: center;
+    max-width: 33%;
+    /* box-shadow: 0 4px 12px rgba(0,0,0,0.05); */
+    transition: transform 0.2s ease;
+}
+
+.collection-cards .card:hover {
+    transform: translateY(-4px);
+}
+
+.collection-cards .card img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.collection-cards .card h3 {
+    font-size: 16px;
+    font-weight: 600;
+}
 </style>
