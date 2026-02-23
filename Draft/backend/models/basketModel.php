@@ -33,7 +33,7 @@ class Basket {
     }
 
     //get current stock for a product > used in controller to validate stock before updating
-    public function getProductStock(int $prodcut_ID) : ?int {
+    public function getProductStock(int $product_ID) : ?int {
         $stmt = $this->conn->prepare("SELECT stock FROM products WHERE product_ID = ?"); //get stock for specific product
         $stmt->bind_param("i", $product_ID); //product_ID int
         $stmt->execute();
@@ -81,6 +81,24 @@ class Basket {
         $items = $result->fetch_all(MYSQLI_ASSOC); //return all associated items in basket
         $stmt->close();
         return $items;
+    }
+//fetch product details for given product IDs - used to get details for guest basket items stored in session
+    public function fetchGuestBasketProducts(array $productIDs) : array {
+        if (empty($productIDs)) return [];
+        //int security
+        $productIDs = array_values(array_filter(array_map('intval', $productIDs), fn($id) => $id > 0)); //filter out non int values - array indexed for prep-statements
+        if (empty($productIDs)) return []; //if no valid ids, return empty
+        $placeholders = implode(',', array_fill(0, count($productIDs), '?')); //placeholders for prep-statement
+        $types = str_repeat('i', count($productIDs)); //strin of i for count of IDs for binding parameters
+        $stmt = $this->conn->prepare("SELECT product_ID, name, price, image, stock, category_id
+                FROM products
+                WHERE product_ID IN ($placeholders)"); //select product details for given IDs
+        $stmt->bind_param($types, ...$productIDs); //bind parametes
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $products = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $products; 
     }
 
 }
