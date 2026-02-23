@@ -1,6 +1,5 @@
 <?php //basket functions - > will also contain some helpers for checkout process 
 //session-based basket helpers + merge logic
-require_once __DIR__ . '/../models/basketModel.php'; //include basketModel for user's basket interactions 
 
 //get session basket function > user/guest
 function getSessionBasket(): array { //fetch session guest basket > for users, merge with DB basket upon register/login
@@ -56,13 +55,15 @@ function clearSessionBasket(): void {
 //-Helpers for checkout process- Some also used in basketController.php
 
 //merge basket function (userID and basketModel) > upon login/register during checkout
-function mergeBaskets($user_ID): void {
+function mergeSessionBasketToUser($user_ID): void {
     //security constraints
     $user_ID = (int)$user_ID; //int security
     if ($user_ID <=0) return; //invalid user Id so exit
     $sessionBasket = getSessionBasket();
     if (empty($sessionBasket)) return; //if no items to merge then exit
-
+    
+    //loading model here to reduce coupling
+    require_once __DIR__ . '/../models/basketModel.php'; //include basketModel for user's basket interactions 
     $basketModel = new Basket(); //create Basket
     $userBasket = $basketModel->fetchUserBasket($user_ID); //fetch user basket from database
 

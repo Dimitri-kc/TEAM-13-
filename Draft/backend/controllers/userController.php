@@ -84,7 +84,7 @@ class UserController {
         $_SESSION['role'] = $user['role']; //customer/admin
         $_SESSION['must_change_password'] = (int)($user['must_change_password'] ?? 0); //stores flag in session at login > force password change on first login
         //merge guest basket with user basket upon login
-        mergeBaskets($_SESSION['user_ID']);
+        mergeSessionBasketToUser($_SESSION['user_ID']);
 
         if ($_SESSION['must_change_password'] === 1) { //force password change on first login for security
             echo json_encode(["success" => true, "redirect" => "changepassword.php", //redirect to change password page after login
