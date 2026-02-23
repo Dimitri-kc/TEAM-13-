@@ -56,29 +56,40 @@ function clearSessionBasket(): void {
 //-Helpers for checkout process- Some also used in basketController.php
 
 //merge basket function (userID and basketModel) > upon login/register during checkout
-function mergeBaskets($user_ID) {
+function mergeBaskets($user_ID): void {
+    //security constraints
+    $user_ID = (int)$user_ID; //int security
+    if ($user_ID <=0) return; //invalid user Id so exit
+    $sessionBasket = getSessionBasket();
+    if (empty($sessionBasket)) return; //if no items to merge then exit
+
     $basketModel = new Basket(); //create Basket
     $userBasket = $basketModel->fetchUserBasket($user_ID); //fetch user basket from database
 
-    if (!$userBasket || empty($userBasket)) { //if no basket exists for user, then fetch new basket details from one created in basketModel.php fetchUserBasket
+    //if no basket exists for user, then fetch new basket details from one created in basketModel.php fetchUserBasket
+    if (!$userBasket || empty($userBasket['basket_ID'])) { //don't clear guest basket, let it merge next login
     return; //added for error handling - if basket creation/fetching fails then exit merging process - user can still shop, add items to session basket -> merge upon next login/register
     }
     $basket_ID = (int)$userBasket['basket_ID']; //int prevents SQL injection, ensures correct data type by forcfully converting ID to int
 
-    $sessionBasket = getSessionBasket(); //get guest basket from session
-
     //loop through session basket and add all items to user basket in database
     foreach ($sessionBasket as $product_ID => $quantity) { //for each item in guest basket
-        $basketModel->addItemToBasket($basket_ID, $product_ID, $quantity); //add each item to user basket
+        $product_ID = (int)$product_ID;
+        $quantity = (int) $quantity;
+        if ($product_ID < 0 || $quantity < 0) { //if invalid, skip
+            $basketModel->addItemToBasket($basket_ID, $product_ID, $quantity); //add each item to user basket
+        }
     }
 
     clearSessionBasket(); //clear guest basket from session after merging - no orphaned data
 }
 
-function basket_total($basketItems) { //calculate total cost of items in basket
+function basket_total(array $basketItems): float { //calculate total cost of items in basket
     $total = 0.0; 
     foreach ($basketItems as $item) { //for each item in basket
-        $total += $item['price'] * $item['quantity']; //add price * quantity to total
+    $price = (float)($item['price'] ?? 0); //get price, default to 0 if not set
+    $quantity = (int)($item['quantity'] ?? 0); //get quantity, default to 0 if not set    
+    $total += $price * $quantity; //add price * quantity to total
     }
     return $total;
 }
