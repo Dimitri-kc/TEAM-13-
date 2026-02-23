@@ -36,7 +36,7 @@ class Basket {
         //check if item already in basket
         $stmt = $this->conn->prepare("INSERT INTO basket_items (basket_ID, product_ID, quantity) VALUES (?, ?, ?)
                                       ON DUPLICATE KEY UPDATE quantity = quantity + ?"); //if item exists, update quantity
-        $stmt->bind_param("iii", $basket_ID, $product_ID, $quantity); //binding parameters for INSERT and UPDATE
+        $stmt->bind_param("iiii", $basket_ID, $product_ID, $quantity, $quantity); //binding parameters for INSERT and UPDATE
         return $stmt->execute(); //add item or update quantity if item exists in basket
     }
 
@@ -54,9 +54,11 @@ class Basket {
         return $stmt->execute(); 
     }
 
+    //adjusted below to JOIN with products and return product details with quantity for each basket item
     public function fetchBasketItems($basket_ID) {
-        //fetch all items in basket
-        $stmt = $this->conn->prepare("SELECT * FROM basket_items WHERE basket_ID = ?");
+        //fetch all items in basket with product details
+        $stmt = $this->conn->prepare("SELECT bi.product_ID, bi.quantity, p.name, p.price, p.image, p.stock, p.category_id 
+        FROM basket_items bi JOIN products p ON bi.product_ID = p.product_ID WHERE bi.basket_ID = ?"); //JOIN to get prodcut details for each item in basket
         $stmt->bind_param("i", $basket_ID); //binding paramenter for SELECT
         $stmt->execute(); //execute with basket ID
         $result = $stmt->get_result();
