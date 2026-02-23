@@ -32,6 +32,19 @@ class Basket {
         }
     }
 
+    //get current stock for a product > used in controller to validate stock before updating
+    public function getProductStock(int $prodcut_ID) : ?int {
+        $stmt = $this->conn->prepare("SELECT stock FROM products WHERE product_ID = ?"); //get stock for specific product
+        $stmt->bind_param("i", $product_ID); //product_ID int
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        if (!$result) {
+            return null; //product not found
+        }
+        return (int)$result['stock']; //return stock as int
+    }
+
     public function addItemToBasket($basket_ID, $product_ID, $quantity) {
         //check if item already in basket
         $stmt = $this->conn->prepare("INSERT INTO basket_items (basket_ID, product_ID, quantity) VALUES (?, ?, ?)
@@ -54,11 +67,14 @@ class Basket {
         return $stmt->execute(); 
     }
 
-    //adjusted below to JOIN with products and return product details with quantity for each basket item
+//JOIN with products and return product details with quantity for each basket item
     public function fetchBasketItems($basket_ID) {
         //fetch all items in basket with product details
         $stmt = $this->conn->prepare("SELECT bi.product_ID, bi.quantity, p.name, p.price, p.image, p.stock, p.category_id 
-        FROM basket_items bi JOIN products p ON bi.product_ID = p.product_ID WHERE bi.basket_ID = ?"); //JOIN to get prodcut details for each item in basket
+        FROM basket_items bi 
+        JOIN products p ON bi.product_ID = p.product_ID 
+        WHERE bi.basket_ID = ?"); //JOIN to get prodcut details for each item in basket
+
         $stmt->bind_param("i", $basket_ID); //binding paramenter for SELECT
         $stmt->execute(); //execute with basket ID
         $result = $stmt->get_result();

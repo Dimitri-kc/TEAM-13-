@@ -23,9 +23,9 @@ class BasketController {
     }
 
     //Stock validation helper - checks if requested quantity available
-    //using basketModel > getStock(int $product_ID) : ?int
+    //using basketModel > getProductStock(int $product_ID) : ?int
     private function validateStock(Basket $basketModel, int $product_ID, int $requestedQuantity) : bool {
-        $stock = $basketModel->getStock($product_ID); //get current stock, returning int or null
+        $stock = $basketModel->getProductStock($product_ID); //get current stock, returning int or null
         if ($stock === null) {
             $this->jsonSuccess(false, "Product not found.", ['product_ID' => $product_ID], 404); //404=not
         return false; //product doesn't exit > no stock
