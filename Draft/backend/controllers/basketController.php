@@ -11,35 +11,79 @@ require_once '../../services/userFunctions.php'; //for require_login() & require
 //Handling basket-related operations
 class BasketController {
 
+    //helper - consistent JSON response format
+    private function jsonSuccess(bool $success, string $message, $data = null, int $statusCode =200): void {
+        http_response_code($statusCode); //set HTTP code
+        echo json_encode(['success' => $success, 'message' => $message, 'data' => $data]); //standard response format for javascript
+    }
 
-    public function addItem() {
+    //helper - validate & convert input to in
+    private function requireInt($value): ?int { 
+        return (int)($value ?? 0); //convert to int, default 0 if null
+    }
+
+    //view basket contents
+    public function viewBasket(): void {
+
+        //if user logged in, fetch database basket items
+        if (isset($_SESSION['user_ID'])) {
+            //get session details
+            $user_ID = (int)$_SESSION['user_ID']; 
+
+            $basketModel = new Basket();
+            $basket = $basketModel->fetchUserBasket($user_ID);
+            if (!$basket || empty($basket['basket_ID'])) { //if no basket found, return empty array
+                $this->jsonSuccess(false, "No basket found for user.", null, 500); //500 for server error
+                return;
+            }
+
+            $basket_ID = (int)$basket['basket_ID'];
+            $items = $basketModel->fetchBasketItems($basket_ID);
+            if (empty($items)) $items = []; //if no items, return empty
+            $this->jsonSuccess(true, "Basket fetched successfully.", ['item' => $items]);
+            return;
+        }
+        //if guest user, fetch session basket items
+        $items = getSessionBasket(); //get guest basket from session
+        if (empty($items)) $items = []; //if no items, return empty
+        $this->jsonSuccess(true, "Guest basket fetched successfully.", ['items' => $items]);
+        
+    }
+
+    public function addItem(array $data): void {
 
         //get product details from session
-        $product_ID = trim($_POST['product_ID'] ?? '');
-        $quantity = trim($_POST['quantity'] ?? '');
+        $product_ID = $this->requireInt($data['product_ID'] ?? ''); //validate/convert to int, default to 0 otherwise
+        $quantity = $this->requireInt($data['quantity'] ?? '');
+        //requireint to prevent SQL injection & ensure correct daata type
 
-        if (!$product_ID || !$quantity) { //check valid input
-            echo "Product ID and quantity are required.";
-            exit;
+        if ($product_ID <=0 || $quantity <= 0) { //check valid input
+            $this->jsonSuccess(false, "Product ID and quantity integers are required.", null, 400); //400=bad request ie invalid input
+            return;
         }
 
         //if user logged in, use database basket
         if (isset($_SESSION['user_ID'])) { 
-            $user_ID = $_SESSION['user_ID']; //retreive user ID from session
+            $user_ID = (int)$_SESSION['user_ID']; //retreive user ID from session
         
             //create Basket model instance
             $basketModel = new Basket(); //for database connection via basket model Basket.php holding basket class <
             //fetch or create user basket
             $basket = $basketModel->fetchUserBasket($user_ID);
-            $basket_ID = $basket['basket_ID']; //get basket ID
-            echo "Item added to basket.";
-            return $basketModel->addItemToBasket($basket_ID, $product_ID, $quantity);//adds item into database basket
-            
-        } else {
-            //guest user - use session-based basket
-            addToSessionBasket($product_ID, $quantity); 
-            echo "Item added to guest basket.";
+            //if no basket, return error
+            if (!$basket || empty($basket['basket_ID'])) {
+                $this->jsonSuccess(false, "Failed to fetch or create basket for user.", null, 500);
+                return;
+             }
+             
+            $basket_ID = (int)$basket['basket_ID']; //get basket ID
+            $addBasketSuccess = $basketModel->addItemToBasket($basket_ID, $product_ID, $quantity);//adds item into database basket
+            $this->jsonSuccess((bool)$addBasketSuccess, $addBasketSuccess ? "Item added to basket." : "Failed to add item to basket.", null, $addBasketSuccess ? 200 : 500); //200=success, 500=server error
+            return;
         }
+        //guest user - use session-based basket
+            addToSessionBasket($product_ID, $quantity); 
+            $this->jsonSuccess(true, "Item added to guest basket.", null, 200);
 
     }
 
@@ -100,23 +144,6 @@ class BasketController {
 
     }
 
-    //view basket contents
-    public function viewBasket() {
-
-        //if user logged in, fetch database basket items
-        if (isset($_SESSION['user_ID'])) {
-            //get session details
-            $user_ID = $_SESSION['user_ID']; 
-
-            $basketModel = new Basket();
-            $basket = $basketModel->fetchUserBasket($user_ID);
-            $basket_ID = $basket['basket_ID'];
-            return $basketModel->fetchBasketItems($basket_ID);
-        } else {
-            //if guest user, fetch session basket items
-            return getSessionBasket();
-        }
-    }
 }
 
 

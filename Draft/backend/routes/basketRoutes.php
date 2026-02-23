@@ -1,6 +1,9 @@
 <?php //basket Routes - receives route requests from frontend html
 
-session_start();
+header('Content-Type: application/json'); //respond with JSON for frontend js
+if (Session_status() === PHP_SESSION_NONE) { //
+    session_start();
+}
 
 require_once '../../controllers/basketController.php'; //path to basketContrller.php
 require_once '../../services/basketFunctions.php'; //>guest specific
