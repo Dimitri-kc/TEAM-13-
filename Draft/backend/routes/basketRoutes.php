@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     switch ($action) {
         case 'view':
             $items = $basketController->viewBasket(); //return array for both users/guests
-            if (!empty($items)) {
+            if (empty($items)) { //if no items in basket, return empty
                 $items = [];
             }
             echo json_encode(['success' => true, 'items' => $items]); 

@@ -69,7 +69,6 @@ class UserController {
         "success" => false,
         "message" => "All fields are required."
         ]);
-        //echo "All fields are required.";
         return;
     }
 
@@ -80,21 +79,21 @@ class UserController {
     //verify password
     if ($user && password_verify($password, $user['password'])) {
         //setting session details
-        $_SESSION['user_ID'] = $user['user_ID']; //store session userID
+        $_SESSION['user_ID'] = (int)$user['user_ID']; //store session userID
         $_SESSION['name'] = $user['name']; //store sesion name
         $_SESSION['role'] = $user['role']; //customer/admin
         $_SESSION['must_change_password'] = (int)($user['must_change_password'] ?? 0); //stores flag in session at login > force password change on first login
         //merge guest basket with user basket upon login
         mergeBaskets($user['user_ID']);
 
-        if (!empty($user['must_change_password'])) { //force password change on first login for security
+        if ($_SESSION['must_change_password'] === 1) { //force password change on first login for security
             echo json_encode(["success" => true, "redirect" => "changepassword.php", //redirect to change password page after login
                 "message" => "Login successful. Please change your password before proceeding."]);
             return;
         }
             //redirect to homepage after login
             echo json_encode([
-                "success" => true, "redirect" => "homepage.php", "user" => ["user_ID" => $user['user_ID'], "name" => $user['name'], "role" => $user['role']]
+                "success" => true, "redirect" => "homepage.php", "user" => ["user_ID" => $_SESSION['user_ID'], "name" => $_SESSION['name'], "role" => $_SESSION['role'], "must_change_password" => $_SESSION['must_change_password']]
             ]);
             return;
         } else {
@@ -105,11 +104,22 @@ class UserController {
     }
 
     public function changePassword($data) { //change user password upon first login only 
+
+        if (session_start() === PHP_SESSION_NONE) {//start session if not already
+            session_start();
+        }
         if (empty($_SESSION['user_ID'])) { //check if user logged in
             echo json_encode(["success" => false, "message" => "Please login."]);
             return;
         }
-        $user_ID = $_SESSION['user_ID']; //get user ID from session
+        $user_ID = (int)$_SESSION['user_ID']; //get user ID from session
+
+        //check if password change needed for fisrt login
+        if (!isset($_SESSION['must_change_password']) || (int)$_SESSION['must_change_password'] !== 1) {
+            echo json_encode(["success" => false, "message" => "Password change not required."]);
+            return;
+        }
+
         $newPassword = trim($data['newPassword'] ?? ''); //get new password from input, trim whitespace
         if (!$newPassword) { //check valid input
             echo json_encode([ "success" => false, "message" => "New password is required."]);
@@ -124,7 +134,7 @@ class UserController {
         if (!$minLength || !$uppercase || !$lowercase || !$numbers || !$specialChar) {
             echo json_encode([
                 "success" => false,
-                "message" => "Password must be atleast 8 characters long and contain uppercase, lowercase, numbers and special characters."
+                "message" => "Password must be atleast 8 characters long and contain uppercase, lowercase, numbers and a special character."
             ]);
             return;
         }
@@ -132,7 +142,7 @@ class UserController {
         $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT); //hash new password for security
 
         $userModel = new User(); //for database connection
-        $changeSuccess = $userModel->changePassword((int)$_SESSION['user_ID'], $hashedPassword); //call changePassword method in model to update password in database
+        $changeSuccess = $userModel->changePassword($user_ID, $hashedPassword); //call changePassword method in model to update password in database
 
         if ($changeSuccess) {
             $_SESSION['must_change_password'] = 0; //syncs session flag with DB after successful forced password change

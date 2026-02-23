@@ -1,6 +1,8 @@
 <?php //basketController.php - requests from hmtl pages
 
-session_start();
+if(session_status() === PHP_SESSION_NONE) { //start session if not already started
+    session_start();
+}
 //included so controller can connect to database and relevant methods
 require_once '../../models/basketModel.php';//state file path
 require_once '../../services/basketFunctions.php'; //for session-based guest basket functions
