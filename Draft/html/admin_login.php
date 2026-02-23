@@ -2,20 +2,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Change Password | LOFT & LIVING</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login | LOFT & LIVING</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
- 
   <link rel="stylesheet" href="../css/header_footer_style.css">
   <link rel="stylesheet" href="../css/signup.style.css">
 
   <style>
-
     html, body {
       width: 100%;
       margin: 0;
@@ -25,13 +23,12 @@
     body.page-background {
       display: flex !important;
       flex-direction: column !important;
-      justify-content: flex-start !important; 
-      align-items: stretch !important;         
+      justify-content: flex-start !important;
+      align-items: stretch !important;
       min-height: 100vh !important;
       width: 100% !important;
       margin: 0 !important;
     }
-
 
     .site-header,
     .site-footer {
@@ -41,7 +38,6 @@
       align-self: stretch !important;
     }
 
-    
     main.form-container {
       flex: 1;
       width: 100% !important;
@@ -61,6 +57,16 @@
       margin-top: -6px;
       margin-bottom: 16px;
       opacity: 0.8;
+    }
+
+    .small-links {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      font-size: 0.95rem;
+      opacity: 0.85;
+      flex-wrap: wrap;
     }
 
     .error-popup {
@@ -106,7 +112,7 @@
     </button>
 
     <div class="logo-wrapper">
-      <a href="Homepage.php">
+      <a href="homepage.php">
         <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
       </a>
     </div>
@@ -132,18 +138,18 @@
 
 <main class="form-container">
   <section class="form-box">
-    <h1 class="form-title">CHANGE PASSWORD</h1>
-    <p class="helper-text">You must change your password before continuing.</p>
+    <h1 class="form-title">ADMIN LOGIN</h1>
+    <p class="helper-text">Sign in with your admin credentials to access the dashboard.</p>
 
-    <form class="form-fields" id="changePasswordForm">
+    <form class="form-fields" id="adminLoginForm" autocomplete="on">
       <label class="input-group">
-        <span class="input-label">New Password</span>
-        <input type="password" name="newPassword" required>
+        <span class="input-label">Email</span>
+        <input type="email" name="email" required />
       </label>
 
       <label class="input-group">
-        <span class="input-label">Confirm New Password</span>
-        <input type="password" name="confirmPassword" required>
+        <span class="input-label">Password</span>
+        <input type="password" name="password" required />
       </label>
 
       <div id="errorPopup" class="error-popup">
@@ -151,7 +157,12 @@
         <div class="error-text" id="errorText"></div>
       </div>
 
-      <button type="submit" class="main-button">Update Password</button>
+      <button type="submit" class="main-button">Login</button>
+
+      <div class="small-links">
+        <a href="signin.php">Customer login</a>
+        <a href="forgot_password.php">Forgot password</a>
+      </div>
     </form>
   </section>
 </main>
@@ -166,7 +177,7 @@
     <div class="footer-section">
       <h4>Navigation</h4>
       <ul>
-        <li><a href="Homepage.php">Homepage</a></li>
+        <li><a href="homepage.php">Homepage</a></li>
         <li><a href="signin.php">My Account</a></li>
         <li><a href="favourites.php">Favourites</a></li>
         <li><a href="basket.php">Basket</a></li>
@@ -195,57 +206,61 @@
 </footer>
 
 <script>
-  const API_URL = "../backend/routes/userRoutes.php";
-  const form = document.getElementById("changePasswordForm");
+  const API_URL = "/TEAM-13-/Draft/backend/routes/userRoutes.php";
+  const form = document.getElementById("adminLoginForm");
 
-  function showPopup(message){
+  function showPopup(message) {
     document.getElementById("errorText").textContent = message;
     document.getElementById("errorPopup").style.display = "flex";
   }
 
-  function hidePopup(){
+  function hidePopup() {
     document.getElementById("errorPopup").style.display = "none";
   }
 
-  async function readJsonSafely(res){
+  async function readJsonSafely(res) {
     const ct = (res.headers.get("content-type") || "").toLowerCase();
     const raw = await res.text();
-    if (ct.includes("application/json")){
+    if (ct.includes("application/json")) {
       try { return JSON.parse(raw); } catch {}
     }
-    return { success:false, message: raw || "Server error. Please try again." };
+    return { success: false, message: raw || "Server error. Please try again." };
   }
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     hidePopup();
 
-    const newPassword = form.querySelector('input[name="newPassword"]').value;
-    const confirmPassword = form.querySelector('input[name="confirmPassword"]').value;
+    const email = form.querySelector('input[name="email"]').value.trim();
+    const password = form.querySelector('input[name="password"]').value;
 
-    if (!newPassword || !confirmPassword) return showPopup("Please fill in both fields.");
-    if (newPassword !== confirmPassword) return showPopup("Passwords do not match.");
+    if (!email || !password) {
+      showPopup("Please enter your email and password.");
+      return;
+    }
 
-    try{
+    const payload = {
+      action: "admin_login",
+      email,
+      password
+    };
+
+    try {
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "change_password",
-          newPassword,
-          confirmPassword
-        })
+        body: JSON.stringify(payload)
       });
 
       const data = await readJsonSafely(res);
 
-      if (data.success){
-        window.location.href = data.redirect || "Homepage.php";
+      if (data.success) {
+        window.location.href = data.redirect || "admin_dashboard.php";
         return;
       }
 
-      showPopup(data.message || "Failed to update password.");
-    } catch (err){
+      showPopup(data.message || "Login failed. Please check your details.");
+    } catch (err) {
       console.error(err);
       showPopup("Server error. Please try again.");
     }
@@ -255,6 +270,4 @@
 <script src="../javascript/header_footer_script.js"></script>
 </body>
 </html>
-
-
 
