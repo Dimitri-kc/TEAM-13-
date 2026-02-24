@@ -44,7 +44,7 @@ class BasketController {
     //view basket contents
     public function viewBasket(): void {
 
-        //if user logged in, fetch database basket items
+        //if USER logged in, fetch database basket items
         if (isset($_SESSION['user_ID'])) {
             //get session details
             $user_ID = (int)$_SESSION['user_ID']; 
@@ -59,14 +59,46 @@ class BasketController {
             $basket_ID = (int)$basket['basket_ID'];
             $items = $basketModel->fetchBasketItems($basket_ID);
             if (empty($items)) $items = []; //if no items, return empty
-            $this->jsonSuccess(true, "Basket fetched successfully.", ['items' => $items]);
+            $this->jsonSuccess(true, "Basket fetched successfully.", ['items' => $items], 200); //200=success
             return;
         }
-        //if guest user, fetch session basket items
-        $items = getSessionBasket(); //get guest basket from session
-        if (empty($items)) $items = []; //if no items, return empty
-        $this->jsonSuccess(true, "Guest basket fetched successfully.", ['items' => $items]);
+
+        //if GUEST user, fetch session basket items
+        $sessionBasket = getSessionBasket(); //get guest basket from session > [product_ID => quantity]
+        if (empty($sessionBasket)) $items = []; //if no items, return empty
+        $this->jsonSuccess(true, "Guest basket fetched successfully.", ['items' => $sessionBasket], 200); //200=success
         
+        $productIDs = array_keys($sessionBasket); //get product IDs from session basket
+        $basketModel = new Basket();
+        $products = $basketModel->fetchGuestBasketProducts($productIDs); //fetch product details for guest basket items
+        $items = []; //combine prodcut details with quantities
+        foreach ($products as $product) {
+            $pid = (int)$product['product_ID'];
+            $items[] = [ //defining item details to return for guest basket items
+                'product_ID' => $pid,
+                'quantity' => (int)($sessionBasket[$pid] ?? 0), //get quantity from sess basket
+                'name' => $product['name'], //get all deatils from products table > session only holds product_ID & quantity
+                'price' => (float)$product['price'],
+                'image' => $product['image'],
+                'stock' => (int)$product['stock'],
+                'category_id' => (int)$product['category_id'], ]; 
+        }
+        //check if deleted/out of stock items in session basket & remove
+        foreach ($sessionBasket as $pid => $quantity) {
+            $pid = (int)$pid;
+            $productExists = false;
+            foreach ($products as $product) {
+                if ((int)$product['product_ID'] === $pid) {
+                    $productExists = true;
+                    break;
+                }
+            }
+            if (!$productExists) { //if product no longer exists or unavailable
+            removeFromSessionBasket($pid);//remove to prevent orphaned data & user confusuion
+            }
+        }
+        $this->jsonSuccess(true, "Guest basket fetched successfully.", ['items' => $items], 200);
+        return;
     }
 
     //POST request to add item to basket
