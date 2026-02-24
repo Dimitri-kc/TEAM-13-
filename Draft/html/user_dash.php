@@ -1,5 +1,5 @@
 <?php
-// user_dashboard.php
+// user_dash.php
 // User dashboard page - shows account shortcuts once a user is logged in
 
 // Start session to access logged-in user information (set during login)
@@ -148,7 +148,7 @@ $userRole = $_SESSION['role'] ?? 'customer';
                 <a href="favourites.php">
                     <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
                 </a>
-                <a href="user_dashboard.php">
+                <a href="user_dash.php">
                     <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
                 </a>
                 <a href="basket.php">
@@ -164,7 +164,7 @@ $userRole = $_SESSION['role'] ?? 'customer';
                 <li><a href="bedroom.php">Bedroom</a></li>
                 <li><a href="office.php">Office</a></li>
                 <li><a href="kitchen.php">Kitchen</a></li>
-                <li class="nav-divider"><a href="user_dashboard.php">My Account</a></li>
+                <li class="nav-divider"><a href="user_dash.php">My Account</a></li>
             </ul>
         </nav>
     </header>
@@ -275,7 +275,7 @@ $userRole = $_SESSION['role'] ?? 'customer';
                 <h4>Navigation</h4>
                 <ul>
                     <li><a href="homepage.php">Homepage</a></li>
-                    <li><a href="user_dashboard.php">My Account</a></li>
+                    <li><a href="user_dash.php">My Account</a></li>
                     <li><a href="favourites.php">Favourites</a></li>
                     <li><a href="basket.php">Basket</a></li>
                 </ul>
