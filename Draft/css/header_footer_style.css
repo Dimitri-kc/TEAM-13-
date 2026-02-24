@@ -7,7 +7,7 @@
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #000;
-    min-width: 1024px; 
+    min-width: 1024px;
     overflow-x: auto;
 }
 
@@ -29,7 +29,7 @@ ul {
 
 .site-header {
     background: #fff;
-    border-bottom: none;  
+    border-bottom: none;
     position: relative;
     height: 150px;
     z-index: 1000;
@@ -62,7 +62,7 @@ ul {
 }
 
 .main-logo {
-    height: 50px; 
+    height: 50px;
     display: block;
 }
 
@@ -81,7 +81,7 @@ ul {
     display: block;
 }
 
-/* DROPDOWN MENU */
+/* LEFT DROPDOWN MENU */
 .dropdown-panel {
     position: absolute;
     top: 90px;
@@ -97,7 +97,7 @@ ul {
 }
 
 .dropdown-panel.open {
-    display: block; 
+    display: block;
 }
 
 .nav-links li {
@@ -129,7 +129,7 @@ ul {
     margin: 0 auto;
     padding: 0 40px;
     display: grid;
-    grid-template-columns: 0.5fr 1fr 1fr 1fr; 
+    grid-template-columns: 0.5fr 1fr 1fr 1fr;
     gap: 40px;
 }
 
@@ -156,7 +156,66 @@ ul {
 }
 
 .social-icon {
-    width: 20px; /* Slightly smaller than header icons */
+    width: 20px;
     height: 20px;
     object-fit: contain;
+}
+
+/* PROFILE DROPDOWN (right side) */
+
+.profile-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    z-index: 2000; /* keeps it above header */
+}
+
+/* Button reset */
+.profile-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Dropdown under the user icon */
+.profile-dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 260px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    display: none;
+    z-index: 3000; /* above left menu and header */
+}
+
+.profile-dropdown.open {
+    display: block;
+}
+
+.profile-welcome {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 14px;
+}
+
+.profile-link {
+    display: block;
+    font-size: 14px;
+    color: #444;
+    padding: 10px 0;
+}
+
+.profile-link + .profile-link {
+    border-top: 1px solid #eee;
+}
+
+.profile-link-danger {
+    color: #b00020;
 }

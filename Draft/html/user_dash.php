@@ -28,7 +28,9 @@ $userRole = $_SESSION['role'] ?? 'customer';
     <link rel="stylesheet" href="../css/header_footer_style.css">
 
     <style>
-        /* Dashboard page specific styling */
+        /* ===============================
+           Dashboard page specific styling
+           =============================== */
 
         .dashboard-wrap {
             background: #ffffff;
@@ -73,7 +75,6 @@ $userRole = $_SESSION['role'] ?? 'customer';
             transition: transform 120ms ease, box-shadow 120ms ease;
         }
 
-        /* Slight lift on hover to give it a modern UI feel */
         .dash-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.06);
@@ -113,11 +114,9 @@ $userRole = $_SESSION['role'] ?? 'customer';
             max-width: 320px;
         }
 
-        /* Grid spans for correct sizing */
-        .span-2 { grid-column: span 2; } /* top row cards */
-        .span-3 { grid-column: span 3; } /* bottom row cards */
+        .span-2 { grid-column: span 2; }
+        .span-3 { grid-column: span 3; }
 
-        /* Responsive adjustments */
         @media (max-width: 980px) {
             .dash-grid { grid-template-columns: repeat(2, 1fr); }
             .span-2, .span-3 { grid-column: span 1; }
@@ -126,12 +125,70 @@ $userRole = $_SESSION['role'] ?? 'customer';
         @media (max-width: 560px) {
             .dash-grid { grid-template-columns: 1fr; }
         }
+
+        /* ===============================
+           Profile dropdown styling (FIX)
+           This is needed so the dropdown can actually appear
+           =============================== */
+
+        .user-icon-wrap {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .user-icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            width: 260px;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            padding: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: none;
+            z-index: 3000; /* keeps it above other header elements */
+        }
+
+        .user-dropdown.open {
+            display: block;
+        }
+
+        .user-dropdown-greeting {
+            font-size: 14px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 14px;
+        }
+
+        .user-dropdown-btn {
+            display: block;
+            font-size: 14px;
+            color: #444;
+            padding: 10px 0;
+        }
+
+        .user-dropdown-btn + .user-dropdown-btn {
+            border-top: 1px solid #eee;
+        }
+
+        .user-dropdown-btn.signout {
+            color: #b00020;
+        }
     </style>
 </head>
 
 <body>
 
-  
     <header class="site-header">
         <div class="header-inner">
             <button class="menu-btn" id="menu-toggle-btn">
@@ -148,9 +205,27 @@ $userRole = $_SESSION['role'] ?? 'customer';
                 <a href="favourites.php">
                     <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
                 </a>
-                <a href="user_dash.php">
-                    <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
-                </a>
+
+                <!-- Profile icon dropdown (FIXED) -->
+                <div class="user-icon-wrap" id="user-icon-wrap">
+                    <button class="user-icon-btn" id="user-icon-btn" aria-label="My Account" type="button">
+                        <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
+                    </button>
+
+                    <div class="user-dropdown" id="user-dropdown">
+                        <div class="user-dropdown-greeting">
+                            Welcome, <?php echo htmlspecialchars($userName); ?>
+                        </div>
+
+                        <!-- This page requires login, but keeping Sign In link doesn't hurt -->
+                        <a href="signin.php" class="user-dropdown-btn">Sign in</a>
+                        <a href="user_dash.php" class="user-dropdown-btn">My account</a>
+
+                        <!-- Sign out should go to signout.php (destroys session) -->
+                        <a href="signout.php" class="user-dropdown-btn signout">Sign out</a>
+                    </div>
+                </div>
+
                 <a href="basket.php">
                     <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
                 </a>
@@ -172,15 +247,12 @@ $userRole = $_SESSION['role'] ?? 'customer';
     <main class="dashboard-wrap">
         <div class="dashboard-container">
 
-            <!-- Personalised greeting using session name -->
             <div class="dashboard-heading">
                 <h2>Welcome, <?php echo htmlspecialchars($userName); ?></h2>
                 <p>My Account</p>
             </div>
 
             <div class="dash-grid">
-
-                <!-- Card 1: Favourites -->
                 <a class="dash-card span-2" href="favourites.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
@@ -195,7 +267,6 @@ $userRole = $_SESSION['role'] ?? 'customer';
                     </div>
                 </a>
 
-                <!-- Card 2: Recent Orders -->
                 <a class="dash-card span-2" href="orders.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
@@ -204,13 +275,12 @@ $userRole = $_SESSION['role'] ?? 'customer';
                             </div>
                             <div>
                                 <h3>My Recent Orders</h3>
-                                <p>Take a look at previous orders you’ve made</p>
+                                <p>Take a look at previous orders you've made</p>
                             </div>
                         </div>
                     </div>
                 </a>
 
-                <!-- Card 3: Addresses -->
                 <a class="dash-card span-2" href="addresses.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
@@ -225,7 +295,6 @@ $userRole = $_SESSION['role'] ?? 'customer';
                     </div>
                 </a>
 
-                <!-- Card 4: Account Settings -->
                 <a class="dash-card span-3" href="account_settings.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
@@ -240,7 +309,6 @@ $userRole = $_SESSION['role'] ?? 'customer';
                     </div>
                 </a>
 
-                <!-- Card 5: Privacy -->
                 <a class="dash-card span-3" href="privacy.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
@@ -254,11 +322,10 @@ $userRole = $_SESSION['role'] ?? 'customer';
                         </div>
                     </div>
                 </a>
-
             </div>
+
         </div>
     </main>
-
 
     <footer class="site-footer">
         <div class="footer-inner">
@@ -302,7 +369,37 @@ $userRole = $_SESSION['role'] ?? 'customer';
         </div>
     </footer>
 
-    <!-- Header menu toggle script -->
+    <!-- Your existing header menu script -->
     <script src="../javascript/header_footer_script.js"></script>
+
+    <!-- Profile dropdown script (FIX for THIS page) -->
+    <script>
+        // Profile dropdown toggle for user icon (kept separate so it doesn't interfere with your existing menu JS)
+        document.addEventListener('DOMContentLoaded', () => {
+            const userBtn = document.getElementById('user-icon-btn');
+            const userDropdown = document.getElementById('user-dropdown');
+            const userWrap = document.getElementById('user-icon-wrap');
+
+            if (!userBtn || !userDropdown || !userWrap) return;
+
+            userBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                userDropdown.classList.toggle('open');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!userWrap.contains(e.target)) {
+                    userDropdown.classList.remove('open');
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    userDropdown.classList.remove('open');
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
