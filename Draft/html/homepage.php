@@ -398,7 +398,7 @@ document.getElementById("reviewForm").addEventListener("submit", function(e) {
     const text = document.getElementById("reviewText").value;
     const name = document.getElementById("reviewName").value;
 
-    fetch("../html/submit_review.php", {
+    fetch("../html/submit_general_review.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -419,12 +419,24 @@ document.getElementById("reviewForm").addEventListener("submit", function(e) {
 });
 
 function loadReviewsFromDB() {
-    fetch("../html/get_reviews.php")
+    fetch("../html/get_general_reviews.php")
     .then(response => response.json())
     .then(reviews => {
         const container = document.getElementById("reviewsContainer");
         container.innerHTML = "";
 
+        // If 0 reviews
+        if (!reviews || reviews.length === 0) {
+            container.innerHTML = `
+                <div class="no-reviews-message">
+                    <p>No reviews yet.</p>
+                    <p>Be the first to review this product!</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Otherwise display reviews
         reviews.forEach(review => {
             const card = document.createElement("div");
             card.classList.add("review-card");
@@ -452,6 +464,7 @@ function loadReviewsFromDB() {
         });
     });
 }
+
 loadReviewsFromDB();
 
 // Star rating logic
@@ -855,4 +868,17 @@ function scrollReviews(direction) {
     font-size: 16px;
     font-weight: 600;
 }
+.no-reviews-message p:first-child {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+.no-reviews-message {
+    padding-left: 80px; /* adjust as needed */
+    font-size: 1.1rem
+}
+
+.no-reviews-message p:last-child {
+    opacity: 0.8;
+}
+
 </style>
