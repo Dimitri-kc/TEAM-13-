@@ -48,20 +48,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     switch ($action) {
         case 'view':
-            $items = $basketController->viewBasket(); //return array for both users/guests
-            if (empty($items)) { //if no items in basket, return empty
-                $items = [];
-            }
-            echo json_encode(['success' => true, 'items' => $items]); 
+            $basketController->viewBasket(); //return array for both users/guests
             break;
-
-            default:
-        echo json_encode(['success' => false, 'message' => 'Invalid action']); //unknown action
-        break;
+        default:
+            echo json_encode(['success' => false, 'message' => 'Invalid action', 'data' => null]); //
+            break;
     }
-
+    exit; 
 }
-//Note:confirm json as js to be implemented
-//for frontend path: href="../../routes/basketRoutes.php?action=view">View Basket
+echo json_encode(['success' => false, 'message' => 'Invalid request method', 'data' => null]);
 
+//Note:
+//for frontend path: href="../../routes/basketRoutes.php?action=view">View Basket
 ?>
