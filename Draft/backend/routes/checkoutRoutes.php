@@ -5,7 +5,7 @@ ini_set('display_errors', 1); //t
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-header('Content-Type: applicaiton/json');
+header('Content-Type: application/json');
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -17,12 +17,12 @@ $checkoutController = new CheckoutController();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
     $raw = file_get_contents("php://input"); //get raw POST data
     $data = json_decode($raw, true); //decode json to array
-    if (!$data || empty($data['action'])) { //if no data/action specified, return msg
+    if (!$data || empty($data['action']) || !is_string($data['action'])) { //if no data/action specified, return msg
         echo json_encode(['success' => false, 'message' => "No action specified.", 'data' => null]);
         exit;
     }
-    //sanitise action input for security -> XSS prevention
-    $action = is_string($data['action']) ? htmlspecialchars($data['action']) : '';
+    //changed to null - if valid then empty string ->XSS prevention
+    $action = $data['action'] ?? ''; 
 
     switch ($action) {
         case 'checkout': 
@@ -41,8 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } 
 
 echo json_encode(['success' => false, 'message' => 'Invalid request method. Use POST.', 'data' => null]);
-
-
 /* Notes: 
 ADded new flow with checkout for basket/order/payment harmony
 Flow breakdwon: 
