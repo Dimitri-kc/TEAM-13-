@@ -27,7 +27,7 @@ function updateSessionBasket($product_ID, $quantity): void {
     $product_ID = (int)$product_ID;
     $quantity = (int) $quantity;
     if ($product_ID <=0) return; //invalid id > exit
-    if ($quantity <=0) { // < MAY NEED TO CHANGE IN FUTURE FOR STOCK REFLECTION TO USER?
+    if ($quantity <=0) {
         removeFromSessionBasket($product_ID);
         return; //invalid quantity > remove from basket
     }
@@ -77,7 +77,7 @@ function mergeSessionBasketToUser($user_ID): void {
     foreach ($sessionBasket as $product_ID => $quantity) { //for each item in guest basket
         $product_ID = (int)$product_ID;
         $quantity = (int) $quantity;
-        if ($product_ID < 0 || $quantity < 0) { //if invalid, skip
+        if ($product_ID > 0 && $quantity > 0) { //if valid, add to user basket
             $basketModel->addItemToBasket($basket_ID, $product_ID, $quantity); //add each item to user basket
         }
     }
