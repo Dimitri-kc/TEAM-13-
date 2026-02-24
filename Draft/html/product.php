@@ -266,7 +266,6 @@ document.getElementById("reviewForm").addEventListener("submit", function(e) {
         }
     });
 });
-
 function loadReviewsFromDB() {
     fetch(`../html/get_product_reviews.php?product_ID=${productId}`)
     .then(response => response.json())
@@ -274,17 +273,14 @@ function loadReviewsFromDB() {
         const container = document.getElementById("reviewsContainer");
         container.innerHTML = "";
 
-        // ✅ If no reviews exist
+        // If 0 reviews
         if (!reviews || reviews.length === 0) {
-if (!reviews || reviews.length === 0) {
-    container.innerHTML = `
-        <div class="no-reviews-message">
-            <p>No reviews yet.</p>
-            <p>Be the first to review this product!</p>
-        </div>
-    `;
-}
-
+            container.innerHTML = `
+                <div class="no-reviews-message">
+                    <p>No reviews yet.</p>
+                    <p>Be the first to review this product!</p>
+                </div>
+            `;
             return;
         }
 
@@ -316,7 +312,9 @@ if (!reviews || reviews.length === 0) {
         });
     });
 }
+
 loadReviewsFromDB();
+
 
 function openReviewModal(productID) {
     document.getElementById("reviewProductID").value = productID;
@@ -541,11 +539,11 @@ addBtn.onclick = () => {
 }
 
 .prev-btn {
-    left: 5px;     /* inside the container */
+    left: -20px;     /* inside the container */
 }
 
 .next-btn {
-    right: 5px;    /* inside the container */
+    right: -20px;    /* inside the container */
 }
 
 .reviews-section {
@@ -671,7 +669,6 @@ addBtn.onclick = () => {
     color: #111;            
     transform: scale(1.1);  
             }
-
 
 .no-reviews-message p:first-child {
     font-weight: 600;

@@ -667,11 +667,11 @@ function scrollReviews(direction) {
 }
 
 .prev-btn {
-    left: 5px;     /* inside the container */
+    left: -20px;     /* inside the container */
 }
 
 .next-btn {
-    right: 5px;    /* inside the container */
+    right: -20px;    /* inside the container */
 }
 
 .reviews-section {
