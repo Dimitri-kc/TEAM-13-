@@ -128,10 +128,11 @@
         while($row = mysqli_fetch_assoc($result)) {
             ?>
             <div class="item" 
-                 data-price="<?php echo $row['price']; ?>" 
-                 data-category="<?php echo $row['category_id']; ?>" 
-                 data-keywords="<?php echo $row['keywords']; ?>" 
-                 data-colour="<?php echo $row['colour']; ?>">
+     data-price="<?php echo $row['price']; ?>" 
+     data-rating="<?php echo $row['rating']; ?>"     
+     data-keywords="<?php echo $row['keywords']; ?>" 
+     data-category="<?php echo ($row['categories']); ?>"
+     data-colour="<?php echo $row['colour']; ?>">
                  
                  <a href="product.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
                      <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
