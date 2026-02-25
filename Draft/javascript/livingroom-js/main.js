@@ -105,18 +105,6 @@ function addToBasket(button) {
 
 }
 
-// if (continueBtn) {
-//     continueBtn.addEventListener('click', () => {
-//         basketModal.style.display = 'none'; // closes modal
-//     });
-// }
-
-// if (goToBasketBtn) {
-//     goToBasketBtn.addEventListener('click', () => {
-//         window.location.href = 'basket.html'; // redirects to the basket
-//     });
-// }
-
 if (continueBtn) {
     continueBtn.addEventListener('click', () => {
         basketModal.style.display = 'none';
@@ -125,7 +113,7 @@ if (continueBtn) {
 
 if (goToBasketBtn) {
     goToBasketBtn.addEventListener('click', () => {
-        window.location.href = 'basket.html';
+        window.location.href = 'basket.php';
     });
 }
 
