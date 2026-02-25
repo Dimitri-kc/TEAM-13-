@@ -50,6 +50,7 @@ if ($showWelcomeToast) {
             right: 0;
             width: 260px;
             background: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             border: 1px solid #e0e0e0;
             padding: 18px;
             
