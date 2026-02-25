@@ -254,11 +254,11 @@ $userRole = $_SESSION['role'] ?? 'customer';
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
-                                <img src="../images/dashboard/dash1.png" alt="My Favourites">
+                                <img src="../images/dashboard/admin_dash1.png" alt="My Favourites">
                             </div>
                             <div>
-                                <h3>My Favourites</h3>
-                                <p>See an item you like? Come back to it later at any time</p>
+                                <h3>Orders & Shipments</h3>
+                                <p>View and manage all orders and shipments</p>
                             </div>
                         </div>
                     </div>
@@ -268,11 +268,11 @@ $userRole = $_SESSION['role'] ?? 'customer';
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
-                                <img src="../images/dashboard/dash2.png" alt="My Recent Orders">
+                                <img src="../images/dashboard/admin_dash2.png" alt="My Recent Orders">
                             </div>
                             <div>
-                                <h3>My Recent Orders</h3>
-                                <p>Take a look at previous orders you've made</p>
+                                <h3>Real-Time Reports</h3>
+                                <p>View real-time reports and analytics</p>
                             </div>
                         </div>
                     </div>
@@ -282,11 +282,11 @@ $userRole = $_SESSION['role'] ?? 'customer';
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
-                                <img src="../images/dashboard/dash3.png" alt="My Addresses">
+                                <img src="../images/dashboard/admin_dash3.png" alt="My Addresses">
                             </div>
                             <div>
-                                <h3>My Addresses</h3>
-                                <p>View any saved addresses and make any changes</p>
+                                <h3>Reports & Analytics</h3>
+                                <p>View and manage reports and analytics</p>
                             </div>
                         </div>
                     </div>
@@ -296,11 +296,11 @@ $userRole = $_SESSION['role'] ?? 'customer';
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
-                                <img src="../images/dashboard/dash4.png" alt="My Account Settings">
+                                <img src="../images/dashboard/admin_dash4.png" alt="My Account Settings">
                             </div>
                             <div>
-                                <h3>My Account Settings</h3>
-                                <p>Make any changes to your account name, email address or password</p>
+                                <h3>Customer Management</h3>
+                                <p>Manage customer accounts and user permissions</p>
                             </div>
                         </div>
                     </div>
@@ -310,11 +310,11 @@ $userRole = $_SESSION['role'] ?? 'customer';
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
-                                <img src="../images/dashboard/dash5.png" alt="Privacy">
+                                <img src="../images/dashboard/admin_dash5.png" alt="Privacy">
                             </div>
                             <div>
-                                <h3>Privacy</h3>
-                                <p>Make any changes to your privacy settings here</p>
+                                <h3>Product Inventory</h3>
+                                <p>Manage product inventory and stock levels</p>
                             </div>
                         </div>
                     </div>
