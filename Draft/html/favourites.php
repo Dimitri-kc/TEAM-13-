@@ -5,8 +5,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Example: $favs should be fetched from DB or session
-// $favs = [...]; // Make sure $favs is defined before using
+$favs = isset($_SESSION['favourites']) ? $_SESSION['favourites'] : [];
 ?>
 
 <!DOCTYPE html>
@@ -36,17 +35,16 @@ error_reporting(E_ALL);
           display: flex;
           align-items: center;
           justify-content: space-between;
-          background: #fff;
-          min-height: 92px;
+          background: #ffffff;
+          min-height: 200px;
         }
 
         .thumb {
-          width: 86px; height: 86px;
+          width: 200px; height: 200px;
           border-radius: 4px;
           background: #e9e9e9;
           overflow: hidden;
           display:flex; align-items:center; justify-content:center;
-          flex: 0 0 86px;
         }
         .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
 
@@ -137,11 +135,7 @@ error_reporting(E_ALL);
                             <button class="removeBtn" type="submit" title="Remove">×</button>
                         </form>
 
-                        <form method="post" action="favorite_add.php">
-                            <input type="hidden" name="product_id" value="<?= $pid ?>">
-                            <input type="hidden" name="redirect" value="favourites.php">
-                            <button type="submit">♡</button>
-                        </form>
+                        
 
                         <div class="thumb">
                             <?php if (!empty($p["image"]) && file_exists($p["image"])): ?>
@@ -151,7 +145,7 @@ error_reporting(E_ALL);
                             <?php endif; ?>
                         </div>
 
-                        <form method="post" action="bag_add.php" style="margin:0;">
+                        <form method="post" action="basket.php" style="margin:0;">
                             <input type="hidden" name="product_id" value="<?= $pid ?>">
                             <button class="btn" type="submit">Add to bag</button>
                         </form>

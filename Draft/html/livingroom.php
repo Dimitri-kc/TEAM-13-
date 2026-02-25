@@ -143,13 +143,27 @@
          </div>
      </a>
 
-     <button class="add-to-basket" aria-label="Add to basket">
-         <img src="../images/add-button-icon.png" alt="Add to basket">
-     </button>
+<div class="action-buttons">
+     <form method="post" action="favourites_add.php" style="margin:0; padding:0;">
+        <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
+        <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
+        <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
+        <input type="hidden" name="product_image" value="../images/<?= htmlspecialchars($row['image']) ?>">
+        <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+        <button type="submit" title="Add to Favourites">❤️</button>
+    </form>
 
-         <button class="fav-icon-btn" type="submit" aria-label="Add to favourites">
-    <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
+
+    <form method="post" action="basket.php" style="margin:0; padding:0;">
+        <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
+        <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
+        <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
+        <input type="hidden" name="product_image" value="../images/livingroom-images/<?= htmlspecialchars($row['image']) ?>">
+        <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+        <button type="submit" title="Add to basket">➕</button>
+    </form>
+</div>
+
 
      </div>
      <?php

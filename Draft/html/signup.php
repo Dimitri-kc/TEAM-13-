@@ -219,7 +219,7 @@
 </footer>
 
 <script>
-  const API_URL = "/Team-13-/Draft/backend/routes/userRoutes.php";
+  const API_URL = "/TEAM-13-/Draft/backend/routes/userRoutes.php";
   const form = document.getElementById("signupForm");
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
