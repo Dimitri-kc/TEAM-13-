@@ -132,7 +132,7 @@
 
                                      <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
         <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
+        </button>
 
                  
                  <a href="product.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
