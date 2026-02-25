@@ -1,4 +1,24 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+header("Content-Type: application/json");
+
+//REMOVED THIS
+// include_once __DIR__ . '/../models/ProductModel.php';
+// $productModel = new ProductModel();
+
+// $category = isset($_GET['category']) ? (int)$_GET['category'] : null;
+
+// if ($category) {
+//     $products = $productModel->getProductsByCategory($category);
+//     echo json_encode($products);
+// } else {
+//     echo json_encode(["error" => "Category ID missing"]);
+// }
+
+
 // Product routes - handles HTTP requests for product management
 header("Content-Type: application/json");
 
@@ -7,9 +27,8 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Path to ProductController.php
-include_once '../../controllers/ProductController.php'; 
-
+// Path to ProductController.php - added . __DIR__
+include_once __DIR__ . '/../controllers/productController.php'; 
 $productController = new ProductController();
 
 // Helper function to safely get integer IDs
@@ -23,9 +42,7 @@ return $id !== null ? (int)$id : null;
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 $action = isset($_GET['action']) ? htmlspecialchars($_GET['action']) : '';
 $id = getProductId();
-
-$category = isset($_GET['category']) ? htmlspecialchars($_GET['category']) : null;
-
+$category = isset($_GET['category']) ? (int)$_GET['category'] : null;
 switch ($action) {
 // Get all products 
 case 'index': 
@@ -35,8 +52,10 @@ case 'index':
 break;
 
 case 'byCategory':
-    if ($category) {
-        echo json_encode($productController->getByCategory($category));
+    if ($category > 0 ) {
+        $products = $productController->getByCategory($category);
+        echo json_encode($products);
+        // echo json_encode($productController->getByCategory($category));
     } else {
         echo json_encode([]);
     }

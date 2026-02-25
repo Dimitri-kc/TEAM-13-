@@ -1,6 +1,4 @@
 <?php
-// orderItemsController.php
-header('Content-Type: application/json');
 
 require_once __DIR__ . '/orderItemsModel.php';
 
@@ -12,7 +10,7 @@ class OrderItemsController {
         $this->model = new OrderItem();
     }
 
-    // POST: add item to order
+    // INSERT ORDER ITEM
     public function insert() {
 
         $order_ID   = $_POST['order_ID'] ?? null;
@@ -40,7 +38,7 @@ class OrderItemsController {
         );
     }
 
-    // GET: fetch items by order
+    // FETCH ITEMS BY ORDER
     public function fetchByOrder() {
 
         $order_ID = $_GET['order_ID'] ?? null;
@@ -57,7 +55,8 @@ class OrderItemsController {
 
         echo json_encode([
             "status" => "success",
-            "data" => $items
+            "count"  => count($items),
+            "data"   => $items
         ]);
     }
 }

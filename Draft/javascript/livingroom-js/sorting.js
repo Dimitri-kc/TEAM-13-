@@ -5,18 +5,26 @@ const btnNew       = document.querySelector(".btn-New");
 const btnPriceAsc  = document.querySelector(".btn-PriceAsc");
 const btnPriceDesc = document.querySelector(".btn-PriceDesc");
 const btnRating    = document.querySelector(".btn-Rating");
-const originalProducts    = [...productGrid.querySelectorAll(".item")];
+// const originalProducts    = [...productGrid.querySelectorAll(".item")];
+
+let originalProducts = [];
+
+document.addEventListener("productsRendered", () => {
+  originalProducts = [...document.querySelectorAll(".item")];
+  });
+  
 
 function resetGrid() {
   productGrid.innerHTML ="";
   originalProducts.forEach(p => {
-
-    p.style.display = "none";
-
+    // p.style.display = "none";
     p.style.display ="block";
-
     productGrid.appendChild(p);
-  }) 
+
+  });
+// document.addEventListener("productsRendered", () => {
+//   originalProducts = [...document.querySelectorAll(".item")];
+//   }) 
   
   document.querySelectorAll(".button-sort").forEach(b => b.classList.remove("active"));
 }
@@ -25,6 +33,7 @@ function showAllProducts() {
   getProductsArray().forEach(p => p.style.display = "block");
 }
 
+//Buttons sorting
 btnNew.addEventListener("click", () => {
   if(btnNew.classList.contains("active")){
     resetGrid();

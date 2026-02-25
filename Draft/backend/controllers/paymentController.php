@@ -3,11 +3,11 @@
 
 session_start();
 //include database and user models so controller can connect to database and use user methods
-require_once '../../config/db_connect.php';//state file path
-include_once '../../models/paymentModel.php'; //call payment database functions
-include_once '../../models/orderItemsModel.php'; //call order 
-include_once '../../services/paymentFunctions.php'; //for payment functions
-include_once '../../services/basketFunctions.php'; //for checkout helpers and basket merger
+require_once __DIR__ . '/../config/db_connect.php';//state file path
+include_once __DIR__ . '/../models/paymentModel.php'; //call payment database functions
+include_once __DIR__ . '/../models/orderItemsModel.php'; //call order 
+include_once __DIR__ . '/../services/paymentFunctions.php'; //for payment functions
+include_once __DIR__ . '/../services/basketFunctions.php'; //for checkout helpers and basket merger
 
 class PaymentController {
     
@@ -33,7 +33,7 @@ class PaymentController {
         }
 
         //fetch payment via order id
-        $orderItemModel = new OrderItemModel();
+        $orderItemModel = new OrderItem();
         if (isset($user_ID)) { //if user logged in
             $orderItems = $orderItemModel->getItemsByOrder($order_ID) ?? [];
         } else {

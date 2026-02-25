@@ -1,0 +1,151 @@
+<?php include '../backend/config/db_connect.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest Checkout page</title>
+
+    <link rel="stylesheet" href="../css/header_footer_style.css">
+
+    <link rel="stylesheet" href="../css/checkout.css" />
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <button class="menu-btn" id="menu-toggle-btn">
+                <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img"> 
+            </button>
+
+            <div class="logo-wrapper">
+                <a href="homepage.php">
+                    <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
+                </a>
+            </div>
+
+            <div class="header-actions">
+                <a href="favourites.php">
+                    <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
+                </a>
+                <a href="signin.php">
+                    <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
+                </a>
+                <a href="basket.php">
+                    <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+                </a>
+            </div>
+        </div>
+
+        <nav class="dropdown-panel" id="dropdown-nav">
+            <ul class="nav-links">
+                <li><a href="Categories.php">Living Room</a></li>
+                <li><a href="bathroom.php">Bathroom</a></li>
+                <li><a href="bedroom.php">Bedroom</a></li>
+                <li><a href="office.php">Office</a></li>
+                <li><a href="kitchen.php">Kitchen</a></li>
+                <li class="nav-divider"><a href="signin.php">My Account</a></li>
+            </ul>
+        </nav>
+    </header>
+    <header class="checkout-header">
+        <h1>GUEST CHECKOUT</h1>
+    </header>
+
+    <main class="checkout-layout">
+
+        <aside class="product-column">
+            <div class="product-item">
+                <img src="../images/basket-images/sofa.jpg" alt="Venice Cream Sofa"/>
+                <div class="product-text">
+                    <p>Venice Cream Sofa</p>
+                    <p class="price">£295</p>
+                    <p class="quantity">Quantity: 1</p>
+                </div>
+            </div>
+        </aside>
+
+        <section class="details-column">
+            
+     <section class="review-box">
+ 
+</section>
+
+
+                    <div class="card-fields">
+                         <h2>Email</h2>
+    <input type="email" placeholder="Email Address" required />
+    <h2>Full Name</h2>
+    <input type="text" placeholder="Full Name" required />
+    <h2>Address (Using Google Lookup)</h2>
+    <input type="text" placeholder="Address Line 1" required />
+
+
+                        <h2>Card Details</h2>
+
+                        <input type="text" placeholder="Card Number (16 Digits)" maxlength="16" required />
+                        <input type="text" placeholder="Expiry Date (MM/YY)" required />
+                        <input type="text" placeholder="CVV (3 Digits)" maxlength="3" required />
+                        <button type="submit">Submit</button>
+
+                        <div class="pay-buttons">
+                            <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
+                            <img src="../images/basket-images/googlepay.png" alt="Google Pay" class="pay-btn">
+                        </div>
+                    </div>
+
+            <div class="delivery-section">
+                <p>Ready for Loft & Living in Your Home?</p>
+                <p>Your Order will be dispatched using Standard Delivery </p>
+                <p>Estimated Delivery: 9th December 2025</p>
+
+                <button class="checkout-btn" onclick="window.location.href='order_confirmation.php'">Checkout</button>
+            </div>
+
+        </section>
+        
+    </main>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-section social-links">
+                <a href="#">
+                    <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon">
+                </a>
+                <a href="#">
+                    <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon">
+                </a>
+            </div>
+
+            <div class="footer-section">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="homepage.php">Homepage</a></li>
+                    <li><a href="signin.php">My Account</a></li>
+                    <li><a href="favourites.php">Favourites</a></li>
+                    <li><a href="basket.php">Basket</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="livingroom.php">Living Room</a></li>
+                    <li><a href="office.php">Offices</a></li>
+                    <li><a href="kitchen.php">Kitchen</a></li>
+                    <li><a href="bathroom.php">Bathrooms</a></li>
+                    <li><a href="bedroom.php">Bedrooms</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>More...</h4>
+                <ul>
+                    <li><a href="contact.php">Contact Us</a></li>
+                    <li><a href="about.php">About Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <script src="../javascript/header_footer_script.js"></script>
+</body>
+</html>
