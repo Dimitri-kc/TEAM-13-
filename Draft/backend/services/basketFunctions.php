@@ -77,7 +77,7 @@ function mergeSessionBasketToUser($user_ID): void {
     foreach ($sessionBasket as $product_ID => $quantity) { //for each item in guest basket
         $product_ID = (int)$product_ID;
         $quantity = (int) $quantity;
-        if ($product_ID > 0 && $quantity > 0) { //if valid, add to user basket
+        if ($product_ID > 0 && $quantity > 0) { //if valid, add to user basketS
             $basketModel->addItemToBasket($basket_ID, $product_ID, $quantity); //add each item to user basket
         }
     }
