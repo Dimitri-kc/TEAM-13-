@@ -863,7 +863,7 @@ if ($showWelcomeToast) {
             });
         });
     }
-    
+
     loadReviewsFromDB();
 
     document.querySelectorAll(".star-rating span").forEach(star => {

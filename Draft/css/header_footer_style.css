@@ -273,9 +273,7 @@ ul {
 
 /* Defensive overrides to prevent accidental filled circle on header icons */
 .header-actions .profile-btn,
-.header-actions .profile-btn *,
-.profile-wrapper,
-.profile-wrapper * {
+.header-actions .profile-btn * {
     background: transparent !important;
     background-color: transparent !important;
     box-shadow: none !important;
@@ -295,4 +293,11 @@ ul {
 .profile-wrapper::before,
 .profile-wrapper::after {
     content: none !important;
+}
+
+/* Restore dropdown background explicitly so defensive rules don't affect it */
+.profile-dropdown {
+    background: #fff !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+    border-radius: 6px !important;
 }
