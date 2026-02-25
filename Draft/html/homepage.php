@@ -506,17 +506,10 @@ if ($showWelcomeToast) {
                 <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
             </a>
 
-                        <div class="profile-wrapper" id="profile-wrapper">
-                                <button class="profile-btn" id="profile-toggle-btn" type="button" aria-haspopup="true" aria-expanded="false">
-                                        <!-- Inline SVG outline user icon to avoid filled-circle asset -->
-                                        <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg">
-                                            <title>My account</title>
-                                            <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" />
-                                                <path d="M4 20a8 8 0 0 1 16 0" />
-                                            </g>
-                                        </svg>
-                                </button>
+            <div class="profile-wrapper" id="profile-wrapper">
+                <button class="profile-btn" id="profile-toggle-btn" type="button" aria-haspopup="true" aria-expanded="false">
+                    <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
+                </button>
 
                 <div class="profile-dropdown" id="profile-dropdown">
                     <?php if ($isLoggedIn): ?>
@@ -870,7 +863,7 @@ if ($showWelcomeToast) {
             });
         });
     }
-
+    
     loadReviewsFromDB();
 
     document.querySelectorAll(".star-rating span").forEach(star => {
