@@ -1,5 +1,8 @@
 <?php //basket Routes - receives route requests from frontend 
 //JSON API for basket interactions
+ini_set('display_errors', 1); //t
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 header('Content-Type: application/json'); //respond with JSON for frontend js
 if (session_status() === PHP_SESSION_NONE) {

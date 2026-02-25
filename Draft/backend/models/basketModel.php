@@ -1,5 +1,5 @@
 <?php //basketModel.php - database comms for basket
-error_log("Basket model loaded from: " . __FILE__); //log to confirm file is being loaded and path is correct
+error_log("Basket model loaded from: " . realpath(__DIR__ . '/../config/db_connect.php')); //log to confirm file is being loaded and path is correct
 
 class Basket {
     private $conn;
@@ -11,6 +11,7 @@ class Basket {
             throw new Exception("Database connection failed in basketModel.php.");
         } 
         $this->conn = $conn;
+        error_log("BasketModel constructor conn is: " . (isset($conn) && $conn ? "SET" : "NULL"));
     }
 
     //creates or fetches existing basket

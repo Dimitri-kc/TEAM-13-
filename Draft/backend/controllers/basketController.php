@@ -4,7 +4,8 @@ if(session_status() === PHP_SESSION_NONE) { //start session if not already start
     session_start();
 }
 //included so controller can connect to database and relevant methods
-require_once __DIR__ . '/../models/basketModel.php';//state file path
+require_once $_SERVER['DOCUMENT_ROOT'] . '/TEAM-13-/Draft/backend/models/basketModel.php';
+//require_once __DIR__ . '/../models/basketModel.php';//state file path
 require_once __DIR__ . '/../services/basketFunctions.php'; //for session-based guest basket functions
 //require_once __DIR__ . '/../services/userFunctions.php'; //for require_login() & require_role() & guest basket functions
 
@@ -49,7 +50,13 @@ class BasketController {
             //get session details
             $user_ID = (int)$_SESSION['user_ID']; 
 
-            $basketModel = new Basket();
+            try {
+                $basketModel = new Basket();
+            } catch (Exception $e) {
+                $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
+                return;
+            }
+            //$basketModel = new Basket();
             $basket = $basketModel->fetchUserBasket($user_ID);
             if (!$basket || empty($basket['basket_ID'])) { //if no basket found, return empty array
                 $this->jsonSuccess(false, "No basket found for user.", null, 500); //500 for server error
@@ -71,7 +78,12 @@ class BasketController {
         }
         
         $productIDs = array_keys($sessionBasket); //get product IDs from session basket
-        $basketModel = new Basket();
+        try {
+            $basketModel = new Basket();
+        } catch (Exception $e) {
+            $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
+            return;
+        }
         $products = $basketModel->fetchGuestBasketProducts($productIDs); //fetch product details for guest basket items
         $items = []; //combine prodcut details with quantities
         foreach ($products as $product) {
@@ -116,10 +128,11 @@ class BasketController {
             return;
         }
 
-        $basketModel = new Basket();
-        //validate stock before adding to basket
-        if (!$this->validateStock($basketModel, $product_ID, $quantity)) {
-            return; //stock validation failed, response already sent in validateStock method
+        try {
+            $basketModel = new Basket();
+        } catch (Exception $e) {
+            $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
+            return;
         }
 
         //if user logged in, use database basket
@@ -127,7 +140,13 @@ class BasketController {
             $user_ID = (int)$_SESSION['user_ID']; //retreive user ID from session
         
             //create Basket model instance
-            $basketModel = new Basket(); //for database connection via basket model Basket.php holding basket class <
+            try {
+                $basketModel = new Basket();
+            } catch (Exception $e) {
+                $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
+                return;
+            }
+            //$basketModel = new Basket(); //for database connection via basket model Basket.php holding basket class <
             //fetch or create user basket
             $basket = $basketModel->fetchUserBasket($user_ID);
             //if no basket, return error
@@ -164,7 +183,13 @@ class BasketController {
             return;
         }
 
-        $basketModel = new Basket();
+        try {
+            $basketModel = new Basket();
+        } catch (Exception $e) {
+            $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
+            return;
+        }
+        //$basketModel = new Basket();
         //validate stock before updating basket
         if (!$this->validateStock($basketModel, $product_ID, $quantity)) {
             return; //stock validation failed, response sent in validateStock method
@@ -173,7 +198,13 @@ class BasketController {
         if(isset($_SESSION['user_ID'])) {
             $user_ID = (int)$_SESSION['user_ID'];
 
-            $basketModel = new Basket();
+            try {
+                $basketModel = new Basket();
+            } catch (Exception $e) {
+                $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
+                return;
+            }
+            //$basketModel = new Basket();
             $basket = $basketModel->fetchUserBasket($user_ID); //fetch user basket
             
             //if no basket found, return error > error hadling as also in model
@@ -219,7 +250,13 @@ class BasketController {
         if (isset($_SESSION['user_ID'])) {
             $user_ID = (int)$_SESSION['user_ID'];
 
-            $basketModel = new Basket();
+            try {
+                $basketModel = new Basket();
+            } catch (Exception $e) {
+                $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
+                return;
+            }
+            //$basketModel = new Basket();
             $basket = $basketModel->fetchUserBasket($user_ID); //fetch user basket
             //if no basket found, return error
             if (!$basket || empty($basket['basket_ID'])) {
