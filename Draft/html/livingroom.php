@@ -130,7 +130,9 @@
      data-rating="<?php echo $row['rating']; ?>"     
      data-keywords="<?php echo $row['keywords']; ?>" 
      data-category="<?php echo ($row['categories']); ?>"
-     data-colour="<?php echo $row['colour']; ?>">
+     data-colour="<?php echo $row['colour']; ?>"
+     data-new="<?php echo $row['is_new']; ?>">
+
 
      
      <a href="product.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
@@ -235,3 +237,4 @@
 
 </body>
 </html>
+
