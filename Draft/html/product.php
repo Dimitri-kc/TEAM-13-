@@ -230,24 +230,11 @@ if (!$product) {
     
 <script>
 //----------- Add to Basket Logic -----------
-document.querySelector(".add-to-basket").forEach(button => {
+document.querySelectorAll(".add-to-basket").forEach(button => {
     button.addEventListener("click", async () => {
         const productID = parseInt(button.dataset.id);
-        const quantitySelect = document.getElementById("quantitySelect");
-        const quantity = quantitySelect ? parseInt(quantitySelect.value) : 1;
-        const res = await fetch("../backend/routes/basketRoutes.php", {
-            method: "POST",
-            credentials: "include",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ action: 'add', product_ID: productID, quantity: quantity })
-        });
-        const data = await res.json();
-        if (data.success) {
-            updateBasketCounter(data.totalItems);
-            showBasketModal();
-        } else { 
-            alert(data.message)
-        }
+        const quantity = parseInt(document.getElementById("quantity")?.value || 1); //default to 1 if quantity selection not found
+        addToBasket(productID, quantity, button);
     });
 })
 // ---------- Modal Controls ----------
