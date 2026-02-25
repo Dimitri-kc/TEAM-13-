@@ -1,20 +1,38 @@
 <?php
 session_start();
-require __DIR__ . "/db.php";
 
-if (!isset($_SESSION["user_id"])) { http_response_code(401); exit("Not logged in."); }
-$userId = (int)$_SESSION["user_id"];
+$product_id = (int)$_POST['product_id'];
+$product_name = $_POST['product_name'] ?? '';
+$product_price = $_POST['product_price'] ?? '';
+$product_image = $_POST['product_image'] ?? '';
+$redirect = $_POST['redirect'] ?? 'favourites.php';
 
-$productId = filter_input(INPUT_POST, "product_id", FILTER_VALIDATE_INT);
-$redirect = $_POST["redirect"] ?? "favorites.php";
-
-if ($productId) {
-  // insert-ignore pattern via PRIMARY KEY (user_id, product_id)
-  $stmt = $pdo->prepare("INSERT IGNORE INTO favourites (user_id, product_id) VALUES (?, ?)");
-  $stmt->execute([$userId, $productId]);
+// Make sure the session array exists
+if (!isset($_SESSION['favourites'])) {
+    $_SESSION['favourites'] = [];
 }
 
-header("Location: " . $redirect);
+// Only add if product_id is valid and not already saved
+if ($product_id > 0) {
+
+    $exists = false;
+    foreach ($_SESSION['favourites'] as $item) {
+        if ($item['id'] == $product_id) {
+            $exists = true;
+            break;
+        }
+    }
+
+    if (!$exists) {
+        $_SESSION['favourites'][] = [
+            'id' => $product_id,
+            'name' => $product_name,
+            'price' => $product_price,
+            'image' => $product_image
+        ];
+    }
+}
+
+header("Location: $redirect");
 exit;
-
-
+?>
