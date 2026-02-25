@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // If already logged in, redirect to dashboard (no need to see sign in page)
 if (!empty($_SESSION['user_ID'])) {
-    header("Location: user_dash.php");
+    header("Location: admin_dash.php");
     exit;
 }
 
@@ -294,8 +294,8 @@ $headerName = $_SESSION['name'] ?? 'Guest';
     <main class="auth-wrap">
         <div class="auth-container">
             <div class="auth-heading">
-                <h2>Sign in</h2>
-                <p>Access your account, orders and saved items.</p>
+                <h2>Admin Sign in</h2>
+                <p>Access the admin dashboard, manage products, and view user data.</p>
             </div>
 
             <div id="successPopup" class="popup popup-success">
@@ -374,7 +374,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
                 <ul>
                     <li><a href="contact.php">Contact Us</a></li>
                     <li><a href="about.php">About Us</a></li>
-                    <li><a href="admin_signin.php">Admin Dashboard</a></li>
+                    <li><a href="admin_dash.php">Admin Dashboard</a></li>
                 </ul>
             </div>
         </div>
@@ -468,7 +468,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
                     }
 
                     // Always go to dashboard after login
-                    window.location.href = "user_dash.php";
+                    window.location.href = "admin_dash.php";
                     return;
                 }
 
