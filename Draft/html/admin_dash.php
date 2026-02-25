@@ -278,15 +278,15 @@ $userRole = $_SESSION['role'] ?? 'customer';
                     </div>
                 </a>
 
-                <a class="dash-card span-2" href="addresses.php">
+                <a class="dash-card span-2" href="admin_homepage.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
                                 <img src="../images/dashboard/admin_dash3.png" alt="My Addresses">
                             </div>
                             <div>
-                                <h3>Reports & Analytics</h3>
-                                <p>View and manage reports and analytics</p>
+                                <h3>View as Customer Mode</h3>
+                                <p>View the website as a customer would see it and access all customer features</p>
                             </div>
                         </div>
                     </div>
