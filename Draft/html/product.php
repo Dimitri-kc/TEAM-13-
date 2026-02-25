@@ -116,7 +116,7 @@ if (!$product) {
                     </div>
                     <div class="select-group">
                         <label>Quantity</label>
-                        <select>
+                        <select id='quantity'>
                             <option value='1'>1</option>
                             <option value='2'>2</option>
                             <option value='3'>3</option>
@@ -124,7 +124,7 @@ if (!$product) {
                     </div>
                 </div>
 
-                <button class="add-to-basket" onclick="<?= $product['product_ID'] ?>">Add to Basket</button>
+                <button class="add-to-basket" data-id="<?= $product['product_ID'] ?>">Add to Basket</button>
 
                 <div class="description-box">
                     <div class="desc-header">
@@ -226,6 +226,7 @@ if (!$product) {
 
     <script src="../javascript/sofa_script.js"></script>
     <script src="../javascript/header_footer_script.js"></script>
+    <script src="../javascript/global/basketIcon.js"></script>
 
     
 <script>

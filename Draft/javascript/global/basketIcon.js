@@ -2,11 +2,12 @@
 
 const basketCountEl = document.getElementById('basket-count'); //element to display count
 const basketModal = document.getElementById('basket-modal'); 
+const BASKET_API = "TEAM-13-/Draft/backend/routes/basketRoutes.php"; //centralized API endpoint 
 
 //fetch curent basket and update counter icon
 async function updateBasketCounter() { //asynchronous as waiting for response from server
     try {
-        const res = await fetch("../backend/routes/basketRoute.php?action=view", {
+        const res = await fetch('${BASKET_API}?action=view', {
             method: 'GET',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' }
@@ -26,7 +27,7 @@ async function updateBasketCounter() { //asynchronous as waiting for response fr
 
 async function addToBasket(productID, quantity = 1, button = null) {
     try {
-        const res = await fetch("../backend/routes/basketRoute.php", {
+        const res = await fetch(BASKET_API, {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
@@ -47,4 +48,5 @@ async function addToBasket(productID, quantity = 1, button = null) {
         return false;
     }
 }
+window.addToBasket = addToBasket; //make function globally accessible for product pages
 document.addEventListener('DOMContentLoaded', updateBasketCounter); //update counter upon page load
