@@ -189,7 +189,7 @@ ul {
     background: #fff;
     border: 1px solid #e0e0e0;
     padding: 18px;
-   
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     display: none;
     z-index: 3000; /* above left menu and header */
 }
@@ -269,4 +269,30 @@ ul {
         max-width: calc(100vw - 48px) !important;
         padding: 0 12px !important;
         pointer-events: auto !important;
+}
+
+/* Defensive overrides to prevent accidental filled circle on header icons */
+.header-actions .profile-btn,
+.header-actions .profile-btn *,
+.profile-wrapper,
+.profile-wrapper * {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+/* Ensure inline SVG icons use stroke only and no fill */
+.header-actions .ui-icon svg,
+.header-actions .ui-icon {
+    fill: none !important;
+    stroke: currentColor !important;
+}
+
+/* Prevent pseudo-elements from creating shapes on header buttons */
+.header-actions .profile-btn::before,
+.header-actions .profile-btn::after,
+.profile-wrapper::before,
+.profile-wrapper::after {
+    content: none !important;
 }
