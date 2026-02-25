@@ -117,14 +117,14 @@ if (!$product) {
                     <div class="select-group">
                         <label>Quantity</label>
                         <select>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
+                            <option value='1'>1</option>
+                            <option value='2'>2</option>
+                            <option value='3'>3</option>
                         </select>
                     </div>
                 </div>
 
-                <button class="add-to-basket" onclick="window.location.href='basket.php'">Add to Basket</button>
+                <button class="add-to-basket" onclick="<?= $product['product_ID'] ?>">Add to Basket</button>
 
                 <div class="description-box">
                     <div class="desc-header">
@@ -229,6 +229,27 @@ if (!$product) {
 
     
 <script>
+//----------- Add to Basket Logic -----------
+document.querySelector(".add-to-basket").forEach(button => {
+    button.addEventListener("click", async () => {
+        const productID = parseInt(button.dataset.id);
+        const quantitySelect = document.getElementById("quantitySelect");
+        const quantity = quantitySelect ? parseInt(quantitySelect.value) : 1;
+        const res = await fetch("../backend/routes/basketRoutes.php", {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: 'add', product_ID: productID, quantity: quantity })
+        });
+        const data = await res.json();
+        if (data.success) {
+            updateBasketCounter(data.totalItems);
+            showBasketModal();
+        } else { 
+            alert(data.message)
+        }
+    });
+})
 // ---------- Modal Controls ----------
 const modal = document.getElementById("reviewModal");
 const addBtn = document.querySelector(".add-review-btn");
