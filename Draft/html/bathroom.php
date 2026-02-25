@@ -121,10 +121,11 @@
         while($row = mysqli_fetch_assoc($result)) {
             ?>
             <div class="item" 
-                 data-price="<?php echo $row['price']; ?>" 
-                 data-category="<?php echo $row['category_id']; ?>" 
-                 data-keywords="<?php echo $row['keywords']; ?>" 
-                 data-colour="<?php echo $row['colour']; ?>">
+     data-price="<?php echo $row['price']; ?>" 
+     data-rating="<?php echo $row['rating']; ?>"     
+     data-keywords="<?php echo $row['keywords']; ?>" 
+     data-category="<?php echo ($row['categories']); ?>"
+     data-colour="<?php echo $row['colour']; ?>">
 
                                      <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
         <img src="../images/header_footer_images/icon-heart.png" alt="">
