@@ -49,10 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     switch ($action) {
         case 'view':
             $basketController->viewBasket(); //return array for both users/guests
-            break;
-        default:
+            exit;
+        /* default:
             echo json_encode(['success' => false, 'message' => 'Invalid action', 'data' => null]); //
-            break;
+            break; */
     }
     exit; 
 }

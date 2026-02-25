@@ -5,7 +5,9 @@ class Basket {
 
     public function __construct() {
         require_once __DIR__ . '/../config/db_connect.php'; // Adjusted path to include db_connect.php
-        global $conn; //variable from db_connect.php for database connection
+        if (!isset($conn) || !$conn) { //prevent errors if not established connection
+            throw new Exception("Database connection failed in basketModel.php.");
+        }
         $this->conn = $conn;
     }
 

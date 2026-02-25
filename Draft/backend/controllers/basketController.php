@@ -65,8 +65,10 @@ class BasketController {
 
         //if GUEST user, fetch session basket items
         $sessionBasket = getSessionBasket(); //get guest basket from session > [product_ID => quantity]
-        if (empty($sessionBasket)) $items = []; //if no items, return empty
-        $this->jsonSuccess(true, "Guest basket fetched successfully.", ['items' => $sessionBasket], 200); //200=success
+        if (empty($sessionBasket)) {
+            $this->jsonSuccess(true, "Guest basket fetched successfully.", ['items' => []], 200); //200=success
+            return; //empty basket
+        }
         
         $productIDs = array_keys($sessionBasket); //get product IDs from session basket
         $basketModel = new Basket();
@@ -236,16 +238,12 @@ class BasketController {
         $this->jsonSuccess(true, "Item removed from guest basket.", null, 200);
 
     }
-
-}
-
-
 //Notes: 
 //calls basketModel methods to interact with database
 //adds to basket
 //updates quantity 
 //removes items from basket
 //fetches user's basket items
-
 //Update: wrapped logic in if() so basket can be handled based on login status (user/guest)
+}
 ?>
