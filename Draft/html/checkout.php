@@ -1,4 +1,43 @@
-<?php include '../backend/config/db_connect.php'; ?>
+<?php
+include '../backend/config/db_connect.php';
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
+
+  // Collects customer info 
+  $customer = [
+    "name"     => $_POST["name"] ?? "",
+    "email"    => $_POST["email"] ?? "",
+    "address1" => $_POST["address1"] ?? "",
+    "address2" => $_POST["address2"] ?? "",
+    "city"     => $_POST["city"] ?? "",
+    "state"    => $_POST["state"] ?? "",
+    "postcode" => $_POST["postcode"] ?? "",
+    "phone"    => $_POST["phone"] ?? "",
+  ];
+
+  // Collect items from session cart 
+
+  $items = $_SESSION["cart_items"] ?? [];
+
+  // Store order for confirmation page
+  $_SESSION["order"] = [
+    "number" => (string)random_int(100000, 999999),
+    "date" => date("F j, Y"),
+    "currency" => "£",
+    "payment_method" => "Card",
+    "customer" => $customer,
+    "items" => $items,
+    "shipping" => 0,
+    "tax" => 0,
+    "discount" => 0,
+    "continue_url" => "homepage.php"
+  ];
+
+  header("Location: order_confirmation.php");
+  exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,37 +93,61 @@
 
     <main class="checkout-layout">
 
-        <aside class="product-column">
-            <div class="product-item">
-                <img src="../images/basket-images/sofa.jpg" alt="Venice Cream Sofa"/>
-                <div class="product-text">
-                    <p>Venice Cream Sofa</p>
-                    <p class="price">£295</p>
-                    <p class="quantity">Quantity: 1</p>
-                </div>
-            </div>
-        </aside>
+       <aside class="product-column">
+  <?php
+    function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, "UTF-8"); }
+    function money($n){ return "£" . number_format((float)$n, 2); }
+
+    $items = $_SESSION["cart_items"] ?? [];
+    if (!is_array($items) || count($items) === 0):
+  ?>
+      <p>Your basket is empty.</p>
+  <?php else: ?>
+      <?php foreach ($items as $item): ?>
+        <div class="product-item">
+          <img src="<?= e($item["image"] ?? "../images/basket-images/sofa.jpg") ?>" alt="<?= e($item["name"] ?? "Item") ?>"/>
+          <div class="product-text">
+            <p><?= e($item["name"] ?? "") ?></p>
+            <p class="price"><?= money((float)($item["price"] ?? 0)) ?></p>
+            <p class="quantity">Quantity: <?= (int)($item["qty"] ?? 1) ?></p>
+          </div>
+        </div>
+      <?php endforeach; ?>
+  <?php endif; ?>
+</aside>
 
         <section class="details-column">
             
-     <section class="review-box">
-    <h1 class="form-title">REVIEW:</h1>
+    <form method="post">
+  <section class="review-box">
+    <h1 class="form-title">YOUR DETAILS</h1>
 
     <div class="review-details">
-        <p><strong>Name:</strong> Emma Smith</p>
-        <p><strong>Email:</strong> emma.smith@example.com</p>
-        <p><strong>Address:</strong></p>
-        <p class="address-line">Aston University,</p>
-        <p class="address-line">Aston St,</p>
-        <p class="address-line">Birmigham,</p>
-        <p class="address-line">B4 7ET</p>
-    </div>
-</section>
+      <label><strong>Name *</strong></label>
+      <input type="text" name="name" required>
 
-<div class="card-buttons">
-    <button class="edit-btn">Edit Details</button>
-    <button class="address-btn">Change Address</button>
-</div>
+      <label><strong>Email *</strong></label>
+      <input type="email" name="email" required>
+
+      <label><strong>Phone</strong></label>
+      <input type="text" name="phone">
+
+      <label><strong>Address line 1 *</strong></label>
+      <input type="text" name="address1" required>
+
+      <label><strong>Address line 2</strong></label>
+      <input type="text" name="address2">
+
+      <label><strong>City *</strong></label>
+      <input type="text" name="city" required>
+
+      <label><strong>State</strong></label>
+      <input type="text" name="state">
+
+      <label><strong>Postcode *</strong></label>
+      <input type="text" name="postcode" required>
+    </div>
+  </section>
 
 
                     <div class="card-fields">
@@ -104,10 +167,11 @@
             <div class="delivery-section">
                 <p>Ready for Loft & Living in Your Home?</p>
                 <p>Your Order will be dispatched using Standard Delivery </p>
-                <p>Estimated Delivery: 9th December 2025</p>
+                <p>Estimated Delivery: 9th March 2026</p>
 
-                <button class="checkout-btn" onclick="window.location.href='order_confirmation.php'">Checkout</button>
+                <button class="checkout-btn" type="submit" name="place_order" value="1">Checkout</button>
             </div>
+</form>
 
         </section>
         
