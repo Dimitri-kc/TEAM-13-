@@ -61,13 +61,13 @@
 
     <h3>Keywords</h3>
     <div class="tags">
-      <input type="checkbox" id="grey-tag" hidden>
-      <label for="grey-tag" class="tag">Grey <span class="X">✕</span></label>
+      <!-- <input type="checkbox" id="grey-tag" value="grey" hidden>
+      <label for="grey-tag" class="tag">Grey <span class="X">✕</span></label> -->
 
-      <input type="checkbox" id="modern-tag" hidden>
+      <input type="checkbox" id="modern-tag" value="modern" hidden>
       <label for="modern-tag" class="tag">Modern <span class="X">✕</span></label>
 
-      <input type="checkbox" id="soft-tag" hidden>
+      <input type="checkbox" id="soft-tag" value="soft" hidden>
       <label for="soft-tag" class="tag">Soft <span class="X">✕</span></label>
     </div>
 
