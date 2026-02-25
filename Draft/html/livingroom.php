@@ -124,18 +124,13 @@
                 if (mysqli_num_rows($result) > 0) {
                     while($row = mysqli_fetch_assoc($result)) {
                         ?>
-
-                
-                        <!-- line added for better filtering due to php -->
+                      <!-- line added for better filtering due to php -->
 <div class="item" 
      data-price="<?php echo $row['price']; ?>" 
      data-rating="<?php echo $row['rating']; ?>"     
      data-keywords="<?php echo $row['keywords']; ?>" 
+     data-category="<?php echo ($row['categories']); ?>"
      data-colour="<?php echo $row['colour']; ?>">
-
-                         <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
 
      
      <a href="product.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
@@ -149,6 +144,11 @@
      <button class="add-to-basket" aria-label="Add to basket">
          <img src="../images/add-button-icon.png" alt="Add to basket">
      </button>
+
+         <button class="fav-icon-btn" type="submit" aria-label="Add to favourites">
+    <img src="../images/header_footer_images/icon-heart.png" alt="">
+    </button>
+
      </div>
      <?php
                     }

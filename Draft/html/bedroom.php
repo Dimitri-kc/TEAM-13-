@@ -62,13 +62,13 @@
 
     <h3>Keywords</h3>
     <div class="tags">
-      <input type="checkbox" id="soft-tag" hidden>
+      <input type="checkbox" id="soft-tag" value="soft" hidden>
       <label for="soft-tag" class="tag">Soft <span class="X">✕</span></label>
 
-      <input type="checkbox" id="modern-tag" hidden>
+      <input type="checkbox" id="modern-tag" value="modern" hidden>
       <label for="modern-tag" class="tag">Modern <span class="X">✕</span></label>
 
-      <input type="checkbox" id="comfort-tag" hidden>
+      <input type="checkbox" id="comfort-tag" value="comfort" hidden>
       <label for="comfort-tag" class="tag">Comfort <span class="X">✕</span></label>
     </div>
 
@@ -124,10 +124,11 @@
         while($row = mysqli_fetch_assoc($result)) {
             ?>
             <div class="item" 
-                 data-price="<?php echo $row['price']; ?>" 
-                 data-category="<?php echo $row['category_id']; ?>" 
-                 data-keywords="<?php echo $row['keywords']; ?>" 
-                 data-colour="<?php echo $row['colour']; ?>">
+     data-price="<?php echo $row['price']; ?>" 
+     data-rating="<?php echo $row['rating']; ?>"     
+     data-keywords="<?php echo $row['keywords']; ?>" 
+     data-category="<?php echo ($row['categories']); ?>"
+     data-colour="<?php echo $row['colour']; ?>">
 
                                      <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
         <img src="../images/header_footer_images/icon-heart.png" alt="">
