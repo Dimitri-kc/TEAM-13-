@@ -37,7 +37,6 @@ if ($showWelcomeToast) {
         }
 
         .profile-btn {
-    <div id="llWelcomeToast" class="ll-welcome-toast" role="status" aria-live="polite" style="position:fixed;top:140px;left:50%;z-index:99999;width:auto;max-width:calc(100vw - 48px);padding:0 12px;display:flex;justify-content:center;">
             border: none;
             cursor: pointer;
             padding: 0;
