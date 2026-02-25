@@ -37,7 +37,7 @@ if ($showWelcomeToast) {
         }
 
         .profile-btn {
-    <div id="llWelcomeToast" class="ll-welcome-toast" role="status" aria-live="polite" style="position:fixed;top:60px;left:50%;z-index:99999;width:auto;max-width:calc(100vw - 48px);padding:0 12px;display:flex;justify-content:center;">
+    <div id="llWelcomeToast" class="ll-welcome-toast" role="status" aria-live="polite" style="position:fixed;top:140px;left:50%;z-index:99999;width:auto;max-width:calc(100vw - 48px);padding:0 12px;display:flex;justify-content:center;">
             border: none;
             cursor: pointer;
             padding: 0;
@@ -466,7 +466,7 @@ if ($showWelcomeToast) {
             // Force inline positioning to avoid stylesheet conflicts
             Object.assign(toast.style, {
                 position: 'fixed',
-                top: '60px',
+                top: '140px',
                 left: '50%',
                 transform: 'translate(-50%, 0)',
                 zIndex: '99999',
@@ -483,7 +483,7 @@ if ($showWelcomeToast) {
             setTimeout(() => {
                 toast.classList.remove('is-visible');
                 setTimeout(() => { try { toast.remove(); } catch(e){} }, 350);
-            }, 2200);
+            }, 2500);
         })();
   </script>
 <?php endif; ?>

@@ -223,7 +223,7 @@ ul {
 /* Welcome toast (top-centred) */
 .ll-welcome-toast {
     position: fixed;
-    top: 60px; /* distance from top of viewport */
+    top: 140px; /* distance from top of viewport */
     left: 50%;
     transform: translate(-50%, -10px);
     z-index: 99999;
@@ -244,22 +244,22 @@ ul {
 }
 
 .ll-welcome-toast-inner{
-  background: rgba(20,20,20,0.92);
-  color: #fff;
-  padding: 16px 26px;
-  border-radius: 18px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  font-size: 15px;
-  font-weight: 600;
-  text-align: center;
+    background: rgba(20,20,20,0.50); /* lighter and more transparent */
+    color: #fff;
+    padding: 16px 26px;
+    border-radius: 18px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
 }
 
 /* Stronger ID-based override to prevent page-level CSS from breaking positioning */
 #llWelcomeToast {
-        position: fixed !important;
-        top: 60px !important;
+    position: fixed !important;
+    top: 140px !important;
         left: 50% !important;
         transform: translate(-50%, 0) !important;
         z-index: 99999 !important;
