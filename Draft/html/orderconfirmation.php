@@ -3,18 +3,7 @@ declare(strict_types=1);
 
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
-}
 
-/**
- * Order Confirmation Page (single file)
- * - If no order exists: shows an “empty state” like your screenshot
- * - If order exists: shows items + totals + order details + delivery address
- *
- * Expected order source:
- *   $_SESSION['order'] (preferred) OR POST payload with keys:
- *   currency, number/order_number, date, payment_method, email,
- *   shipping, tax, discount, continue_url, customer[], items[]
- */
 
 function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
 
@@ -37,16 +26,14 @@ function safe_continue_url(string $url, string $fallback = "index.php"): string 
   $url = trim($url);
   if ($url === "") return $fallback;
 
-  // Allow relative paths or http/https only
+  
   $isRelative = str_starts_with($url, "/") || !preg_match('~^[a-zA-Z][a-zA-Z0-9+.-]*:~', $url);
   $isHttp = (bool)preg_match('~^https?://~i', $url);
 
   return ($isRelative || $isHttp) ? $url : $fallback;
 }
 
-/* -----------------------------
-   Load order (POST first, then session)
--------------------------------- */
+
 $order = null;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -64,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     "items" => (is_array($_POST["items"] ?? null) ? $_POST["items"] : []),
   ];
 
-  // optional: keep latest order in session
+ 
   $_SESSION["order"] = $order;
 
 } elseif (isset($_SESSION["order"]) && is_array($_SESSION["order"])) {
@@ -73,9 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 $hasOrder = is_array($order);
 
-/* -----------------------------
-   Normalize fields
--------------------------------- */
+
 $currency = $hasOrder ? (string)($order["currency"] ?? "£") : "£";
 $orderNumber = $hasOrder ? (string)($order["number"] ?? "") : "";
 $orderDate = $hasOrder ? (string)($order["date"] ?? "") : "";
@@ -96,9 +81,7 @@ $cCity     = (string)($customer["city"] ?? "");
 $cState    = (string)($customer["state"] ?? "");
 $cPostcode = (string)($customer["postcode"] ?? "");
 
-/* -----------------------------
-   Items + totals
--------------------------------- */
+
 $items = ($hasOrder && isset($order["items"]) && is_array($order["items"])) ? $order["items"] : [];
 
 $shipping = $hasOrder ? as_float($order["shipping"] ?? 0) : 0.0;
@@ -165,7 +148,7 @@ $total = max(0.0, $subtotal + $shipping + $tax - $discount);
       margin: 28px auto 50px;
     }
 
-    /* Empty state (like your screenshot) */
+    
     .empty h1{
       margin:0;
       font-size: clamp(30px, 3vw, 44px);
@@ -195,7 +178,7 @@ $total = max(0.0, $subtotal + $shipping + $tax - $discount);
       font-weight: 500;
     }
 
-    /* Confirmation layout */
+    
     .hero{
       display:flex;
       align-items:flex-start;
@@ -294,10 +277,10 @@ $total = max(0.0, $subtotal + $shipping + $tax - $discount);
         <p>Place an order and you’ll see your receipt here</p>
 
         <div class="empty-box">
-          No orders yet.
+          No orders yet. Go to categories and start ordering.
         </div>
 
-        <a href="homepage.php">Back to Homepage</a>
+       <div class="actions"><a href="homepage.php">Back to Homepage</a></div>
       </section>
 
     <?php else: ?>

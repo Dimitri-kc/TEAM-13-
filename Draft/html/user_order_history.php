@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Admin - Orders & Shipments</title>
+<title>User - My Recent Orders</title>
 
 <link rel="stylesheet" href="../css/header_footer_style.css">
 
