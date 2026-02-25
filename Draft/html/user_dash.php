@@ -126,10 +126,6 @@ $userRole = $_SESSION['role'] ?? 'customer';
             .dash-grid { grid-template-columns: 1fr; }
         }
 
-        /* ===============================
-           Profile dropdown styling (FIX)
-           This is needed so the dropdown can actually appear
-           =============================== */
 
         .user-icon-wrap {
             position: relative;
@@ -217,8 +213,9 @@ $userRole = $_SESSION['role'] ?? 'customer';
                             Welcome, <?php echo htmlspecialchars($userName); ?>
                         </div>
 
-                        <!-- This page requires login, but keeping Sign In link doesn't hurt -->
+                        
                         <a href="signin.php" class="user-dropdown-btn">Sign in</a>
+                        <a class="profile-link" href="signup.php">Sign Up</a>
                         <a href="user_dash.php" class="user-dropdown-btn">My account</a>
 
                         <!-- Sign out should go to signout.php (destroys session) -->
@@ -369,12 +366,10 @@ $userRole = $_SESSION['role'] ?? 'customer';
         </div>
     </footer>
 
-    <!-- Your existing header menu script -->
     <script src="../javascript/header_footer_script.js"></script>
 
-    <!-- Profile dropdown script (FIX for THIS page) -->
+    
     <script>
-        // Profile dropdown toggle for user icon (kept separate so it doesn't interfere with your existing menu JS)
         document.addEventListener('DOMContentLoaded', () => {
             const userBtn = document.getElementById('user-icon-btn');
             const userDropdown = document.getElementById('user-dropdown');

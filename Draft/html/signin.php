@@ -260,6 +260,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
                         </div>
 
                         <a class="profile-link" href="signin.php">Sign in</a>
+                        <a class="profile-link" href="signup.php">Sign Up</a>
                         <a class="profile-link" href="user_dash.php">My account</a>
 
                         <?php if ($isLoggedIn): ?>
