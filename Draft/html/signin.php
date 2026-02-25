@@ -251,13 +251,9 @@ $headerName = $_SESSION['name'] ?? 'Guest';
                     </button>
 
                     <div class="profile-dropdown" id="profile-dropdown">
-                        <div class="profile-welcome">
-                            <?php if ($isLoggedIn): ?>
-                                Welcome, <?php echo htmlspecialchars($headerName); ?>
-                            <?php else: ?>
-                                Welcome
-                            <?php endif; ?>
-                        </div>
+                        <?php if ($isLoggedIn): ?>
+                            <div class="profile-welcome">Welcome, <?php echo htmlspecialchars($headerName); ?></div>
+                        <?php endif; ?>
 
                         <a class="profile-link" href="signin.php">Sign in</a>
                         <a class="profile-link" href="signup.php">Sign Up</a>
@@ -374,7 +370,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
                 <ul>
                     <li><a href="contact.php">Contact Us</a></li>
                     <li><a href="about.php">About Us</a></li>
-                    <li><a href="admin_signin.php">Admin Dashboard</a></li>
+                    <li><a href="admin_signin.php">Admin</a></li>
                 </ul>
             </div>
         </div>
