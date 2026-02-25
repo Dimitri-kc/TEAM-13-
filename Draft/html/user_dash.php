@@ -16,6 +16,7 @@ if (empty($_SESSION['user_ID'])) {
 // Pull user details from session (already set in UserController login method)
 $userName = $_SESSION['name'] ?? 'User';
 $userRole = $_SESSION['role'] ?? 'customer';
+$isLoggedIn = !empty($_SESSION['user_ID']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -213,13 +214,17 @@ $userRole = $_SESSION['role'] ?? 'customer';
                             Welcome, <?php echo htmlspecialchars($userName); ?>
                         </div>
 
-                        
-                        <a href="signin.php" class="user-dropdown-btn">Sign in</a>
-                        <a class="profile-link" href="signup.php">Sign Up</a>
+                        <?php if (!$isLoggedIn): ?>
+                            <a href="signin.php" class="user-dropdown-btn">Sign in</a>
+                            <a class="profile-link" href="signup.php">Sign Up</a>
+                        <?php endif; ?>
+
                         <a href="user_dash.php" class="user-dropdown-btn">My account</a>
 
                         <!-- Sign out should go to signout.php (destroys session) -->
-                        <a href="signout.php" class="user-dropdown-btn signout">Sign out</a>
+                        <?php if ($isLoggedIn): ?>
+                            <a href="signout.php" class="user-dropdown-btn signout">Sign out</a>
+                        <?php endif; ?>
                     </div>
                 </div>
 

@@ -115,7 +115,7 @@
     </button>
 
     <div class="logo-wrapper">
-      <a href="Homepage.php">
+      <a href="homepage.php">
         <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
       </a>
     </div>
