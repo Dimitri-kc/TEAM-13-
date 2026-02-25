@@ -219,3 +219,54 @@ ul {
 .profile-link-danger {
     color: #b00020;
 }
+
+/* Welcome toast (top-centred) */
+.ll-welcome-toast {
+    position: fixed;
+    top: 60px; /* distance from top of viewport */
+    left: 50%;
+    transform: translate(-50%, -10px);
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 350ms ease, transform 350ms ease;
+    display: flex;
+    justify-content: center;
+    width: auto;
+    max-width: calc(100vw - 48px);
+    padding: 0 12px;
+}
+
+.ll-welcome-toast.is-visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    pointer-events: auto;
+}
+
+.ll-welcome-toast-inner{
+  background: rgba(20,20,20,0.92);
+  color: #fff;
+  padding: 16px 26px;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Stronger ID-based override to prevent page-level CSS from breaking positioning */
+#llWelcomeToast {
+        position: fixed !important;
+        top: 60px !important;
+        left: 50% !important;
+        transform: translate(-50%, 0) !important;
+        z-index: 99999 !important;
+        display: flex !important;
+        justify-content: center !important;
+        width: auto !important;
+        max-width: calc(100vw - 48px) !important;
+        padding: 0 12px !important;
+        pointer-events: auto !important;
+}
