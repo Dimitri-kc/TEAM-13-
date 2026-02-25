@@ -374,6 +374,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
                 <ul>
                     <li><a href="contact.php">Contact Us</a></li>
                     <li><a href="about.php">About Us</a></li>
+                    <li><a href="admin_dash.php">Admin Dashboard</a></li>
                 </ul>
             </div>
         </div>
