@@ -269,7 +269,7 @@ $isLoggedIn = !empty($_SESSION['user_ID']);
                     </div>
                 </a>
 
-                <a class="dash-card span-2" href="orders.php">
+                <a class="dash-card span-2" href="user_order_history.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
