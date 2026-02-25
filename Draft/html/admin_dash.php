@@ -245,7 +245,7 @@ $userRole = $_SESSION['role'] ?? 'customer';
         <div class="dashboard-container">
 
             <div class="dashboard-heading">
-                <h2>Welcome, <?php echo htmlspecialchars($userName); ?></h2>
+                <h2>Welcome to the Admin Dashboard, <?php echo htmlspecialchars($userName); ?></h2>
                 <p>My Account</p>
             </div>
 
