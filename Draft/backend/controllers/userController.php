@@ -130,7 +130,7 @@ class UserController {
         $uppercase = preg_match('/[A-Z]/', $newPassword); //uppercase required
         $lowercase = preg_match('/[a-z]/', $newPassword); //lowercase required
         $numbers = preg_match('/[0-9]/', $newPassword); //must contain numbers
-        $specialChar = preg_match('/[!@#$%^&*()]/', $newPassword); //must contain special characters such as !@#$%^&*()
+        $specialChar = preg_match('/[!@#$%^&*()?]/', $newPassword); //must contain special characters such as !@#$%^&*()
         if (!$minLength || !$uppercase || !$lowercase || !$numbers || !$specialChar) {
             echo json_encode([
                 "success" => false,
