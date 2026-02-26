@@ -251,7 +251,7 @@ $userRole = $_SESSION['role'] ?? 'customer';
             </div>
 
             <div class="dash-grid">
-                <a class="dash-card span-2" href="favourites.php">
+                <a class="dash-card span-2" href="admin_order_list.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
