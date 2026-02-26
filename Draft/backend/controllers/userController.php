@@ -105,7 +105,7 @@ class UserController {
 
     public function changePassword($data) { //change user password upon first login only 
 
-        if (session_start() === PHP_SESSION_NONE) {//start session if not already
+        if (session_status() === PHP_SESSION_NONE) {//start session if not already
             session_start();
         }
         if (empty($_SESSION['user_ID'])) { //check if user logged in
@@ -130,7 +130,7 @@ class UserController {
         $uppercase = preg_match('/[A-Z]/', $newPassword); //uppercase required
         $lowercase = preg_match('/[a-z]/', $newPassword); //lowercase required
         $numbers = preg_match('/[0-9]/', $newPassword); //must contain numbers
-        $specialChar = preg_match('/[!@#$%^&*()]/', $newPassword); //must contain special characters such as !@#$%^&*()
+        $specialChar = preg_match('/[!@#$%^&*()?]/', $newPassword); //must contain special characters such as !@#$%^&*()
         if (!$minLength || !$uppercase || !$lowercase || !$numbers || !$specialChar) {
             echo json_encode([
                 "success" => false,

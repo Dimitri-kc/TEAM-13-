@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // If the user isn't logged in, redirect them to sign in
 if (empty($_SESSION['user_ID'])) {
-    header("Location: signin.php");
+    header("Location: admin_login.php");
     exit;
 }
 
@@ -251,7 +251,7 @@ $userRole = $_SESSION['role'] ?? 'customer';
             </div>
 
             <div class="dash-grid">
-                <a class="dash-card span-2" href="favourites.php">
+                <a class="dash-card span-2" href="admin_order_list.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
