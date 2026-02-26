@@ -105,7 +105,7 @@ class UserController {
 
     public function changePassword($data) { //change user password upon first login only 
 
-        if (session_start() === PHP_SESSION_NONE) {//start session if not already
+        if (session_status() === PHP_SESSION_NONE) {//start session if not already
             session_start();
         }
         if (empty($_SESSION['user_ID'])) { //check if user logged in
