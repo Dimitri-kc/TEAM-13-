@@ -1,12 +1,13 @@
 <?php //basketModel.php - database comms for basket
+error_log("THIS IS BASKET MODEL: " . __FILE__);
 error_log("Basket model loaded from: " . realpath(__DIR__ . '/../config/db_connect.php')); //log to confirm file is being loaded and path is correct
 
 class Basket {
     private $conn;
 
     public function __construct() {
-        require_once __DIR__ . '/../config/db_connect.php'; // Adjusted path to include db_connect.php
         global $conn; // Use the global $conn variable from db_connect.php
+        require_once __DIR__ . '/../config/db_connect.php'; // Adjusted path to include db_connect.php
         if (!isset($conn) || !$conn) { //prevent errors if not established connection
             throw new Exception("Database connection failed in basketModel.php.");
         } 
