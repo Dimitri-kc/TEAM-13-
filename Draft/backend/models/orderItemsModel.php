@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/db_connect.php';
+require_once __DIR__ . '/../config/db_connect.php';
 
-class OrderItem {
+class OrderItemsModel {
 
     private $conn;
 
@@ -11,9 +11,7 @@ class OrderItem {
         $this->conn = $conn;
     }
 
-   
-     //Fetch all items for a specific order
-     
+    // Fetch all items for a specific order
     public function getItemsByOrder($order_ID) {
 
         $stmt = $this->conn->prepare(
@@ -33,33 +31,30 @@ class OrderItem {
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-      //Insert a single order item
-    
-    public function addOrderItem($order_ID, $product_ID, $unit_price, $quantity) {
+    // Insert a single order item (NO quantity)
+    public function addOrderItem($order_ID, $product_ID, $unit_price) {
 
         $stmt = $this->conn->prepare(
             "INSERT INTO order_items 
-             (order_ID, product_ID, unit_price, quantity)
-             VALUES (?, ?, ?, ?)"
+             (order_ID, product_ID, unit_price)
+             VALUES (?, ?, ?)"
         );
 
         if (!$stmt) {
             return false;
         }
 
-        $stmt->bind_param("iidi", 
-            $order_ID, 
-            $product_ID, 
-            $unit_price, 
-            $quantity
+        $stmt->bind_param(
+            "iid",
+            $order_ID,
+            $product_ID,
+            $unit_price
         );
 
         return $stmt->execute();
     }
 
-    
-     //Delete all items for an order admin
-     
+    // Delete all items for an order (admin)
     public function deleteItemsByOrder($order_ID) {
 
         $stmt = $this->conn->prepare(
