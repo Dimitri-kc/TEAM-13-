@@ -109,6 +109,11 @@ button:hover {
   transform: translateY(-1px);
 }
 
+.shipping-address {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
 /* Responsive layout */
 @media (max-width: 900px) {
   .container {
