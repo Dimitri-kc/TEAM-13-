@@ -1,12 +1,35 @@
-<?php include '../backend/config/db_connect.php'; ?>
-<?php
+<?php 
+include '../backend/config/db_connect.php'; 
 session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$favs = isset($_SESSION['favourites']) ? $_SESSION['favourites'] : [];
+// Require login
+if (!isset($_SESSION['user_ID'])) {
+    header("Location: signin.php");
+    exit;
+}
+
+$user_id = $_SESSION['user_ID'];
+
+// Load favourites from database
+$sql = "SELECT p.product_ID, p.name, p.price, p.image
+        FROM favourites f
+        JOIN products p ON f.product_ID = p.product_ID
+        WHERE f.user_ID = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$res = $stmt->get_result();
+
+$favs = [];
+while ($row = $res->fetch_assoc()) {
+    $favs[] = $row;
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -129,32 +152,43 @@ $favs = isset($_SESSION['favourites']) ? $_SESSION['favourites'] : [];
             <div class="empty">No favourites yet. Go to categories and like a product.</div>
             <div class="actions"><a href="homepage.php">Back to Homepage</a></div>
         <?php else: ?>
+            
             <div class="grid">
-                <?php foreach ($favs as $p): $pid = (int)$p["id"]; ?>
-                    <div class="fav-card">
-                        <form method="post" action="favourite_remove.php" style="margin:0;">
-                            <input type="hidden" name="product_id" value="<?= $pid ?>">
-                            <input type="hidden" name="redirect" value="favourites.php">
-                            <button class="removeBtn" type="submit" title="Remove">×</button>
-                        </form>
+    <?php foreach ($favs as $p): ?>
+        <?php 
+            $pid = (int)$p["product_ID"]; 
+            $imagePath = "../images/livingroom-images/" . $p["image"];
+        ?>
+        
+        <div class="fav-card">
+            
+            <!-- REMOVE FROM FAVOURITES -->
+            <form method="post" action="favourite_remove.php" style="margin:0;">
+                <input type="hidden" name="product_id" value="<?= $pid ?>">
+                <input type="hidden" name="redirect" value="favourites.php">
+                <button class="removeBtn" type="submit" title="Remove">×</button>
+            </form>
 
-                        
+            <!-- PRODUCT IMAGE -->
+<div class="thumb">
+    <?php if (!empty($p["image"])): ?>
+        <img src="../images/<?= htmlspecialchars($p["image"]) ?>" alt="">
+    <?php else: ?>
+        <span style="color:#cfcfcf; font-size:12px;">IMG</span>
+    <?php endif; ?>
+</div>
 
-                        <div class="thumb">
-                            <?php if (!empty($p["image"]) && file_exists($p["image"])): ?>
-                                <img src="<?= htmlspecialchars($p["image"]) ?>" alt="">
-                            <?php else: ?>
-                                <span style="color:#cfcfcf; font-size:12px;">IMG</span>
-                            <?php endif; ?>
-                        </div>
 
-                        <form method="post" action="basket.php" style="margin:0;">
-                            <input type="hidden" name="product_id" value="<?= $pid ?>">
-                            <button class="btn" type="submit">Add to bag</button>
-                        </form>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+            <!-- ADD TO BASKET -->
+            <form method="post" action="basket.php" style="margin:0;">
+                <input type="hidden" name="product_id" value="<?= $pid ?>">
+                <button class="btn" type="submit">Add to bag</button>
+            </form>
+
+        </div>
+    <?php endforeach; ?>
+</div>
+
 
             <div class="actions" style="margin-top:18px;">
                 <a href="homepage.php">Back to homepage</a>

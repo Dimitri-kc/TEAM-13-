@@ -83,12 +83,11 @@ if (count($cart) > 0) {
   $ids = array_keys($cart);
   $placeholders = implode(",", array_fill(0, count($ids), "?"));
 
-  $sql = "SELECT product_id, product_name, price, image_path
+  $sql = "SELECT product_id, name, price, image
           FROM products
           WHERE product_id IN ($placeholders)";
 
-  $stmt = $conn->prepare($sql);
-
+$stmt = $conn ->prepare($sql);
   if ($stmt) {
     $types = str_repeat("i", count($ids));
     $stmt->bind_param($types, ...$ids);
@@ -105,11 +104,11 @@ if (count($cart) > 0) {
 
       $cartProducts[] = [
         "id" => $id,
-        "name" => $row["product_name"],
+        "name" => $row["name"],
         "price" => $price,
         "qty" => $qty,
         "line" => $line,
-        "image" => $row["image_path"] ?: "../images/basket-images/sofa.jpg"
+        "image" => $row["image"] ?: "../images/basket-images/sofa.jpg"
       ];
     }
     $stmt->close();

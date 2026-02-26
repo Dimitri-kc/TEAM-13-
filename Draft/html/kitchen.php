@@ -134,13 +134,8 @@
      data-category="<?php echo ($row['categories']); ?>"
      data-colour="<?php echo $row['colour']; ?>">
 
-                                <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
 
-            
-                 
-                 <a href="product.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
+ <a href="product.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
                      <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
                      <div class="product-text">
                          <h2><?php echo $row['name']; ?></h2>
@@ -148,9 +143,27 @@
                      </div>
                  </a>
 
-                 <button class="add-to-basket" aria-label="Add to basket">
-                     <img src="../images/add-button-icon.png" alt="Add to basket">
-                 </button>
+<div class="action-buttons">
+<form method="post" action="favourites_add.php" style="position: absolute; top: 15px; left: 15px; z-index: 999; margin: 0; padding: 0; pointer-events: auto;">
+    <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
+    <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
+    <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
+    <input type="hidden" name="product_image" value="../images/<?= htmlspecialchars($row['image']) ?>">
+    <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+    <button type="submit" title="Add to Favourites" style="background: rgb(217, 217, 222); border: none; border-radius: 60%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">♡</button>
+</form>
+
+<form method="post" action="basket.php?action=add" style="position: absolute; bottom: 15px; right: 15px; z-index: 999; margin: 0; padding: 0; pointer-events: auto;">
+    <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
+    <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
+    <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
+    <input type="hidden" name="product_image" value="../images/livingroom-images/<?= htmlspecialchars($row['image']) ?>">
+    <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+    <button type="submit" title="Add to basket" style="background: rgba(0,0,0,0.08); border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">+</button>
+</form>
+</div>
+
+
             </div>
             <?php
         }

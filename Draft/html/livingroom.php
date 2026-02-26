@@ -153,7 +153,7 @@
     <button type="submit" title="Add to Favourites" style="background: rgb(217, 217, 222); border: none; border-radius: 60%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">♡</button>
 </form>
 
-<form method="post" action="basket.php" style="position: absolute; bottom: 15px; right: 15px; z-index: 999; margin: 0; padding: 0; pointer-events: auto;">
+<form method="post" action="basket.php?action=add" style="position: absolute; bottom: 15px; right: 15px; z-index: 999; margin: 0; padding: 0; pointer-events: auto;">
     <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
     <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
     <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">

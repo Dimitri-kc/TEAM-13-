@@ -1,38 +1,32 @@
 <?php
 session_start();
+include '../backend/config/db_connect.php';
 
-$product_id = (int)$_POST['product_id'];
-$product_name = $_POST['product_name'] ?? '';
-$product_price = $_POST['product_price'] ?? '';
-$product_image = $_POST['product_image'] ?? '';
-$redirect = $_POST['redirect'] ?? 'favourites.php';
-
-// Make sure the session array exists
-if (!isset($_SESSION['favourites'])) {
-    $_SESSION['favourites'] = [];
+// User must be logged in
+if (!isset($_SESSION['user_ID'])) {
+    header("Location: signin.php");
+    exit;
 }
 
-// Only add if product_id is valid and not already saved
+$user_id = $_SESSION['user_ID'];
+$product_id = (int)($_POST['product_id'] ?? 0);
+$redirect = $_POST['redirect'] ?? 'favourites.php';
+
 if ($product_id > 0) {
 
-    $exists = false;
-    foreach ($_SESSION['favourites'] as $item) {
-        if ($item['id'] == $product_id) {
-            $exists = true;
-            break;
-        }
-    }
+    // Check if already in favourites
+    $check = $conn->prepare("SELECT * FROM favourites WHERE user_ID = ? AND product_ID = ?");
+    $check->bind_param("ii", $user_id, $product_id);
+    $check->execute();
+    $res = $check->get_result();
 
-    if (!$exists) {
-        $_SESSION['favourites'][] = [
-            'id' => $product_id,
-            'name' => $product_name,
-            'price' => $product_price,
-            'image' => $product_image
-        ];
+    if ($res->num_rows === 0) {
+        // Insert into DB
+        $insert = $conn->prepare("INSERT INTO favourites (user_ID, product_ID) VALUES (?, ?)");
+        $insert->bind_param("ii", $user_id, $product_id);
+        $insert->execute();
     }
 }
 
 header("Location: $redirect");
 exit;
-?>
