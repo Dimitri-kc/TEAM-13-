@@ -35,8 +35,10 @@
     <div class="header-actions">
       <a href="favourites.php"><img src="../images/header_footer_images/icon-heart.png" class="ui-icon" alt="Favourites"></a>
       <a href="signin.php"><img src="../images/header_footer_images/icon-user.png" class="ui-icon" alt="My Account"></a>
-      <a href="basket.php" class="basket-icon"><img src="../images/header_footer_images/icon-basket.png" class="ui-icon" alt="Basket">
-      <span id="basket-count">0</span>
+      <a href="basket.php" class="basket-icon">
+          <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+          <span id="basket-count">0</span>
+      </a>
     </a>
     </div>
   </div>
@@ -202,6 +204,7 @@
 <!-- JS (same as living room) -->
 <script type="module" src="../javascript/livingroom-js/main.js"></script>
 <script src="../javascript/header_footer_script.js"></script>
+<script src="../javascript/global/basketIcon.js"></script>
 
 <!-- Basket -->
     <div id="basket-modal" class="basket-modal">
