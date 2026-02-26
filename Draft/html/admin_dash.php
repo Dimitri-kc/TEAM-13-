@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // If the user isn't logged in, redirect them to sign in
 if (empty($_SESSION['user_ID'])) {
-    header("Location: signin.php");
+    header("Location: admin_login.php");
     exit;
 }
 
