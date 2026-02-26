@@ -50,13 +50,13 @@ class BasketController {
             //get session details
             $user_ID = (int)$_SESSION['user_ID']; 
 
-            try {
-                $basketModel = new Basket();
-            } catch (Exception $e) {
-                $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
-                return;
-            }
-            //$basketModel = new Basket();
+            // try {
+            //     $basketModel = new Basket();
+            // } catch (Exception $e) {
+            //     $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
+            //     return;
+            // }
+            $basketModel = new Basket();
             $basket = $basketModel->fetchUserBasket($user_ID);
             if (!$basket || empty($basket['basket_ID'])) { //if no basket found, return empty array
                 $this->jsonSuccess(false, "No basket found for user.", null, 500); //500 for server error
@@ -78,12 +78,13 @@ class BasketController {
         }
         
         $productIDs = array_keys($sessionBasket); //get product IDs from session basket
-        try {
-            $basketModel = new Basket();
-        } catch (Exception $e) {
-            $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
-            return;
-        }
+        // try {
+        //     $basketModel = new Basket();
+        // } catch (Exception $e) {
+        //     $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
+        //     return;
+        // }
+        $basketModel = new Basket();
         $products = $basketModel->fetchGuestBasketProducts($productIDs); //fetch product details for guest basket items
         $items = []; //combine prodcut details with quantities
         foreach ($products as $product) {
@@ -128,25 +129,25 @@ class BasketController {
             return;
         }
 
-        try {
-            $basketModel = new Basket();
-        } catch (Exception $e) {
-            $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
-            return;
-        }
-
+        // try {
+        //     $basketModel = new Basket();
+        // } catch (Exception $e) {
+        //     $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
+        //     return;
+        // }
+        $basketModel = new Basket();
         //if user logged in, use database basket
         if (isset($_SESSION['user_ID'])) { 
             $user_ID = (int)$_SESSION['user_ID']; //retreive user ID from session
         
             //create Basket model instance
-            try {
-                $basketModel = new Basket();
-            } catch (Exception $e) {
-                $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
-                return;
-            }
-            //$basketModel = new Basket(); //for database connection via basket model Basket.php holding basket class <
+            // try {
+            //     $basketModel = new Basket();
+            // } catch (Exception $e) {
+            //     $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
+            //     return;
+            // }
+            $basketModel = new Basket(); //for database connection via basket model Basket.php holding basket class <
             //fetch or create user basket
             $basket = $basketModel->fetchUserBasket($user_ID);
             //if no basket, return error
@@ -183,13 +184,13 @@ class BasketController {
             return;
         }
 
-        try {
-            $basketModel = new Basket();
-        } catch (Exception $e) {
-            $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
-            return;
-        }
-        //$basketModel = new Basket();
+        // try {
+        //     $basketModel = new Basket();
+        // } catch (Exception $e) {
+        //     $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
+        //     return;
+        // }
+        $basketModel = new Basket();
         //validate stock before updating basket
         if (!$this->validateStock($basketModel, $product_ID, $quantity)) {
             return; //stock validation failed, response sent in validateStock method
@@ -198,13 +199,13 @@ class BasketController {
         if(isset($_SESSION['user_ID'])) {
             $user_ID = (int)$_SESSION['user_ID'];
 
-            try {
-                $basketModel = new Basket();
-            } catch (Exception $e) {
-                $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
-                return;
-            }
-            //$basketModel = new Basket();
+            // try {
+            //     $basketModel = new Basket();
+            // } catch (Exception $e) {
+            //     $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
+            //     return;
+            // }
+            $basketModel = new Basket();
             $basket = $basketModel->fetchUserBasket($user_ID); //fetch user basket
             
             //if no basket found, return error > error hadling as also in model
@@ -250,13 +251,13 @@ class BasketController {
         if (isset($_SESSION['user_ID'])) {
             $user_ID = (int)$_SESSION['user_ID'];
 
-            try {
-                $basketModel = new Basket();
-            } catch (Exception $e) {
-                $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
-                return;
-            }
-            //$basketModel = new Basket();
+            // try {
+            //     $basketModel = new Basket();
+            // } catch (Exception $e) {
+            //     $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
+            //     return;
+            // }
+            $basketModel = new Basket();
             $basket = $basketModel->fetchUserBasket($user_ID); //fetch user basket
             //if no basket found, return error
             if (!$basket || empty($basket['basket_ID'])) {

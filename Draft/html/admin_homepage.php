@@ -132,8 +132,9 @@ $headerName = $_SESSION['name'] ?? 'Guest';
                         <?php endif; ?>
                     </div>
                 </div>
-                <a href="basket.php">
+                <a href="basket.php" class="basket-icon">
                     <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+                    <span id="basket-count">0</span>
                 </a>
             </div>
         </div>
@@ -360,6 +361,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
         </div>
     </footer>
     <script src="../javascript/header_footer_script.js"></script>
+    <script src="../javascript/global/basketIcon.js"></script>
 
     <script>
         // Profile dropdown toggle (homepage)
