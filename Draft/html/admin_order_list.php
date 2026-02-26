@@ -6,7 +6,6 @@
 <title>Admin - Orders & Shipments</title>
 
 <link rel="stylesheet" href="../css/header_footer_style.css">
-
 <link rel="stylesheet" href="../css/category-css/livingroom-base.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">
