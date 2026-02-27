@@ -3,17 +3,39 @@
 include '../backend/config/db_connect.php';
 session_start();
 
-if (!isset($_SESSION["cart"])) {
+require_once __DIR__ . '/../backend/models/basketModel.php';
+require_once __DIR__ . '/../backend/services/basketFunctions.php'; //guest_basket
+
+if (!isset($_SESSION["guest_basket"])) {
   // cart format: [ product_id => qty ]
-  $_SESSION["cart"] = [];
+  $_SESSION["guest_basket"] = [];
 }
 
 function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, "UTF-8"); }
 function money($n){ return "£" . number_format((float)$n, 2); }
 
+
 // Actions 
 $action = $_GET["action"] ?? "";
+$user_ID = isset($_SESSION["user_ID"]) ? (int)$_SESSION["user_ID"] : null; //get user_ID from session if logged in, otherwise null
+$basketModel = new Basket(); //
 
+//use guest_basket for guests (not saved to DB), cart for logged in users (syncs with DB)
+$cart = ($user_ID > 0) ? ($_SESSION["cart"] ?? []) : ($_SESSION["guest_basket"] ?? []); //logged in users have cart that syncs with DB
+
+/* if ($user_ID > 0 && empty($_SESSION["cart"])) {
+    $basket = $basketModel->fetchUserBasket($user_ID);
+    if ($basket && !empty($basket['basket_ID'])) {
+        $items = $basketModel->fetchBasketItems((int)$basket['basket_ID']);
+        foreach ($items as $it) {
+            $pid = (int)($it['product_ID'] ?? 0);
+            $qty = (int)($it['quantity'] ?? 0);
+            if ($pid > 0 && $qty > 0) {
+                $_SESSION["cart"][$pid] = $qty;
+            }
+        }
+    }
+} */
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   // Add item from product pages
@@ -21,11 +43,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $id = (int)($_POST["product_id"] ?? 0);
     $qty = max(1, (int)($_POST["qty"] ?? 1));
     if ($id > 0) {
-      $_SESSION["cart"][$id] = ($_SESSION["cart"][$id] ?? 0) + $qty;
+      if ($user_ID > 0) {
+        $_SESSION["cart"][$id] = ($_SESSION["cart"][$id] ?? 0) + $qty; //update session cart for logged in user
+      } else {
+        $_SESSION["guest_basket"][$id] = ($_SESSION["guest_basket"][$id] ?? 0) + $qty;
+      }
     }
     header("Location: basket.php");
     exit;
   }
+
 
   // Update quantities OR remove item 
 if ($action === "update") {
@@ -34,7 +61,15 @@ if ($action === "update") {
   if (isset($_POST["remove_id"])) {
     $removeId = (int)$_POST["remove_id"];
     if ($removeId > 0) {
-      unset($_SESSION["cart"][$removeId]);
+      if ($user_ID > 0) { //if user logged in, also sync to DB and remove item
+        unset($_SESSION["cart"][$removeId]);
+        $basket = $basketModel->fetchUserBasket($user_ID);
+        if ($basket && !empty($basket['basket_ID'])) {
+          $basketModel->removeItemFromBasket((int)$basket['basket_ID'], $removeId); //remove item from DB basket
+        }
+      } else {
+        unset($_SESSION["guest_basket"][$removeId]);
+      }
     }
     header("Location: basket.php");
     exit;
@@ -48,11 +83,30 @@ if ($action === "update") {
       $q  = (int)$q;
       if ($id <= 0) continue;
 
-      if ($q <= 0) unset($_SESSION["cart"][$id]);  // qty 0 = remove
-      else $_SESSION["cart"][$id] = $q;
+      if ($user_ID >0) { //update session cart for logged in user
+        if ($q <= 0) {
+          unset($_SESSION["cart"][$id]);  // qty 0 = remove
+          //if user logged in, also sync to DB and remove item
+          $basket = $basketModel->fetchUserBasket($user_ID);
+          if ($basket && !empty($basket['basket_ID'])) {
+            $basketModel->removeItemFromBasket((int)$basket['basket_ID'], $id); //remove item from DB basket
+          }
+        } else {
+            $_SESSION["cart"][$id] = $q; //if user logged in, sync new quantity to DB
+            $basket = $basketModel->fetchUserBasket($user_ID);
+            if ($basket && !empty($basket['basket_ID'])) {
+              $basketModel->updateItemQuantity((int)$basket['basket_ID'], $id, $q); //update quantity in DB
+            }
+        }
+      } else {
+        if ($q <= 0) { //guest user qty 0 = remove
+          unset($_SESSION["guest_basket"][$id]);  
+        } else {
+          $_SESSION["guest_basket"][$id] = $q;
+        }
+      }
     }
   }
-
   header("Location: basket.php");
   exit;
 }
@@ -67,39 +121,53 @@ if ($action === "update") {
 
   // Clear basket
   if ($action === "clear") {
-    $_SESSION["cart"] = [];
-    header("Location: basket.php");
-    exit;
+    if ($user_ID > 0) {
+      $_SESSION["cart"] = [];
+      //sync clear to DB for logged in users
+      $basket = $basketModel->fetchUserBasket($user_ID);
+      if ($basket && !empty($basket['basket_ID'])) {
+        $stmt = $conn->prepare("DELETE FROM basket_items WHERE basket_ID = ?"); //clear from DB basket
+        if ($stmt) {
+          $stmt->bind_param("i", (int)$basket['basket_ID']);
+          $stmt->execute();
+          $stmt->close();
+      }
+    }
+  } else {
+    $_SESSION["guest_basket"] = [];
   }
-}
+  header("Location: basket.php");
+  exit;
+  }
+} //POST ENDS
 
-// Load products to cart 
+//debugging below
+$basketMode = ($user_ID > 0) ? "Account Basket (DB-backed)" : "Guest Basket (Session-only)"; 
+error_log("TESTING: $basketMode | user_ID=$user_ID | cart items=" . count($cart));
 
-$cart = $_SESSION["cart"];
+// Load products to cart for display
+$ids = array_keys($cart);
 $cartProducts = [];
 $subtotal = 0.0;
 
-if (count($cart) > 0) {
+if (count($ids) > 0) {
   $ids = array_keys($cart);
   $placeholders = implode(",", array_fill(0, count($ids), "?"));
 
-  $sql = "SELECT product_id, name, price, image
+  $sql = "SELECT product_ID, name, price, image
           FROM products
-          WHERE product_id IN ($placeholders)";
+          WHERE product_ID IN ($placeholders)";
 
 $stmt = $conn ->prepare($sql);
-  if ($stmt) {
-    $types = str_repeat("i", count($ids));
-    $stmt->bind_param($types, ...$ids);
-    $stmt->execute();
-    $res = $stmt->get_result();
+$stmt->bind_param(str_repeat("i", count($ids)), ...$ids);
+$stmt->execute();
+$res = $stmt->get_result();
 
     while ($row = $res->fetch_assoc()) {
-      $id = (int)$row["product_id"];
+      $id = (int)$row["product_ID"];
       $qty = (int)($cart[$id] ?? 1);
       $price = (float)$row["price"];
       $line = $price * $qty;
-
       $subtotal += $line;
 
       $cartProducts[] = [
@@ -108,11 +176,10 @@ $stmt = $conn ->prepare($sql);
         "price" => $price,
         "qty" => $qty,
         "line" => $line,
-        "image" => $row["image"] ?: "../images/basket-images/sofa.jpg"
+        "image" => $row["image"] //?: "../images/basket-images/sofa.jpg"
       ];
     }
-    $stmt->close();
-  }
+  $stmt->close();
 }
 ?>
 

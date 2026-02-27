@@ -38,6 +38,12 @@ async function addToBasket(productID, quantity = 1, button = null) {
             return false;
         }
         await updateBasketCounter(); //update counter after adding to basket
+        // Also sync to session cart for basket.php
+        await fetch('basket.php?action=add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `product_id=${productID}&qty=${quantity}`
+        });
         if(button) button.classList.add('added'); //visual feedback for added item
         if (basketModal) basketModal.style.display = 'flex'; //confirmation modal
         return true;
@@ -51,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateBasketCounter(); //update counter upon page load
     const goToBasketBtn = document.getElementById('go-to-basket');
     const continueShoppingBtn = document.getElementById('continue-shopping');
-    const basketModal = document.getElementById('basket-modal');
     if (goToBasketBtn) {
         goToBasketBtn.addEventListener('click', () => {
             window.location.href = 'basket.php'; //navigate to basket page
