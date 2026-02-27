@@ -169,7 +169,21 @@
 </div>
 
 
-        </div> </div> <footer class="site-footer">
+    </div> 
+</div> 
+<!-- Basket -->
+    <div id="basket-modal" class="basket-modal">
+    <div class="basket-modal-content">
+        <p>Item added to basket!</p>
+        <div class="basket-modal-buttons">
+            <button id="go-to-basket">Proceed to Basket</button>
+            <button id="continue-shopping">Continue Shopping</button>
+
+        </div>
+    </div>
+</div> 
+ 
+    <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-section social-links">
                 <a href="#">
@@ -214,16 +228,5 @@
     <script src="../javascript/header_footer_script.js"></script>
     <script src="../javascript/global/basketIcon.js"></script>
 
-    <!-- Basket -->
-    <div id="basket-modal" class="basket-modal">
-    <div class="basket-modal-content">
-        <p>Item added to basket!</p>
-        <div class="basket-modal-buttons">
-            <button id="go-to-basket">Proceed to Basket</button>
-            <button id="continue-shopping">Continue Shopping</button>
-
-        </div>
-    </div>
-</div>
 </body>
 </html>

@@ -126,9 +126,10 @@ if ($action === "update") {
       //sync clear to DB for logged in users
       $basket = $basketModel->fetchUserBasket($user_ID);
       if ($basket && !empty($basket['basket_ID'])) {
+        $basket_ID = (int)$basket['basket_ID'];
         $stmt = $conn->prepare("DELETE FROM basket_items WHERE basket_ID = ?"); //clear from DB basket
         if ($stmt) {
-          $stmt->bind_param("i", (int)$basket['basket_ID']);
+          $stmt->bind_param("i", $basket_ID); //changed to variable not direct value
           $stmt->execute();
           $stmt->close();
       }
