@@ -131,7 +131,8 @@
      data-keywords="<?php echo $row['keywords']; ?>" 
      data-category="<?php echo ($row['categories']); ?>"
      data-colour="<?php echo $row['colour']; ?>"
-     data-new="<?php echo $row['is_new']; ?>">
+    
+     >
 
 
      
