@@ -137,7 +137,7 @@
             <div class="footer-section">
                 <h4>Categories</h4>
                 <ul>
-                    <li><a href="categories.php">Living Room</a></li>
+                    <li><a href="livingroom.php">Living Room</a></li>
                     <li><a href="office.php">Offices</a></li>
                     <li><a href="kitchen.php">Kitchen</a></li>
                     <li><a href="bathroom.php">Bathrooms</a></li>
