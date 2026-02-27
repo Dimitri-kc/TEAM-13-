@@ -152,14 +152,9 @@
     <button type="submit" title="Add to Favourites" style="background: rgb(217, 217, 222); border: none; border-radius: 60%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">♡</button>
 </form>
 
-<form method="post" action="basket.php?action=add" style="position: absolute; bottom: 15px; right: 15px; z-index: 999; margin: 0; padding: 0; pointer-events: auto;">
-    <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
-    <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
-    <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
-    <input type="hidden" name="product_image" value="../images/livingroom-images/<?= htmlspecialchars($row['image']) ?>">
-    <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
-    <button type="submit" title="Add to basket" style="background: rgba(0,0,0,0.08); border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">+</button>
-</form>
+<!--onclick to pass product_ID in function - API fetch details from DB-->
+<button type="submit" onclick="addToBasket(<?= $row['product_ID'] ?>, 1)" title="Add to basket" style="background: rgba(0,0,0,0.08); border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">+</button>
+
 </div>
                
             </div>
@@ -216,7 +211,7 @@
     <script type="module" src="../javascript/livingroom-js/main.js"></script>
     <script src="../javascript/header_footer_script.js"></script>
     <script src="../javascript/global/basketIcon.js"></script>
-    
+
     <!-- Basket -->
     <div id="basket-modal" class="basket-modal">
     <div class="basket-modal-content">

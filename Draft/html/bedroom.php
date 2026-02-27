@@ -145,9 +145,8 @@
                      </div>
                  </a>
 
-                 <button class="add-to-basket" aria-label="Add to basket">
-                     <img src="../images/add-button-icon.png" alt="Add to basket">
-                 </button>
+                <!--onclick to pass product_ID in function - API fetch details from DB-->
+                <button type="submit" onclick="addToBasket(<?= $row['product_ID'] ?>, 1)" title="Add to basket" style="background: rgba(0,0,0,0.08); border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">+</button>
             </div>
             <?php
         }
