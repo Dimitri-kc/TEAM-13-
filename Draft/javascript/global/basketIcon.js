@@ -47,5 +47,26 @@ async function addToBasket(productID, quantity = 1, button = null) {
         return false;
     }
 }
+document.addEventListener('DOMContentLoaded', () => {
+    updateBasketCounter(); //update counter upon page load
+    const goToBasketBtn = document.getElementById('go-to-basket');
+    const continueShoppingBtn = document.getElementById('continue-shopping');
+    const basketModal = document.getElementById('basket-modal');
+    if (goToBasketBtn) {
+        goToBasketBtn.addEventListener('click', () => {
+            window.location.href = 'basket.php'; //navigate to basket page
+        });
+    }
+    if (continueShoppingBtn) {
+        continueShoppingBtn.addEventListener('click', () => {
+            basketModal.style.display = 'none'; //hide modal
+        });
+    }
+    if (basketModal) {
+        basketModal.addEventListener('click', (e) => {
+            if (e.target === basketModal) basketModal.style.display = 'none'; //hide modal when clicking outside content
+        });
+    }
+});
 window.addToBasket = addToBasket; //make function globally accessible for product pages
-document.addEventListener('DOMContentLoaded', updateBasketCounter); //update counter upon page load
+//document.addEventListener('DOMContentLoaded', updateBasketCounter); //update counter upon page load
