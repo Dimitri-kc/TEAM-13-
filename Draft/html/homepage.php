@@ -512,6 +512,11 @@ if ($showWelcomeToast) {
                 </button>
 
                 <div class="profile-dropdown" id="profile-dropdown">
+                    <?php //added check for session details for welcome message/links
+                        if (session_status() === PHP_SESSION_NONE) session_start();
+                        $isLoggedIn = !empty($_SESSION['user_ID']); //
+                        $headerName = $_SESSION['name'] ?? 'Guest'; //h
+                    ?>
                     <?php if ($isLoggedIn): ?>
                         <div class="profile-welcome">Welcome, <?php echo htmlspecialchars($headerName); ?></div>
                     <?php endif; ?>
@@ -757,7 +762,7 @@ if ($showWelcomeToast) {
 <script src="../javascript/header_footer_script.js"></script>
 <script src="../javascript/global/basketIcon.js"></script>
 
-<script>
+<!-- <script> //DUPLICATE LOGIC AS header_footer_script.js ALREADY CALLS
     // Profile dropdown toggle (homepage)
     document.addEventListener("DOMContentLoaded", () => {
         const profileToggleBtn = document.getElementById("profile-toggle-btn");
@@ -783,7 +788,7 @@ if ($showWelcomeToast) {
             }
         });
     });
-</script>
+</script> -->
 
 <script>
     // Review modal logic

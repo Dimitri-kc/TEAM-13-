@@ -372,26 +372,26 @@ $userRole = $_SESSION['role'] ?? 'customer';
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const userBtn = document.getElementById('user-icon-btn');
-            const userDropdown = document.getElementById('user-dropdown');
-            const userWrap = document.getElementById('user-icon-wrap');
+            const profileToggleBtn = document.getElementById('user-icon-btn');
+            const profileDropdown = document.getElementById('user-dropdown');
+            const profileWrapper = document.getElementById('user-icon-wrap');
 
-            if (!userBtn || !userDropdown || !userWrap) return;
+            if (!profileToggleBtn || !profileDropdown || !profileWrapper) return;
 
-            userBtn.addEventListener('click', (e) => {
+            profileToggleBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                userDropdown.classList.toggle('open');
+                profileDropdown.classList.toggle('open');
             });
 
             document.addEventListener('click', (e) => {
-                if (!userWrap.contains(e.target)) {
-                    userDropdown.classList.remove('open');
+                if (!profileWrapper.contains(e.target)) {
+                    profileDropdown.classList.remove('open');
                 }
             });
 
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
-                    userDropdown.classList.remove('open');
+                    profileDropdown.classList.remove('open');
                 }
             });
         });
