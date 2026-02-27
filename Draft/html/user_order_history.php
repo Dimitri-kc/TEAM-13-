@@ -173,18 +173,18 @@
   </nav>
 </header>
 
-<div class="admin-container">
-  <h1>Order and Shipments</h1>
-  <p class="subheader">View recent customer orders and make edits or cancel</p>
+<div class="user-container">
+  <h1>My Recent orders </h1>
+  <p class="subheader">View recent customer orders and add to bag if you want to purchase it again</p>
 
   <div class="orders-grid">
 
     <div class="order-card">
       <img src="https://via.placeholder.com/80" alt="Product Image" />
       <div class="order-details">
-        <p class="order-status">Order Status: Pending</p>
-        <p class="order-number">Order #UK12345</p>
-        <p class="customer-name">Customer: FirstName LastName</p>
+        <!-- <p class="order-status">Order Status: Pending</p> -->
+        <p class="order-number">Order Status: delivered </p>
+        <p class="customer-name">Date: 28 October 2025 </p>
       </div>
       <div class="order-actions">
         <button class="btn-view-edit">View & Edit</button>
@@ -195,9 +195,9 @@
     <div class="order-card">
       <img src="https://via.placeholder.com/80" alt="Product Image" />
       <div class="order-details">
-        <p class="order-status">Order Status: Shipped</p>
-        <p class="order-number">Order #UK12345</p>
-        <p class="customer-name">Customer: FirstName LastName</p>
+        <!-- <p class="order-status">Order Status: Shipped</p> -->
+        <p class="order-number">Order Status: delivered </p>
+        <p class="customer-name">Date: 17 November 2025 </p>
       </div>
       <div class="order-actions">
         <button class="btn-view-edit">View & Edit</button>
@@ -208,9 +208,9 @@
     <div class="order-card">
       <img src="https://via.placeholder.com/80" alt="Product Image" />
       <div class="order-details">
-        <p class="order-status">Order Status: Pending</p>
-        <p class="order-number">Order #UK12345</p>
-        <p class="customer-name">Customer: FirstName LastName</p>
+        <!-- <p class="order-status">Order Status: Pending</p> -->
+        <p class="order-number">Order Status: delivered </p>
+        <p class="customer-name">Date: 12 January 2026 </p>
       </div>
       <div class="order-actions">
         <button class="btn-view-edit">View & Edit</button>
@@ -221,9 +221,9 @@
     <div class="order-card">
       <img src="https://via.placeholder.com/80" alt="Product Image" />
       <div class="order-details">
-        <p class="order-status">Order Status: Pending</p>
-        <p class="order-number">Order #UK12345</p>
-        <p class="customer-name">Customer: FirstName LastName</p>
+        <!-- <p class="order-status">Order Status: Pending</p> -->
+        <p class="order-number">Order Status: delivered </p>
+        <p class="customer-name"> Date: 2 February 2026 </p>
       </div>
       <div class="order-actions">
         <button class="btn-view-edit">View & Edit</button>
