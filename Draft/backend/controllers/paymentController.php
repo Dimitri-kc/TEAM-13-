@@ -1,6 +1,8 @@
 
 <?php //paymentController.php - process requests from checkout.html
 
+//STILL HAS OLD CODE FROM BEFORE JSON REFACTOR, NEEDS TO BE UPDATED TO MATCH NEW STRUCTURE
+
 session_start();
 //include database and user models so controller can connect to database and use user methods
 require_once __DIR__ . '/../config/db_connect.php';//state file path
@@ -33,7 +35,7 @@ class PaymentController {
         }
 
         //fetch payment via order id
-        $orderItemModel = new OrderItem();
+        $orderItemModel = new OrderItemsModel();
         if (isset($user_ID)) { //if user logged in
             $orderItems = $orderItemModel->getItemsByOrder($order_ID) ?? [];
         } else {
