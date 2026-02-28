@@ -5,7 +5,7 @@ if (!isset($_SESSION['user_ID'])) {
     header("Location: signin.php");
     exit();
 }
-
+//commented out while testing
 /* if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
 
   // Collects customer info 
@@ -98,8 +98,26 @@ if (!isset($_SESSION['user_ID'])) {
 
     <main class="checkout-layout">
 
-       <aside class="product-column">
-  <?php
+<aside class="product-column" id="basket-items-container">
+    <p>Loading basket...</p>
+
+    <!--BASKET TOTALS-->
+    <div class="basket-totals">
+        <div class="total-row">
+            <span>Subtotal:</span>
+            <span id="subtotal">£0.00</span>
+        </div>
+        <div class="total-row">
+             <span>Delivery:</span>
+            <span id="delivery">£0.00</span>
+        </div>
+        <div class="total-row total">
+            <span><strong>Total:</strong></span>
+            <span id="total"><strong>£0.00</strong></span>
+        </div>
+    </div>
+<!--commented out php while testing-->
+<!--   <?php
     function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, "UTF-8"); }
     function money($n){ return "£" . number_format((float)$n, 2); }
 
@@ -118,12 +136,13 @@ if (!isset($_SESSION['user_ID'])) {
           </div>
         </div>
       <?php endforeach; ?>
-  <?php endif; ?>
+  <?php endif; ?> -->
+  
 </aside>
 
         <section class="details-column">
             
-    <form method="post">
+    <form method="post" id="checkout-form">
   <section class="review-box">
     <h1 class="form-title">YOUR DETAILS</h1>
 
@@ -158,10 +177,10 @@ if (!isset($_SESSION['user_ID'])) {
     <div class="card-fields">
         <h2>Card Details</h2>
 
-        <input type="text" name="card_number" placeholder="Card Number (16 Digits)" maxlength="16" inputmode="numeric" required />
+        <input type="text" name="card_number" placeholder="Card Number (16 Digits)" maxlength="19" inputmode="numeric" required />
         <input type="text" name="expiry" placeholder="Expiry Date (MM/YY)" pattern="(0[1-9]|1[0-2])/[0-9]{2}" required />
         <input type="text" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />
-        <button type="submit" name="place_order" class="checkout-btn">Checkout</button>
+        <button type="submit" name="place_order" class="submit-btn">Submit</button>
 
         <div class="pay-buttons">
             <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
@@ -176,9 +195,9 @@ if (!isset($_SESSION['user_ID'])) {
 
                 <button class="checkout-btn" type="submit" name="place_order" value="1">Checkout</button>
             </div>
-</form>
+    </form>
 
-        </section>
+    </section>
         
     </main>
     <footer class="site-footer">
@@ -224,41 +243,6 @@ if (!isset($_SESSION['user_ID'])) {
     </footer>
     <script src="../javascript/header_footer_script.js"></script>
     <script src="../javascript/global/basketIcon.js"></script>
-
-    <script>
-    document.getElementById('checkout-form').addEventListener('submit', async function(e) {
-    e.preventDefault(); // Prevent default form submission
-    const formData = new FormData(this);
-
-    //combine address fields into one string for BE
-    const address = [formData.get('address1'), formData.get('address2'), formData.get('city'), formData.get('state'), formData.get('postcode')].filter(Boolean).join(', '); 
-    const data = { 
-        action: 'checkout',
-        address: address,
-        card_number: formData.get('card_number'),
-        expiry: formData.get('expiry'),
-        cvv: formData.get('cvv')
-      };
-      //send to BE controller
-      try {
-        const response = await fetch('../backend/routes/checkoutRoutes.php', { //
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        const result = await response.json();
-        if (result.success) {
-            //redirect to confirmation with order ID
-          window.location.href = `order_confirmation.php?order_id=${result.data.order_ID}`; // Redirect on success with order ID
-        } else {
-          alert('Checkout failed: ' + result.message); // Show error message
-          console.error('Stock issues: ', result.data?.stock_issues); // Log stock issues if any > DEBUG
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred while processing your payment. Please try again.');
-      }
-    });
-    </script>
+        
 </body>
 </html>
