@@ -1,8 +1,12 @@
 <?php
 include '../backend/config/db_connect.php';
 session_start();
+if (!isset($_SESSION['user_ID'])) {
+    header("Location: signin.php");
+    exit();
+}
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
+/* if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
 
   // Collects customer info 
   $customer = [
@@ -36,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
 
   header("Location: order_confirmation.php");
   exit;
-}
+} */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -151,19 +155,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
   </section>
 
 
-                    <div class="card-fields">
-                        <h2>Card Details</h2>
+    <div class="card-fields">
+        <h2>Card Details</h2>
 
-                        <input type="text" placeholder="Card Number (16 Digits)" maxlength="16" required />
-                        <input type="text" placeholder="Expiry Date (MM/YY)" required />
-                        <input type="text" placeholder="CVV (3 Digits)" maxlength="3" required />
-                        <button type="submit">Submit</button>
+        <input type="text" name="card_number" placeholder="Card Number (16 Digits)" maxlength="16" inputmode="numeric" required />
+        <input type="text" name="expiry" placeholder="Expiry Date (MM/YY)" pattern="(0[1-9]|1[0-2])/[0-9]{2}" required />
+        <input type="text" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />
+        <button type="submit" name="place_order" class="checkout-btn">Checkout</button>
 
-                        <div class="pay-buttons">
-                            <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
-                            <img src="../images/basket-images/googlepay.png" alt="Google Pay" class="pay-btn">
-                        </div>
-                    </div>
+        <div class="pay-buttons">
+            <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
+            <img src="../images/basket-images/googlepay.png" alt="Google Pay" class="pay-btn">
+        </div>
+    </div>
 
             <div class="delivery-section">
                 <p>Ready for Loft & Living in Your Home?</p>
@@ -220,5 +224,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
     </footer>
     <script src="../javascript/header_footer_script.js"></script>
     <script src="../javascript/global/basketIcon.js"></script>
+
+    <script>
+    document.getElementById('checkout-form').addEventListener('submit', async function(e) {
+    e.preventDefault(); // Prevent default form submission
+    const formData = new FormData(this);
+
+    //combine address fields into one string for BE
+    const address = [formData.get('address1'), formData.get('address2'), formData.get('city'), formData.get('state'), formData.get('postcode')].filter(Boolean).join(', '); 
+    const data = { 
+        action: 'checkout',
+        address: address,
+        card_number: formData.get('card_number'),
+        expiry: formData.get('expiry'),
+        cvv: formData.get('cvv')
+      };
+      //send to BE controller
+      try {
+        const response = await fetch('../backend/routes/checkoutRoutes.php', { //
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const result = await response.json();
+        if (result.success) {
+            //redirect to confirmation with order ID
+          window.location.href = `order_confirmation.php?order_id=${result.data.order_ID}`; // Redirect on success with order ID
+        } else {
+          alert('Checkout failed: ' + result.message); // Show error message
+          console.error('Stock issues: ', result.data?.stock_issues); // Log stock issues if any > DEBUG
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while processing your payment. Please try again.');
+      }
+    });
+    </script>
 </body>
 </html>
