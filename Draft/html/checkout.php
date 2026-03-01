@@ -38,7 +38,7 @@ if (!isset($_SESSION['user_ID'])) {
     "continue_url" => "homepage.php"
   ];
 
-  header("Location: order_confirmation.php");
+  header("Location: orderconfirmation.php");
   exit;
 } */
 ?>

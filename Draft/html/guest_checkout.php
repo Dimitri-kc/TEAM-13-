@@ -100,7 +100,7 @@
                 <p>Your Order will be dispatched using Standard Delivery </p>
                 <p>Estimated Delivery: 9th December 2025</p>
 
-                <button class="checkout-btn" onclick="window.location.href='order_confirmation.php'">Checkout</button>
+                <button class="checkout-btn" onclick="window.location.href='orderconfirmation.php'">Checkout</button>
             </div>
 
         </section>

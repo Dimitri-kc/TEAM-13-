@@ -6,6 +6,7 @@ private $conn;
 
 public function __construct() {
 include_once __DIR__ . '/../config/db_connect.php';
+global $conn;
 $this->conn = $conn;
 }
 

@@ -52,7 +52,7 @@ class PaymentController {
             if(!isset($user_ID)) {
                 clearSessionBasket();//call clear guest basket
             }
-            header ('Location: /order_confirmation.html');//if payment successful direct to confirmation
+            header ('Location: /orderconfirmation.php');//if payment successful direct to confirmation
             exit;
         } else {
             echo 'Payment failed. Please try again.';
@@ -76,5 +76,5 @@ class PaymentController {
 //Notes:
 //For both registered users and guests
 //basket totalS retrieved from basketFunctions.php
-//redirects to order_confirmation.html upon payment success
+//redirects to orderconfirmation.php upon payment success
 ?>

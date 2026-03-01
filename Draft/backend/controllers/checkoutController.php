@@ -140,14 +140,14 @@ class CheckoutController {
 
             //success > mark order status paid
             $this->orderModel->updateOrderStatus((int)$order_ID, 'Paid'); //update order status to paid
-            //deduct stock for each item
+/* COMMENTED OUT UNTIL updateStock() FUNCTION ADDED             //deduct stock for each item
             require_once __DIR__ . '/../models/productModel.php';
             $productModel = new ProductModel();
             foreach ($basketItems as $item) {
                 $pid = (int)($item['product_ID'] ?? 0);
                 $quantity = (int)($item['quantity'] ?? 0);
                 $productModel->updateStock($pid, -$quantity); // Assuming this method exists
-            }
+            } */
             //clear basket in DB & session
             $this->basketModel->clearBasket($basket_ID); //clear basket items in DB
 
