@@ -137,7 +137,7 @@ if (!isset($_SESSION['user_ID'])) {
         </div>
       <?php endforeach; ?>
   <?php endif; ?> -->
-  
+
 </aside>
 
         <section class="details-column">
@@ -243,6 +243,7 @@ if (!isset($_SESSION['user_ID'])) {
     </footer>
     <script src="../javascript/header_footer_script.js"></script>
     <script src="../javascript/global/basketIcon.js"></script>
+    <script src="../javascript/checkout.js"></script>
         
 </body>
 </html>
