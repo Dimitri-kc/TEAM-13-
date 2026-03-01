@@ -11,7 +11,8 @@ class OrderItemsModel {
         $this->conn = $conn;
     }
 
-    // Fetch all items for a specific order
+    //Fetch all items for a specific order
+ 
     public function getItemsByOrder($order_ID) {
 
         $stmt = $this->conn->prepare(
@@ -31,13 +32,13 @@ class OrderItemsModel {
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    // Insert a single order item (NO quantity)
-    public function addOrderItem($order_ID, $product_ID, $unit_price) {
+    //Insert a single order item
+    public function addOrderItem($order_ID, $product_ID, $unit_price, $quantity) {
 
         $stmt = $this->conn->prepare(
             "INSERT INTO order_items 
-             (order_ID, product_ID, unit_price)
-             VALUES (?, ?, ?)"
+             (order_ID, product_ID, unit_price, quantity)
+             VALUES (?, ?, ?, ?)"
         );
 
         if (!$stmt) {
@@ -45,16 +46,18 @@ class OrderItemsModel {
         }
 
         $stmt->bind_param(
-            "iid",
+            "iidi",   // int, int, double, int
             $order_ID,
             $product_ID,
-            $unit_price
+            $unit_price,
+            $quantity
         );
 
         return $stmt->execute();
     }
 
-    // Delete all items for an order (admin)
+    //Delete all items for an order (admin use)
+    
     public function deleteItemsByOrder($order_ID) {
 
         $stmt = $this->conn->prepare(
