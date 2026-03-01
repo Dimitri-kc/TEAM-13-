@@ -7,16 +7,22 @@ const BASKET_API = "/TEAM-13-/Draft/backend/routes/basketRoutes.php"; //centrali
 //fetch curent basket and update counter icon
 async function updateBasketCounter() { //asynchronous as waiting for response from server
     try {
-        const res = await fetch(`${BASKET_API}?action=view`, {
+        const res = await fetch(`${BASKET_API}?action=count`, {
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' }
         });
         const data = await res.json(); //console.log("Basket data:", data);
         if (!data.success) return; //console.error("Failed to fetch basket data:", data.message);
         let count = 0;
-        data.data.items.forEach(item => { 
+        if (data.success && data.data && typeof data.data.count !== 'undefined') {
+            count = parseInt(data.data.count);
+        } else {
+            count = 0; //default to 0 if count not provided by server
+        }
+        
+        /* data.data.items.forEach(item => { 
             count += Number(item.quantity) || 0; //update count with quantity of each item in basket
-        });
+        }); */
 
         if (basketCountEl) basketCountEl.textContent = count;
     } catch (error) {

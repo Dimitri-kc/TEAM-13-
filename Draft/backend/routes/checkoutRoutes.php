@@ -1,4 +1,4 @@
-<?php //checkoutRoutes.php > JSON API for all checkout process
+<?php //checkoutRoutes.php > entry point JSON API for all checkout process
 //Flow: basket > create order + order_items > payment > finalise order
 
 ini_set('display_errors', 1); //t

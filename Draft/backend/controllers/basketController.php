@@ -66,14 +66,14 @@ class BasketController {
             $basket_ID = (int)$basket['basket_ID'];
             $items = $basketModel->fetchBasketItems($basket_ID);
             if (empty($items)) $items = []; //if no items, return empty
-            $this->jsonSuccess(true, "Basket fetched successfully.", ['items' => $items], 200); //200=success
+            $this->jsonSuccess(true, "Basket fetched successfully.", $items, 200); //200=success
             return;
         }
 
         //if GUEST user, fetch session basket items
         $sessionBasket = getSessionBasket(); //get guest basket from session > [product_ID => quantity]
         if (empty($sessionBasket)) {
-            $this->jsonSuccess(true, "Guest basket fetched successfully.", ['items' => []], 200); //200=success
+            $this->jsonSuccess(true, "Guest basket fetched successfully.", [], 200); //200=success
             return; //empty basket
         }
         
@@ -112,7 +112,7 @@ class BasketController {
             removeFromSessionBasket($pid);//remove to prevent orphaned data & user confusuion
             }
         }
-        $this->jsonSuccess(true, "Guest basket fetched successfully.", ['items' => $items], 200);
+        $this->jsonSuccess(true, "Guest basket fetched successfully.", $items, 200);
         return;
     }
 
@@ -275,6 +275,31 @@ class BasketController {
         removeFromSessionBasket($product_ID);
         $this->jsonSuccess(true, "Item removed from guest basket.", null, 200);
 
+    }
+
+    //get count of items in basket for basket icon
+    public function getBasketCount(): void {
+        if (isset($_SESSION['user_ID'])) { //if user logged in, count items in database basket
+            $user_ID = (int)$_SESSION['user_ID'];
+            $basketModel = new Basket();
+            $basket = $basketModel->fetchUserBasket($user_ID); //fetch user basket
+            if (!$basket || empty($basket['basket_ID'])) { //if no basket found, return count 0
+                $this->jsonSuccess(true, "Basket count fetched successfully.", ['count' => 0], 200);
+                return;
+            }
+            $basket_ID = (int)$basket['basket_ID'];
+            $basketItems = $basketModel->fetchBasketItems($basket_ID);
+            $count = 0; //call model method to count items in basket
+            foreach ($basketItems as $item) {
+                $count += (int)($item['quantity'] ?? 0); //sum quantity of each item for total count
+            }
+            $this->jsonSuccess(true, "Basket count fetched successfully.", ['count' => $count], 200);
+            return;
+        }
+        //guest user
+        $sessionBasket = getSessionBasket(); //get guest basket from session > [product_ID => quantity]
+        $count = array_sum($sessionBasket); //sum quantities for total count
+        $this->jsonSuccess(true, "Basket count fetched successfully.", ['count' => $count], 200);
     }
 //Notes: 
 //calls basketModel methods to interact with database
