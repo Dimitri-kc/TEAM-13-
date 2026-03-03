@@ -40,7 +40,7 @@
 
         <nav class="dropdown-panel" id="dropdown-nav">
             <ul class="nav-links">
-                <li><a href="Categories.php">Living Room</a></li>
+                <li><a href="livingroom.php">Living Room</a></li>
                 <li><a href="bathroom.php">Bathroom</a></li>
                 <li><a href="bedroom.php">Bedroom</a></li>
                 <li><a href="office.php">Office</a></li>
@@ -100,7 +100,7 @@
                 <p>Your Order will be dispatched using Standard Delivery </p>
                 <p>Estimated Delivery: 9th December 2025</p>
 
-                <button class="checkout-btn" onclick="window.location.href='order_confirmation.php'">Checkout</button>
+                <button class="checkout-btn" onclick="window.location.href='orderconfirmation.php'">Checkout</button>
             </div>
 
         </section>

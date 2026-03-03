@@ -107,6 +107,12 @@ class Basket {
         return $products; 
     }
 
+    //clear basket items after checkout
+    public function clearBasket($basket_ID) {
+        $stmt = $this->conn->prepare("DELETE FROM basket_items WHERE basket_ID = ?");
+        $stmt->bind_param("i", $basket_ID); //binding parameter for DELETE
+        return $stmt->execute(); //clear all items from specific basket
+    }
 }
 //Notes:
 //communicates with basket table in database

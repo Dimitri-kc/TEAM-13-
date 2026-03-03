@@ -1,8 +1,12 @@
 <?php
 include '../backend/config/db_connect.php';
 session_start();
-
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
+if (!isset($_SESSION['user_ID'])) {
+    header("Location: signin.php");
+    exit();
+}
+//commented out while testing
+/* if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
 
   // Collects customer info 
   $customer = [
@@ -34,9 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
     "continue_url" => "homepage.php"
   ];
 
-  header("Location: order_confirmation.php");
+  header("Location: orderconfirmation.php");
   exit;
-}
+} */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
 
         <nav class="dropdown-panel" id="dropdown-nav">
             <ul class="nav-links">
-                <li><a href="Categories.php">Living Room</a></li>
+                <li><a href="livingroom.php">Living Room</a></li>
                 <li><a href="bathroom.php">Bathroom</a></li>
                 <li><a href="bedroom.php">Bedroom</a></li>
                 <li><a href="office.php">Office</a></li>
@@ -94,8 +98,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
 
     <main class="checkout-layout">
 
-       <aside class="product-column">
-  <?php
+<aside class="product-column" id="basket-items-container">
+    <p>Loading basket...</p>
+
+    <!--BASKET TOTALS-->
+    <div class="basket-totals">
+        <div class="total-row">
+            <span>Subtotal:</span>
+            <span id="subtotal">£0.00</span>
+        </div>
+        <div class="total-row">
+             <span>Delivery:</span>
+            <span id="delivery">£0.00</span>
+        </div>
+        <div class="total-row total">
+            <span><strong>Total:</strong></span>
+            <span id="total"><strong>£0.00</strong></span>
+        </div>
+    </div>
+<!--commented out php while testing-->
+<!--   <?php
     function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, "UTF-8"); }
     function money($n){ return "£" . number_format((float)$n, 2); }
 
@@ -114,12 +136,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
           </div>
         </div>
       <?php endforeach; ?>
-  <?php endif; ?>
+  <?php endif; ?> -->
+
 </aside>
 
         <section class="details-column">
             
-    <form method="post">
+    <form method="post" id="checkout-form">
   <section class="review-box">
     <h1 class="form-title">YOUR DETAILS</h1>
 
@@ -151,19 +174,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
   </section>
 
 
-                    <div class="card-fields">
-                        <h2>Card Details</h2>
+    <div class="card-fields">
+        <h2>Card Details</h2>
 
-                        <input type="text" placeholder="Card Number (16 Digits)" maxlength="16" required />
-                        <input type="text" placeholder="Expiry Date (MM/YY)" required />
-                        <input type="text" placeholder="CVV (3 Digits)" maxlength="3" required />
-                        <button type="submit">Submit</button>
+        <input type="text" name="card_number" placeholder="Card Number (16 Digits)" maxlength="19" inputmode="numeric" required />
+        <input type="text" name="expiry" placeholder="Expiry Date (MM/YY)" pattern="(0[1-9]|1[0-2])/[0-9]{2}" required />
+        <input type="text" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />
+        <button type="submit" name="place_order" class="submit-btn">Submit</button>
 
-                        <div class="pay-buttons">
-                            <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
-                            <img src="../images/basket-images/googlepay.png" alt="Google Pay" class="pay-btn">
-                        </div>
-                    </div>
+        <div class="pay-buttons">
+            <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
+            <img src="../images/basket-images/googlepay.png" alt="Google Pay" class="pay-btn">
+        </div>
+    </div>
 
             <div class="delivery-section">
                 <p>Ready for Loft & Living in Your Home?</p>
@@ -172,9 +195,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
 
                 <button class="checkout-btn" type="submit" name="place_order" value="1">Checkout</button>
             </div>
-</form>
+    </form>
 
-        </section>
+    </section>
         
     </main>
     <footer class="site-footer">
@@ -220,5 +243,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
     </footer>
     <script src="../javascript/header_footer_script.js"></script>
     <script src="../javascript/global/basketIcon.js"></script>
+    <script src="../javascript/checkout.js"></script>
+        
 </body>
 </html>

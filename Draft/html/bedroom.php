@@ -145,9 +145,8 @@
                      </div>
                  </a>
 
-                 <button class="add-to-basket" aria-label="Add to basket">
-                     <img src="../images/add-button-icon.png" alt="Add to basket">
-                 </button>
+                <!--onclick to pass product_ID in function - API fetch details from DB-->
+                <button type="submit" onclick="addToBasket(<?= $row['product_ID'] ?>, 1)" title="Add to basket" style="background: rgba(0,0,0,0.08); border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">+</button>
             </div>
             <?php
         }
@@ -155,6 +154,18 @@
         echo "<p style='padding: 20px;'>No bedroom products found in the database.</p>";
     }
     ?>
+</div>
+
+<!-- Basket -->
+    <div id="basket-modal" class="basket-modal">
+    <div class="basket-modal-content">
+        <p>Item added to basket!</p>
+        <div class="basket-modal-buttons">
+            <button id="go-to-basket">Proceed to Basket</button>
+            <button id="continue-shopping">Continue Shopping</button>
+
+        </div>
+    </div>
 </div>
 
 <footer class="site-footer">
@@ -206,16 +217,5 @@
 <script src="../javascript/header_footer_script.js"></script>
 <script src="../javascript/global/basketIcon.js"></script>
 
-<!-- Basket -->
-    <div id="basket-modal" class="basket-modal">
-    <div class="basket-modal-content">
-        <p>Item added to basket!</p>
-        <div class="basket-modal-buttons">
-            <button id="go-to-basket">Proceed to Basket</button>
-            <button id="continue-shopping">Continue Shopping</button>
-
-        </div>
-    </div>
-</div>
 </body>
 </html>

@@ -1,6 +1,7 @@
-<?php
+<!-- THIS FILE ISN'T BEING CALLED ANYWHERE IN THE CURRENT FLOW, FROM MVP1
+ <?php
 session_start();
-require __DIR__ . "/db.php";
+require __DIR__ . "/../backend/config/db_connect.php";
 
 if (!isset($_SESSION["user_id"])) $_SESSION["user_id"] = 1; // demo
 $userId = (int)$_SESSION["user_id"];
@@ -83,3 +84,4 @@ foreach ($stmt->fetchAll() as $row) $favSet[(int)$row["product_id"]] = true;
   </div>
 </body>
 </html>
+ -->

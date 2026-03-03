@@ -53,9 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         case 'view':
             $basketController->viewBasket(); //return array for both users/guests
             exit;
+            break;
         /* default:
             echo json_encode(['success' => false, 'message' => 'Invalid action', 'data' => null]); //
             break; */
+        case 'count': //for basket icon count
+            $basketController->getBasketCount(); //call countItems method in controller
+            exit;
+            break;
     }
     exit; 
 }

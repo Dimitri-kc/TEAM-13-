@@ -7,7 +7,7 @@ class OrderItemsController {
     private $model;
 
     public function __construct() {
-        $this->model = new OrderItem();
+        $this->model = new OrderItemsModel();  
     }
 
     // INSERT ORDER ITEM
@@ -16,6 +16,7 @@ class OrderItemsController {
         $order_ID   = $_POST['order_ID'] ?? null;
         $product_ID = $_POST['product_ID'] ?? null;
         $unit_price = $_POST['unit_price'] ?? null;
+        $quantity   = $_POST['quantity'] ?? 1;   
 
         if (!$order_ID || !$product_ID || !$unit_price) {
             echo json_encode([
@@ -28,7 +29,8 @@ class OrderItemsController {
         $success = $this->model->addOrderItem(
             $order_ID,
             $product_ID,
-            $unit_price
+            $unit_price,
+            $quantity    
         );
 
         echo json_encode(
