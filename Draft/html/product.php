@@ -96,11 +96,12 @@ if (!$product) {
     <main class="container">
         <section class="product-wrapper">
 
-            <div class="product-image zoom-container">
+                  <div class="product-image zoom-container">
     <div class="wishlist-icon">
         <i class="fa-regular fa-heart"></i>
     </div>
 
+  
     <img 
         id="zoom-image"
         src="../images/<?php echo $product['image']; ?>" 
@@ -369,10 +370,7 @@ addBtn.onclick = () => {
     modal.style.display = "block";
 };
 
-
 </script>
-
-
 </body>
 </html>
 

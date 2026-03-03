@@ -117,4 +117,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!closeBtn) console.warn("Close button not found!");
 
+    const wishlistIcon = document.querySelector(".wishlist-icon");
+
+if (wishlistIcon) {
+    wishlistIcon.addEventListener("click", function (e) {
+        e.stopPropagation(); // 🔥 THIS FIXES IT
+        console.log("Heart clicked");
+    });
+}
 });
