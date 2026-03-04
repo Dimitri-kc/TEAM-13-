@@ -1,0 +1,367 @@
+/* Dark Mode Styles */
+
+html.dark-mode {
+    color-scheme: dark;
+}
+
+/* Body and Background */
+html.dark-mode body {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+/* Header and Navigation */
+html.dark-mode .site-header {
+    background-color: #0d0d0d !important;
+    border-bottom: 1px solid #333 !important;
+}
+
+html.dark-mode .site-header a,
+html.dark-mode .site-header button {
+    color: #e0e0e0;
+}
+
+/* Hero Section */
+html.dark-mode .homepage-hero {
+    background: #0d0d0d;
+}
+
+html.dark-mode .homepage-hero::after {
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.75) 100%);
+}
+
+/* Headings */
+html.dark-mode h1,
+html.dark-mode h2,
+html.dark-mode h3,
+html.dark-mode h4,
+html.dark-mode h5,
+html.dark-mode h6 {
+    color: #e0e0e0;
+}
+
+/* Text */
+html.dark-mode p,
+html.dark-mode span,
+html.dark-mode a {
+    color: #d0d0d0;
+}
+
+html.dark-mode a {
+    color: #8ab4f8;
+}
+
+html.dark-mode a:hover {
+    color: #adc8ff;
+}
+
+/* Cards and Containers */
+html.dark-mode .category,
+html.dark-mode .card,
+html.dark-mode .review-card {
+    background-color: #2a2a2a;
+    border-color: #333;
+}
+
+/* Grey Sections */
+html.dark-mode .grey-section {
+    background-color: #242424;
+}
+
+html.dark-mode .grey-section h2 {
+    color: #e0e0e0;
+}
+
+/* Buttons */
+html.dark-mode .btn,
+html.dark-mode button {
+    background-color: #333;
+    color: #e0e0e0;
+    border-color: #555;
+}
+
+html.dark-mode .btn:hover,
+html.dark-mode button:hover {
+    background-color: #444;
+}
+
+/* Form Elements */
+html.dark-mode input,
+html.dark-mode textarea,
+html.dark-mode select {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    border-color: #444;
+}
+
+html.dark-mode input::placeholder,
+html.dark-mode textarea::placeholder {
+    color: #999;
+}
+
+/* Footer */
+html.dark-mode footer {
+    background-color: #0d0d0d;
+    color: #d0d0d0;
+    border-top: 1px solid #333;
+}
+
+html.dark-mode footer a {
+    color: #d0d0d0;
+}
+
+html.dark-mode footer a:hover {
+    color: #e0e0e0;
+}
+
+/* Category Images - Slightly Darker Tint */
+html.dark-mode .image-box::after {
+    background: rgba(0, 0, 0, 0.65) !important;
+}
+
+/* About Section */
+html.dark-mode .split-page .left {
+    color: #e0e0e0;
+}
+
+html.dark-mode .split-page .left h1 {
+    color: #e0e0e0;
+}
+
+html.dark-mode .split-page .left p {
+    color: #d0d0d0;
+}
+
+/* Split Page Styling */
+html.dark-mode .split-page {
+    background-color: #1a1a1a;
+    border-color: #333;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+}
+
+html.dark-mode .split-page .left,
+html.dark-mode .split-page .right {
+    background-color: #242424;
+    color: #e0e0e0;
+    border-color: #333;
+}
+
+html.dark-mode .split-page .left h1,
+html.dark-mode .split-page .right h1 {
+    color: #e0e0e0;
+}
+
+html.dark-mode .split-page .left p,
+html.dark-mode .split-page .right p {
+    color: #d0d0d0;
+}
+
+/* Dropdown Menu */
+html.dark-mode .profile-dropdown {
+    background-color: #242424 !important;
+    border-color: #444 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+html.dark-mode .profile-dropdown .profile-welcome {
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .profile-dropdown a,
+html.dark-mode .profile-dropdown button {
+    color: #e0e0e0 !important;
+    border-color: #444;
+}
+
+html.dark-mode .profile-dropdown a:hover,
+html.dark-mode .profile-dropdown button:hover {
+    background-color: #333;
+}
+
+html.dark-mode .profile-link {
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .profile-link:hover {
+    color: #8ab4f8 !important;
+}
+
+/* Left Dropdown Panel */
+html.dark-mode .dropdown-panel {
+    background-color: #242424;
+    border-color: #444;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+html.dark-mode .dropdown-panel .nav-links a {
+    color: #e0e0e0;
+}
+
+html.dark-mode .dropdown-panel .nav-links a:hover {
+    color: #8ab4f8;
+}
+
+html.dark-mode .nav-divider {
+    border-color: #444;
+}
+
+html.dark-mode .dropdown-panel .nav-button {
+    background-color: #333;
+    color: #e0e0e0;
+    border-color: #555;
+}
+
+html.dark-mode .dropdown-panel .nav-button:hover {
+    background-color: #444;
+}
+
+/* Scrollbar */
+html.dark-mode ::-webkit-scrollbar {
+    width: 12px;
+}
+
+html.dark-mode ::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+html.dark-mode ::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 6px;
+}
+
+html.dark-mode ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Rating Stars */
+html.dark-mode .star {
+    color: #ffd700;
+}
+
+/* Links in Navigation */
+html.dark-mode .header-links a {
+    color: #e0e0e0;
+}
+
+html.dark-mode .header-links a:hover {
+    color: #8ab4f8;
+}
+
+/* Review Section */
+html.dark-mode .reviews-section {
+    color: #e0e0e0;
+}
+
+html.dark-mode .review-card {
+    background-color: #2a2a2a;
+    border: 1px solid #333;
+}
+
+html.dark-mode .review-card p {
+    color: #d0d0d0;
+}
+
+html.dark-mode .reviews-header {
+    color: #e0e0e0;
+}
+
+html.dark-mode .reviews-header h2 {
+    color: #e0e0e0;
+}
+
+/* Breadcrumb */
+html.dark-mode .breadcrumb,
+html.dark-mode .breadcrumb a {
+    color: #999;
+}
+
+html.dark-mode .breadcrumb a:hover {
+    color: #8ab4f8;
+}
+
+/* Contact Form Section */
+html.dark-mode .form-container {
+    background-color: #242424;
+    border-color: #444;
+}
+
+html.dark-mode .form-container label {
+    color: #e0e0e0;
+}
+
+html.dark-mode .form-container input,
+html.dark-mode .form-container textarea {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    border-color: #444;
+}
+
+html.dark-mode .form-container input::placeholder,
+html.dark-mode .form-container textarea::placeholder {
+    color: #888;
+}
+
+html.dark-mode .form-container input:focus,
+html.dark-mode .form-container textarea:focus {
+    border-color: #8ab4f8;
+    outline: none;
+}
+
+html.dark-mode .form-container button {
+    background-color: #444;
+    color: #e0e0e0;
+}
+
+html.dark-mode .form-container button:hover {
+    background-color: #555;
+}
+
+html.dark-mode .form-container .required {
+    color: #aaa;
+}
+
+/* Main Content Section */
+html.dark-mode main {
+    background-color: #1a1a1a;
+}
+
+html.dark-mode section {
+    background-color: #1a1a1a;
+}
+
+/* Page Title Heading */
+html.dark-mode .title {
+    color: #e0e0e0;
+}
+
+/* Modal and Overlay Styles */
+html.dark-mode .modal {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+html.dark-mode .modal-content {
+    background-color: #242424;
+    color: #e0e0e0;
+    border-color: #333;
+}
+
+/* Navigation Buttons */
+html.dark-mode .nav-btn {
+    background-color: #333;
+    color: #e0e0e0;
+    border-color: #555;
+}
+
+html.dark-mode .nav-btn:hover {
+    background-color: #444;
+}
+
+html.dark-mode .add-review-btn {
+    background-color: #333;
+    color: #e0e0e0;
+    border-color: #555;
+}
+
+html.dark-mode .add-review-btn:hover {
+    background-color: #444;
+}
