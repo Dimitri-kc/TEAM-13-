@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Order History Details | Admin</title>
+
+<link rel="stylesheet" href="../css/header_footer_style.css">
+<link rel="stylesheet" href="../css/category-css/livingroom-base.css">
+<link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
+<link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">
+<link rel="stylesheet" href="../css/category-css/livingroom-page.css">
+
+<style>
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 40px;
+  color: #1a1a1a;
+}
+
+/* Page layout */
+.container {
+  display: flex;
+  gap: 40px;
+  max-width: 1000px;
+  margin: 40px auto;
+  align-items: flex-start;
+}
+
+/* Left card */
+.left-section {
+  flex: 1;
+  padding: 28px;
+  border-radius: 14px;
+  border: 1px solid #e6e6e6;
+}
+
+/* Right card */
+.right-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f5f5f5;
+  padding: 32px;
+  border-radius: 14px;
+  border: 1px solid #e0e0e0;
+}
+
+/* Order image */
+.order-image {
+  width: 300px;
+  height: 300px;
+  background-color: #d3d3d3;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+/* Form layout: label + field (used in edit mode) */
+.form-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  align-items: center;
+  margin-bottom: 22px;
+  gap: 16px;
+}
+
+.form-row label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #333;
+  text-align: right;
+}
+
+.form-row input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #cfcfcf;
+  background: #fff;
+  font-size: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-row input:focus {
+  border-color: #2C2C2C;
+  box-shadow: 0 0 0 3px rgba(44,44,44,0.15);
+  outline: none;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  background-color: #2C2C2C;
+  color: white;
+  border: none;
+  padding: 14px 0;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background-color 0.25s, transform 0.15s;
+}
+
+button:hover {
+  background-color: #000;
+  transform: translateY(-1px);
+}
+
+/* -----------------------------
+   SHIPPING INFO (matches screenshot)
+   ----------------------------- */
+
+/* Title like screenshot */
+.shipping-address-title{
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0 0 12px 0;
+  color: #111;
+}
+
+/* View mode: stacked lines */
+.shipping-details.view-mode .form-row{
+  grid-template-columns: 1fr;  /* single column */
+  gap: 0;
+  margin-bottom: 10px;
+}
+
+.shipping-details.view-mode label{
+  display: none;
+}
+
+/* In view mode show plain text lines */
+.display-line{
+  font-weight: 700;
+  font-size: 15px;
+  color: #111;
+  line-height: 1.4;
+}
+
+/* Hide inputs in view mode */
+.shipping-details.view-mode input{
+  display: none;
+}
+
+/* Edit mode: hide the plain lines and show your normal inputs */
+.shipping-details.editing .display-line{
+  display: none;
+}
+.shipping-details.editing input{
+  display: block;
+}
+
+/* Responsive layout */
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row label {
+    text-align: left;
+  }
+
+  .right-section,
+  .left-section {
+    padding: 22px;
+  }
+
+  .order-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="header-inner">
+    <button class="menu-btn" id="menu-toggle-btn">
+      <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img" />
+    </button>
+
+    <div class="logo-wrapper">
+      <a href="homepage.php">
+        <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo" />
+      </a>
+    </div>
+
+    <div class="header-actions">
+      <a href="favourites.php">
+        <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon" />
+      </a>
+      <a href="signin.php">
+        <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon" />
+      </a>
+      <a href="basket.php" class="basket-icon">
+        <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon" />
+        <span id="basket-count">0</span>
+      </a>
+    </div>
+  </div>
+
+  <nav class="dropdown-panel" id="dropdown-nav">
+    <ul class="nav-links">
+      <li><a href="livingroom.php">Living Room</a></li>
+      <li><a href="bathroom.php">Bathroom</a></li>
+      <li><a href="bedroom.php">Bedroom</a></li>
+      <li><a href="office.php">Office</a></li>
+      <li><a href="kitchen.php">Kitchen</a></li>
+      <li class="nav-divider"><a href="signin.php">My Account</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="left-section">
+    <div class="order-info">
+      <h2>Order #UK12345</h2>
+      <p>Customer: FirstName LastName</p>
+      <p>Status: Delivered</p>
+      <p>Date: 2026-02-27</p>
+    </div>
+    <div class="order-image" aria-label="Order product image placeholder"></div>
+  </div>
+
+  <div class="right-section">
+    <!-- ONLY THIS SECTION CHANGED TO MATCH SCREENSHOT -->
+    <h3 class="shipping-address-title">Shipping Address:</h3>
+
+    <form id="shipping-form" class="shipping-details view-mode" method="POST" action="update-order.php">
+
+      <div class="form-row">
+        <label for="full_name">Full Name:</label>
+        <div class="display-line" id="display-full-name">FirstName LastName</div>
+        <input type="text" id="full_name" name="full_name" value="FirstName LastName" readonly>
+      </div>
+
+      <div class="form-row">
+        <label for="address1">Address Line 1:</label>
+        <div class="display-line" id="display-address1">Address Line 1</div>
+        <input type="text" id="address1" name="address1" value="Address Line 1" readonly>
+      </div>
+
+      <div class="form-row">
+        <label for="address2">Address Line 2:</label>
+        <div class="display-line" id="display-address2">Address Line 2</div>
+        <input type="text" id="address2" name="address2" value="Address Line 2" readonly>
+      </div>
+
+      <div class="form-row">
+        <label for="postcode">Postcode:</label>
+        <div class="display-line" id="display-postcode">Postcode</div>
+        <input type="text" id="postcode" name="postcode" value="Postcode" readonly>
+      </div>
+
+      <div class="form-row">
+        <label for="county">County:</label>
+        <div class="display-line" id="display-county">County</div>
+        <input type="text" id="county" name="county" value="County" readonly>
+      </div>
+
+      <div class="form-row">
+        <label for="country">Country:</label>
+        <div class="display-line" id="display-country">Country</div>
+        <input type="text" id="country" name="country" value="Country" readonly>
+      </div>
+
+      <button type="submit" id="save-btn" style="display:none;">Save Changes</button>
+    </form>
+    <!-- END SHIPPING SECTION -->
+
+    <button type="button" id="edit-btn">Amend Details (Editing Mode)</button>
+    <button type="button">Confirm Shipment Processing</button>
+    <button type="button">Cancel Entire Order</button>
+  </div>
+</div>
+
+<script>
+const editBtn = document.getElementById('edit-btn');
+const saveBtn = document.getElementById('save-btn');
+const form = document.getElementById('shipping-form');
+
+// Switch into editing mode
+editBtn.addEventListener('click', () => {
+  form.classList.remove('view-mode');
+  form.classList.add('editing');
+
+  // Make all input fields editable
+  form.querySelectorAll('input').forEach(input => input.removeAttribute('readonly'));
+
+  // Show the Save button
+  saveBtn.style.display = 'block';
+
+  // Hide edit button (optional)
+  editBtn.style.display = 'none';
+});
+
+// Optional: keep the display lines in sync if you ever switch back to view mode later
+form.addEventListener('input', () => {
+  const map = [
+    ['full_name', 'display-full-name'],
+    ['address1', 'display-address1'],
+    ['address2', 'display-address2'],
+    ['postcode', 'display-postcode'],
+    ['county', 'display-county'],
+    ['country', 'display-country'],
+  ];
+
+  map.forEach(([inputId, displayId]) => {
+    const input = document.getElementById(inputId);
+    const display = document.getElementById(displayId);
+    if (input && display) display.textContent = input.value;
+  });
+});
+</script>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-section social-links">
+      <a href="#">
+        <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon" />
+      </a>
+      <a href="#">
+        <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon" />
+      </a>
+    </div>
+
+    <div class="footer-section">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="homepage.php">Homepage</a></li>
+        <li><a href="signin.php">My Account</a></li>
+        <li><a href="favourites.php">Favourites</a></li>
+        <li><a href="basket.php">Basket</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>Categories</h4>
+      <ul>
+        <li><a href="livingroom.php">Living Room</a></li>
+        <li><a href="office.php">Offices</a></li>
+        <li><a href="kitchen.php">Kitchen</a></li>
+        <li><a href="bathroom.php">Bathrooms</a></li>
+        <li><a href="bedroom.php">Bedrooms</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>More...</h4>
+      <ul>
+        <li><a href="contact.php">Contact Us</a></li>
+        <li><a href="about.php">About Us</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
