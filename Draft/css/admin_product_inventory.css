@@ -105,3 +105,75 @@ body {
 .remove-btn:hover {
     background: #b02a37;
 }
+
+/* Category dropdown filter */
+
+/* .filter-wrapper {
+    margin-bottom: 25px; /* or whatever spacing you want */
+/* } */ */
+
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.select-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #333;
+    pointer-events: none;
+}
+
+#category-filter {
+    padding: 8px 12px;
+    padding-right: 32px; /* space for arrow */
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    appearance: none;
+}
+
+/* Search bar */
+#search-bar {
+    padding: 8px 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    outline: none;
+    transition: 0.2s ease;
+}
+
+#search-bar:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0,123,255,0.4);
+}
+
+.filter-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+@media screen and (max-width: 600px) {
+    .filter-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    #search-bar {
+        width: 100%;
+    }
+}

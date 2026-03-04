@@ -13,17 +13,28 @@
     <h1 class="title">Product Inventory</h1>
     <p class="subtitle">View current product inventory, edit product information and add more products </p>
 
+<div class="filter-wrapper">
+
     <label>Category:</label>
-<select id="category-filter" name="category_id" required>
-    <!-- <option value="">-- Select Category --</option> -->
-     <option value="">All Items</option>
-    <option value="1">Living Room</option>
-    <option value="2">Kitchen</option>
-    <option value="3">Office</option>
-    <option value="4">Bathroom</option>
-    <option value="5">Bedroom</option>
-</select>
-    
+    <div class="select-wrapper">
+        <select id="category-filter" name="category_id">
+            <option value="">All Items</option>
+            <option value="1">Living Room</option>
+            <option value="2">Kitchen</option>
+            <option value="3">Office</option>
+            <option value="4">Bathroom</option>
+            <option value="5">Bedroom</option>
+        </select>
+    </div>
+
+    <input 
+        type="text" 
+        id="search-bar" 
+        placeholder="Search products…" 
+        autocomplete="off"
+    >
+</div>
+
 <!-- <label for="category-filter">Filter by Category:</label>
 <select id="category-filter">
     <option value="all">All Categories</option>
@@ -122,6 +133,16 @@ function removeProduct(productID) {
         }
     });
 }
+document.getElementById("search-bar").addEventListener("input", function () {
+    const query = this.value.toLowerCase();
+    const products = document.querySelectorAll(".product-card");
+
+    products.forEach(card => {
+        const name = card.querySelector(".product-info p").textContent.toLowerCase();
+        card.style.display = name.includes(query) ? "flex" : "none";
+    });
+});
+
 </script>
 
 </body>
