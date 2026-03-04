@@ -45,6 +45,33 @@ body {
     margin-top: -20px;  /* pulls it closer to title */
     margin-bottom: 25px;
 }
+/* Add New Product Card */
+.add-product-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f5f5;       /* soft neutral grey */
+    cursor: pointer;
+    font-weight: bold;
+    border: 2px dashed #b0b0b0; /* neutral dashed border */
+    color: #333333;             /* dark grey text */
+    font-size: 18px;
+    transition: 0.2s ease;
+    min-height: 150px;
+    margin-bottom: 20px;        /* space before products */
+}
+
+/* Hover effect */
+.add-product-card:hover {
+    background: #e0e0e0;        /* slightly darker neutral */
+    border-color: #999999;      /* subtle darker border */
+}
+
+/* Inner text */
+.add-product-inner {
+    text-align: center;
+}
+
 /* ADMIN BUTTONS */
 .admin-buttons {
     margin-top: 10px;

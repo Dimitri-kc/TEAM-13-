@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<script>
+<!-- <script>
 fetch('admin_get_products.php')
 .then(response => response.json())
 .then(data => {
@@ -54,6 +54,80 @@ fetch('admin_get_products.php')
 })
 .catch(error => console.error('Error loading products:', error));
 
+function viewEditProduct(productID) {
+    window.location.href = `admin_edit_product.php?id=${productID}`;
+}
+
+function removeProduct(productID) {
+    if (!confirm("Are you sure you want to remove this product?")) return;
+
+    fetch('admin_delete_product.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `product_ID=${productID}`
+    })
+    .then(res => res.text())
+    .then(response => {
+        if (response.trim() === "success") {
+            location.reload();
+        } else {
+            alert("Error deleting product");
+        }
+    });
+}
+
+</script> -->
+
+<script>
+fetch('admin_get_products.php')
+.then(response => response.json())
+.then(data => {
+    const container = document.getElementById('product-container');
+
+    // Add "Add New Product" card at the top
+    const addCard = document.createElement('div');
+    addCard.classList.add('product-card', 'add-product-card');
+
+    addCard.innerHTML = `
+        <div class="add-product-inner">
+            <p>+ Add New Product</p>
+        </div>
+    `;
+
+    addCard.addEventListener('click', () => {
+        window.location.href = 'admin_add_product.php';
+    });
+
+    container.appendChild(addCard); // Add card first
+
+    // Add product cards after
+    data.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.classList.add('product-card');
+
+        productCard.innerHTML = `
+            <img src="../images/${product.image}" alt="${product.name}">
+            <div class="product-info">
+                <p><strong>Product #:</strong> ${product.product_ID}</p>
+                <p><strong>Price:</strong> £${product.price}</p>
+                <p><strong>Stock Available:</strong> ${product.stock}</p>
+
+                <div class="admin-buttons">
+                    <button class="view-btn" onclick="viewEditProduct(${product.product_ID})">
+                        View & Edit
+                    </button>
+                    <button class="remove-btn" onclick="removeProduct(${product.product_ID})">
+                        Remove
+                    </button>
+                </div>
+            </div>
+        `;
+
+        container.appendChild(productCard);
+    });
+})
+.catch(error => console.error('Error loading products:', error));
+// Functions for buttons
 function viewEditProduct(productID) {
     window.location.href = `admin_edit_product.php?id=${productID}`;
 }
