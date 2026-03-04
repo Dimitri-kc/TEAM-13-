@@ -18,7 +18,6 @@ body {
   color: #1a1a1a;
 }
 
-/* Page layout */
 .container {
   display: flex;
   gap: 40px;
@@ -27,7 +26,6 @@ body {
   align-items: flex-start;
 }
 
-/* Left card */
 .left-section {
   flex: 1;
   padding: 28px;
@@ -35,7 +33,6 @@ body {
   border: 1px solid #e6e6e6;
 }
 
-/* Right card */
 .right-section {
   flex: 1;
   display: flex;
@@ -46,7 +43,6 @@ body {
   border: 1px solid #e0e0e0;
 }
 
-/* Order image */
 .order-image {
   width: 300px;
   height: 300px;
@@ -55,7 +51,6 @@ body {
   margin-top: 20px;
 }
 
-/* Form layout: label + field (used in edit mode) */
 .form-row {
   display: grid;
   grid-template-columns: 160px 1fr;
@@ -87,31 +82,6 @@ body {
   outline: none;
 }
 
-/* Buttons */
-button {
-  width: 100%;
-  background-color: #2C2C2C;
-  color: white;
-  border: none;
-  padding: 14px 0;
-  margin-bottom: 14px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 15px;
-  transition: background-color 0.25s, transform 0.15s;
-}
-
-button:hover {
-  background-color: #000;
-  transform: translateY(-1px);
-}
-
-/* -----------------------------
-   SHIPPING INFO (matches screenshot)
-   ----------------------------- */
-
-/* Title like screenshot */
 .shipping-address-title{
   font-size: 22px;
   font-weight: 800;
@@ -119,9 +89,8 @@ button:hover {
   color: #111;
 }
 
-/* View mode: stacked lines */
 .shipping-details.view-mode .form-row{
-  grid-template-columns: 1fr;  /* single column */
+  grid-template-columns: 1fr;
   gap: 0;
   margin-bottom: 10px;
 }
@@ -130,7 +99,6 @@ button:hover {
   display: none;
 }
 
-/* In view mode show plain text lines */
 .display-line{
   font-weight: 700;
   font-size: 15px;
@@ -138,20 +106,18 @@ button:hover {
   line-height: 1.4;
 }
 
-/* Hide inputs in view mode */
 .shipping-details.view-mode input{
   display: none;
 }
 
-/* Edit mode: hide the plain lines and show your normal inputs */
 .shipping-details.editing .display-line{
   display: none;
 }
+
 .shipping-details.editing input{
   display: block;
 }
 
-/* Responsive layout */
 @media (max-width: 900px) {
   .container {
     flex-direction: column;
@@ -182,7 +148,6 @@ button:hover {
 
 <body>
 
-<!-- Header -->
 <header class="site-header">
   <div class="header-inner">
     <button class="menu-btn" id="menu-toggle-btn">
@@ -233,97 +198,38 @@ button:hover {
   </div>
 
   <div class="right-section">
-    <!-- ONLY THIS SECTION CHANGED TO MATCH SCREENSHOT -->
     <h3 class="shipping-address-title">Shipping Address:</h3>
 
-    <form id="shipping-form" class="shipping-details view-mode" method="POST" action="update-order.php">
+    <form class="shipping-details view-mode">
 
       <div class="form-row">
-        <label for="full_name">Full Name:</label>
-        <div class="display-line" id="display-full-name">FirstName LastName</div>
-        <input type="text" id="full_name" name="full_name" value="FirstName LastName" readonly>
+        <div class="display-line">FirstName LastName</div>
       </div>
 
       <div class="form-row">
-        <label for="address1">Address Line 1:</label>
-        <div class="display-line" id="display-address1">Address Line 1</div>
-        <input type="text" id="address1" name="address1" value="Address Line 1" readonly>
+        <div class="display-line">Address Line 1</div>
       </div>
 
       <div class="form-row">
-        <label for="address2">Address Line 2:</label>
-        <div class="display-line" id="display-address2">Address Line 2</div>
-        <input type="text" id="address2" name="address2" value="Address Line 2" readonly>
+        <div class="display-line">Address Line 2</div>
       </div>
 
       <div class="form-row">
-        <label for="postcode">Postcode:</label>
-        <div class="display-line" id="display-postcode">Postcode</div>
-        <input type="text" id="postcode" name="postcode" value="Postcode" readonly>
+        <div class="display-line">Postcode</div>
       </div>
 
       <div class="form-row">
-        <label for="county">County:</label>
-        <div class="display-line" id="display-county">County</div>
-        <input type="text" id="county" name="county" value="County" readonly>
+        <div class="display-line">County</div>
       </div>
 
       <div class="form-row">
-        <label for="country">Country:</label>
-        <div class="display-line" id="display-country">Country</div>
-        <input type="text" id="country" name="country" value="Country" readonly>
+        <div class="display-line">Country</div>
       </div>
 
-      <button type="submit" id="save-btn" style="display:none;">Save Changes</button>
     </form>
-    <!-- END SHIPPING SECTION -->
-
-    <button type="button" id="edit-btn">Amend Details (Editing Mode)</button>
-    <button type="button">Confirm Shipment Processing</button>
-    <button type="button">Cancel Entire Order</button>
   </div>
 </div>
 
-<script>
-const editBtn = document.getElementById('edit-btn');
-const saveBtn = document.getElementById('save-btn');
-const form = document.getElementById('shipping-form');
-
-// Switch into editing mode
-editBtn.addEventListener('click', () => {
-  form.classList.remove('view-mode');
-  form.classList.add('editing');
-
-  // Make all input fields editable
-  form.querySelectorAll('input').forEach(input => input.removeAttribute('readonly'));
-
-  // Show the Save button
-  saveBtn.style.display = 'block';
-
-  // Hide edit button (optional)
-  editBtn.style.display = 'none';
-});
-
-// Optional: keep the display lines in sync if you ever switch back to view mode later
-form.addEventListener('input', () => {
-  const map = [
-    ['full_name', 'display-full-name'],
-    ['address1', 'display-address1'],
-    ['address2', 'display-address2'],
-    ['postcode', 'display-postcode'],
-    ['county', 'display-county'],
-    ['country', 'display-country'],
-  ];
-
-  map.forEach(([inputId, displayId]) => {
-    const input = document.getElementById(inputId);
-    const display = document.getElementById(displayId);
-    if (input && display) display.textContent = input.value;
-  });
-});
-</script>
-
-<!-- Footer -->
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-section social-links">
