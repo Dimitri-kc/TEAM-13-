@@ -25,6 +25,18 @@ body {
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* <-- add this line */
+}
+
+/* Hover effect */
+.product-card:hover {
+    transform: translateY(-2px) scale(1.01); /* tiny lift + minimal zoom */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* very soft shadow */
+    transition: transform 0.25s ease, box-shadow 0.25s ease; /* smooth, quick */
+}
+/* Inner text */
+.add-product-inner {
+    text-align: center;
 }
 
 .product-card img {
@@ -46,31 +58,21 @@ body {
     margin-bottom: 25px;
 }
 /* Add New Product Card */
-.add-product-card {
+/* .add-product-card {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f5f5f5;       /* soft neutral grey */
+    background: #f5f5f5;  
     cursor: pointer;
     font-weight: bold;
-    border: 2px dashed #b0b0b0; /* neutral dashed border */
-    color: #333333;             /* dark grey text */
+    border: 2px dashed #b0b0b0; 
+    color: #333333;            
     font-size: 18px;
     transition: 0.2s ease;
     min-height: 150px;
-    margin-bottom: 20px;        /* space before products */
-}
+    margin-bottom: 20px;      
+} */
 
-/* Hover effect */
-.add-product-card:hover {
-    background: #e0e0e0;        /* slightly darker neutral */
-    border-color: #999999;      /* subtle darker border */
-}
-
-/* Inner text */
-.add-product-inner {
-    text-align: center;
-}
 
 /* ADMIN BUTTONS */
 .admin-buttons {
@@ -99,39 +101,22 @@ body {
 }
 
 .view-btn:hover {
-    background: #259131;
+    background: #6f9a74;
 }
 
 .remove-btn:hover {
-    background: #b02a37;
+    background: #e04454;
 }
 
 /* Category dropdown filter */
-
-/* .filter-wrapper {
-    margin-bottom: 25px; /* or whatever spacing you want */
-/* } */ */
-
 .select-wrapper {
     position: relative;
     display: inline-block;
-}
-
-.select-wrapper::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 12px;
-    transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 6px solid #333;
-    pointer-events: none;
+    width: 100%; /* forces wrapper to shrink to select width */
 }
 
 #category-filter {
+    width: 180px; /* FIX: defines the actual width of the dropdown */
     padding: 8px 12px;
     padding-right: 32px; /* space for arrow */
     font-size: 15px;
@@ -144,7 +129,23 @@ body {
     appearance: none;
 }
 
-/* Search bar */
+.select-wrapper::after {
+    /* content: ""; */
+    position: absolute;
+    top: 20%;
+    /* right: 250px; now aligns perfectly */
+    left:270px;
+    margin-top:10px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #333;
+    pointer-events: none;
+}
+
+
 #search-bar {
     padding: 8px 12px;
     font-size: 15px;
@@ -153,7 +154,7 @@ body {
     background-color: #fff;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     outline: none;
-    transition: 0.2s ease;
+    flex: 1; /* makes search bar expand nicely */
 }
 
 #search-bar:focus {
@@ -161,12 +162,12 @@ body {
     box-shadow: 0 0 5px rgba(0,123,255,0.4);
 }
 
-.filter-wrapper {
+/* .filter-wrapper {
     display: flex;
     align-items: center;
     gap: 15px;
     margin-bottom: 25px;
-}
+} */
 
 @media screen and (max-width: 600px) {
     .filter-wrapper {
@@ -176,4 +177,52 @@ body {
     #search-bar {
         width: 100%;
     }
+}
+
+.product-name {
+    font-weight: bold;
+}
+#add-product-btn {
+    margin-left: 15px;       /* space from category filter */
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #2c2c2c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#add-product-btn:hover {
+    background-color: #6f9a74;
+}
+.filter-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap; /* allows responsive wrapping if screen is small */
+}
+
+.select-wrapper {
+    display: inline-block;
+    width: auto; /* let it shrink to content instead of 100% */
+}
+
+#category-filter {
+    width: 180px; /* keep dropdown width fixed */
+}
+
+#add-product-btn {
+    margin-left: 0; /* no forced margin needed, gap handles spacing */
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #2c2c2c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    white-space: nowrap; /* prevents text wrapping */
 }

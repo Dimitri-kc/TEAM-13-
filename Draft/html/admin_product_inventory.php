@@ -14,8 +14,14 @@
     <p class="subtitle">View current product inventory, edit product information and add more products </p>
 
 <div class="filter-wrapper">
+        <input 
+        type="text" 
+        id="search-bar" 
+        placeholder="Search products…" 
+        autocomplete="off">
+        
+ <label>Category:</label>
 
-    <label>Category:</label>
     <div class="select-wrapper">
         <select id="category-filter" name="category_id">
             <option value="">All Items</option>
@@ -27,19 +33,11 @@
         </select>
     </div>
 
-    <input 
-        type="text" 
-        id="search-bar" 
-        placeholder="Search products…" 
-        autocomplete="off"
-    >
+      <!-- <button id="add-product-btn">Add New Product</button> -->
+    <button id="add-product-btn" onclick="window.location.href='admin_add_product.php'">
+        + Add New Product
+    </button>
 </div>
-
-<!-- <label for="category-filter">Filter by Category:</label>
-<select id="category-filter">
-    <option value="all">All Categories</option>
-</select> -->
-
 
     <div id="product-container" class="product-grid">
         <!-- Products will load here automatically -->
@@ -58,17 +56,17 @@ fetch('admin_get_products.php')
         container.innerHTML = ''; // clear previous cards
 
         // Add "Add New Product" card first
-        const addCard = document.createElement('div');
-        addCard.classList.add('product-card', 'add-product-card');
-        addCard.innerHTML = `
-            <div class="add-product-inner">
-                <p>+ Add New Product</p>
-            </div>
-        `;
-        addCard.addEventListener('click', () => {
-            window.location.href = 'admin_add_product.php';
-        });
-        container.appendChild(addCard);
+        // const addCard = document.createElement('div');
+        // addCard.classList.add('product-card', 'add-product-card');
+        // addCard.innerHTML = `
+        //     <div class="add-product-inner">
+        //         <p>+ Add New Product</p>
+        //     </div>
+        // `;
+        // addCard.addEventListener('click', () => {
+        //     window.location.href = 'admin_add_product.php';
+        // });
+        // container.appendChild(addCard);
 
         // Add product cards
         filteredData.forEach(product => {
@@ -77,10 +75,10 @@ fetch('admin_get_products.php')
             productCard.innerHTML = `
                 <img src="../images/${product.image}" alt="${product.name}">
                 <div class="product-info">
-                    <p><strong>Product #:</strong> ${product.product_ID}</p>
-                    <p><strong>Price:</strong> £${product.price}</p>
-                    <p><strong>Stock Available:</strong> ${product.stock}</p>
-
+                <p class="product-name">${product.name}</p>
+                        <p>Product #: ${product.product_ID}</p>
+                        <p>Price: £${product.price}</p>
+                        <p>Stock Available: ${product.stock}</p>
                     <div class="admin-buttons">
                         <button class="view-btn" onclick="viewEditProduct(${product.product_ID})">
                             View & Edit
@@ -109,6 +107,15 @@ categoryFilter.addEventListener('change', () => {
         renderProducts(filteredData); // Show only selected category
     }
 });
+document.getElementById("search-bar").addEventListener("input", function () {
+    const query = this.value.toLowerCase();
+
+    const filtered = data.filter(product =>
+        product.name.toLowerCase().includes(query)
+    );
+
+    renderProducts(filtered);
+});
 })
 .catch(error => console.error('Error loading products:', error));
 // Functions for buttons
@@ -134,15 +141,23 @@ function removeProduct(productID) {
     });
 }
 document.getElementById("search-bar").addEventListener("input", function () {
-    const query = this.value.toLowerCase();
-    const products = document.querySelectorAll(".product-card");
+    const query = this.value.toLowerCase(); // Get the search query, converting it to lowercase
+    const products = document.querySelectorAll(".product-card"); // Get all product cards
 
     products.forEach(card => {
-        const name = card.querySelector(".product-info p").textContent.toLowerCase();
-        card.style.display = name.includes(query) ? "flex" : "none";
+        const productName = card.querySelector(".product-info p strong").nextElementSibling.textContent.toLowerCase(); // Get the product name from the product card
+
+        // Check if the product name includes the query text
+        if (productName.includes(query)) {
+            card.style.display = "flex"; // Show the product card
+        } else {
+            card.style.display = "none"; // Hide the product card
+        }
     });
 });
-
+document.getElementById('add-product-btn').addEventListener('click', () => {
+    window.location.href = 'admin_add_product.php';
+});
 </script>
 
 </body>
