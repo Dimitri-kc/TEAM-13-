@@ -74,7 +74,7 @@ function renderProducts(products) {
         const button = div.querySelector('.add-to-basket');
         button.addEventListener('click', (event) => {
             event.stopPropagation();
-            addToBasket(button);
+            addToBasket(product.product_ID, 1, button);
         });
       });
       }
@@ -84,7 +84,7 @@ function renderProducts(products) {
 // fetch(`https://cs2team13.cs2410-web01pvm.aston.ac.uk/TEAM-13-/Draft/backend/routes/productRoute.php?action=byCategory&category=${categoryName}`)
 // fetch(`../php/productRoute.php?action=byCategory&category=${filters.category}`)
 
-const basketCountEl = document.getElementById('basket-count');
+/* const basketCountEl = document.getElementById('basket-count');
 
 let basketCount = parseInt(localStorage.getItem('basketCount')) || 0;
 if (basketCountEl) basketCountEl.textContent = basketCount;
@@ -105,18 +105,6 @@ function addToBasket(button) {
 
 }
 
-// if (continueBtn) {
-//     continueBtn.addEventListener('click', () => {
-//         basketModal.style.display = 'none'; // closes modal
-//     });
-// }
-
-// if (goToBasketBtn) {
-//     goToBasketBtn.addEventListener('click', () => {
-//         window.location.href = 'basket.html'; // redirects to the basket
-//     });
-// }
-
 if (continueBtn) {
     continueBtn.addEventListener('click', () => {
         basketModal.style.display = 'none';
@@ -125,9 +113,9 @@ if (continueBtn) {
 
 if (goToBasketBtn) {
     goToBasketBtn.addEventListener('click', () => {
-        window.location.href = 'basket.html';
+        window.location.href = 'basket.php';
     });
-}
+} */
 
 document.addEventListener("click", function (e) {
   const favBtn = e.target.closest(".fav-icon-btn");

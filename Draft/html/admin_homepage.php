@@ -1,7 +1,11 @@
 <?php
 session_start();
- include '../backend/config/db_connect.php';
-  ?>
+include '../backend/config/db_connect.php';
+
+// Check if user is logged in and get their name for the header
+$isLoggedIn = !empty($_SESSION['user_ID']);
+$headerName = $_SESSION['name'] ?? 'Guest';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,8 +20,82 @@ session_start();
     <link rel="stylesheet" href="../css/homepage-css/homepage.css">
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
+
+    <style>
+        /* Profile dropdown (header) */
+        .profile-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .profile-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            width: 260px;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            padding: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: none;
+            z-index: 3000;
+        }
+
+        .profile-dropdown.open {
+            display: block;
+        }
+
+        .profile-welcome {
+            font-size: 14px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 14px;
+        }
+
+        .profile-link {
+            display: block;
+            font-size: 14px;
+            color: #444;
+            padding: 10px 0;
+        }
+
+        .profile-link + .profile-link {
+            border-top: 1px solid #eee;
+        }
+
+        .profile-link-danger {
+            color: #b00020;
+        }
+
+        /* Top view bar */
+        #view-bar {
+            height: 28px;
+            background: #f3f3f3;
+            color: #444;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 600;
+        }
+    </style>
+
 </head>
 <body>
+
+    <div id="view-bar">Viewing as customer</div>
 
     <header class="site-header">
         <div class="header-inner">
@@ -35,11 +113,28 @@ session_start();
                 <a href="favourites.php">
                     <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
                 </a>
-                <a href="signin.php">
-                    <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
-                </a>
-                <a href="basket.php">
+                <div class="profile-wrapper" id="profile-wrapper">
+                    <button class="profile-btn" id="profile-toggle-btn" type="button" aria-haspopup="true" aria-expanded="false">
+                        <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
+                    </button>
+
+                    <div class="profile-dropdown" id="profile-dropdown">
+                        <?php if ($isLoggedIn): ?>
+                            <div class="profile-welcome">Welcome, <?php echo htmlspecialchars($headerName); ?></div>
+                        <?php endif; ?>
+
+                        <a class="profile-link" href="signin.php">Sign in</a>
+                        <a class="profile-link" href="signup.php">Sign Up</a>
+                        <a class="profile-link" href="user_dash.php">My account</a>
+
+                        <?php if ($isLoggedIn): ?>
+                            <a class="profile-link profile-link-danger" href="signout.php">Sign out</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <a href="basket.php" class="basket-icon">
                     <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+                    <span id="basket-count">0</span>
                 </a>
             </div>
         </div>
@@ -91,6 +186,34 @@ session_start();
             </div>
         </a>
     </div>
+
+<!-- Favourites section -->
+<section class="grey-section">
+    <div class="grey-inner">
+        <h2>OUR FAVOURITES</h2>
+
+        <div class="collection-cards">
+            <div class="card">
+                <a href="product.php?id=1"> 
+                    <img src="../images/livingroom-images/sofa.jpg" alt="Sofa">
+                    <h3>VENICE CREAM SOFA</h3>
+                </a>
+            </div>
+            <div class="card">
+                <a href="product.php?id=5"> 
+                    <img src="../images/livingroom-images/consoletable.png" alt="Console Table">
+                    <h3>NY CONSOLE TABLE</h3>
+                </a>
+            </div>
+            <div class="card">
+                <a href="product.php?id=2"> 
+                    <img src="../images/livingroom-images/throwpillow3.jpg" alt="Throw Pillow">
+                    <h3>OXFORD THROW PILLOW</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
  <section class="reviews-section">
     <div class="reviews-header">
@@ -174,7 +297,7 @@ session_start();
             <div class="form-container">
             <form id="contact-form" action="https://formspree.io/f/xzzlerol" method="POST">
                 <input type="text" name="_gotcha" style="display: none;" />
-            <!-- <form id="contact-form" onsubmit="return validateForm()"> -->
+        
                 <label for="first">Name<span class="required">*</span> </label>
                 <input type="text" id="first" name="first" placeholder="First Name" required>
                 
@@ -238,10 +361,40 @@ session_start();
         </div>
     </footer>
     <script src="../javascript/header_footer_script.js"></script>
+    <script src="../javascript/global/basketIcon.js"></script>
+
+    <script>
+        // Profile dropdown toggle (homepage)
+        document.addEventListener("DOMContentLoaded", () => {
+            const profileToggleBtn = document.getElementById("profile-toggle-btn");
+            const profileDropdown = document.getElementById("profile-dropdown");
+            const profileWrapper = document.getElementById("profile-wrapper");
+
+            if (!profileToggleBtn || !profileDropdown || !profileWrapper) return;
+
+            profileToggleBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                profileDropdown.classList.toggle("open");
+            });
+
+            document.addEventListener("click", (e) => {
+                if (!profileWrapper.contains(e.target)) {
+                    profileDropdown.classList.remove("open");
+                }
+            });
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") {
+                    profileDropdown.classList.remove("open");
+                }
+            });
+        });
+    </script>
+
     
 
 <script>
-// ---------- Modal Controls ----------
+// Review modal logic
 const modal = document.getElementById("reviewModal");
 const addBtn = document.querySelector(".add-review-btn");
 const closeModal = document.querySelector(".close-modal");
@@ -259,7 +412,7 @@ document.getElementById("reviewForm").addEventListener("submit", function(e) {
     const text = document.getElementById("reviewText").value;
     const name = document.getElementById("reviewName").value;
 
-    fetch("../html/submit_review.php", {
+    fetch("../html/submit_general_review.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -280,12 +433,24 @@ document.getElementById("reviewForm").addEventListener("submit", function(e) {
 });
 
 function loadReviewsFromDB() {
-    fetch("../html/get_reviews.php")
+    fetch("../html/get_general_reviews.php")
     .then(response => response.json())
     .then(reviews => {
         const container = document.getElementById("reviewsContainer");
         container.innerHTML = "";
 
+        // If 0 reviews
+        if (!reviews || reviews.length === 0) {
+            container.innerHTML = `
+                <div class="no-reviews-message">
+                    <p>No reviews yet.</p>
+                    <p>Be the first to review this product!</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Otherwise display reviews
         reviews.forEach(review => {
             const card = document.createElement("div");
             card.classList.add("review-card");
@@ -313,9 +478,10 @@ function loadReviewsFromDB() {
         });
     });
 }
+
 loadReviewsFromDB();
 
-// ---------- STAR RATING CLICK LOGIC ----------
+// Star rating logic
 document.querySelectorAll(".star-rating span").forEach(star => {
     star.addEventListener("click", () => {
         const value = star.getAttribute("data-value");
@@ -329,7 +495,7 @@ document.querySelectorAll(".star-rating span").forEach(star => {
 
 function scrollReviews(direction) {
     const container = document.getElementById("reviewsContainer");
-    const scrollAmount = 280; // width of one card + gap
+    const scrollAmount = 280; 
     container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
 }
 </script>
@@ -528,11 +694,11 @@ function scrollReviews(direction) {
 }
 
 .prev-btn {
-    left: 5px;     /* inside the container */
+    left: -20px;     /* inside the container */
 }
 
 .next-btn {
-    right: 5px;    /* inside the container */
+    right: -20px;    /* inside the container */
 }
 
 .reviews-section {
@@ -658,5 +824,75 @@ function scrollReviews(direction) {
     color: #111;            
     transform: scale(1.1);  
             }
+
+/* OUR FAVOURITES SECTION */
+.grey-section {
+    background-color: #B6B6B6;  /* same grey as reviews */
+    padding: 25px 30px;
+    margin: 60px auto;          /* space above and below */
+    border-radius: 25px;
+    max-width: 1100px;
+    width: 100%;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+}
+
+.grey-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.grey-section p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Collections cards */
+.collection-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.collection-cards .card {
+    background: #B6B6B6;
+    border-radius: 10px;
+    padding: 10px;
+    flex: 1 1 calc(33% - 20px); /* 3 cards per row */
+    text-align: center;
+    max-width: 33%;
+    /* box-shadow: 0 4px 12px rgba(0,0,0,0.05); */
+    transition: transform 0.2s ease;
+}
+
+.collection-cards .card:hover {
+    transform: translateY(-4px);
+}
+
+.collection-cards .card img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.collection-cards .card h3 {
+    font-size: 16px;
+    font-weight: 600;
+}
+.no-reviews-message p:first-child {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+.no-reviews-message {
+    padding-left: 80px; /* adjust as needed */
+    font-size: 1.1rem
+}
+
+.no-reviews-message p:last-child {
+    opacity: 0.8;
+}
 
 </style>

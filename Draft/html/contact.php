@@ -34,15 +34,16 @@
                 <a href="signin.php">
                     <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
                 </a>
-                <a href="basket.php">
+                <a href="basket.php" class="basket-icon">
                     <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+                    <span id="basket-count">0</span>
                 </a>
             </div>
         </div>
 
         <nav class="dropdown-panel" id="dropdown-nav">
             <ul class="nav-links">
-                <li><a href="Categories.php">Living Room</a></li>
+                <li><a href="livingroom.php">Living Room</a></li>
                 <li><a href="bathroom.php">Bathroom</a></li>
                 <li><a href="bedroom.php">Bedroom</a></li>
                 <li><a href="office.php">Office</a></li>
@@ -123,5 +124,6 @@
         </div>
     </footer>
     <script src="../javascript/header_footer_script.js"></script>
+    <script src="../javascript/global/basketIcon.js"></script>
 </body>
 </html>

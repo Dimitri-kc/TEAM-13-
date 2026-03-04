@@ -7,7 +7,7 @@
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #000;
-    min-width: 1024px; 
+    min-width: 1024px;
     overflow-x: auto;
 }
 
@@ -29,7 +29,7 @@ ul {
 
 .site-header {
     background: #fff;
-    border-bottom: none;  
+    border-bottom: none;
     position: relative;
     height: 150px;
     z-index: 1000;
@@ -62,7 +62,7 @@ ul {
 }
 
 .main-logo {
-    height: 50px; 
+    height: 50px;
     display: block;
 }
 
@@ -81,7 +81,7 @@ ul {
     display: block;
 }
 
-/* DROPDOWN MENU */
+/* LEFT DROPDOWN MENU */
 .dropdown-panel {
     position: absolute;
     top: 90px;
@@ -97,7 +97,7 @@ ul {
 }
 
 .dropdown-panel.open {
-    display: block; 
+    display: block;
 }
 
 .nav-links li {
@@ -129,7 +129,7 @@ ul {
     margin: 0 auto;
     padding: 0 40px;
     display: grid;
-    grid-template-columns: 0.5fr 1fr 1fr 1fr; 
+    grid-template-columns: 0.5fr 1fr 1fr 1fr;
     gap: 40px;
 }
 
@@ -156,7 +156,167 @@ ul {
 }
 
 .social-icon {
-    width: 20px; /* Slightly smaller than header icons */
+    width: 20px;
     height: 20px;
     object-fit: contain;
+}
+
+/* PROFILE DROPDOWN (right side) */
+
+.profile-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    z-index: 2000; /* keeps it above header */
+}
+
+/* Button reset */
+.profile-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Dropdown under the user icon */
+.profile-dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 260px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    display: none;
+    z-index: 3000; /* above left menu and header */
+}
+
+.profile-dropdown.open {
+    display: block;
+}
+
+.profile-welcome {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 14px;
+}
+
+.profile-link {
+    display: block;
+    font-size: 14px;
+    color: #444;
+    padding: 10px 0;
+}
+
+.profile-link + .profile-link {
+    border-top: 1px solid #eee;
+}
+
+.profile-link-danger {
+    color: #b00020;
+}
+
+/* Welcome toast (top-centred) */
+.ll-welcome-toast {
+    position: fixed;
+    top: 140px; /* distance from top of viewport */
+    left: 50%;
+    transform: translate(-50%, -10px);
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 350ms ease, transform 350ms ease;
+    display: flex;
+    justify-content: center;
+    width: auto;
+    max-width: calc(100vw - 48px);
+    padding: 0 12px;
+}
+
+.ll-welcome-toast.is-visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    pointer-events: auto;
+}
+
+.ll-welcome-toast-inner{
+    background: rgba(20,20,20,0.50); /* lighter and more transparent */
+    color: #fff;
+    padding: 16px 26px;
+    border-radius: 18px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Stronger ID-based override to prevent page-level CSS from breaking positioning */
+#llWelcomeToast {
+    position: fixed !important;
+    top: 140px !important;
+        left: 50% !important;
+        transform: translate(-50%, 0) !important;
+        z-index: 99999 !important;
+        display: flex !important;
+        justify-content: center !important;
+        width: auto !important;
+        max-width: calc(100vw - 48px) !important;
+        padding: 0 12px !important;
+        pointer-events: auto !important;
+}
+
+/* Defensive overrides to prevent accidental filled circle on header icons */
+.header-actions .profile-btn,
+.header-actions .profile-btn * {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+/* Ensure inline SVG icons use stroke only and no fill */
+.header-actions .ui-icon svg,
+.header-actions .ui-icon {
+    fill: none !important;
+    stroke: currentColor !important;
+}
+
+/* Prevent pseudo-elements from creating shapes on header buttons */
+.header-actions .profile-btn::before,
+.header-actions .profile-btn::after,
+.profile-wrapper::before,
+.profile-wrapper::after {
+    content: none !important;
+}
+
+/* Restore dropdown background explicitly so defensive rules don't affect it */
+.profile-dropdown {
+    background: #fff !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+    border-radius: 6px !important;
+}
+
+/* basket icon that updates in the header  */
+.basket-icon {
+    position: relative;
+    display: inline-block;
+}
+/* basket product counter  */
+#basket-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff6f61;  
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    border-radius: 50%;
+    padding: 2px 6px;
 }

@@ -1,13 +1,35 @@
-<?php include '../backend/config/db_connect.php'; ?>
-<?php
+<?php 
+include '../backend/config/db_connect.php'; 
 session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Example: $favs should be fetched from DB or session
-// $favs = [...]; // Make sure $favs is defined before using
+// Require login
+if (!isset($_SESSION['user_ID'])) {
+    header("Location: signin.php");
+    exit;
+}
+
+$user_id = $_SESSION['user_ID'];
+
+// Load favourites from database
+$sql = "SELECT p.product_ID, p.name, p.price, p.image
+        FROM favourites f
+        JOIN products p ON f.product_ID = p.product_ID
+        WHERE f.user_ID = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$res = $stmt->get_result();
+
+$favs = [];
+while ($row = $res->fetch_assoc()) {
+    $favs[] = $row;
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,17 +58,16 @@ error_reporting(E_ALL);
           display: flex;
           align-items: center;
           justify-content: space-between;
-          background: #fff;
-          min-height: 92px;
+          background: #ffffff;
+          min-height: 200px;
         }
 
         .thumb {
-          width: 86px; height: 86px;
+          width: 200px; height: 200px;
           border-radius: 4px;
           background: #e9e9e9;
           overflow: hidden;
           display:flex; align-items:center; justify-content:center;
-          flex: 0 0 86px;
         }
         .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
 
@@ -100,7 +121,10 @@ error_reporting(E_ALL);
         <div class="header-actions">
             <a href="favourites.php"><img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon"></a>
             <a href="signin.php"><img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon"></a>
-            <a href="basket.php"><img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon"></a>
+            <a href="basket.php" class="basket-icon">
+                <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+                <span id="basket-count">0</span>
+            </a>
         </div>
     </div>
 
@@ -128,36 +152,43 @@ error_reporting(E_ALL);
             <div class="empty">No favourites yet. Go to categories and like a product.</div>
             <div class="actions"><a href="homepage.php">Back to Homepage</a></div>
         <?php else: ?>
+            
             <div class="grid">
-                <?php foreach ($favs as $p): $pid = (int)$p["id"]; ?>
-                    <div class="fav-card">
-                        <form method="post" action="favourite_remove.php" style="margin:0;">
-                            <input type="hidden" name="product_id" value="<?= $pid ?>">
-                            <input type="hidden" name="redirect" value="favourites.php">
-                            <button class="removeBtn" type="submit" title="Remove">×</button>
-                        </form>
+    <?php foreach ($favs as $p): ?>
+        <?php 
+            $pid = (int)$p["product_ID"]; 
+            $imagePath = "../images/livingroom-images/" . $p["image"];
+        ?>
+        
+        <div class="fav-card">
+            
+            <!-- REMOVE FROM FAVOURITES -->
+            <form method="post" action="favourite_remove.php" style="margin:0;">
+                <input type="hidden" name="product_id" value="<?= $pid ?>">
+                <input type="hidden" name="redirect" value="favourites.php">
+                <button class="removeBtn" type="submit" title="Remove">×</button>
+            </form>
 
-                        <form method="post" action="favorite_add.php">
-                            <input type="hidden" name="product_id" value="<?= $pid ?>">
-                            <input type="hidden" name="redirect" value="favourites.php">
-                            <button type="submit">♡</button>
-                        </form>
+            <!-- PRODUCT IMAGE -->
+<div class="thumb">
+    <?php if (!empty($p["image"])): ?>
+        <img src="../images/<?= htmlspecialchars($p["image"]) ?>" alt="">
+    <?php else: ?>
+        <span style="color:#cfcfcf; font-size:12px;">IMG</span>
+    <?php endif; ?>
+</div>
 
-                        <div class="thumb">
-                            <?php if (!empty($p["image"]) && file_exists($p["image"])): ?>
-                                <img src="<?= htmlspecialchars($p["image"]) ?>" alt="">
-                            <?php else: ?>
-                                <span style="color:#cfcfcf; font-size:12px;">IMG</span>
-                            <?php endif; ?>
-                        </div>
 
-                        <form method="post" action="bag_add.php" style="margin:0;">
-                            <input type="hidden" name="product_id" value="<?= $pid ?>">
-                            <button class="btn" type="submit">Add to bag</button>
-                        </form>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+            <!-- ADD TO BASKET -->
+            <form method="post" action="basket.php" style="margin:0;">
+                <input type="hidden" name="product_id" value="<?= $pid ?>">
+                <button class="btn" type="submit">Add to bag</button>
+            </form>
+
+        </div>
+    <?php endforeach; ?>
+</div>
+
 
             <div class="actions" style="margin-top:18px;">
                 <a href="homepage.php">Back to homepage</a>
@@ -206,5 +237,6 @@ error_reporting(E_ALL);
 </footer>
 
 <script src="../javascript/header_footer_script.js"></script>
+<script src="../javascript/global/basketIcon.js"></script>
 </body>
 </html>

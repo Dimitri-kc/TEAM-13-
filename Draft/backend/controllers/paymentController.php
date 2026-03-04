@@ -1,6 +1,8 @@
 
 <?php //paymentController.php - process requests from checkout.html
 
+//STILL HAS OLD CODE FROM BEFORE JSON REFACTOR, NEEDS TO BE UPDATED TO MATCH NEW STRUCTURE
+
 session_start();
 //include database and user models so controller can connect to database and use user methods
 require_once __DIR__ . '/../config/db_connect.php';//state file path
@@ -33,7 +35,7 @@ class PaymentController {
         }
 
         //fetch payment via order id
-        $orderItemModel = new OrderItem();
+        $orderItemModel = new OrderItemsModel();
         if (isset($user_ID)) { //if user logged in
             $orderItems = $orderItemModel->getItemsByOrder($order_ID) ?? [];
         } else {
@@ -50,7 +52,7 @@ class PaymentController {
             if(!isset($user_ID)) {
                 clearSessionBasket();//call clear guest basket
             }
-            header ('Location: /order_confirmation.html');//if payment successful direct to confirmation
+            header ('Location: /orderconfirmation.php');//if payment successful direct to confirmation
             exit;
         } else {
             echo 'Payment failed. Please try again.';
@@ -74,5 +76,5 @@ class PaymentController {
 //Notes:
 //For both registered users and guests
 //basket totalS retrieved from basketFunctions.php
-//redirects to order_confirmation.html upon payment success
+//redirects to orderconfirmation.php upon payment success
 ?>

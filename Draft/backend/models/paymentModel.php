@@ -5,9 +5,10 @@
 class Payment {
     private $conn;
 
-        public function __construct() {
+    public function __construct() {
         require_once __DIR__ . '/../config/db_connect.php'; // database connection
-        $this->conn = $dbConnection;
+        global $conn;
+        $this->conn = $conn;
     }
 
     //validate input
@@ -88,4 +89,5 @@ class Payment {
 //add luhn algorithm for realism to fake validate card
 //may need to add created_at and status to payment sql and include in createPayment
 //possibly shared function needed for stock updates with products
+
 ?>

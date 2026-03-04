@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>User - My Recent Orders</title>
+
+<link rel="stylesheet" href="../css/header_footer_style.css">
+
+<link rel="stylesheet" href="../css/category-css/livingroom-base.css">
+<link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
+<link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">
+<link rel="stylesheet" href="../css/category-css/livingroom-page.css">
+
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff;
+    margin: 0;
+    padding: 40px 20px;
+    color: #1a1a1a;
+  }
+
+  .admin-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-weight: 700;
+    text-align: left;
+    font-size: 30px;
+    margin-bottom: 4px;
+  }
+
+  p.subheader {
+    color: #6c6c6c;
+    font-weight: 400;
+    font-size: 14px;
+    margin-top: 0;
+    margin-bottom: 24px;
+  }
+
+  .orders-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 50px;
+  }
+
+  .order-card {
+    border: 1px solid #e2e2e2;
+    border-radius: 6px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .order-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    background: #eee;
+    flex-shrink: 0;
+  }
+
+  .order-details {
+    flex-grow: 1;
+    font-size: 14px;
+  }
+
+  .order-status {
+    font-weight: 600;
+    font-size: 12px;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  .order-number {
+    font-weight: 700;
+    font-size: 16px;
+    margin: 0 0 4px 0;
+  }
+
+  .customer-name {
+    margin: 0;
+    font-weight: 500;
+    color: #555;
+  }
+
+  .order-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  button {
+    border-radius: 6px;
+    border: none;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-view-edit {
+    background-color: #ddd;
+    color: #333;
+  }
+
+  .btn-view-edit:hover {
+    background-color: #ccc;
+  }
+
+  .btn-cancel {
+    background-color: #2C2C2C;
+    color: white;
+  }
+
+  .btn-cancel:hover {
+    background-color: #1a1a1a;
+  }
+
+  /* Responsive: single column on small screens */
+  @media (max-width: 600px) {
+    .orders-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body data-category="livingroom">
+
+<!-- Header -->
+<header class="site-header">
+  <div class="header-inner">
+    <button class="menu-btn" id="menu-toggle-btn">
+      <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img" />
+    </button>
+
+    <div class="logo-wrapper">
+      <a href="homepage.php">
+        <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo" />
+      </a>
+    </div>
+
+    <div class="header-actions">
+      <a href="favourites.php">
+        <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon" />
+      </a>
+      <a href="signin.php">
+        <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon" />
+      </a>
+      <a href="basket.php" class="basket-icon">
+        <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon" />
+        <span id="basket-count">0</span>
+      </a>
+    </div>
+  </div>
+
+  <nav class="dropdown-panel" id="dropdown-nav">
+    <ul class="nav-links">
+      <li><a href="livingroom.php">Living Room</a></li>
+      <li><a href="bathroom.php">Bathroom</a></li>
+      <li><a href="bedroom.php">Bedroom</a></li>
+      <li><a href="office.php">Office</a></li>
+      <li><a href="kitchen.php">Kitchen</a></li>
+      <li class="nav-divider"><a href="signin.php">My Account</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="user-container">
+  <h1>My Recent orders </h1>
+  <p class="subheader">View recent customer orders and add to bag if you want to purchase it again</p>
+
+  <div class="orders-grid">
+
+    <div class="order-card">
+      <img src="https://via.placeholder.com/80" alt="Product Image" />
+      <div class="order-details">
+        <!-- <p class="order-status">Order Status: Pending</p> -->
+        <p class="order-number">Order Status: delivered </p>
+        <p class="customer-name">Date: 28 October 2025 </p>
+      </div>
+      <div class="order-actions">
+        <button class="btn-view-edit">View & Edit</button>
+        <button class="btn-cancel">Cancel</button>
+      </div>
+    </div>
+
+    <div class="order-card">
+      <img src="https://via.placeholder.com/80" alt="Product Image" />
+      <div class="order-details">
+        <!-- <p class="order-status">Order Status: Shipped</p> -->
+        <p class="order-number">Order Status: delivered </p>
+        <p class="customer-name">Date: 17 November 2025 </p>
+      </div>
+      <div class="order-actions">
+        <button class="btn-view-edit">View & Edit</button>
+        <button class="btn-cancel">Cancel</button>
+      </div>
+    </div>
+
+    <div class="order-card">
+      <img src="https://via.placeholder.com/80" alt="Product Image" />
+      <div class="order-details">
+        <!-- <p class="order-status">Order Status: Pending</p> -->
+        <p class="order-number">Order Status: delivered </p>
+        <p class="customer-name">Date: 12 January 2026 </p>
+      </div>
+      <div class="order-actions">
+        <button class="btn-view-edit">View & Edit</button>
+        <button class="btn-cancel">Cancel</button>
+      </div>
+    </div>
+
+    <div class="order-card">
+      <img src="https://via.placeholder.com/80" alt="Product Image" />
+      <div class="order-details">
+        <!-- <p class="order-status">Order Status: Pending</p> -->
+        <p class="order-number">Order Status: delivered </p>
+        <p class="customer-name"> Date: 2 February 2026 </p>
+      </div>
+      <div class="order-actions">
+        <button class="btn-view-edit">View & Edit</button>
+        <button class="btn-cancel">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-section social-links">
+      <a href="#">
+        <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon" />
+      </a>
+      <a href="#">
+        <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon" />
+      </a>
+    </div>
+
+    <div class="footer-section">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="homepage.php">Homepage</a></li>
+        <li><a href="signin.php">My Account</a></li>
+        <li><a href="favourites.php">Favourites</a></li>
+        <li><a href="basket.php">Basket</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>Categories</h4>
+      <ul>
+        <li><a href="livingroom.php">Living Room</a></li>
+        <li><a href="office.php">Offices</a></li>
+        <li><a href="kitchen.php">Kitchen</a></li>
+        <li><a href="bathroom.php">Bathrooms</a></li>
+        <li><a href="bedroom.php">Bedrooms</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>More...</h4>
+      <ul>
+        <li><a href="contact.php">Contact Us</a></li>
+        <li><a href="about.php">About Us</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

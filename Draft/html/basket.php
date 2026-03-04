@@ -1,5 +1,188 @@
 
-<?php include '../backend/config/db_connect.php'; ?>
+<?php
+include '../backend/config/db_connect.php';
+session_start();
+
+require_once __DIR__ . '/../backend/models/basketModel.php';
+require_once __DIR__ . '/../backend/services/basketFunctions.php'; //guest_basket
+
+if (!isset($_SESSION["guest_basket"])) {
+  // cart format: [ product_id => qty ]
+  $_SESSION["guest_basket"] = [];
+}
+
+function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, "UTF-8"); }
+function money($n){ return "£" . number_format((float)$n, 2); }
+
+
+// Actions 
+$action = $_GET["action"] ?? "";
+$user_ID = isset($_SESSION["user_ID"]) ? (int)$_SESSION["user_ID"] : null; //get user_ID from session if logged in, otherwise null
+$basketModel = new Basket(); //
+
+//use guest_basket for guests (not saved to DB), cart for logged in users (syncs with DB)
+$cart = ($user_ID > 0) ? ($_SESSION["cart"] ?? []) : ($_SESSION["guest_basket"] ?? []); //logged in users have cart that syncs with DB
+
+/* if ($user_ID > 0 && empty($_SESSION["cart"])) {
+    $basket = $basketModel->fetchUserBasket($user_ID);
+    if ($basket && !empty($basket['basket_ID'])) {
+        $items = $basketModel->fetchBasketItems((int)$basket['basket_ID']);
+        foreach ($items as $it) {
+            $pid = (int)($it['product_ID'] ?? 0);
+            $qty = (int)($it['quantity'] ?? 0);
+            if ($pid > 0 && $qty > 0) {
+                $_SESSION["cart"][$pid] = $qty;
+            }
+        }
+    }
+} */
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+  // Add item from product pages
+  if ($action === "add") {
+    $id = (int)($_POST["product_id"] ?? 0);
+    $qty = max(1, (int)($_POST["qty"] ?? 1));
+    if ($id > 0) {
+      if ($user_ID > 0) {
+        $_SESSION["cart"][$id] = ($_SESSION["cart"][$id] ?? 0) + $qty; //update session cart for logged in user
+      } else {
+        $_SESSION["guest_basket"][$id] = ($_SESSION["guest_basket"][$id] ?? 0) + $qty;
+      }
+    }
+    header("Location: basket.php");
+    exit;
+  }
+
+
+  // Update quantities OR remove item 
+if ($action === "update") {
+
+  // if clicking remove button 
+  if (isset($_POST["remove_id"])) {
+    $removeId = (int)$_POST["remove_id"];
+    if ($removeId > 0) {
+      if ($user_ID > 0) { //if user logged in, also sync to DB and remove item
+        unset($_SESSION["cart"][$removeId]);
+        $basket = $basketModel->fetchUserBasket($user_ID);
+        if ($basket && !empty($basket['basket_ID'])) {
+          $basketModel->removeItemFromBasket((int)$basket['basket_ID'], $removeId); //remove item from DB basket
+        }
+      } else {
+        unset($_SESSION["guest_basket"][$removeId]);
+      }
+    }
+    header("Location: basket.php");
+    exit;
+  }
+
+ 
+  $qtyArr = $_POST["qty"] ?? [];
+  if (is_array($qtyArr)) {
+    foreach ($qtyArr as $id => $q) {
+      $id = (int)$id;
+      $q  = (int)$q;
+      if ($id <= 0) continue;
+
+      if ($user_ID >0) { //update session cart for logged in user
+        if ($q <= 0) {
+          unset($_SESSION["cart"][$id]);  // qty 0 = remove
+          //if user logged in, also sync to DB and remove item
+          $basket = $basketModel->fetchUserBasket($user_ID);
+          if ($basket && !empty($basket['basket_ID'])) {
+            $basketModel->removeItemFromBasket((int)$basket['basket_ID'], $id); //remove item from DB basket
+          }
+        } else {
+            $_SESSION["cart"][$id] = $q; //if user logged in, sync new quantity to DB
+            $basket = $basketModel->fetchUserBasket($user_ID);
+            if ($basket && !empty($basket['basket_ID'])) {
+              $basketModel->updateItemQuantity((int)$basket['basket_ID'], $id, $q); //update quantity in DB
+            }
+        }
+      } else {
+        if ($q <= 0) { //guest user qty 0 = remove
+          unset($_SESSION["guest_basket"][$id]);  
+        } else {
+          $_SESSION["guest_basket"][$id] = $q;
+        }
+      }
+    }
+  }
+  header("Location: basket.php");
+  exit;
+}
+
+  // Remove one
+//   if ($action === "remove") {
+//     $id = (int)($_POST["product_id"] ?? 0);
+//     if ($id > 0) unset($_SESSION["cart"][$id]);
+//     header("Location: basket.php");
+//     exit;
+//   }
+
+  // Clear basket
+  if ($action === "clear") {
+    if ($user_ID > 0) {
+      $_SESSION["cart"] = [];
+      //sync clear to DB for logged in users
+      $basket = $basketModel->fetchUserBasket($user_ID);
+      if ($basket && !empty($basket['basket_ID'])) {
+        $basket_ID = (int)$basket['basket_ID'];
+        $stmt = $conn->prepare("DELETE FROM basket_items WHERE basket_ID = ?"); //clear from DB basket
+        if ($stmt) {
+          $stmt->bind_param("i", $basket_ID); //changed to variable not direct value
+          $stmt->execute();
+          $stmt->close();
+      }
+    }
+  } else {
+    $_SESSION["guest_basket"] = [];
+  }
+  header("Location: basket.php");
+  exit;
+  }
+} //POST ENDS
+
+//debugging below
+$basketMode = ($user_ID > 0) ? "Account Basket (DB-backed)" : "Guest Basket (Session-only)"; 
+error_log("TESTING: $basketMode | user_ID=$user_ID | cart items=" . count($cart));
+
+// Load products to cart for display
+$ids = array_keys($cart);
+$cartProducts = [];
+$subtotal = 0.0;
+
+if (count($ids) > 0) {
+  $ids = array_keys($cart);
+  $placeholders = implode(",", array_fill(0, count($ids), "?"));
+
+  $sql = "SELECT product_ID, name, price, image
+          FROM products
+          WHERE product_ID IN ($placeholders)";
+
+$stmt = $conn ->prepare($sql);
+$stmt->bind_param(str_repeat("i", count($ids)), ...$ids);
+$stmt->execute();
+$res = $stmt->get_result();
+
+    while ($row = $res->fetch_assoc()) {
+      $id = (int)$row["product_ID"];
+      $qty = (int)($cart[$id] ?? 1);
+      $price = (float)$row["price"];
+      $line = $price * $qty;
+      $subtotal += $line;
+
+      $cartProducts[] = [
+        "id" => $id,
+        "name" => $row["name"],
+        "price" => $price,
+        "qty" => $qty,
+        "line" => $line,
+        "image" => $row["image"] //?: "../images/basket-images/sofa.jpg"
+      ];
+    }
+  $stmt->close();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,15 +217,16 @@
                 <a href="signin.php">
                     <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
                 </a>
-                <a href="basket.php">
+                <a href="basket.php" class="basket-icon">
                     <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+                    <span id="basket-count">0</span>
                 </a>
             </div>
         </div>
 
         <nav class="dropdown-panel" id="dropdown-nav">
             <ul class="nav-links">
-                <li><a href="Categories.php">Living Room</a></li>
+                <li><a href="livingroom.php">Living Room</a></li>
                 <li><a href="bathroom.php">Bathroom</a></li>
                 <li><a href="bedroom.php">Bedroom</a></li>
                 <li><a href="office.php">Office</a></li>
@@ -61,23 +245,71 @@
 
             <div class="basket-items">
 
-                <div class="basket-item" data-price="295">
-                    <img src="../images/basket-images/sofa.jpg" alt="Sofa" class="item-image">
+  <?php if (count($cartProducts) === 0): ?>
+   
+    <div style="border:1px dashed #d8d8d8; border-radius:16px; padding:26px 22px; color:#555; background:#fff;">
+      <div style="font-size:20px; margin-bottom:6px;">
+        No items in your basket yet. Go to categories and add a product.
+      </div>
+    </div>
 
-                    <div class="item-details">
-                        <h3 class="item-name">Venice Cream Sofa</h3>
-                        <p class="price">£295</p>
-                        <!-- <p class="qty">Quantity: 1</p> -->
-                         <div class="quant-controls">
-                            <button class="minus">-</button>
-                             <span class="quant-number">1</span>
-                              <button class="plus">+</button>
-                         
-                    </div>
-                </div>
-                </div>
+    <a href="homepage.php" style="display:inline-block; margin-top:14px; color:#000;">
+      Back to Homepage
+    </a>
 
+  <?php else: ?>
+
+    <form method="post" action="basket.php?action=update">
+      <?php foreach ($cartProducts as $p): ?>
+        <div class="basket-item">
+          <img src="<?= e($p["image"]) ?>" alt="<?= e($p["name"]) ?>" class="item-image">
+
+          <div class="item-details">
+            <h3 class="item-name"><?= e($p["name"]) ?></h3>
+            <p class="price"><?= money($p["price"]) ?></p>
+
+            <div class="quant-controls">
+              <input
+                class="quant-number"
+                style="width:70px; padding:8px; border:1px solid #ddd; border-radius:10px;"
+                type="number"
+                min="0"
+                name="qty[<?= (int)$p["id"] ?>]"
+                value="<?= (int)$p["qty"] ?>"
+              />
+              <span style="color:#555; margin-left:10px;">Line: <?= money($p["line"]) ?></span>
             </div>
+
+            <div style="margin-top:10px;">
+  <button 
+    type="submit"
+    name="remove_id"
+    value="<?= (int)$p["id"] ?>"
+    class="discount-btn"
+    style="background:#fff; color:#000; border:1px solid #000;"
+  >
+    Remove
+  </button>
+</div>
+
+          </div>
+        </div>
+      <?php endforeach; ?>
+
+      <button type="submit" class="discount-btn" style="margin-top:12px; background:#000; color:#fff; border:1px solid #000;">
+        Update Basket
+      </button>
+    </form>
+
+    <form method="post" action="basket.php?action=clear" style="margin-top:10px;">
+      <button type="submit" class="discount-btn" style="background:#fff; color:#000; border:1px solid #000;">
+        Clear Basket
+      </button>
+    </form>
+
+  <?php endif; ?>
+
+</div>
 
             <aside class="basket-summary">
 
@@ -87,26 +319,31 @@
                     <button class="discount-btn">Add Discount</button>
                 </div>
 
-                <div class="summary-box">
-                    <h3>Your Basket Total</h3>
-                    <p>Basket: £295</p>
-                    <p>Discount: £0</p>
-                    <p><strong>Total: £295</strong></p>
-                   
-                </div>
+               <div class="summary-box">
+    <h3>Your Basket Total</h3>
+
+    <?php if (count($cartProducts) === 0): ?>
+        <p>Basket: £0.00</p>
+        <p>Discount: £0.00</p>
+        <p><strong>Total: £0.00</strong></p>
+    <?php else: ?>
+        <p>Basket: <?= money($subtotal) ?></p>
+        <p>Discount: £0.00</p>
+        <p><strong>Total: <?= money($subtotal) ?></strong></p>
+    <?php endif; ?>
+</div>
 
             <div class="checkout-info">
                 <h3>Ready To Checkout?</h3>
                 <p>On the next page you’ll be asked to log in or sign up if
                 this is your first time, so you can confirm as a guest.</p>
-                 <button class="checkout-btn" onclick="window.location.href='signin.php'">Checkout</button>
+                 <button class="checkout-btn" onclick="window.location.href='checkout.php'">Checkout</button>
                                     <div class="pay-buttons">
 
                     <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
                     <img src="../images/basket-images/googlepay.png" alt="Google Pay" class="pay-btn">
                 </div>
             </div>
-
 
 
             </aside>
@@ -156,7 +393,8 @@
         </div>
     </footer>
     <script src="../javascript/header_footer_script.js"></script>
-    <script src="../javascript/basket-quantity.js"></script>
+    <script src="../javascript/global/basketIcon.js"></script>
 
 </body>
 </html>
+

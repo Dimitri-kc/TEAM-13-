@@ -45,7 +45,7 @@
 
         <nav class="dropdown-panel" id="dropdown-nav">
             <ul class="nav-links">
-                <li><a href="Categories.php">Living Room</a></li>
+                <li><a href="livingroom.php">Living Room</a></li>
                 <li><a href="bathroom.php">Bathroom</a></li>
                 <li><a href="bedroom.php">Bedroom</a></li>
                 <li><a href="office.php">Office</a></li>
@@ -128,18 +128,14 @@
         while($row = mysqli_fetch_assoc($result)) {
             ?>
             <div class="item" 
-                 data-price="<?php echo $row['price']; ?>" 
-                 data-category="<?php echo $row['category_id']; ?>" 
-                 data-keywords="<?php echo $row['keywords']; ?>" 
-                 data-colour="<?php echo $row['colour']; ?>">
+     data-price="<?php echo $row['price']; ?>" 
+     data-rating="<?php echo $row['rating']; ?>"     
+     data-keywords="<?php echo $row['keywords']; ?>" 
+     data-category="<?php echo ($row['categories']); ?>"
+     data-colour="<?php echo $row['colour']; ?>">
 
-                                <button class="fav-icon-btn" type="button" aria-label="Add to favourites">
-        <img src="../images/header_footer_images/icon-heart.png" alt="">
-    </button>
 
-            
-                 
-                 <a href="product.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
+ <a href="product.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
                      <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
                      <div class="product-text">
                          <h2><?php echo $row['name']; ?></h2>
@@ -147,9 +143,22 @@
                      </div>
                  </a>
 
-                 <button class="add-to-basket" aria-label="Add to basket">
-                     <img src="../images/add-button-icon.png" alt="Add to basket">
-                 </button>
+<div class="action-buttons">
+<form method="post" action="favourites_add.php" style="position: absolute; top: 15px; left: 15px; z-index: 999; margin: 0; padding: 0; pointer-events: auto;">
+    <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
+    <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
+    <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
+    <input type="hidden" name="product_image" value="../images/<?= htmlspecialchars($row['image']) ?>">
+    <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+    <button type="submit" title="Add to Favourites" style="background: rgb(217, 217, 222); border: none; border-radius: 60%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">♡</button>
+</form>
+
+<!--onclick to pass product_ID in function - API fetch details from DB-->
+<button type="submit" onclick="addToBasket(<?= $row['product_ID'] ?>, 1)" title="Add to basket" style="background: rgba(0,0,0,0.08); border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">+</button>
+
+</div>
+
+
             </div>
             <?php
         }
@@ -160,7 +169,21 @@
 </div>
 
 
-        </div> </div> <footer class="site-footer">
+    </div> 
+</div> 
+<!-- Basket -->
+    <div id="basket-modal" class="basket-modal">
+    <div class="basket-modal-content">
+        <p>Item added to basket!</p>
+        <div class="basket-modal-buttons">
+            <button id="go-to-basket">Proceed to Basket</button>
+            <button id="continue-shopping">Continue Shopping</button>
+
+        </div>
+    </div>
+</div> 
+ 
+    <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-section social-links">
                 <a href="#">
@@ -203,17 +226,7 @@
     </footer>
     <script type="module" src="../javascript/livingroom-js/main.js"></script>
     <script src="../javascript/header_footer_script.js"></script>
+    <script src="../javascript/global/basketIcon.js"></script>
 
-    <!-- Basket -->
-    <div id="basket-modal" class="basket-modal">
-    <div class="basket-modal-content">
-        <p>Item added to basket!</p>
-        <div class="basket-modal-buttons">
-            <button id="go-to-basket">Proceed to Basket</button>
-            <button id="continue-shopping">Continue Shopping</button>
-
-        </div>
-    </div>
-</div>
 </body>
 </html>

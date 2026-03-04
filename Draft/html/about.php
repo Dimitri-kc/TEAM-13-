@@ -30,8 +30,9 @@
                 <a href="signin.php">
                     <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
                 </a>
-                <a href="basket.php">
+                <a href="basket.php" class="basket-icon">
                     <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+                    <span id="basket-count">0</span>
                 </a>
             </div>
         </div>
@@ -136,7 +137,7 @@
             <div class="footer-section">
                 <h4>Categories</h4>
                 <ul>
-                    <li><a href="categories.php">Living Room</a></li>
+                    <li><a href="livingroom.php">Living Room</a></li>
                     <li><a href="office.php">Offices</a></li>
                     <li><a href="kitchen.php">Kitchen</a></li>
                     <li><a href="bathroom.php">Bathrooms</a></li>
@@ -154,5 +155,6 @@
         </div>
     </footer>
     <script src="../javascript/header_footer_script.js"></script>
+    <script src="../javascript/global/basketIcon.js"></script>
 </body>
 </html>

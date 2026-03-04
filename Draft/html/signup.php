@@ -115,7 +115,10 @@
     <div class="header-actions">
       <a href="favourites.php"><img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon"></a>
       <a href="signin.php"><img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon"></a>
-      <a href="basket.php"><img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon"></a>
+      <a href="basket.php" class="basket-icon">
+          <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+          <span id="basket-count">0</span>
+      </a>
     </div>
   </div>
 
@@ -219,7 +222,7 @@
 </footer>
 
 <script>
-  const API_URL = "/Team-13-/Draft/backend/routes/userRoutes.php";
+  const API_URL = "/TEAM-13-/Draft/backend/routes/userRoutes.php";
   const form = document.getElementById("signupForm");
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -313,6 +316,7 @@
 </script>
 
 <script src="../javascript/header_footer_script.js"></script>
+<script src="../javascript/global/basketIcon.js"></script>
 </body>
 </html>
 
