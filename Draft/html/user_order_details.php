@@ -3,14 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Order Details | Admin</title>
+<title>Order History Details | Admin</title>
 
 <link rel="stylesheet" href="../css/header_footer_style.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-base.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-page.css">
-
 
 <style>
 body {
@@ -19,7 +18,6 @@ body {
   color: #1a1a1a;
 }
 
-/* Page layout */
 .container {
   display: flex;
   gap: 40px;
@@ -28,16 +26,13 @@ body {
   align-items: flex-start;
 }
 
-/* Left card */
 .left-section {
   flex: 1;
-  
   padding: 28px;
   border-radius: 14px;
   border: 1px solid #e6e6e6;
 }
 
-/* Right card */
 .right-section {
   flex: 1;
   display: flex;
@@ -48,7 +43,6 @@ body {
   border: 1px solid #e0e0e0;
 }
 
-/* Order image */
 .order-image {
   width: 300px;
   height: 300px;
@@ -57,7 +51,6 @@ body {
   margin-top: 20px;
 }
 
-/* Form layout: label + field */
 .form-row {
   display: grid;
   grid-template-columns: 160px 1fr;
@@ -89,32 +82,42 @@ body {
   outline: none;
 }
 
-/* Buttons */
-button {
-  width: 100%;
-  background-color: #2C2C2C;
-  color: white;
-  border: none;
-  padding: 14px 0;
-  margin-bottom: 14px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 15px;
-  transition: background-color 0.25s, transform 0.15s;
+.shipping-address-title{
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0 0 12px 0;
+  color: #111;
 }
 
-button:hover {
-  background-color: #000;
-  transform: translateY(-1px);
-}
-
-.shipping-address {
-  font-size: 18px;
-  font-weight: 600;
+.shipping-details.view-mode .form-row{
+  grid-template-columns: 1fr;
+  gap: 0;
   margin-bottom: 10px;
 }
-/* Responsive layout */
+
+.shipping-details.view-mode label{
+  display: none;
+}
+
+.display-line{
+  font-weight: 700;
+  font-size: 15px;
+  color: #111;
+  line-height: 1.4;
+}
+
+.shipping-details.view-mode input{
+  display: none;
+}
+
+.shipping-details.editing .display-line{
+  display: none;
+}
+
+.shipping-details.editing input{
+  display: block;
+}
+
 @media (max-width: 900px) {
   .container {
     flex-direction: column;
@@ -141,14 +144,10 @@ button:hover {
   }
 }
 </style>
-
-
 </head>
+
 <body>
 
-
-
-<!-- Header -->
 <header class="site-header">
   <div class="header-inner">
     <button class="menu-btn" id="menu-toggle-btn">
@@ -192,80 +191,45 @@ button:hover {
     <div class="order-info">
       <h2>Order #UK12345</h2>
       <p>Customer: FirstName LastName</p>
+      <p>Status: Delivered</p>
+      <p>Date: 2026-02-27</p>
     </div>
     <div class="order-image" aria-label="Order product image placeholder"></div>
   </div>
 
   <div class="right-section">
-    <div class="shipping-address">Shipping Address:</div>
-<form id="shipping-form" class="shipping-details" method="POST" action="update-order.php">
+    <h3 class="shipping-address-title">Shipping Address:</h3>
 
-  <div class="form-row">
-    <label for="full_name">Full Name:</label>
-    <input type="text" id="full_name" name="full_name" value="FirstName LastName" readonly>
-  </div>
+    <form class="shipping-details view-mode">
 
-  <div class="form-row">
-    <label for="address1">Address Line 1:</label>
-    <input type="text" id="address1" name="address1" value="Address Line 1" readonly>
-  </div>
+      <div class="form-row">
+        <div class="display-line">FirstName LastName</div>
+      </div>
 
-  <div class="form-row">
-    <label for="address2">Address Line 2:</label>
-    <input type="text" id="address2" name="address2" value="Address Line 2" readonly>
-  </div>
+      <div class="form-row">
+        <div class="display-line">Address Line 1</div>
+      </div>
 
-  <div class="form-row">
-    <label for="postcode">Postcode:</label>
-    <input type="text" id="postcode" name="postcode" value="Postcode" readonly>
-  </div>
+      <div class="form-row">
+        <div class="display-line">Address Line 2</div>
+      </div>
 
-  <div class="form-row">
-    <label for="county">County:</label>
-    <input type="text" id="county" name="county" value="County" readonly>
-  </div>
+      <div class="form-row">
+        <div class="display-line">Postcode</div>
+      </div>
 
-  <div class="form-row">
-    <label for="country">Country:</label>
-    <input type="text" id="country" name="country" value="Country" readonly>
-  </div>
+      <div class="form-row">
+        <div class="display-line">County</div>
+      </div>
 
-  <button type="submit" id="save-btn" style="display:none;">Save Changes</button>
-</form>
+      <div class="form-row">
+        <div class="display-line">Country</div>
+      </div>
 
-    <!-- <label for="cancel-lines">Cancel Select Lines</label>
-    <select id="cancel-lines" name="cancel-lines">
-      <option value="" disabled selected>Value</option>
-         Populate options dynamically here -->
-      <!-- <option value="line1">Line 1</option>
-      <option value="line2">Line 2</option>
-      <option value="line3">Line 3</option>
-    </select> --> 
-
-    <button type="button" id="edit-btn">Edit Details</button>
-    <button type="button">Confirm Shipment Processing</button>
-    <button type="button">Cancel Order</button>
+    </form>
   </div>
 </div>
-<script>
-const editBtn = document.getElementById('edit-btn');
-const saveBtn = document.getElementById('save-btn');
-const form = document.getElementById('shipping-form');
 
-editBtn.addEventListener('click', () => {
-  // Make all input fields editable
-  const inputs = form.querySelectorAll('input');
-  inputs.forEach(input => input.removeAttribute('readonly'));
-
-  // Show the Save button
-  saveBtn.style.display = 'block';
-
-  // Optionally hide the edit button to prevent multiple clicks
-  editBtn.style.display = 'none';
-});
-</script>
-
-<!-- Footer -->
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-section social-links">
@@ -307,5 +271,6 @@ editBtn.addEventListener('click', () => {
     </div>
   </div>
 </footer>
+
 </body>
 </html>

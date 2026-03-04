@@ -95,13 +95,20 @@ if (!$product) {
 
     <main class="container">
         <section class="product-wrapper">
-            <div class="product-image">
-                <div class="wishlist-icon">
-                    <i class="fa-regular fa-heart"></i>
-                </div>
-                <img src="../images/<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
+
+                  <div class="product-image zoom-container">
+    <div class="wishlist-icon">
+        <i class="fa-regular fa-heart"></i>
+    </div>
+
+  
+    <img 
+        id="zoom-image"
+        src="../images/<?php echo $product['image']; ?>" 
+        alt="<?php echo $product['name']; ?>"
+    >
+
+</div>  
 
             <div class="product-info">
                 <h1><?php echo $product['name']; ?></h1>
@@ -225,10 +232,19 @@ if (!$product) {
         </div>
     </footer>
 
+    <div id="imageModal" class="image-modal">
+    <span class="close-modal-image">&times;</span>
+    <div class="modal-image-wrapper">
+        <img id="modalZoomImage" src="" alt="">
+        <img id="zoomIcon" class="zoom-icon" src="../images/zoom_in.png" alt="Zoom">
+    </div>
+</div>
+
+
     <script src="../javascript/sofa_script.js"></script>
     <script src="../javascript/header_footer_script.js"></script>
     <script src="../javascript/global/basketIcon.js"></script>
-
+    <script src="../javascript/image_zoom.js"></script>
     
 <script>
 //----------- Add to Basket Logic -----------
@@ -358,8 +374,128 @@ addBtn.onclick = () => {
 </body>
 </html>
 
-   <!-- REVIEWS SECTION -->
+  
 <style>
+/* ===========================
+   MODAL OVERLAY
+   =========================== */
+.image-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+    z-index: 9999;
+
+}
+
+.image-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ===========================
+   IMAGE WRAPPER (LIMITED HEIGHT)
+   =========================== */
+.modal-image-wrapper {
+    position: relative;
+    width: 60vw;          /* same idea as product-image flex width */
+    height: auto;         /* let the image decide height */
+    max-width: 600px;     /* optional limit */
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===========================
+   IMAGE (NATURAL SIZE, NO CROPPING)
+   =========================== */
+#modalZoomImage {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transition: transform .25s ease;
+    user-select: none;
+    pointer-events: none;
+}
+
+
+/* ===========================
+   CLOSE BUTTON
+   =========================== */
+.close-modal-image {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+    z-index: 10000;
+    font-weight: bold;
+    transition: opacity .2s ease;
+}
+
+.close-modal-image:hover {
+    opacity: 0.7;
+}
+
+/* ===========================
+   ZOOM ICON
+   =========================== */
+.zoom-icon {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    opacity: 0.85;
+    pointer-events: none;
+}
+
+/* ===========================
+   PRODUCT IMAGE (TRIGGER)
+   =========================== */
+#zoom-image {
+    cursor: zoom-in;
+    transition: opacity .2s ease;
+}
+
+#zoom-image:hover {
+    opacity: 0.9;
+}
+/* ---------------- IMAGE ZOOM ---------------- */
+/* 
+.zoom-container {
+    position: relative;
+    overflow: hidden;
+    cursor: zoom-in;
+} */
+
+.zoom-container img {
+    width: 100%;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transform-origin: center center;
+    will-change: transform;
+}
+
+/* .zoom-container.zoomed {
+    cursor: grab;
+} */
+ /* Only active AFTER modal opens */
+.modal-image-wrapper.zoom-ready {
+    cursor: url("../images/zoom_in.png") 16 16, zoom-in;
+}
+
+.modal-image-wrapper.zoomed {
+    cursor: url("../images/zoom_out.png") 16 16, zoom-out;
+}
+
+     /* <!-- REVIEWS SECTION --> */
 .reviews-header {
     display: flex;
     justify-content: space-between;
@@ -535,7 +671,6 @@ addBtn.onclick = () => {
     cursor: pointer;
     font-size: 22px;
     font-weight: bold;
-
     display: flex;              /* center arrow */
     align-items: center;
     justify-content: center;
@@ -692,5 +827,6 @@ addBtn.onclick = () => {
 .no-reviews-message p:last-child {
     opacity: 0.8;
 }
+
 
 </style>

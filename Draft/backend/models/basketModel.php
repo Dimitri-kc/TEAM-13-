@@ -123,4 +123,7 @@ class Basket {
 //fetches user basket items from " "
 //Design allows for one basket per user, with multiple items in each basket, and supports both logged in users and guests via session management in controller and services
 //MySQLi is used in db_connect.php, prepared statements changed to reflect this for consistency/funcitonality.
+
+//The backedn of this project was implemented using php with MYSQLi.
+//php was selected due to its ease of use for server-side scripting and seamless integration with MySQL databases, which is ideal for handling the dynamic content and database interactions required for this e-commerce application. MYSQLi was chosen over PDO for its improved performance and support for prepared statements, which enhance security against SQL injection attacks. This combination allows for efficient data management and secure transactions within the application. 
 ?>
