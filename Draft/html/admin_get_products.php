@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 $query = "SELECT product_ID, name, price, stock, image 
           FROM products 
           ORDER BY product_ID ASC 
-          LIMIT 25";
+        --   LIMIT 25";
 
 $result = mysqli_query($conn, $query);
 
