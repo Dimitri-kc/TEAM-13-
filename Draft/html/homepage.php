@@ -455,35 +455,35 @@ if ($showWelcomeToast) {
     <a class="category living" href="livingroom.php">
         <div class="title-box">LIVING ROOM</div>
         <div class="image-box">
-            <img src="../images/homepage-images/livingroom.png" alt="Living Room">
+            <img src="../images/homepage-images/livingroom.png?v=2" alt="Living Room">
         </div>
     </a>
 
     <a class="category kitchen" href="kitchen.php">
         <div class="title-box">KITCHEN</div>
         <div class="image-box">
-            <img src="../images/homepage-images/kitchen.png" alt="Kitchen">
+            <img src="../images/homepage-images/kitchen.png?v=2" alt="Kitchen">
         </div>
     </a>
 
     <a class="category office" href="office.php">
         <div class="title-box">OFFICE</div>
         <div class="image-box">
-            <img src="../images/homepage-images/office_final.png" alt="Office">
+            <img src="../images/homepage-images/officefinal.png" alt="Office">
         </div>
     </a>
 
     <a class="category bathroom" href="bathroom.php">
         <div class="title-box">BATHROOM</div>
         <div class="image-box">
-            <img src="../images/homepage-images/bathroom.png" alt="Bathroom">
+            <img src="../images/homepage-images/bathroom.png?v=2" alt="Bathroom">
         </div>
     </a>
 
     <a class="category bedroom" href="bedroom.php">
         <div class="title-box">BEDROOM</div>
         <div class="image-box">
-            <img src="../images/homepage-images/bedroom.png" alt="Bedroom">
+            <img src="../images/homepage-images/bedroom.png?v=2" alt="Bedroom">
         </div>
     </a>
 </div>
