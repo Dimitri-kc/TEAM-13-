@@ -5,16 +5,19 @@ body {
 }
 
 .title {
-    text-align: center;
+    text-align: left;
+    font-size: 20px;
     margin-bottom: 30px;
 }
-
+.admin-wrapper {
+    max-width: 900px;   /* 420px x 2 columns + gap */
+    margin: 0 auto;     /* center the whole block */
+}
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 420px);
     gap: 20px;
 }
-
 .product-card {
     display: flex;
     align-items: center;
@@ -34,4 +37,44 @@ body {
 
 .product-info p {
     margin: 6px 0;
+}
+
+.subtitle {
+    font-size: 13px;
+    color: #888;        /* soft grey */
+    margin-top: -20px;  /* pulls it closer to title */
+    margin-bottom: 25px;
+}
+/* ADMIN BUTTONS */
+.admin-buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+}
+
+.view-btn {
+    background: #2c2c2c;        /* green */
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+.remove-btn {
+    background: #979797;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.view-btn:hover {
+    background: #259131;
+}
+
+.remove-btn:hover {
+    background: #b02a37;
 }
