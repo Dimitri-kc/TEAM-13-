@@ -74,6 +74,46 @@ $stmt = $this->conn->prepare("DELETE FROM products WHERE product_ID = ?");
 $stmt->bind_param("i", $id);
 return $stmt->execute();
 }
+public function updateStock($product_ID, $quantityChange) {
+
+    $product_ID = (int)$product_ID;
+    $quantityChange = (int)$quantityChange;
+
+    if ($product_ID <= 0 || $quantityChange === 0) {
+        return ["success" => false, "message" => "Invalid product ID or quantity change"];
+    }
+
+    //Grabs current stock
+    $stmt = $this->conn->prepare("SELECT stock FROM products WHERE product_ID = ?");
+    $stmt->bind_param("i", $product_ID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 0) {
+        return ["success" => false, "message" => "Product not found"];
+    }
+
+    $currentStock = (int)$result->fetch_assoc()['stock'];
+    $newStock = $currentStock + $quantityChange;
+
+    //Prevents nnegative stock
+    if ($newStock < 0) {
+        return ["success" => false, "message" => "Insufficient stock"];
+    }
+
+    //Updates stock
+    $update = $this->conn->prepare(
+        "UPDATE products SET stock = ? WHERE product_ID = ?"
+    );
+    $update->bind_param("ii", $newStock, $product_ID);
+
+    if ($update->execute()) {
+        return ["success" => true, "newStock" => $newStock];
+    }
+
+    return ["success" => false, "message" => "Failed to update stock"];
+}
+
 }
 
 ?>

@@ -123,7 +123,16 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('An error occurred while processing your payment. Please try again.');
       }
     });
-} else {
-    console.error('Form not found!');
-}
+    } else {
+        console.error('Form not found!');
+    }
+    //auto-format card number with spaces every 4 digits
+    const cardInput = document.getElementById('card_number');
+    if (cardInput) {
+        cardInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s+/g, ''); //remove all spaces
+            let formatted = value.replace(/(\d{4})(?=\d)/g, '$1 '); //add space after every 4 digits
+            e.target.value = formatted;
+        });
+    }
 }); 
