@@ -3,10 +3,10 @@ include '../backend/config/db_connect.php';
 
 header('Content-Type: application/json');
 
-$query = "SELECT product_ID, name, price, stock, image 
+// Modify the query to include category_id
+$query = "SELECT product_ID, name, price, stock, image, category_id 
           FROM products 
-          ORDER BY product_ID ASC 
-        --   LIMIT 25";
+          ORDER BY product_ID ASC";
 
 $result = mysqli_query($conn, $query);
 
