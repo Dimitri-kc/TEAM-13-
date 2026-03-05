@@ -83,7 +83,6 @@ input[name="postcode"]{
     clear: both;
 }
 
-/* bigger payment total area */
 .payment-summary{
     border: 1px solid #ddd;
     border-radius: 12px;
@@ -101,6 +100,24 @@ input[name="postcode"]{
     font-weight: 700;
     font-size: 16px;
     margin-top: 10px;
+}
+
+.view-basket-btn{
+    display: inline-block;
+    padding: 10px 12px;
+    border: 1px solid #111;
+    border-radius: 6px;
+    background: #fff;
+    color: #111;
+    text-decoration: none;
+    font-size: 12px;
+}
+.payment-actions{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0;
 }
 </style>
 </head>
@@ -222,7 +239,6 @@ input[name="postcode"]{
 <input type="text" name="expiry" placeholder="Expiry Date (MM/YY)" pattern="(0[1-9]|1[0-2])/[0-9]{2}" required />
 <input type="text" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />
 
-<!-- Total above the submit button (bigger payment area) -->
 <div class="payment-summary">
     <div class="row">
         <span>Subtotal</span>
@@ -239,6 +255,13 @@ input[name="postcode"]{
     <div class="row total">
         <span>Total</span>
         <span><?= money($total) ?></span>
+    </div>
+</div>
+
+<div class="payment-actions">
+    <a href="basket.php" class="view-basket-btn">View Basket</a>
+    <div style="font-weight:700;">
+        Total: <?= money($total) ?>
     </div>
 </div>
 
