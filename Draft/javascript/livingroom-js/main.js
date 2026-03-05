@@ -38,19 +38,30 @@ async function fetchProducts() {
 
   // Render products into the grid
 function renderProducts(products) {
-    productGrid.innerHTML = '';
+  productGrid.innerHTML = '';
+  productGrid.style.display = 'grid';
+  productGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(260px, 1fr))';
+  productGrid.style.gap = '24px';
+  productGrid.style.alignItems = 'start';
 
     if (!products.length) {
         productGrid.innerHTML = '<p id="no-results">Uh oh! No products available.</p>';
         return;
     }
  
+    const fragment = document.createDocumentFragment();
+    
     products.forEach(product => {
     const div = document.createElement('div');
     div.classList.add('item');
+    div.style.display = 'grid';
 
-   div.dataset.category = product.category_id;
-   div.dataset.id = product.product_ID;
+    const imgSrc = product.image && !product.image.startsWith('http') && !product.image.startsWith('../')
+      ? `../images/${product.image}`
+      : (product.image || '../images/placeholder.png');
+
+    div.dataset.category = product.category_id;
+    div.dataset.id = product.product_ID;
     div.dataset.price    = product.price;
     div.dataset.new      = product.is_new;
     div.dataset.rating   = product.rating;
@@ -58,17 +69,15 @@ function renderProducts(products) {
     div.dataset.colour   = product.colour;
 
     div.innerHTML = `
-    <img class="product-img" src="${product.image}" alt="${product.name}">
-      <div class="product-text">
-        <h2>${product.name}</h2>
-        <p>£${product.price}</p>
-      </div>
+      <img class="product-img" src="${imgSrc}" alt="${product.name}">
+      <h2>${product.name}</h2>
+      <p>£${product.price}</p>
       <button class="add-to-basket">
         <img src="../images/add-button-icon.png">
       </button>
     `;
 
-    productGrid.appendChild(div);
+    fragment.appendChild(div);
 
       // Added basket event listener after button is created
         const button = div.querySelector('.add-to-basket');
@@ -77,7 +86,17 @@ function renderProducts(products) {
             addToBasket(product.product_ID, 1, button);
         });
       });
+      
+      productGrid.appendChild(fragment);
       }
+      
+// Ensure products load on page ready using batched DOM insertion
+document.addEventListener("DOMContentLoaded", () => {
+  if (productGrid) {
+    productGrid.style.display = "grid";
+  }
+  fetchProducts();
+});
 // Initial fetch
 document.addEventListener("click", function (e) {
   const favBtn = e.target.closest(".fav-icon-btn");
