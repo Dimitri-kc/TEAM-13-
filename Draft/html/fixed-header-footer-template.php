@@ -15,7 +15,7 @@ $headerName = ($userName !== '') ? $userName : 'Guest';
     <title>Page Title</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=8">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
     <style>
@@ -232,6 +232,10 @@ $headerName = ($userName !== '') ? $userName : 'Guest';
 
         html.dark-mode .main-logo {
             filter: invert(0);
+        }
+
+        .social-icon {
+            filter: invert(1) brightness(0.8) !important;
         }
     </style>
     <script src="../javascript/dark-mode.js"></script>
