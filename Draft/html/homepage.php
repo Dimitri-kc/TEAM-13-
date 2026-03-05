@@ -365,6 +365,8 @@ if ($showWelcomeToast) {
     <script src="../javascript/dark-mode.js"></script>
 </head>
 
+<script src="//code.tidio.co/39jephe3cplamvoahaopa21ssco3ywxf.js" async></script>
+
 <body class="ll-homepage">
 
 <header class="site-header">

@@ -145,7 +145,7 @@
      </a>
 
 <div class="action-buttons">
-<form method="post" action="favourites_add.php" style="position: absolute; top: 15px; left: 15px; z-index: 999; margin: 0; padding: 0; pointer-events: auto;">
+<form method="post" action="favourites_add.php" style="position: absolute; top: 18px; left: 18px; z-index: 999; margin: 0; padding: 0; pointer-events: auto;">
     <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
     <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
     <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
