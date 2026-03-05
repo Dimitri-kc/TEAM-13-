@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_ID'])) {
     exit();
 }
 //commented out while testing
-/* if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
 
   // Collects customer info 
   $customer = [
@@ -19,10 +19,17 @@ if (!isset($_SESSION['user_ID'])) {
     "postcode" => $_POST["postcode"] ?? "",
     "phone"    => $_POST["phone"] ?? "",
   ];
+//debugging > check what's in cart
+error_log("Checkout form submitted with customer data: " . print_r($customer, true));
+error_log("Session cart items: " . print_r($items, true));
 
-  // Collect items from session cart 
-
-  $items = $_SESSION["cart_items"] ?? [];
+  // Collect items from session cart > use session key based on login status
+if ($user_ID > 0) {
+    $items = $_SESSION["cart"] ?? [];
+} else {
+    $items = $_SESSION["guest_basket"] ?? [];
+}
+error_log("Checkout - user_ID: " . $user_ID . " | Cart items: " . print_r($cart, true));
 
   // Store order for confirmation page
   $_SESSION["order"] = [
@@ -40,7 +47,7 @@ if (!isset($_SESSION['user_ID'])) {
 
   header("Location: orderconfirmation.php");
   exit;
-} */
+}
 
 //fetch user details for pre-filling form
 $user_ID = $_SESSION['user_ID'] ?? null;
