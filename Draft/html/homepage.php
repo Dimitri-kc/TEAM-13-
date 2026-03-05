@@ -24,7 +24,7 @@ if ($showWelcomeToast) {
     <link rel="stylesheet" href="../css/header_footer_style.css?v=8">
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
-    <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=16">
+    <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=19">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
     <style>
