@@ -439,6 +439,8 @@ if ($showWelcomeToast) {
     </style>
 </head>
 
+<script src="//code.tidio.co/39jephe3cplamvoahaopa21ssco3ywxf.js" async></script>
+
 <body>
 
 <?php if ($showWelcomeToast): ?>
