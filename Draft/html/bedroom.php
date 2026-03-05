@@ -106,10 +106,10 @@
 
     <div class="top-bar">
       <input class="search" type="text" placeholder="Search..">
-      <button class="button-sort btn-New">New</button>
-      <button class="button-sort btn-PriceAsc">Price ascending</button>
-      <button class="button-sort btn-PriceDesc">Price descending</button>
-      <button class="button-sort btn-Rating">Rating</button>
+<button class="btn-New button-sort">New <span class="X">✕</span></button>
+<button class="btn-PriceAsc button-sort">Price ascending <span class="X">✕</span></button>
+<button class="btn-PriceDesc button-sort">Price descending <span class="X">✕</span></button>
+<button class="btn-Rating button-sort">Rating <span class="X">✕</span></button>
     </div>
 
     <p id="no-results" style="display:none; font-size:20px; margin-top: 15px; padding-left: 48px; font-weight: 500;">
