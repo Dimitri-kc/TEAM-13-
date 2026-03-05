@@ -584,6 +584,9 @@ if ($showWelcomeToast) {
             to focus on exceptional design and quality while maintaining
             an affordable cost.
         </p>
+        <div class="about-logo-container">
+            <img src="../images/about-logo.png" alt="Loft & Living Logo" class="about-logo">
+        </div>
     </div>
     
     <div class="right">
