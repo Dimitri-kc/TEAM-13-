@@ -2,7 +2,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #EFEFEA;
+    background-color: #e8e8e8;
     font-family: "Ibarra Real Nova", serif;
 }
 
@@ -188,7 +188,7 @@ body {
 
 /* FAVOURITES */
 .grey-section {
-    background-color: #B6B6B6;
+    background-color: #d4d4d4;
     padding: 25px 30px;
     margin: 60px auto;
     border-radius: 25px;
@@ -239,29 +239,85 @@ body {
     width: calc(100% - 48px);
     max-width: none;
     margin: 60px auto;
+    display: flex !important;
+    gap: 24px;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
 }
 
 .ll-homepage .split-page .left {
-    width: 100%;
-    align-items: center;
-    text-align: center;
-    padding: 50px 40px;
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    padding: 40px !important;
+    background: #c8c8c8 !important;
+    width: auto !important;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
-
 .ll-homepage .split-page .left h1 {
-    margin: 0 0 12px;
-    text-align: center;
+    margin: 0 0 20px !important;
+    text-align: center !important;
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
 }
 
 .ll-homepage .split-page .left p {
-    margin-top: 0;
-    max-width: 800px;
-    text-align: center;
-    padding: 0 40px;
+    margin-top: 0 !important;
+    text-align: center !important;
+    line-height: 1.6 !important;
+    max-width: none !important;
+    padding: 0 20px !important;
 }
 
 .ll-homepage .split-page .right {
-    display: none !important;
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 40px !important;
+    background: #bcbcbc !important;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.ll-homepage .split-page .right h1 {
+    margin: 0 0 20px !important;
+    text-align: center !important;
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+}
+
+.ll-homepage .split-page .about-logo-container {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.ll-homepage .split-page .about-logo {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+}
+
+.ll-homepage .split-page .logo-caption {
+    font-size: 12px;
+    color: #666;
+    margin-top: 10px;
+    font-style: italic;
+    text-align: center;
+}
+
+.ll-homepage .split-page .right .form-container {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    width: 80% !important;
+    max-width: 400px;
 }
 
 /* REVIEWS */
@@ -273,6 +329,11 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #b0b0b0;
+    padding: 30px;
+    border-radius: 25px;
+    margin-top: 60px;
+    margin-bottom: 60px;
 }
 
 .reviews-slider-wrapper{

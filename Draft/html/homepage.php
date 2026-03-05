@@ -24,6 +24,7 @@ if ($showWelcomeToast) {
     <link rel="stylesheet" href="../css/header_footer_style.css">
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
+    <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=3">
     <link rel="stylesheet" href="../css/dark-mode.css">
 
     <style>
@@ -565,7 +566,7 @@ if ($showWelcomeToast) {
     </div>
 </div>
 
-<!-- ABOUT -->
+<!-- ABOUT & CONTACT -->
 <div class="split-page">
     <div class="left">
         <h1>ABOUT US</h1>
@@ -584,15 +585,9 @@ if ($showWelcomeToast) {
             an affordable cost.
         </p>
     </div>
-</div>
-
-<!-- CONTACT -->
-<header id="main-header">
-    <h1 class="title">CONTACT US</h1>
-</header>
-
-<main>
-    <section>
+    
+    <div class="right">
+        <h1>CONTACT US</h1>
         <div class="form-container">
             <form id="contact-form" action="https://formspree.io/f/xzzlerol" method="POST">
                 <input type="text" name="_gotcha" style="display: none;" />
@@ -615,8 +610,8 @@ if ($showWelcomeToast) {
                 <button type="submit">Submit</button>
             </form>
         </div>
-    </section>
-</main>
+    </div>
+</div>
 
 <!-- FOOTER -->
 <footer class="site-footer">
