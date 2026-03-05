@@ -3,6 +3,9 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Optional: Include database connection if needed for your page
+// include '../backend/config/db_connect.php';
+
 $isLoggedIn = !empty($_SESSION['user_ID']);
 $userName   = $_SESSION['name'] ?? '';
 $headerName = ($userName !== '') ? $userName : 'Guest';
