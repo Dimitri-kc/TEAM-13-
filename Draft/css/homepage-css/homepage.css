@@ -2,7 +2,8 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #e8e8e8;
+    background-color: #F4F1EC;
+    color: #2B2B2B;
     font-family: "Ibarra Real Nova", serif;
 }
 
@@ -18,7 +19,7 @@ body {
 .homepage-hero .hero-media{
     position: absolute;
     inset: 0;
-    background-image: url("../../images/homepage-images/adobe-main.jpg");
+    background-image: url("../../images/homepage-images/light.jpg?v=20260305b");
     background-size: cover;
     background-position: center;
     transform: scale(1.02);
@@ -28,7 +29,7 @@ body {
     content:"";
     position:absolute;
     inset:0;
-    background: radial-gradient(ellipse at center, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.55) 100%);
+    background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15));
     pointer-events:none;
 }
 
@@ -44,6 +45,11 @@ body {
     z-index: 3500;
 }
 
+.ll-homepage .site-header .ui-icon {
+    filter: brightness(0) invert(1) contrast(180%);
+    opacity: 1 !important;
+}
+
 /* Keep dropdown above hero */
 .ll-homepage .dropdown-panel{ z-index: 4000; }
 
@@ -56,13 +62,13 @@ body {
 
 /* ICONS (menu, user, basket etc) -> muted light grey */
 .ll-homepage .site-header .ui-icon{
-    filter: invert(1) brightness(0.82) contrast(0.92);
-    opacity: 0.85;
+    filter: brightness(0) invert(1) contrast(180%);
+    opacity: 1;
     transition: opacity 0.2s ease, filter 0.2s ease;
 }
 
 .ll-homepage .site-header .ui-icon:hover{
-    filter: invert(1) brightness(0.95) contrast(1);
+    filter: brightness(0) invert(1) contrast(200%);
     opacity: 1;
 }
 
@@ -138,7 +144,7 @@ body {
 .category {
     min-width: 0;
     text-decoration: none;
-    color: black;
+    color: #2B2B2B;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -162,7 +168,7 @@ body {
 
 .image-box {
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 4 / 5;
     position: relative;
     overflow: hidden;
     border-radius: 8px;
@@ -188,7 +194,7 @@ body {
 
 /* FAVOURITES */
 .grey-section {
-    background-color: #d4d4d4;
+    background-color: #E5E1DB;
     padding: 25px 30px;
     margin: 60px auto;
     border-radius: 25px;
@@ -203,6 +209,7 @@ body {
     font-weight: 600;
     margin-bottom: 22px;
     text-align: center;
+    color: #2B2B2B;
 }
 
 .collection-cards {
@@ -214,13 +221,15 @@ body {
 
 .collection-cards .card {
         font-size: 13px;
-    background: none;
+    background: transparent;
+    border: none;
     border-radius: 10px;
     padding: 10px;
     flex: 1 1 calc(25% - 20px);
     text-align: center;
     max-width: 25%;
     transition: transform 0.2s ease;
+    font-family: "Ibarra Real Nova", serif !important;
 }
 
 .collection-cards .card:hover { 
@@ -232,6 +241,11 @@ body {
     border-radius: 8px;
     margin-bottom: 8px;
     object-fit: cover;
+}
+
+.collection-cards .card h3 {
+    color: #2B2B2B;
+    font-weight: normal;
 }
 
 /* ABOUT (homepage override) */
@@ -251,9 +265,9 @@ body {
     flex: 1 !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: flex-start !important;
+    justify-content: center !important;
     padding: 40px !important;
-    background: #c8c8c8 !important;
+    background: #E5E1DB !important;
     width: auto !important;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -263,6 +277,7 @@ body {
     text-align: center !important;
     font-size: 1.8rem !important;
     font-weight: 700 !important;
+    color: #2B2B2B;
 }
 
 .ll-homepage .split-page .left p {
@@ -271,6 +286,7 @@ body {
     line-height: 1.6 !important;
     max-width: none !important;
     padding: 0 20px !important;
+    color: #2B2B2B;
 }
 
 .ll-homepage .split-page .right {
@@ -278,7 +294,7 @@ body {
     display: flex !important;
     flex-direction: column !important;
     padding: 40px !important;
-    background: #bcbcbc !important;
+    background: #E5E1DB !important;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
@@ -288,6 +304,7 @@ body {
     text-align: center !important;
     font-size: 1.8rem !important;
     font-weight: 700 !important;
+    color: #2B2B2B;
 }
 
 .ll-homepage .split-page .about-logo-container {
@@ -296,7 +313,7 @@ body {
 }
 
 .ll-homepage .split-page .about-logo {
-    max-width: 60%;
+    max-width: 40%;
     height: auto;
     border-radius: 8px;
     display: block;
@@ -312,12 +329,49 @@ body {
 }
 
 .ll-homepage .split-page .right .form-container {
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
+    background: #F9F7F4 !important;
+    border: 1px solid #E8E4DF !important;
+    padding: 14px !important;
     margin: 0 auto !important;
-    width: 80% !important;
-    max-width: 400px;
+    width: 90% !important;
+    max-width: 500px;
+    border-radius: 12px;
+    box-shadow: none !important;
+}
+
+.ll-homepage .split-page .right label {
+    color: #2B2B2B;
+    font-family: "Ibarra Real Nova", serif;
+}
+
+.ll-homepage .split-page .right input,
+.ll-homepage .split-page .right textarea {
+    background-color: #F4F1EC !important;
+    color: #2B2B2B !important;
+    border: 1px solid #D8CFC2 !important;
+    font-family: "Ibarra Real Nova", serif;
+}
+
+.ll-homepage .split-page .right input::placeholder,
+.ll-homepage .split-page .right textarea::placeholder {
+    color: #9A9084;
+}
+
+.ll-homepage .split-page .right input:focus,
+.ll-homepage .split-page .right textarea:focus {
+    border-color: #B8AFA4 !important;
+    box-shadow: 0 0 0 2px rgba(184, 175, 164, 0.22);
+    outline: none;
+}
+
+.ll-homepage .split-page .right button {
+    background-color: #B8AFA4;
+    color: #FFFFFF;
+    border: none;
+}
+
+.ll-homepage .split-page .right button:hover {
+    background-color: #C8B79C;
 }
 
 /* REVIEWS */
@@ -329,7 +383,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #b0b0b0;
+    background-color: #E5E1DB;
     padding: 30px;
     border-radius: 25px;
     margin-top: 60px;

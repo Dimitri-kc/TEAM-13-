@@ -24,8 +24,8 @@ if ($showWelcomeToast) {
     <link rel="stylesheet" href="../css/header_footer_style.css">
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
-    <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=3">
-    <link rel="stylesheet" href="../css/dark-mode.css">
+    <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=16">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=5">
 
     <style>
         /* Profile dropdown styles */
@@ -63,20 +63,20 @@ if ($showWelcomeToast) {
         .profile-welcome {
             font-size: 14px;
             font-weight: 700;
-            color: #000;
+            color: #2B2B2B;
             margin-bottom: 14px;
         }
 
         .profile-link {
             display: block;
             font-size: 14px;
-            color: #444;
+            color: #2B2B2B;
             padding: 10px 0;
             text-decoration: none;
         }
 
         .profile-link + .profile-link {
-            border-top: 1px solid #eee;
+            border-top: 1px solid #E5E1DB;
         }
 
         .profile-link-danger {
@@ -95,6 +95,7 @@ if ($showWelcomeToast) {
             font-size: 22px;
             font-weight: 700;
             letter-spacing: 1px;
+            color: #2B2B2B;
         }
 
         .add-review-btn {
@@ -115,7 +116,6 @@ if ($showWelcomeToast) {
         .add-review-btn::after {
             content: "Add Review";
             position: absolute;
-            top: -40px;
             left: 50%;
             transform: translateX(-50%);
             background: black;
@@ -145,7 +145,7 @@ if ($showWelcomeToast) {
         .add-review-btn:hover::after,
         .add-review-btn:hover::before { opacity: 1; }
 
-        .add-review-btn:hover { background-color: rgba(0,0,0,0.08); }
+        .add-review-btn:hover { background-color: rgba(184,175,164,0.25); }
 
         .reviews-slider-wrapper {
             position: relative;
@@ -171,7 +171,8 @@ if ($showWelcomeToast) {
         .review-card {
             min-width: 260px;
             max-width: 260px;
-            background: white;
+            background: #FFFFFF;
+            border: 1px solid #E5E1DB;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 6px 18px rgba(0,0,0,0.05);
@@ -183,9 +184,9 @@ if ($showWelcomeToast) {
 
         .stars {
             font-size: 28px;
-            color: #373737;
+            color: #2B2B2B;
             margin-bottom: 8px;
-            background: linear-gradient(90deg, #555, #222);
+            background: linear-gradient(90deg, #B8AFA4, #2B2B2B);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -194,11 +195,12 @@ if ($showWelcomeToast) {
         .review-card h3 {
             margin: 8px 0;
             font-size: 16px;
+            color: #2B2B2B;
         }
 
         .review-card p {
             font-size: 13px;
-            color: #555;
+            color: #2B2B2B;
             margin-bottom: 15px;
         }
 
@@ -215,16 +217,16 @@ if ($showWelcomeToast) {
         }
 
         .name { display: block; font-weight: 600; font-size: 13px; }
-        .date { font-size: 11px; color: #777; }
+        .date { font-size: 11px; color: #B8AFA4; }
 
         /* Nav arrows (we’ll also reinforce in homepage.css) */
         .nav-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255,255,255,0.92);
-            color: #111;
-            border: 1px solid rgba(0,0,0,0.10);
+            background: #FFFFFF;
+            color: #2B2B2B;
+            border: 1px solid #E5E1DB;
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -248,7 +250,7 @@ if ($showWelcomeToast) {
         .next-btn { right: 10px; }
 
         .reviews-section {
-            background-color: #B6B6B6;
+            background-color: #E5E1DB;
             padding: 25px 30px;
             margin: 90px auto;
             border-radius: 25px;
@@ -280,6 +282,7 @@ if ($showWelcomeToast) {
             margin: 3% auto;
             padding: 10px 14px;
             border-radius: 14px;
+            border: 1px solid #E5E1DB;
             box-shadow: 0 8px 28px rgba(0,0,0,0.15);
         }
 
@@ -295,7 +298,7 @@ if ($showWelcomeToast) {
         #reviewForm label {
             font-size: 12px;
             font-weight: 600;
-            color: #333;
+            color: #2B2B2B;
             margin-bottom: 2px;
             display: block;
         }
@@ -306,9 +309,10 @@ if ($showWelcomeToast) {
             margin-bottom: 6px;
             padding: 6px 8px;
             border-radius: 8px;
-            border: 1px solid #ddd;
+            border: 1px solid #E5E1DB;
             font-size: 13px;
-            background: #f7f7f7;
+            background: #FFFFFF;
+            color: #2B2B2B;
         }
 
         #reviewForm textarea {
@@ -319,7 +323,7 @@ if ($showWelcomeToast) {
         .submit-review-btn {
             width: 100%;
             padding: 8px;
-            background: #111;
+            background: #B8AFA4;
             color: white;
             border: none;
             border-radius: 8px;
@@ -329,7 +333,7 @@ if ($showWelcomeToast) {
             margin-top: 4px;
             transition: background 0.2s;
         }
-        .submit-review-btn:hover { background: #000; }
+        .submit-review-btn:hover { background: #C8B79C; }
 
         .star-rating {
             display: flex;
@@ -340,7 +344,7 @@ if ($showWelcomeToast) {
         }
 
         .star-rating span { color: #ccc; transition: color 0.2s, transform 0.15s; }
-        .star-rating span.active { color: #111; transform: scale(1.1); }
+        .star-rating span.active { color: #B8AFA4; transform: scale(1.1); }
 
         .reviews-corner-btn {
             position: absolute;
@@ -457,35 +461,35 @@ if ($showWelcomeToast) {
     <a class="category living" href="livingroom.php">
         <div class="title-box">LIVING ROOM</div>
         <div class="image-box">
-            <img src="../images/homepage-images/livingroom.png?v=2" alt="Living Room">
+            <img src="../images/homepage-images/livingroom.png?v=3" alt="Living Room">
         </div>
     </a>
 
     <a class="category kitchen" href="kitchen.php">
         <div class="title-box">KITCHEN</div>
         <div class="image-box">
-            <img src="../images/homepage-images/kitchen.png?v=2" alt="Kitchen">
+            <img src="../images/homepage-images/kitchen.png?v=3" alt="Kitchen">
         </div>
     </a>
 
     <a class="category office" href="office.php">
         <div class="title-box">OFFICE</div>
         <div class="image-box">
-            <img src="../images/homepage-images/officefinal.png" alt="Office">
+            <img src="../images/homepage-images/officefinal.png?v=3" alt="Office">
         </div>
     </a>
 
     <a class="category bathroom" href="bathroom.php">
         <div class="title-box">BATHROOM</div>
         <div class="image-box">
-            <img src="../images/homepage-images/bathroom.png?v=2" alt="Bathroom">
+            <img src="../images/homepage-images/bathroom.png?v=3" alt="Bathroom">
         </div>
     </a>
 
     <a class="category bedroom" href="bedroom.php">
         <div class="title-box">BEDROOM</div>
         <div class="image-box">
-            <img src="../images/homepage-images/bedroom.png?v=2" alt="Bedroom">
+            <img src="../images/homepage-images/bedroom.png?v=3" alt="Bedroom">
         </div>
     </a>
 </div>
