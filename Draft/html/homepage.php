@@ -22,7 +22,6 @@ if ($showWelcomeToast) {
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/header_footer_style.css">
-    <link rel="stylesheet" href="../css/homepage-css/homepage.css">
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
     <link rel="stylesheet" href="../css/dark-mode.css">
