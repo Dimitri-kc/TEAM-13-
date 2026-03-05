@@ -22,13 +22,13 @@ if ($showWelcomeToast) {
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/header_footer_style.css">
-
     <link rel="stylesheet" href="../css/homepage-css/homepage.css">
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
+    <link rel="stylesheet" href="../css/dark-mode.css">
 
     <style>
-        /* (Keeping your homepage inline dropdown styles as-is) */
+        /* Profile dropdown styles */
         .profile-wrapper {
             position: relative;
             display: inline-flex;
@@ -37,6 +37,7 @@ if ($showWelcomeToast) {
         }
 
         .profile-btn {
+            background: transparent;
             border: none;
             cursor: pointer;
             padding: 0;
@@ -53,14 +54,11 @@ if ($showWelcomeToast) {
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             border: 1px solid #e0e0e0;
             padding: 18px;
-            
             display: none;
             z-index: 3000;
         }
 
-        .profile-dropdown.open {
-            display: block;
-        }
+        .profile-dropdown.open { display: block; }
 
         .profile-welcome {
             font-size: 14px;
@@ -74,6 +72,7 @@ if ($showWelcomeToast) {
             font-size: 14px;
             color: #444;
             padding: 10px 0;
+            text-decoration: none;
         }
 
         .profile-link + .profile-link {
@@ -84,17 +83,11 @@ if ($showWelcomeToast) {
             color: #b00020;
         }
 
-        /* ============================
-           REVIEWS + MODAL CSS
-           (Moved here from after </html>
-           so the page stays stable)
-           ============================ */
-
+        /* Reviews / modal CSS (your working version) */
         .reviews-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: none;
         }
 
         .reviews-header h2 {
@@ -105,8 +98,8 @@ if ($showWelcomeToast) {
         }
 
         .add-review-btn {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background-color: transparent;
             background-image: url('../images/plus.png');
@@ -150,13 +143,9 @@ if ($showWelcomeToast) {
         }
 
         .add-review-btn:hover::after,
-        .add-review-btn:hover::before {
-            opacity: 1;
-        }
+        .add-review-btn:hover::before { opacity: 1; }
 
-        .add-review-btn:hover {
-            background-color: #d3d3d3;
-        }
+        .add-review-btn:hover { background-color: rgba(0,0,0,0.08); }
 
         .reviews-slider-wrapper {
             position: relative;
@@ -177,9 +166,7 @@ if ($showWelcomeToast) {
             scrollbar-width: none;
         }
 
-        .reviews-container::-webkit-scrollbar {
-            display: none;
-        }
+        .reviews-container::-webkit-scrollbar { display: none; }
 
         .review-card {
             min-width: 260px;
@@ -192,9 +179,7 @@ if ($showWelcomeToast) {
             transition: transform 0.2s ease;
         }
 
-        .review-card:hover {
-            transform: translateY(-4px);
-        }
+        .review-card:hover { transform: translateY(-4px); }
 
         .stars {
             font-size: 28px;
@@ -229,35 +214,28 @@ if ($showWelcomeToast) {
             border-radius: 50%;
         }
 
-        .name {
-            display: block;
-            font-weight: 600;
-            font-size: 13px;
-        }
+        .name { display: block; font-weight: 600; font-size: 13px; }
+        .date { font-size: 11px; color: #777; }
 
-        .date {
-            font-size: 11px;
-            color: #777;
-        }
-
+        /* Nav arrows (we’ll also reinforce in homepage.css) */
         .nav-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: white;
-            color: black;
-            border: none;
+            background: rgba(255,255,255,0.92);
+            color: #111;
+            border: 1px solid rgba(0,0,0,0.10);
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.10);
             cursor: pointer;
             font-size: 22px;
             font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 2;
+            z-index: 10;
         }
 
         .nav-btn:hover {
@@ -265,24 +243,23 @@ if ($showWelcomeToast) {
             box-shadow: 0 6px 18px rgba(0,0,0,0.15);
         }
 
-        .prev-btn { left: -20px; }
-        .next-btn { right: -20px; }
+        /* Keep them INSIDE the reviews box so they don’t vanish */
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
 
         .reviews-section {
             background-color: #B6B6B6;
             padding: 25px 30px;
-            margin: 90px auto 90px auto;
+            margin: 90px auto;
             border-radius: 25px;
             max-width: 1100px;
-            width: 100%;
+            width: calc(100% - 80px);
             box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+            position: relative; /* Added positioning context */
         }
 
         @media (max-width: 768px) {
-            .review-card {
-                min-width: 220px;
-                max-width: 220px;
-            }
+            .review-card { min-width: 220px; max-width: 220px; }
         }
 
         .review-modal {
@@ -304,12 +281,6 @@ if ($showWelcomeToast) {
             padding: 10px 14px;
             border-radius: 14px;
             box-shadow: 0 8px 28px rgba(0,0,0,0.15);
-        }
-
-        .modal-content h2 {
-            margin: 10 0 8px 0;
-            font-size: 22px;
-            font-weight: 700;
         }
 
         .close-modal {
@@ -368,138 +339,54 @@ if ($showWelcomeToast) {
             margin-bottom: 8px;
         }
 
-        .star-rating span {
-            color: #ccc;
-            transition: color 0.2s, transform 0.15s;
+        .star-rating span { color: #ccc; transition: color 0.2s, transform 0.15s; }
+        .star-rating span.active { color: #111; transform: scale(1.1); }
+
+        .reviews-corner-btn {
+            position: absolute;
+            right: 18px;
+            bottom: 18px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: transparent;
+            background-image: url('../images/plus.png');
+            background-size: 60%;
+            background-repeat: no-repeat;
+            background-position: center;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+            z-index: 10;
         }
 
-        .star-rating span.active {
-            color: #111;
-            transform: scale(1.1);
-        }
 
-        .grey-section {
-            background-color: #B6B6B6;
-            padding: 25px 30px;
-            margin: 60px auto;
-            border-radius: 25px;
-            max-width: 1100px;
-            width: 100%;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-        }
-
-        .grey-section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .collection-cards {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: space-between;
-        }
-
-        .collection-cards .card {
-            background: #B6B6B6;
-            border-radius: 10px;
-            padding: 10px;
-            flex: 1 1 calc(33% - 20px);
-            text-align: center;
-            max-width: 33%;
-            transition: transform 0.2s ease;
-        }
-
-        .collection-cards .card:hover { transform: translateY(-4px); }
-
-        .collection-cards .card img {
-            width: 100%;
-            border-radius: 8px;
-            margin-bottom: 8px;
-        }
-
-        .collection-cards .card h3 {
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        .no-reviews-message p:first-child {
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .no-reviews-message {
-            padding-left: 80px;
-            font-size: 1.1rem;
-        }
-
-        .no-reviews-message p:last-child { opacity: 0.8; }
     </style>
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 
 <script src="//code.tidio.co/39jephe3cplamvoahaopa21ssco3ywxf.js" async></script>
 
-<body>
-
-<?php if ($showWelcomeToast): ?>
-  <div id="llWelcomeToast" class="ll-welcome-toast" role="status" aria-live="polite">
-    <div class="ll-welcome-toast-inner">
-      <div class="ll-welcome-title">Welcome, <?= htmlspecialchars($userName) ?> </div>
-    </div>
-  </div>
-
-  <script>
-        (function () {
-            const toast = document.getElementById('llWelcomeToast');
-            if (!toast) return;
-
-            // Ensure the toast is a direct child of <body> so fixed positioning
-            // will be relative to the viewport (avoids transformed ancestor bugs).
-            try {
-                if (toast.parentElement !== document.body) {
-                    document.body.appendChild(toast);
-                }
-            } catch (e) {
-                // ignore if append fails
-            }
-
-            // Force inline positioning to avoid stylesheet conflicts
-            Object.assign(toast.style, {
-                position: 'fixed',
-                top: '140px',
-                left: '50%',
-                transform: 'translate(-50%, 0)',
-                zIndex: '99999',
-                width: 'auto',
-                maxWidth: 'calc(100vw - 48px)',
-                padding: '0 12px',
-                display: 'flex',
-                justifyContent: 'center',
-                pointerEvents: 'auto'
-            });
-
-            requestAnimationFrame(() => toast.classList.add('is-visible'));
-
-            setTimeout(() => {
-                toast.classList.remove('is-visible');
-                setTimeout(() => { try { toast.remove(); } catch(e){} }, 350);
-            }, 2500);
-        })();
-  </script>
-<?php endif; ?>
-
+<body class="ll-homepage">
 
 <header class="site-header">
     <div class="header-inner">
-        <button class="menu-btn" id="menu-toggle-btn">
-            <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
-        </button>
+
+        <!-- LEFT: menu + muted search pill -->
+        <div class="header-left-tools">
+            <button class="menu-btn" id="menu-toggle-btn" type="button" aria-label="Open menu">
+                <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
+            </button>
+            <img src="../images/header_footer_images/icon-moon.png" alt="Dark Mode" class="ui-icon" id="moon-icon" data-light-src="../images/header_footer_images/icon-moon.png" data-dark-src="../images/header_footer_images/icon-moon2.png" style="margin-left: 8px; margin-right: 8px; vertical-align: middle; cursor: pointer;">
+            <!-- Replace search pill with search icon -->
+            <a class="mini-search" href="search.php" aria-label="Search">
+                <img src="../images/header_footer_images/icon-search.png" alt="Search" class="ui-icon" id="search-icon" style="vertical-align: middle;">
+            </a>
+        </div>
 
         <div class="logo-wrapper">
             <a href="homepage.php">
-                <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
+                <img src="../images/header_footer_images/logo1.png" alt="LOFT &amp; LIVING" class="main-logo">
             </a>
         </div>
 
@@ -514,13 +401,16 @@ if ($showWelcomeToast) {
                 </button>
 
                 <div class="profile-dropdown" id="profile-dropdown">
-                    <?php //added check for session details for welcome message/links
+                    <?php
                         if (session_status() === PHP_SESSION_NONE) session_start();
-                        $isLoggedIn = !empty($_SESSION['user_ID']); //
-                        $headerName = $_SESSION['name'] ?? 'Guest'; //h
+                        $isLoggedIn = !empty($_SESSION['user_ID']);
+                        $headerName = $_SESSION['name'] ?? 'Guest';
                     ?>
+
                     <?php if ($isLoggedIn): ?>
                         <div class="profile-welcome">Welcome, <?php echo htmlspecialchars($headerName); ?></div>
+                    <?php else: ?>
+                        <div class="profile-welcome">Welcome to Loft & Living</div>
                     <?php endif; ?>
 
                     <?php if (!$isLoggedIn): ?>
@@ -531,7 +421,9 @@ if ($showWelcomeToast) {
                     <a class="profile-link" href="user_dash.php">My account</a>
 
                     <?php if ($isLoggedIn): ?>
+                        <a class="profile-link profile-link-danger" href="my_orders.php">My Orders</a>
                         <a class="profile-link profile-link-danger" href="signout.php">Sign out</a>
+                        
                     <?php endif; ?>
                 </div>
             </div>
@@ -555,39 +447,45 @@ if ($showWelcomeToast) {
     </nav>
 </header>
 
-<div class="row">
+<!-- HERO -->
+<section class="homepage-hero" aria-label="Homepage hero">
+    <div class="hero-media" role="img" aria-label="Hero background"></div>
+</section>
+
+<!-- CATEGORIES -->
+<div class="category-row">
     <a class="category living" href="livingroom.php">
         <div class="title-box">LIVING ROOM</div>
         <div class="image-box">
-            <img src="../images/homepage-images/livingroom.png" alt="Living Room">
+            <img src="../images/homepage-images/livingroom.png?v=2" alt="Living Room">
         </div>
     </a>
 
     <a class="category kitchen" href="kitchen.php">
         <div class="title-box">KITCHEN</div>
         <div class="image-box">
-            <img src="../images/homepage-images/kitchen.png" alt="Kitchen">
+            <img src="../images/homepage-images/kitchen.png?v=2" alt="Kitchen">
         </div>
     </a>
 
     <a class="category office" href="office.php">
         <div class="title-box">OFFICE</div>
         <div class="image-box">
-            <img src="../images/homepage-images/office_final.png" alt="Office">
+            <img src="../images/homepage-images/officefinal.png" alt="Office">
         </div>
     </a>
 
     <a class="category bathroom" href="bathroom.php">
         <div class="title-box">BATHROOM</div>
         <div class="image-box">
-            <img src="../images/homepage-images/bathroom.png" alt="Bathroom">
+            <img src="../images/homepage-images/bathroom.png?v=2" alt="Bathroom">
         </div>
     </a>
 
     <a class="category bedroom" href="bedroom.php">
         <div class="title-box">BEDROOM</div>
         <div class="image-box">
-            <img src="../images/homepage-images/bedroom.png" alt="Bedroom">
+            <img src="../images/homepage-images/bedroom.png?v=2" alt="Bedroom">
         </div>
     </a>
 </div>
@@ -615,20 +513,25 @@ if ($showWelcomeToast) {
                     <h3>OXFORD THROW PILLOW</h3>
                 </a>
             </div>
+            <div class="card">
+                <a href="livingroom.php">
+                    <img src="../images/livingroom-images/rug.png" alt="Faux Fur Rug">
+                    <h3>FAUX FUR RUG</h3>
+                </a>
+            </div>
         </div>
     </div>
 </section>
 
-<section class="reviews-section">
+<section class="reviews-section" style="position:relative;">
     <div class="reviews-header">
         <h2>LATEST REVIEWS</h2>
-        <button class="add-review-btn"></button>
     </div>
-
+    <button class="add-review-btn reviews-corner-btn" type="button" aria-label="Add Review"></button>
     <div class="reviews-slider-wrapper">
-        <button class="nav-btn prev-btn" onclick="scrollReviews(-1)">‹</button>
+        <button class="nav-btn prev-btn" type="button" onclick="scrollReviews(-1)">‹</button>
         <div class="reviews-container" id="reviewsContainer"></div>
-        <button class="nav-btn next-btn" onclick="scrollReviews(1)">›</button>
+        <button class="nav-btn next-btn" type="button" onclick="scrollReviews(1)">›</button>
     </div>
 </section>
 
@@ -638,7 +541,6 @@ if ($showWelcomeToast) {
         <h2>Add a Review</h2>
 
         <form id="reviewForm">
-
             <label>Stars:</label>
             <div class="star-rating">
                 <span data-value="1">★</span>
@@ -664,6 +566,7 @@ if ($showWelcomeToast) {
     </div>
 </div>
 
+<!-- ABOUT -->
 <div class="split-page">
     <div class="left">
         <h1>ABOUT US</h1>
@@ -682,12 +585,9 @@ if ($showWelcomeToast) {
             an affordable cost.
         </p>
     </div>
-
-    <div class="right">
-        <img src="../images/about-logo.png" alt="logo">
-    </div>
 </div>
 
+<!-- CONTACT -->
 <header id="main-header">
     <h1 class="title">CONTACT US</h1>
 </header>
@@ -719,6 +619,7 @@ if ($showWelcomeToast) {
     </section>
 </main>
 
+<!-- FOOTER -->
 <footer class="site-footer">
     <div class="footer-inner">
         <div class="footer-section social-links">
@@ -763,34 +664,6 @@ if ($showWelcomeToast) {
 
 <script src="../javascript/header_footer_script.js"></script>
 <script src="../javascript/global/basketIcon.js"></script>
-
-<!-- <script> //DUPLICATE LOGIC AS header_footer_script.js ALREADY CALLS
-    // Profile dropdown toggle (homepage)
-    document.addEventListener("DOMContentLoaded", () => {
-        const profileToggleBtn = document.getElementById("profile-toggle-btn");
-        const profileDropdown = document.getElementById("profile-dropdown");
-        const profileWrapper = document.getElementById("profile-wrapper");
-
-        if (!profileToggleBtn || !profileDropdown || !profileWrapper) return;
-
-        profileToggleBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            profileDropdown.classList.toggle("open");
-        });
-
-        document.addEventListener("click", (e) => {
-            if (!profileWrapper.contains(e.target)) {
-                profileDropdown.classList.remove("open");
-            }
-        });
-
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
-                profileDropdown.classList.remove("open");
-            }
-        });
-    });
-</script> -->
 
 <script>
     // Review modal logic

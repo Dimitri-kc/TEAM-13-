@@ -9,35 +9,155 @@
 </head>
 <body>
 
+    <div class="admin-wrapper">
     <h1 class="title">Product Inventory</h1>
+    <p class="subtitle">View current product inventory, edit product information and add more products </p>
+
+<div class="filter-wrapper">
+        <input 
+        type="text" 
+        id="search-bar" 
+        placeholder="Search products…" 
+        autocomplete="off">
+        
+ <label>Category:</label>
+
+    <div class="select-wrapper">
+        <select id="category-filter" name="category_id">
+            <option value="">All Items</option>
+            <option value="1">Living Room</option>
+            <option value="2">Kitchen</option>
+            <option value="3">Office</option>
+            <option value="4">Bathroom</option>
+            <option value="5">Bedroom</option>
+        </select>
+    </div>
+
+      <!-- <button id="add-product-btn">Add New Product</button> -->
+    <button id="add-product-btn" onclick="window.location.href='admin_add_product.php'">
+        + Add New Product
+    </button>
+</div>
 
     <div id="product-container" class="product-grid">
         <!-- Products will load here automatically -->
     </div>
+</div>
 
 <script>
 fetch('admin_get_products.php')
 .then(response => response.json())
 .then(data => {
     const container = document.getElementById('product-container');
+    const categoryFilter = document.getElementById('category-filter');
 
-    data.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.classList.add('product-card');
+    // Function to render products
+    function renderProducts(filteredData) {
+        container.innerHTML = ''; // clear previous cards
 
-        productCard.innerHTML = `
-            <img src="../images/${product.image}" alt="${product.name}">
-            <div class="product-info">
-                <p><strong>Product #:</strong> ${product.product_ID}</p>
-                <p><strong>Price:</strong> £${product.price}</p>
-                <p><strong>Stock Available:</strong> ${product.stock}</p>
-            </div>
-        `;
+        // Add "Add New Product" card first
+        // const addCard = document.createElement('div');
+        // addCard.classList.add('product-card', 'add-product-card');
+        // addCard.innerHTML = `
+        //     <div class="add-product-inner">
+        //         <p>+ Add New Product</p>
+        //     </div>
+        // `;
+        // addCard.addEventListener('click', () => {
+        //     window.location.href = 'admin_add_product.php';
+        // });
+        // container.appendChild(addCard);
 
-        container.appendChild(productCard);
-    });
+        // Add product cards
+        filteredData.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.classList.add('product-card');
+            productCard.innerHTML = `
+                <img src="../images/${product.image}" alt="${product.name}">
+                <div class="product-info">
+                <p class="product-name">${product.name}</p>
+                        <p>Product #: ${product.product_ID}</p>
+                        <p>Price: £${product.price}</p>
+                        <p>Stock Available: ${product.stock}</p>
+                    <div class="admin-buttons">
+                        <button class="view-btn" onclick="viewEditProduct(${product.product_ID})">
+                            View & Edit
+                        </button>
+                        <button class="remove-btn" onclick="removeProduct(${product.product_ID})">
+                            Remove
+                        </button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(productCard);
+        });
+    }
+
+    // Initial render with all products
+    renderProducts(data);
+
+    // Filter on dropdown change
+categoryFilter.addEventListener('change', () => {
+    const selected = categoryFilter.value;
+
+    if (selected === '') {
+        renderProducts(data); // Show all products
+    } else {
+        const filteredData = data.filter(product => Number(product.category_id) === Number(selected));
+        renderProducts(filteredData); // Show only selected category
+    }
+});
+document.getElementById("search-bar").addEventListener("input", function () {
+    const query = this.value.toLowerCase();
+
+    const filtered = data.filter(product =>
+        product.name.toLowerCase().includes(query)
+    );
+
+    renderProducts(filtered);
+});
 })
 .catch(error => console.error('Error loading products:', error));
+// Functions for buttons
+function viewEditProduct(productID) {
+    window.location.href = `admin_edit_product.php?id=${productID}`;
+}
+
+function removeProduct(productID) {
+    if (!confirm("Are you sure you want to remove this product?")) return;
+
+    fetch('admin_delete_product.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `product_ID=${productID}`
+    })
+    .then(res => res.text())
+    .then(response => {
+        if (response.trim() === "success") {
+            location.reload();
+        } else {
+            alert("Error deleting product");
+        }
+    });
+}
+document.getElementById("search-bar").addEventListener("input", function () {
+    const query = this.value.toLowerCase(); // Get the search query, converting it to lowercase
+    const products = document.querySelectorAll(".product-card"); // Get all product cards
+
+    products.forEach(card => {
+        const productName = card.querySelector(".product-info p strong").nextElementSibling.textContent.toLowerCase(); // Get the product name from the product card
+
+        // Check if the product name includes the query text
+        if (productName.includes(query)) {
+            card.style.display = "flex"; // Show the product card
+        } else {
+            card.style.display = "none"; // Hide the product card
+        }
+    });
+});
+document.getElementById('add-product-btn').addEventListener('click', () => {
+    window.location.href = 'admin_add_product.php';
+});
 </script>
 
 </body>
