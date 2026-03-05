@@ -2,46 +2,46 @@
 include '../backend/config/db_connect.php';
 session_start();
 
+function money($n){
+    return "£" . number_format((float)$n, 2);
+}
+
 if (!isset($_SESSION['user_ID'])) {
     header("Location: signin.php");
     exit();
 }
-//commented out while testing
-/* if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
 
-  // Collects customer info 
-  $customer = [
-    "name"     => $_POST["name"] ?? "",
-    "email"    => $_POST["email"] ?? "",
-    "address1" => $_POST["address1"] ?? "",
-    "address2" => $_POST["address2"] ?? "",
-    "city"     => $_POST["city"] ?? "",
-    "state"    => $_POST["state"] ?? "",
-    "postcode" => $_POST["postcode"] ?? "",
-    "phone"    => $_POST["phone"] ?? "",
-  ];
+$user_ID = isset($_SESSION["user_ID"]) ? (int)$_SESSION["user_ID"] : null;
+$cart = ($user_ID > 0) ? ($_SESSION["cart"] ?? []) : ($_SESSION["guest_basket"] ?? []);
 
-  // Collect items from session cart 
+$subtotal = 0.0;
+$delivery = 0.0;
+$tax = 0.0;
+$total = 0.0;
 
-  $items = $_SESSION["cart_items"] ?? [];
+$ids = array_keys($cart);
+if (count($ids) > 0) {
+    $placeholders = implode(",", array_fill(0, count($ids), "?"));
+    $sql = "SELECT product_ID, price FROM products WHERE product_ID IN ($placeholders)";
+    $stmt = $conn->prepare($sql);
 
-  // Store order for confirmation page
-  $_SESSION["order"] = [
-    "number" => (string)random_int(100000, 999999),
-    "date" => date("F j, Y"),
-    "currency" => "£",
-    "payment_method" => "Card",
-    "customer" => $customer,
-    "items" => $items,
-    "shipping" => 0,
-    "tax" => 0,
-    "discount" => 0,
-    "continue_url" => "homepage.php"
-  ];
+    if ($stmt) {
+        $stmt->bind_param(str_repeat("i", count($ids)), ...$ids);
+        $stmt->execute();
+        $res = $stmt->get_result();
 
-  header("Location: orderconfirmation.php");
-  exit;
-} */
+        while ($row = $res->fetch_assoc()) {
+            $pid = (int)$row["product_ID"];
+            $qty = (int)($cart[$pid] ?? 0);
+            $price = (float)$row["price"];
+            $subtotal += ($price * $qty);
+        }
+        $stmt->close();
+    }
+}
+
+$tax = $subtotal * 0.10;
+$total = $subtotal + $tax + $delivery;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,20 +61,46 @@ if (!isset($_SESSION['user_ID'])) {
 .product-column img{ display:none!important; }
 .submit-btn,.checkout-btn{ background:#ccc!important; }
 
-/* ==== FIX for CARD DETAILS header appearance ==== */
-/* make header match the input boxes in that card-fields box */
 .card-fields .form-title{
     display: block;
     width: 100%;
-    box-sizing: border-box; /* keep total width stable with border/padding; aligns with inputs */ 
+    box-sizing: border-box;
     border: 1px solid #ddd;
     border-radius: 12px;
-    padding: 12px 14px;       /* similar padding as inputs */
-    margin: 0 0 10px 0;       /* space below header, like inputs have between them */
-    font-size: 15px;          /* closer to input text size */
+    padding: 12px 14px;
+    margin: 0 0 10px 0;
+    font-size: 15px;
     font-weight: 600;
-    line-height: 1.2;         /* compact lines */
+    line-height: 1.2;
     background: #fff;
+}
+
+input[name="postcode"]{
+    margin-bottom: 28px !important;
+}
+.card-fields{
+    margin-top: 12px !important;
+    clear: both;
+}
+
+/* bigger payment total area */
+.payment-summary{
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 18px 16px;
+    margin: 14px 0;
+    background: #fff;
+}
+.payment-summary .row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0;
+}
+.payment-summary .row.total{
+    font-weight: 700;
+    font-size: 16px;
+    margin-top: 10px;
 }
 </style>
 </head>
@@ -136,6 +162,11 @@ if (!isset($_SESSION['user_ID'])) {
 </div>
 
 <div class="total-row">
+<span>Tax (10%):</span>
+<span id="tax"><?= money($tax) ?></span>
+</div>
+
+<div class="total-row">
 <span>Delivery:</span>
 <span id="delivery"><?= money($delivery) ?></span>
 </div>
@@ -149,48 +180,69 @@ if (!isset($_SESSION['user_ID'])) {
 
 </aside>
 
-        <section class="details-column">
-            
-    <form method="post" id="checkout-form">
-  <section class="review-box">
-    <h1 class="form-title">YOUR DETAILS</h1>
+<section class="details-column">
 
-    <div class="review-details">
-      <label><strong>Name *</strong></label>
-      <input type="text" name="name" required>
+<form method="post" id="checkout-form">
 
-      <label><strong>Email *</strong></label>
-      <input type="email" name="email" required>
+<section class="review-box">
+<h1 class="form-title">YOUR DETAILS</h1>
 
-      <label><strong>Phone</strong></label>
-      <input type="text" name="phone">
+<div class="review-details">
+<label><strong>Name *</strong></label>
+<input type="text" name="name" required>
 
-      <label><strong>Address line 1 *</strong></label>
-      <input type="text" name="address1" required>
+<label><strong>Email *</strong></label>
+<input type="email" name="email" required>
 
-      <label><strong>Address line 2</strong></label>
-      <input type="text" name="address2">
+<label><strong>Phone</strong></label>
+<input type="text" name="phone">
 
-      <label><strong>City *</strong></label>
-      <input type="text" name="city" required>
+<label><strong>Address line 1 *</strong></label>
+<input type="text" name="address1" required>
+
+<label><strong>Address line 2</strong></label>
+<input type="text" name="address2">
+
+<label><strong>City *</strong></label>
+<input type="text" name="city" required>
 
 <label><strong>County/Region *</strong></label>
 <input type="text" name="county_region" required>
 
-      <label><strong>Postcode *</strong></label>
-      <input type="text" name="postcode" required>
-    </div>
-  </section>
-
+<label><strong>Postcode *</strong></label>
+<input type="text" name="postcode" required>
+</div>
+</section>
 
 <div class="card-fields">
 
 <h1 class="form-title">CARD DETAILS</h1>
 
-        <input type="text" name="card_number" placeholder="Card Number (16 Digits)" maxlength="19" inputmode="numeric" required />
-        <input type="text" name="expiry" placeholder="Expiry Date (MM/YY)" pattern="(0[1-9]|1[0-2])/[0-9]{2}" required />
-        <input type="text" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />
-        <button type="submit" name="place_order" class="submit-btn">Submit</button>
+<input type="text" name="card_number" placeholder="Card Number (16 Digits)" maxlength="19" inputmode="numeric" required />
+<input type="text" name="expiry" placeholder="Expiry Date (MM/YY)" pattern="(0[1-9]|1[0-2])/[0-9]{2}" required />
+<input type="text" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />
+
+<!-- Total above the submit button (bigger payment area) -->
+<div class="payment-summary">
+    <div class="row">
+        <span>Subtotal</span>
+        <span><?= money($subtotal) ?></span>
+    </div>
+    <div class="row">
+        <span>Tax (10%)</span>
+        <span><?= money($tax) ?></span>
+    </div>
+    <div class="row">
+        <span>Delivery</span>
+        <span><?= money($delivery) ?></span>
+    </div>
+    <div class="row total">
+        <span>Total</span>
+        <span><?= money($total) ?></span>
+    </div>
+</div>
+
+<button type="submit" name="place_order" class="submit-btn">Confirm Payment</button>
 
 <div class="pay-buttons">
 <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
