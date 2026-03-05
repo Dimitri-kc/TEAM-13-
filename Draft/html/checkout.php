@@ -177,9 +177,9 @@ if (!isset($_SESSION['user_ID'])) {
     <div class="card-fields">
         <h2>Card Details</h2>
 
-        <input type="text" name="card_number" placeholder="Card Number (16 Digits)" maxlength="19" inputmode="numeric" required />
-        <input type="text" name="expiry" placeholder="Expiry Date (MM/YY)" pattern="(0[1-9]|1[0-2])/[0-9]{2}" required />
-        <input type="text" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />
+        <input type="text" id="card_number" name="card_number" placeholder="Card Number (1234 4567 8901 2345)" maxlength="19" inputmode="numeric" required />
+        <input type="text" id="expiry" name="expiry" placeholder="Expiry Date (MM/YY)" maxlength="5" required />
+        <input type="text" id="cvv" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />
         <button type="submit" name="place_order" class="submit-btn">Submit</button>
 
         <div class="pay-buttons">
