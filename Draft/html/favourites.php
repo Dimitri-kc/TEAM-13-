@@ -13,23 +13,32 @@ if (!isset($_SESSION['user_ID'])) {
 
 $user_id = $_SESSION['user_ID'];
 
+$favs = [];
+$dbError = null;
+
 // Load favourites from database
 $sql = "SELECT p.product_ID, p.name, p.price, p.image
         FROM favourites f
         JOIN products p ON f.product_ID = p.product_ID
         WHERE f.user_ID = ?";
 
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$res = $stmt->get_result();
+try {
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $res = $stmt->get_result();
 
-$favs = [];
-while ($row = $res->fetch_assoc()) {
-    $favs[] = $row;
+    while ($row = $res->fetch_assoc()) {
+        $favs[] = $row;
+    }
+
+    $stmt->close();
+} catch (mysqli_sql_exception $e) {
+    // If the favourites table doesn't exist (or any SQL error), don't crash the page.
+    $dbError = $e->getMessage();
+    $favs = [];
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,12 +52,11 @@ while ($row = $res->fetch_assoc()) {
         h1 { font-size: 18px; margin: 0 0 4px; font-weight: 700; }
         .sub { font-size: 12px; color: #666; margin-bottom: 18px; }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 3 columns if space allows */
-    gap: 22px; /* spacing between cards */
-}
-
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 22px;
+        }
 
         .fav-card {
           position: relative;
@@ -79,7 +87,7 @@ while ($row = $res->fetch_assoc()) {
           color: #fff;
           font-size: 11px;
           white-space: nowrap;
-          margin-left: 10px; /* shift button a few pixels to the right */
+          margin-left: 10px;
         }
 
         .removeBtn {
@@ -105,7 +113,6 @@ while ($row = $res->fetch_assoc()) {
 </head>
 <body>
 
-<!-- LOFT & LIVING Header -->
 <header class="site-header">
     <div class="header-inner">
         <button class="menu-btn" id="menu-toggle-btn">
@@ -140,9 +147,6 @@ while ($row = $res->fetch_assoc()) {
     </nav>
 </header>
 
-         <!-- <div style="height: 1px; background-color: #ddd; margin-bottom: 0px;"></div> -->
-
-<!-- Main Favourites Content -->
 <main style="padding: 50px; min-height: 600px;">
     <div class="wrap">
         <h1>My Favourites</h1>
@@ -152,44 +156,37 @@ while ($row = $res->fetch_assoc()) {
             <div class="empty">No favourites yet. Go to categories and like a product.</div>
             <div class="actions"><a href="homepage.php">Back to Homepage</a></div>
         <?php else: ?>
-            
+
             <div class="grid">
-    <?php foreach ($favs as $p): ?>
-        <?php 
-            $pid = (int)$p["product_ID"]; 
-            $imagePath = "../images/livingroom-images/" . $p["image"];
-        ?>
-        
-        <div class="fav-card">
-            
-            <!-- REMOVE FROM FAVOURITES -->
-            <form method="post" action="favourite_remove.php" style="margin:0;">
-                <input type="hidden" name="product_id" value="<?= $pid ?>">
-                <input type="hidden" name="redirect" value="favourites.php">
-                <button class="removeBtn" type="submit" title="Remove">×</button>
-            </form>
+                <?php foreach ($favs as $p): ?>
+                    <?php 
+                        $pid = (int)$p["product_ID"]; 
+                        $imagePath = "../images/livingroom-images/" . $p["image"];
+                    ?>
+                    
+                    <div class="fav-card">
+                        <form method="post" action="favourite_remove.php" style="margin:0;">
+                            <input type="hidden" name="product_id" value="<?= $pid ?>">
+                            <input type="hidden" name="redirect" value="favourites.php">
+                            <button class="removeBtn" type="submit" title="Remove">×</button>
+                        </form>
 
-            <!-- PRODUCT IMAGE -->
-<div class="thumb">
-    <?php if (!empty($p["image"])): ?>
-        <img src="../images/<?= htmlspecialchars($p["image"]) ?>" alt="">
-    <?php else: ?>
-        <span style="color:#cfcfcf; font-size:12px;">IMG</span>
-    <?php endif; ?>
-</div>
+                        <div class="thumb">
+                            <?php if (!empty($p["image"])): ?>
+                                <img src="../images/<?= htmlspecialchars($p["image"]) ?>" alt="">
+                            <?php else: ?>
+                                <span style="color:#cfcfcf; font-size:12px;">IMG</span>
+                            <?php endif; ?>
+                        </div>
 
-
-            <!-- ADD TO BASKET -->
-            <form method="post" action="basket.php?action=add" style="margin:0;">
-                <input type="hidden" name="product_id" value="<?= $pid ?>">
-                <input type="hidden" name="qty" value="1">
-                <button class="btn" type="submit">Add to bag</button>
-            </form>
-
-        </div>
-    <?php endforeach; ?>
-</div>
-
+                        <form method="post" action="basket.php?action=add" style="margin:0;">
+                            <input type="hidden" name="product_id" value="<?= $pid ?>">
+                            <input type="hidden" name="qty" value="1">
+                            <button class="btn" type="submit">Add to bag</button>
+                        </form>
+                    </div>
+                <?php endforeach; ?>
+            </div>
 
             <div class="actions" style="margin-top:18px;">
                 <a href="homepage.php">Back to homepage</a>
@@ -198,7 +195,6 @@ while ($row = $res->fetch_assoc()) {
     </div>
 </main>
 
-<!-- LOFT & LIVING Footer -->
 <footer class="site-footer">
     <div class="footer-inner">
         <div class="footer-section social-links">
