@@ -139,9 +139,14 @@ html.dark-mode .split-page {
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
 }
 
+html.dark-mode .ll-homepage .split-page .left,
+html.dark-mode .ll-homepage .split-page .right {
+    background-color: #242424 !important;
+}
+
 html.dark-mode .split-page .left,
 html.dark-mode .split-page .right {
-    background-color: #242424;
+    background-color: #242424 !important;
     color: #e0e0e0;
     border-color: #333;
 }
@@ -281,8 +286,13 @@ html.dark-mode .breadcrumb a:hover {
 
 /* Contact Form Section */
 html.dark-mode .form-container {
-    background-color: #242424;
-    border-color: #444;
+    background-color: #242424 !important;
+    border-color: #444 !important;
+}
+
+html.dark-mode .ll-homepage .split-page .right .form-container {
+    background-color: #242424 !important;
+    border-color: #444 !important;
 }
 
 html.dark-mode .form-container label {
@@ -291,9 +301,16 @@ html.dark-mode .form-container label {
 
 html.dark-mode .form-container input,
 html.dark-mode .form-container textarea {
-    background-color: #2a2a2a;
-    color: #e0e0e0;
-    border-color: #444;
+    background-color: #2a2a2a !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+}
+
+html.dark-mode .ll-homepage .split-page .right input,
+html.dark-mode .ll-homepage .split-page .right textarea {
+    background-color: #2a2a2a !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
 }
 
 html.dark-mode .form-container input::placeholder,
