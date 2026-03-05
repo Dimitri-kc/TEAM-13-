@@ -225,10 +225,10 @@
         </div>
     </footer>
 
-  <script type="module" src="../javascript/livingroom-js/main.js"></script>
+
   <script src="../javascript/header_footer_script.js"></script>
   <script src="../javascript/global/basketIcon.js"></script>
-
+  <script type="module" src="../javascript/livingroom-js/main.js"></script>
 </body>
 </html>
 
