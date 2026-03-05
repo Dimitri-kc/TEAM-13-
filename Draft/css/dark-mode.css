@@ -257,6 +257,11 @@ html.dark-mode .reviews-section {
     color: #e0e0e0;
 }
 
+/* Our Favourites Section */
+html.dark-mode .collection-cards .card h3 {
+    color: #e0e0e0 !important;
+}
+
 html.dark-mode .review-card {
     background-color: #2a2a2a;
     border: 1px solid #333;
@@ -296,7 +301,11 @@ html.dark-mode .ll-homepage .split-page .right .form-container {
 }
 
 html.dark-mode .form-container label {
-    color: #e0e0e0;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .ll-homepage .split-page .right label {
+    color: #e0e0e0 !important;
 }
 
 html.dark-mode .form-container input,

@@ -25,7 +25,7 @@ if ($showWelcomeToast) {
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=16">
-    <link rel="stylesheet" href="../css/dark-mode.css?v=3">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=5">
 
     <style>
         /* Profile dropdown styles */
