@@ -3,6 +3,49 @@
 const basketCountEl = document.getElementById('basket-count'); //element to display count
 const basketModal = document.getElementById('basket-modal'); 
 const BASKET_API = "/TEAM-13-/Draft/backend/routes/basketRoutes.php"; //centralized API endpoint 
+const bToastStyle = document.createElement('style'); //style element for toast notifications
+const basketIcon = document.querySelector('.basket-icon'); 
+
+//added stylings for toast notifications to document head
+function basketToastStyle() {
+    if (document.getElementById('basket-toast')) return; //prevent duplicates
+    bToastStyle.id = 'basket-toast-style';
+    bToastStyle.textContent = `
+        .basket-icon { position: relative;}
+        .basket-toast {
+            position:absolute;
+            top: calc(100% + 8px);
+            right 0;
+            background: #333; 
+            color: #fff;
+            font-size: 12px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            opacity: 0;
+            transform: translateY(-10px) scale(0.8);
+            transform-origin: top right;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+            z-index: 10000;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+            .basket-toast.show { animation: toastFadeIn 0.3s ease-out forwards;
+            .basket-toast.hide { animation: toastFadeOut 0.3s ease-in forwards;
+            @keyframes toastFadeIn {
+            to {opacity: 1; transform: translateY(0) scale(1);}}
+            @keyframes toastFadeOut {
+            to {opacity: 0; transform: translateY(-10px) scale(0.8);}}
+    `;
+    document.head.appendChild(bToastStyle); //add styles to document head
+}
+
+function basketToastEl() {
+    if (!basketIcon) return null; //ensure basket icon exists
+    if (basketToastEl) return basketToastEl; //return existing toast element if already created
+    basketToastStyle(); //ensure styles are added before creating toast element
+}
+
+function showBasketToast() {}
 
 //fetch curent basket and update counter icon
 async function updateBasketCounter() { //asynchronous as waiting for response from server
