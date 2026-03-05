@@ -1,5 +1,10 @@
 <!-- top line creates coorect link to backend database connection -->
-<?php include '../backend/config/db_connect.php'; ?>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+include '../backend/config/db_connect.php';
+?>
 
 <!DOCTYPE html>
 <html lang="en">
