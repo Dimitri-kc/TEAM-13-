@@ -1,4 +1,4 @@
-<!-- did the push work? -->
+<!-- top line creates correct link to backend database connection -->
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -15,7 +15,7 @@ include '../backend/config/db_connect.php';
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
-    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=10">
 
     <link rel="stylesheet" href="../css/category-css/livingroom-base.css">
     <link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
@@ -198,12 +198,10 @@ include '../backend/config/db_connect.php';
     </style>
     <script src="../javascript/dark-mode.js"></script>
 </head>
-<body>
+<body data-category="kitchen">
 
     <header class="site-header">
         <div class="header-inner">
-
-            <!-- LEFT: menu + dark mode + search -->
             <div class="header-left-tools">
                 <button class="menu-btn" id="menu-toggle-btn" type="button" aria-label="Open menu">
                     <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
@@ -275,136 +273,139 @@ include '../backend/config/db_connect.php';
             </ul>
         </nav>
     </header>
-    <a href="../html/homepage.php" style="text-decoration: none; color: inherit;">
-        <h1 style="text-align: center; margin-top: 20px;">KITCHEN</h1>
-    </a>
+    
+    <div style="max-width: 800px; margin: 40px auto 50px; text-align: center; padding: 0 40px;">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 600; margin-bottom: 20px; color: #2B2B2B; letter-spacing: 1px;">KITCHEN</h1>
+        <p style="font-family: 'Ibarra Real Nova', serif; font-size: 16px; line-height: 1.7; color: #2B2B2B; font-weight: 400;">Elevate your culinary space with our premium kitchen collection. From contemporary dining sets and bar stools to elegant storage solutions and stylish accessories, discover everything you need to create a kitchen that's both functional and beautiful.</p>
+    </div>
 
     <div class="content-wrap">
-        
         <aside class="side-bar">
-
             <h3>Keywords</h3>
             <div class="tags">
-                <input type="checkbox" id="grey-tag" value="grey" hidden>
-                <label for="grey-tag" class="tag"> Grey<span class="X">✕</span></label>
-
-                <input type="checkbox" id="smart-tag" value="smart" hidden>
-                <label for="smart-tag" class="tag">Smart <span class="X">✕</span></label>
-
                 <input type="checkbox" id="modern-tag" value="modern" hidden>
-                <label for="modern-tag" class="tag">Modern <span class="X">✕</span></label>
+                <label for="modern-tag" class="tag">Modern<span class="X">✕</span></label>
+                <input type="checkbox" id="contemporary-tag" value="contemporary" hidden>
+                <label for="contemporary-tag" class="tag">Contemporary<span class="X">✕</span></label>
+                <input type="checkbox" id="rustic-tag" value="rustic" hidden>
+                <label for="rustic-tag" class="tag">Rustic<span class="X">✕</span></label>
             </div>
 
             <h3>Categories</h3>
-            <label><input type="checkbox" class="category-filter" value="bins" > Bins </label>
-            <label><input type="checkbox" class="category-filter" value="dining tables" > Dining Tables </label>
-            <label><input type="checkbox" class="category-filter" value="dining chairs" > Dining Chairs</label>
-            <label><input type="checkbox" class="category-filter" value="pans" > Pots and Pans</label>
-            <label><input type="checkbox" class="category-filter" value="cutlery"> Cutlery </label>
+            <label><input type="checkbox" class="category-filter" value="dining-sets"> Dining Sets</label>
+            <label><input type="checkbox" class="category-filter" value="bar-stools"> Bar Stools</label>
+            <label><input type="checkbox" class="category-filter" value="storage"> Storage</label>
+            <label><input type="checkbox" class="category-filter" value="lighting"> Lighting</label>
+            <label><input type="checkbox" class="category-filter" value="accessories"> Accessories</label>
 
-            <h3> Price </h3>
+            <h3>Price</h3>
             <div class="price-wrap">
-                <label for="price" id="price-num">£0-150</label>
+                <label for="price" id="price-num">£0-295</label>
                 <div class="price-slider">
-                    <input type="range" id="price-min" min="0" max="150" value="0">
-                    <input type="range" id="price-max" min="0" max="150" value="150">
+                    <input type="range" id="price-min" min="0" max="295" value="0">
+                    <input type="range" id="price-max" min="0" max="295" value="295">
                     <div class="track"></div>
                     <div class="range" id="range-display"></div>
                 </div>
             </div>
 
-            <h3> Colour </h3>
-            <label><input type="checkbox" class="colour-filter" value="beige"> Beige </label>
-            <label><input type="checkbox" class="colour-filter" value="grey" > Grey </label>
-            <label><input type="checkbox" class="colour-filter" value="green" > Green </label>
-            <label><input type="checkbox" class="colour-filter" value="gold" > Gold </label>
+            <h3>Colour</h3>
+            <label><input type="checkbox" class="colour-filter" value="white"> White</label>
+            <label><input type="checkbox" class="colour-filter" value="black"> Black</label>
+            <label><input type="checkbox" class="colour-filter" value="wood"> Wood</label>
+            <label><input type="checkbox" class="colour-filter" value="grey"> Grey</label>
 
-            <h3> Size </h3>
-            <label><input type="checkbox" class="size-filter" value="one-size" > ONE SIZE </label>
-
+            <h3>Size</h3>
+            <label><input type="checkbox" class="size-filter" value="small"> Small</label>
+            <label><input type="checkbox" class="size-filter" value="medium"> Medium</label>
+            <label><input type="checkbox" class="size-filter" value="large"> Large</label>
         </aside>
 
         <div class="main">
-
             <div class="top-bar">
                 <input class="search" type="text" placeholder="Search..">
-<button class="btn-New button-sort">New <span class="X">✕</span></button>
-<button class="btn-PriceAsc button-sort">Price ascending <span class="X">✕</span></button>
-<button class="btn-PriceDesc button-sort">Price descending <span class="X">✕</span></button>
-<button class="btn-Rating button-sort">Rating <span class="X">✕</span></button>
+                <button class="btn-New button-sort">New <span class="X">✕</span></button>
+                <button class="btn-PriceAsc button-sort">Price ascending <span class="X">✕</span></button>
+                <button class="btn-PriceDesc button-sort">Price descending <span class="X">✕</span></button>
+                <button class="btn-Rating button-sort">Rating <span class="X">✕</span></button>
             </div>
 
             <p id="no-results" style="display:none; font-size:20px; margin-top: 15px; padding-left: 48px; font-weight: 500;">
                 Uh oh! No products matched your search.
             </p>
 
-            <!-- link added to connect to database -->
- <div class="product-grid" id="product-grid">
-    <?php
-    // category_id = 2 for Kitchen. 
-    $query = "SELECT * FROM products WHERE category_id = 2";
-    $result = mysqli_query($conn, $query);
+            <div class="product-grid" id="product-grid" style="display:grid!important;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))!important;gap:24px!important;width:100%!important;">
+                <?php
+                $favouriteProductIds = [];
+                if (!empty($_SESSION['user_ID'])) {
+                    $favUserId = (int)$_SESSION['user_ID'];
+                    $favIdsResult = mysqli_query($conn, "SELECT product_ID FROM favourites WHERE user_ID = {$favUserId}");
+                    if ($favIdsResult instanceof mysqli_result) {
+                        while ($favRow = mysqli_fetch_assoc($favIdsResult)) {
+                            $favouriteProductIds[] = (int)$favRow['product_ID'];
+                        }
+                        mysqli_free_result($favIdsResult);
+                    }
+                }
 
-    if ($result && mysqli_num_rows($result) > 0) {
-        while($row = mysqli_fetch_assoc($result)) {
-            ?>
-            <div class="item" 
+                $query = "SELECT * FROM products WHERE category_id = 2";
+                $result = mysqli_query($conn, $query);
+
+                if (mysqli_num_rows($result) > 0) {
+                    while($row = mysqli_fetch_assoc($result)) {
+                        $isFavourite = in_array((int)$row['product_ID'], $favouriteProductIds, true);
+                        ?>
+<div class="item" style="display:grid;grid-template-rows:280px auto 1fr;position:relative;"
      data-price="<?php echo $row['price']; ?>" 
      data-rating="<?php echo $row['rating']; ?>"     
      data-keywords="<?php echo $row['keywords']; ?>" 
-     data-category="<?php echo ($row['categories']); ?>"
-     data-colour="<?php echo $row['colour']; ?>">
+     data-category="<?php echo $row['categories']; ?>"
+     data-colour="<?php echo $row['colour']; ?>"
+     data-new="<?php echo $row['is_new'] ? 'true' : 'false'; ?>"
+     data-id="<?php echo $row['product_ID']; ?>">
+     
+     <a href="product.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit; display: contents;">
+         <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>" style="grid-row:1;width:100%;height:280px;object-fit:cover;">
+         <h2 style="grid-row:2;"><?php echo $row['name']; ?></h2>
+         <p style="grid-row:3;">£<?php echo $row['price']; ?></p>
+     </a>
 
+     <form method="post" action="favourites_add.php" class="fav-form">
+         <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
+         <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
+         <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
+         <input type="hidden" name="product_image" value="../images/<?= htmlspecialchars($row['image']) ?>">
+         <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+         <button type="submit" class="fav-icon-btn<?= $isFavourite ? ' is-favourite' : '' ?>" title="Add to Favourites">
+             <span class="fav-heart" aria-hidden="true"><?= $isFavourite ? '♥' : '♡' ?></span>
+         </button>
+     </form>
 
- <a href="product.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
-                     <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
-                     <div class="product-text">
-                         <h2><?php echo $row['name']; ?></h2>
-                         <p>£<?php echo $row['price']; ?></p>
-                     </div>
-                 </a>
-
-<div class="action-buttons">
-<form method="post" action="favourites_add.php" style="position: absolute; top: 18px; left: 18px; z-index: 999; margin: 0; padding: 0; pointer-events: auto;">
-    <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
-    <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
-    <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
-    <input type="hidden" name="product_image" value="../images/<?= htmlspecialchars($row['image']) ?>">
-    <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
-    <button type="submit" title="Add to Favourites" style="background: rgb(217, 217, 222); border: none; border-radius: 60%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">♡</button>
-</form>
-
-<!--onclick to pass product_ID in function - API fetch details from DB-->
-<button type="submit" onclick="addToBasket(<?= $row['product_ID'] ?>, 1)" title="Add to basket" style="background: rgba(0,0,0,0.08); border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">+</button>
-
+     <button class="add-to-basket" onclick="addToBasket(<?= $row['product_ID'] ?>, 1, this)" title="Add to basket">
+         <img src="../images/add-button-icon.png" alt="Add" style="width:18px!important;height:18px!important;">
+     </button>
 </div>
-
-
+<?php
+                    }
+                } else {
+                    echo "<p>No products found in the database.</p>";
+                }
+                ?>
             </div>
-            <?php
-        }
-    } else {
-        echo "<p style='padding: 20px;'>No kitchen products found in the database.</p>";
-    }
-    ?>
-</div>
-
-
-    </div> 
-</div> 
-<!-- Basket -->
-    <div id="basket-modal" class="basket-modal">
-    <div class="basket-modal-content">
-        <p>Item added to basket!</p>
-        <div class="basket-modal-buttons">
-            <button id="go-to-basket">Proceed to Basket</button>
-            <button id="continue-shopping">Continue Shopping</button>
-
         </div>
     </div>
-</div> 
- 
-    <footer class="site-footer">
+
+    <div id="basket-modal" class="basket-modal">
+        <div class="basket-modal-content">
+            <p>Item added to basket!</p>
+            <div class="basket-modal-buttons">
+                <button id="go-to-basket">Proceed to Basket</button>
+                <button id="continue-shopping">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer"> 
         <div class="footer-inner">
             <div class="footer-section social-links">
                 <a href="#">
@@ -445,9 +446,12 @@ include '../backend/config/db_connect.php';
             </div>
         </div>
     </footer>
-    <script type="module" src="../javascript/livingroom-js/main.js"></script>
+
     <script src="../javascript/header_footer_script.js"></script>
     <script src="../javascript/global/basketIcon.js"></script>
-
+    <script type="module" src="../javascript/kitchen-js/filters.js"></script>
+    <script type="module" src="../javascript/kitchen-js/sorting.js"></script>
+    <script type="module" src="../javascript/kitchen-js/price-range.js"></script>
+    <script type="module" src="../javascript/kitchen-js/search.js"></script>
 </body>
 </html>

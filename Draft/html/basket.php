@@ -46,14 +46,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   if ($action === "add") {
     $id = (int)($_POST["product_id"] ?? 0);
     $qty = max(1, (int)($_POST["qty"] ?? 1));
+    $redirect = $_POST["redirect"] ?? "basket.php";
+    if (!is_string($redirect) || preg_match('/^https?:\/\//i', $redirect)) {
+      $redirect = "basket.php";
+    }
+
     if ($id > 0) {
       if ($user_ID > 0) {
         $_SESSION["cart"][$id] = ($_SESSION["cart"][$id] ?? 0) + $qty; //update session cart for logged in user
+        $basket = $basketModel->fetchUserBasket($user_ID);
+        if ($basket && !empty($basket['basket_ID'])) {
+          $basketModel->addItemToBasket((int)$basket['basket_ID'], $id, $qty);
+        }
       } else {
         $_SESSION["guest_basket"][$id] = ($_SESSION["guest_basket"][$id] ?? 0) + $qty;
       }
     }
-    header("Location: basket.php");
+    header("Location: $redirect");
     exit;
   }
 

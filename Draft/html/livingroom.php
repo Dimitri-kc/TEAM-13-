@@ -15,7 +15,7 @@ include '../backend/config/db_connect.php';
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
-    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=10">
 
     <link rel="stylesheet" href="../css/category-css/livingroom-base.css">
     <link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
@@ -339,11 +339,24 @@ include '../backend/config/db_connect.php';
 
             <div class="product-grid" id="product-grid" style="display:grid!important;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))!important;gap:24px!important;width:100%!important;">
                 <?php
+                $favouriteProductIds = [];
+                if (!empty($_SESSION['user_ID'])) {
+                    $favUserId = (int)$_SESSION['user_ID'];
+                    $favIdsResult = mysqli_query($conn, "SELECT product_ID FROM favourites WHERE user_ID = {$favUserId}");
+                    if ($favIdsResult instanceof mysqli_result) {
+                        while ($favRow = mysqli_fetch_assoc($favIdsResult)) {
+                            $favouriteProductIds[] = (int)$favRow['product_ID'];
+                        }
+                        mysqli_free_result($favIdsResult);
+                    }
+                }
+
                 $query = "SELECT * FROM products WHERE category_id = 1";
                 $result = mysqli_query($conn, $query);
 
                 if (mysqli_num_rows($result) > 0) {
                     while($row = mysqli_fetch_assoc($result)) {
+                        $isFavourite = in_array((int)$row['product_ID'], $favouriteProductIds, true);
                         ?>
 <div class="item" style="display:grid;grid-template-rows:280px auto 1fr;position:relative;"
      data-price="<?php echo $row['price']; ?>" 
@@ -366,8 +379,8 @@ include '../backend/config/db_connect.php';
          <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
          <input type="hidden" name="product_image" value="../images/<?= htmlspecialchars($row['image']) ?>">
          <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
-         <button type="submit" class="fav-icon-btn" title="Add to Favourites">
-             <img src="../images/heart-icon.png" alt="Favourite">
+         <button type="submit" class="fav-icon-btn<?= $isFavourite ? ' is-favourite' : '' ?>" title="Add to Favourites">
+             <span class="fav-heart" aria-hidden="true"><?= $isFavourite ? '♥' : '♡' ?></span>
          </button>
      </form>
 
