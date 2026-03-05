@@ -226,3 +226,30 @@ body {
     transition: 0.2s ease;
     white-space: nowrap; /* prevents text wrapping */
 }
+/* 
+.low-stock {
+    color: red;
+    font-weight: bold;
+} */
+
+.stock {
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.stock-good {
+    color: #1a7f37;
+    background-color: #d4f5dd;
+}
+
+.stock-low {
+    color: #b36b00;
+    background-color: #ffe9c6;
+}
+
+.stock-critical {
+    color: #b00020;
+    background-color: #ffd6d6;
+}

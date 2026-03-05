@@ -70,25 +70,47 @@ fetch('admin_get_products.php')
 
         // Add product cards
         filteredData.forEach(product => {
-            const productCard = document.createElement('div');
-            productCard.classList.add('product-card');
-            productCard.innerHTML = `
-                <img src="../images/${product.image}" alt="${product.name}">
-                <div class="product-info">
-                <p class="product-name">${product.name}</p>
-                        <p>Product #: ${product.product_ID}</p>
-                        <p>Price: £${product.price}</p>
-                        <p>Stock Available: ${product.stock}</p>
-                    <div class="admin-buttons">
-                        <button class="view-btn" onclick="viewEditProduct(${product.product_ID})">
-                            View & Edit
-                        </button>
-                        <button class="remove-btn" onclick="removeProduct(${product.product_ID})">
-                            Remove
-                        </button>
-                    </div>
-                </div>
-            `;
+
+        // Determine stock level
+    let stockClass = "";
+    let stockText = "";
+
+    if (product.stock <= 4) {
+        stockClass = "stock-critical";
+        stockText = "Critical";
+    } 
+    else if (product.stock <= 9) {
+        stockClass = "stock-low";
+        stockText = "Low Stock";
+    } 
+    else {
+        stockClass = "stock-good";
+        stockText = "In Stock";
+    }
+        const productCard = document.createElement('div');
+        productCard.classList.add('product-card');
+        
+productCard.innerHTML = `
+    <img src="../images/${product.image}" alt="${product.name}">
+    <div class="product-info">
+        <p class="product-name">${product.name}</p>
+        <p>Product #: ${product.product_ID}</p>
+        <p>Price: £${product.price}</p>
+
+        <p class="stock ${stockClass}">
+            Stock Available: ${product.stock} (${stockText})
+        </p>
+
+        <div class="admin-buttons">
+            <button class="view-btn" onclick="viewEditProduct(${product.product_ID})">
+                View & Edit
+            </button>
+            <button class="remove-btn" onclick="removeProduct(${product.product_ID})">
+                Remove
+            </button>
+        </div>
+    </div>
+`;
             container.appendChild(productCard);
         });
     }

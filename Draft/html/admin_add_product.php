@@ -28,6 +28,8 @@
         <input type="file" name="image" accept="image/*" required>
 
         <button type="submit" class="submit-btn">Add Product</button>
+        <button type="button" class="cancel-btn" onclick="window.location.href='admin_product_inventory.php'">
+    Cancel</button>
     </form>
 </div>
 
@@ -121,5 +123,17 @@
 
 .submit-btn:hover {
     background: #259131;
+}
+.cancel-btn {
+    color: #333;
+    border: none;
+    padding: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.cancel-btn:hover {
+    background: #d0d0d0;
 }
 </style>
