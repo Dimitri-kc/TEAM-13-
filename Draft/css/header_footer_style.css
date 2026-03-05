@@ -84,36 +84,51 @@ ul {
 /* LEFT DROPDOWN MENU */
 .dropdown-panel {
     position: absolute;
-    top: 90px;
-    left: 0;
-    width: 300px;
+    top: 100px;
+    left: 10px;
+    width: 260px;
     background: #fff;
-    border: 1px solid #e0e0e0;
-    border-top: none;
-    padding: 30px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 18px;
     display: none;
     z-index: 999;
+    font-family: "Ibarra Real Nova", serif;
 }
 
 .dropdown-panel.open {
     display: block;
 }
 
+.nav-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
 .nav-links li {
-    margin-bottom: 20px;
+    margin: 0;
 }
 
 .nav-links a {
-    font-size: 16px;
-    font-weight: 500;
-    color: #333;
+    display: block;
+    font-size: 14px;
+    color: #2B2B2B;
+    padding: 10px 0;
+    text-decoration: none;
+    font-weight: 400;
+    font-family: "Ibarra Real Nova", serif !important;
+}
+
+.nav-links li + li a {
+    border-top: 1px solid #E5E1DB;
 }
 
 .nav-divider {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
+    margin-top: 14px;
+    padding-top: 0;
+    border-top: 1px solid #E5E1DB;
 }
 
 /* FOOTER */

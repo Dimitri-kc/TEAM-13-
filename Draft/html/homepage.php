@@ -21,7 +21,7 @@ if ($showWelcomeToast) {
     <title>Home</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/header_footer_style.css">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=8">
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=16">
@@ -56,6 +56,7 @@ if ($showWelcomeToast) {
             padding: 18px;
             display: none;
             z-index: 3000;
+            font-family: "Ibarra Real Nova", serif;
         }
 
         .profile-dropdown.open { display: block; }
@@ -65,6 +66,7 @@ if ($showWelcomeToast) {
             font-weight: 700;
             color: #2B2B2B;
             margin-bottom: 14px;
+            font-family: "Ibarra Real Nova", serif !important;
         }
 
         .profile-link {
@@ -73,6 +75,7 @@ if ($showWelcomeToast) {
             color: #2B2B2B;
             padding: 10px 0;
             text-decoration: none;
+            font-family: "Ibarra Real Nova", serif !important;
         }
 
         .profile-link + .profile-link {
