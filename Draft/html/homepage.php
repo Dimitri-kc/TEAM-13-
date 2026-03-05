@@ -421,8 +421,8 @@ if ($showWelcomeToast) {
                     <a class="profile-link" href="user_dash.php">My account</a>
 
                     <?php if ($isLoggedIn): ?>
-                        <a class="profile-link profile-link-danger" href="my_orders.php">My Orders</a>
-                        <a class="profile-link profile-link-danger" href="signout.php">Sign out</a>
+                        <a class="profile-link" href="user_order_history.php">My Orders</a>
+                        <a class="profile-link" href="signout.php">Sign out</a>
                         
                     <?php endif; ?>
                 </div>
