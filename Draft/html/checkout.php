@@ -41,6 +41,22 @@ if (!isset($_SESSION['user_ID'])) {
   header("Location: orderconfirmation.php");
   exit;
 } */
+
+//fetch user details for pre-filling form
+$user_ID = $_SESSION['user_ID'] ?? null;
+$stmt = $conn->prepare("SELECT name, surname, email, phone, address FROM users WHERE user_ID = ?");
+$stmt->bind_param("i", $user_ID);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+//prepares variables for form pre-fill > null handles missing data
+$userName = trim(($user['name'] ?? '') . ' ' . ($user['surname'] ?? ''));//combine name + surname stored in DB
+$userEmail = $user['email'] ?? '';
+$userPhone = $user['phone'] ?? '';
+$userAddress1 = $user['address'] ?? ''; //DB has single address field
+$userAddress2 = '';
+$userCity = '';
+$userPostcode = '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -142,34 +158,34 @@ if (!isset($_SESSION['user_ID'])) {
 
         <section class="details-column">
             
-    <form method="post" id="checkout-form">
+    <form method="POST" id="checkout-form">
   <section class="review-box">
     <h1 class="form-title">YOUR DETAILS</h1>
 
     <div class="review-details">
-      <label><strong>Name *</strong></label>
-      <input type="text" name="name" required>
+      <label><strong>Full Name *</strong></label>
+      <input type="text" name="name" value="<?php echo htmlspecialchars($userName); ?>" required>
 
       <label><strong>Email *</strong></label>
-      <input type="email" name="email" required>
+      <input type="email" name="email" value="<?php echo htmlspecialchars($userEmail); ?>" required>
 
       <label><strong>Phone</strong></label>
-      <input type="text" name="phone">
+      <input type="text" name="phone" value="<?php echo htmlspecialchars($userPhone); ?>" >
 
       <label><strong>Address line 1 *</strong></label>
-      <input type="text" name="address1" required>
+      <input type="text" name="address1" value="<?php echo htmlspecialchars($userAddress1); ?>" required>
 
       <label><strong>Address line 2</strong></label>
-      <input type="text" name="address2">
+      <input type="text" name="address2" value="<?php echo htmlspecialchars($userAddress2); ?>" >
 
       <label><strong>City *</strong></label>
-      <input type="text" name="city" required>
+      <input type="text" name="city" value="<?php echo htmlspecialchars($userCity); ?>" required>
 
       <label><strong>State</strong></label>
       <input type="text" name="state">
 
       <label><strong>Postcode *</strong></label>
-      <input type="text" name="postcode" required>
+      <input type="text" name="postcode" value="<?php echo htmlspecialchars($userPostcode); ?>" required>
     </div>
   </section>
 
