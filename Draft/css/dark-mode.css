@@ -371,6 +371,27 @@ html.dark-mode .modal-content {
     border-color: #333;
 }
 
+/* Review Modal Form Styles */
+html.dark-mode #reviewForm label {
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode #reviewForm input,
+html.dark-mode #reviewForm textarea {
+    background-color: #2a2a2a !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+}
+
+html.dark-mode #reviewForm input::placeholder,
+html.dark-mode #reviewForm textarea::placeholder {
+    color: #888;
+}
+
+html.dark-mode .close-modal {
+    color: #e0e0e0;
+}
+
 /* Navigation Buttons */
 html.dark-mode .nav-btn {
     background-color: #333;
@@ -383,11 +404,24 @@ html.dark-mode .nav-btn:hover {
 }
 
 html.dark-mode .add-review-btn {
-    background-color: #333;
-    color: #e0e0e0;
-    border-color: #555;
+    background-color: #333 !important;
+    background-image: none !important;
+}
+
+html.dark-mode .add-review-btn::before {
+    content: "+" !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff !important;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1;
+    opacity: 1 !important;
+    border: none !important;
 }
 
 html.dark-mode .add-review-btn:hover {
-    background-color: #444;
+    background-color: #444 !important;
 }
