@@ -134,5 +134,16 @@ document.addEventListener('DOMContentLoaded', function() {
             let formatted = value.replace(/(\d{4})(?=\d)/g, '$1 '); //add space after every 4 digits
             e.target.value = formatted;
         });
+    }   
+    // Expiry formatting for '/' (MM/YY format):
+    const expiryInput = document.getElementById('expiry');
+    if (expiryInput) {
+        expiryInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4); // MM/YY
+            }
+            e.target.value = value;
+        });
     }
 }); 

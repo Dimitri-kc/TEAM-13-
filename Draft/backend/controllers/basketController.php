@@ -8,6 +8,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/TEAM-13-/Draft/backend/models/basketM
 //require_once __DIR__ . '/../models/basketModel.php';//state file path
 require_once __DIR__ . '/../services/basketFunctions.php'; //for session-based guest basket functions
 //require_once __DIR__ . '/../services/userFunctions.php'; //for require_login() & require_role() & guest basket functions
+require_once __DIR__ . '/../models/productModel.php'; //for stock validation
 
 //Handling basket-related operations
 class BasketController {
@@ -25,12 +26,14 @@ class BasketController {
 
     //Stock validation helper - checks if requested quantity available
     //using basketModel > getProductStock(int $product_ID) : ?int
-    private function validateStock(Basket $basketModel, int $product_ID, int $requestedQuantity) : bool {
-        $stock = $basketModel->getProductStock($product_ID); //get current stock, returning int or null
-        if ($stock === null) {
+    private function validateStock(int $product_ID, int $requestedQuantity) : bool {
+        $productModel = new ProductModel();
+    $product = $productModel->getById($product_ID); //get current stock, returning int or null
+        if ($product === null) {
             $this->jsonSuccess(false, "Product not found.", ['product_ID' => $product_ID], 404); //404=not
         return false; //product doesn't exit > no stock
-    } 
+        } 
+        $stock = (int)($product['stock'] ?? 0); //ensure stock is int, default to 0 if not set
         if ($stock <=0) {
             $this->jsonSuccess(false, "This product is currently out of stock.", ['product_ID' => $product_ID, 'availableStock' => 0], 409); //409=conflict > out of stock
             return false; //out of stock
@@ -120,12 +123,12 @@ class BasketController {
     public function addItem(array $data): void {
 
         //get product details from session
-        $product_ID = $this->requireInt($data['product_ID'] ?? ''); //validate/convert to int, default to 0 otherwise
-        $quantity = $this->requireInt($data['quantity'] ?? '');
-        //requireint to prevent SQL injection & ensure correct daata type
+        $product_ID = (int)($data['product_ID'] ?? 0); //validate/convert to int, default to 0 otherwise
+        $quantity = (int)($data['quantity'] ?? 1);
+        //int to prevent SQL injection & ensure correct daata type
 
         if ($product_ID <=0 || $quantity <= 0) { //check valid input
-            $this->jsonSuccess(false, "Product ID and quantity integers are required.", null, 400); //400=bad request ie invalid input
+            $this->jsonSuccess(false, "Invalid product ID or quantity.", null, 400); //400=bad request ie invalid input
             return;
         }
 
@@ -156,6 +159,10 @@ class BasketController {
                 return;
              }
              
+            if (!$this->validateStock($product_ID, $quantity)) {
+            return; // Stock validation failed, response already sent
+            }
+            
             $basket_ID = (int)$basket['basket_ID']; //get basket ID
             $addBasketSuccess = $basketModel->addItemToBasket($basket_ID, $product_ID, $quantity);//adds item into database basket
             $this->jsonSuccess((bool)$addBasketSuccess, $addBasketSuccess ? "Item added to basket." : "Failed to add item to basket.", null, $addBasketSuccess ? 200 : 500); //200=success, 500=server error
@@ -190,9 +197,9 @@ class BasketController {
         //     $this->jsonSuccess(false, "Failed to connect to database: " . $e->getMessage(), null, 500); //500=server error
         //     return;
         // }
-        $basketModel = new Basket();
+        //$basketModel = new Basket();
         //validate stock before updating basket
-        if (!$this->validateStock($basketModel, $product_ID, $quantity)) {
+        if (!$this->validateStock($product_ID, $quantity)) {
             return; //stock validation failed, response sent in validateStock method
         }
         //if user logged in, update database basket

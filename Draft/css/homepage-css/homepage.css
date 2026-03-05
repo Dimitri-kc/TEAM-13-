@@ -2,203 +2,414 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #EFEFEA;
+    background-color: #F4F1EC;
+    color: #2B2B2B;
     font-family: "Ibarra Real Nova", serif;
 }
 
-/* Shared container for consistent width */
-.container {
-  max-width: 1200px;   /* adjust to the width you want */
-  margin: 0 auto;      /* centers the container */
-  padding: 0 20px;     /* optional side padding */
+/* HERO */
+.homepage-hero{
+    width: 100%;
+    height: 520px;
+    position: relative;
+    overflow: hidden;
+    background: #111;
 }
 
-/* FIVE COLUMNS */
-.row {
+.homepage-hero .hero-media{
+    position: absolute;
+    inset: 0;
+    background-image: url("../../images/homepage-images/light.jpg?v=20260305b");
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.02);
+}
+
+.homepage-hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15));
+    pointer-events:none;
+}
+
+/* HOMEPAGE: header overlays hero, no white block */
+.ll-homepage .site-header{
+    background: transparent !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 3500;
+}
+
+.ll-homepage .site-header .ui-icon {
+    filter: brightness(0) invert(1) contrast(180%);
+    opacity: 1 !important;
+}
+
+/* Keep dropdown above hero */
+.ll-homepage .dropdown-panel{ z-index: 4000; }
+
+/* Left tools wrapper */
+.ll-homepage .header-left-tools{
     display: flex;
-    justify-content: center;
-    gap: 17px; 
-    margin-top: 18px;       /* approximates your Left values spacing */
-    padding-top: 0px;     /* matches Top = 355px visually */
+    align-items: center;
+    gap: 14px;
 }
 
-/* ONE CATEGORY BLOCK */
+/* ICONS (menu, user, basket etc) -> muted light grey */
+.ll-homepage .site-header .ui-icon{
+    filter: brightness(0) invert(1) contrast(180%);
+    opacity: 1;
+    transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.ll-homepage .site-header .ui-icon:hover{
+    filter: brightness(0) invert(1) contrast(200%);
+    opacity: 1;
+}
+
+/* LOGO */
+.ll-homepage .main-logo{
+    height: 50px !important;
+    width: auto !important;
+    max-width: 280px;
+    object-fit: contain;
+    display: block;
+    opacity: 0.95;
+    transition: opacity 0.2s ease;
+}
+
+.ll-homepage .main-logo:hover{
+    opacity: 1;
+}
+
+/* MINI SEARCH BUTTON (transparent blurred circle) */
+.ll-homepage .mini-search{
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+
+    padding: 0 !important;
+
+    background: none !important;
+    backdrop-filter: none !important;
+
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+
+    border-radius: 999px !important;
+    text-decoration: none !important;
+}
+
+.ll-homepage .mini-search:hover{
+    background: none !important;
+}
+
+/* search icon */
+.ll-homepage .mini-search-icon{
+    font-size: 30px !important;
+    color: rgba(255,255,255,0.82) !important;
+    opacity: 0.95 !important;
+    line-height: 1 !important;
+}
+
+/* hide old SEARCH text if still in HTML */
+.ll-homepage .mini-search-text{
+    display: none !important;
+}
+
+/* CATEGORIES */
+.category-row {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 14px;
+    width: calc(100% - 48px);
+    max-width: none;
+    margin: 30px auto 56px;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .category {
-    width: 200px;           /* exact width */
+    min-width: 0;
     text-decoration: none;
-    color: black;
+    color: #2B2B2B;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
-/* SMALL RECTANGLE (TEXT BOX) */
 .title-box {
-    width: 200px;
-    height: 75px;
-    background-color: #DDDCD5;  /* solid background, not tinted */
-
+    position: absolute;
+    inset: 0;
+    z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    font-weight: 600;   /* SemiBold */
-    font-size: 16px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    color: black;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.65);
+    pointer-events: none;
 }
 
-/* BIG RECTANGLE (IMAGE AREA) */
 .image-box {
-    width: 200px;
-    height: 450px;      /* exact height you gave */
+    width: 100%;
+    aspect-ratio: 4 / 5;
     position: relative;
     overflow: hidden;
+    border-radius: 8px;
 }
 
-/* Image fills the big rectangle (Option A) */
 .image-box img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
+    filter: blur(0.35px);
+    transform: scale(1.01);
 }
 
-/* Base overlay (will be overridden per room) */
 .image-box::after {
     content: "";
     position: absolute;
     inset: 0;
+    background: rgba(0, 0, 0, 0.46);
     pointer-events: none;
+    z-index: 1;
 }
 
-/* -------- INDIVIDUAL TINT COLORS -------- */
-
-/* Living room – #FFC8A5 30% */
-.living .image-box::after {
-    background-color: rgba(144, 138, 106, 0.30);
+/* FAVOURITES */
+.grey-section {
+    background-color: #E5E1DB;
+    padding: 25px 30px;
+    margin: 60px auto;
+    border-radius: 25px;
+    max-width: none;
+    width: calc(100% - 48px);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
 }
 
-/* Kitchen – #FFB2BF 30% */
-.kitchen .image-box::after {
-    background-color: rgba(144, 138, 106, 0.30);
+.grey-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    color: #2B2B2B;
 }
 
-/* Office – #908A6A 30% */
-.office .image-box::after {
-    background-color: rgba(144, 138, 106, 0.30);
-}
-
-/* Bathroom – #5287BC 36% */
-.bathroom .image-box::after {
-    background-color: rgba(144, 138, 106, 0.30);
-}
-
-/* Bedroom – #8758D6 36% */
-.bedroom .image-box::after {
-    background-color: rgba(144, 138, 106, 0.30);
-}
-/* SPACER BETWEEN SECTIONS */
-
-.section-spacer {
-    height: 100px;
-}
-
-/* ABOUT US  */
-@import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
-
-/* body {
-    
-
-/* about us header */
-.left h1 {
-  font-family: 'Ibarra Real Nova', serif;
-  font-weight: 400;
-  font-size: 2.8rem;
-  color: #000000f9;
-  text-align: left;
-  margin-bottom: 0px;
-}
-/* faqs header */
-h2 {
-  font-size: 1.7em;
-  color: #000000f9;
-  margin-top: 40px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.split-page {
+.collection-cards {
     display: flex;
-    width: 100vw;
-    height: 100vh;
-    margin: 0 ;
-    padding: 0;
-
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
 }
 
-.left, .right {
-  flex:1;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  padding: 40px;
-}
-.left {
-  background: #DDDCD5;
-  justify-content: center;
-  color: #000000;
-}
-.right {
-  /* max-width: 700px; */
-  position: relative;
-  overflow: hidden;
-  background-color: #222222 ;
-  align-items: center;
-  justify-content: center;
-}
-.right img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  display: block;
-
-
+.collection-cards .card {
+        font-size: 13px;
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    flex: 1 1 calc(25% - 20px);
+    text-align: center;
+    max-width: 25%;
+    transition: transform 0.2s ease;
+    font-family: "Ibarra Real Nova", serif !important;
 }
 
-.left p {
-    font-weight: 400;
-    font-size: 18px;
-    padding-top: 0px;
-    margin-top: 5px;
-    line-height: 1.5;
-    max-width: 500px;
-    white-space: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+.collection-cards .card:hover { 
+    transform: translateY(-4px); 
 }
 
-@media (max-width: 1024px) {
-  .split-page {
-    flex-direction: row;
+.collection-cards .card img {
+    width: 80%;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    object-fit: cover;
+}
+
+.collection-cards .card h3 {
+    color: #2B2B2B;
+    font-weight: normal;
+}
+
+/* ABOUT (homepage override) */
+.ll-homepage .split-page {
+    width: calc(100% - 48px);
+    max-width: none;
+    margin: 60px auto;
+    display: flex !important;
+    gap: 24px;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+.ll-homepage .split-page .left {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding: 40px !important;
+    background: #E5E1DB !important;
+    width: auto !important;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.ll-homepage .split-page .left h1 {
+    margin: 0 0 20px !important;
+    text-align: center !important;
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    color: #2B2B2B;
+}
+
+.ll-homepage .split-page .left p {
+    margin-top: 0 !important;
+    text-align: center !important;
+    line-height: 1.6 !important;
+    max-width: none !important;
+    padding: 0 20px !important;
+    color: #2B2B2B;
+}
+
+.ll-homepage .split-page .right {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 40px !important;
+    background: #E5E1DB !important;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.ll-homepage .split-page .right h1 {
+    margin: 0 0 20px !important;
+    text-align: center !important;
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    color: #2B2B2B;
+}
+
+.ll-homepage .split-page .about-logo-container {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.ll-homepage .split-page .about-logo {
+    max-width: 40%;
     height: auto;
-    width: 100%;
-  }
-  .left, .right {
-    width: 50%;
-    padding: 20px;
-    flex-direction: column;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+}
 
+.ll-homepage .split-page .logo-caption {
+    font-size: 12px;
+    color: #666;
+    margin-top: 10px;
+    font-style: italic;
+    text-align: center;
+}
 
-  }
-  .left p {
+.ll-homepage .split-page .right .form-container {
+    background: #F9F7F4 !important;
+    border: 1px solid #E8E4DF !important;
+    padding: 14px !important;
+    margin: 0 auto !important;
+    width: 90% !important;
     max-width: 500px;
-    width: 100%;
-  }
- }
-   @media (max-width: 768px) {
-    .left p {
-      font-size: 16px;
-    }
-  }
+    border-radius: 12px;
+    box-shadow: none !important;
+}
+
+.ll-homepage .split-page .right label {
+    color: #2B2B2B;
+    font-family: "Ibarra Real Nova", serif;
+}
+
+.ll-homepage .split-page .right input,
+.ll-homepage .split-page .right textarea {
+    background-color: #F4F1EC !important;
+    color: #2B2B2B !important;
+    border: 1px solid #D8CFC2 !important;
+    font-family: "Ibarra Real Nova", serif;
+}
+
+.ll-homepage .split-page .right input::placeholder,
+.ll-homepage .split-page .right textarea::placeholder {
+    color: #9A9084;
+}
+
+.ll-homepage .split-page .right input:focus,
+.ll-homepage .split-page .right textarea:focus {
+    border-color: #B8AFA4 !important;
+    box-shadow: 0 0 0 2px rgba(184, 175, 164, 0.22);
+    outline: none;
+}
+
+.ll-homepage .split-page .right button {
+    background-color: #B8AFA4;
+    color: #FFFFFF;
+    border: none;
+}
+
+.ll-homepage .split-page .right button:hover {
+    background-color: #C8B79C;
+}
+
+/* REVIEWS */
+.reviews-section{
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: calc(100% - 48px) !important;
+    max-width: none !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #E5E1DB;
+    padding: 30px;
+    border-radius: 25px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.reviews-slider-wrapper{
+    position: relative;
+    padding: 0 55px;
+}
+
+.nav-btn{
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    opacity: 1 !important;
+    z-index: 20 !important;
+}
+
+.prev-btn{ left: 10px !important; }
+.next-btn{ right: 10px !important; }
+
+@media (max-width: 900px){
+    .homepage-hero{ height: 420px; }
+}
+
+@media (max-width: 600px){
+    .homepage-hero{ height: 340px; }
+}

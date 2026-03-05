@@ -265,7 +265,7 @@ $userRole = $_SESSION['role'] ?? 'customer';
                     </div>
                 </a>
 
-                <a class="dash-card span-2" href="orders.php">
+                <a class="dash-card span-2" href="admin_realtime_reports.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
@@ -293,7 +293,7 @@ $userRole = $_SESSION['role'] ?? 'customer';
                     </div>
                 </a>
 
-                <a class="dash-card span-3" href="account_settings.php">
+                <a class="dash-card span-3" href="admin_customer_management.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
@@ -307,7 +307,7 @@ $userRole = $_SESSION['role'] ?? 'customer';
                     </div>
                 </a>
 
-                <a class="dash-card span-3" href="privacy.php">
+                <a class="dash-card span-3" href="admin_product_inventory.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">

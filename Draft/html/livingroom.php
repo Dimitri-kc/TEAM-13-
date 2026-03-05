@@ -105,10 +105,10 @@
         <div class="main">
             <div class="top-bar">
                 <input class="search" type="text" placeholder="Search..">
-                <button class="btn-New button-sort">New</button>
-                <button class="btn-PriceAsc button-sort">Price ascending</button>
-                <button class="btn-PriceDesc button-sort">Price descending</button>
-                <button class="btn-Rating button-sort">Rating</button>
+<button class="btn-New button-sort">New <span class="X">✕</span></button>
+<button class="btn-PriceAsc button-sort">Price ascending <span class="X">✕</span></button>
+<button class="btn-PriceDesc button-sort">Price descending <span class="X">✕</span></button>
+<button class="btn-Rating button-sort">Rating <span class="X">✕</span></button>
             </div>
 
             <p id="no-results" style="display:none; font-size:20px; margin-top: 15px; padding-left: 48px; font-weight: 500;">
@@ -145,7 +145,7 @@
      </a>
 
 <div class="action-buttons">
-<form method="post" action="favourites_add.php" style="position: absolute; top: 15px; left: 15px; z-index: 999; margin: 0; padding: 0; pointer-events: auto;">
+<form method="post" action="favourites_add.php" style="position: absolute; top: 18px; left: 18px; z-index: 999; margin: 0; padding: 0; pointer-events: auto;">
     <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
     <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
     <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
@@ -225,10 +225,10 @@
         </div>
     </footer>
 
-  <script type="module" src="../javascript/livingroom-js/main.js"></script>
+
   <script src="../javascript/header_footer_script.js"></script>
   <script src="../javascript/global/basketIcon.js"></script>
-
+  <script type="module" src="../javascript/livingroom-js/main.js"></script>
 </body>
 </html>
 

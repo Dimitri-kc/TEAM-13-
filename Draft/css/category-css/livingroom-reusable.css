@@ -14,7 +14,7 @@ border: 1px solid #ccc;
     border: none;
     background: #f0f0f0;
     font-size: 14px;
-    color:#555;
+    color:#202020;
     transition: opacity 0.2s ease;
     cursor: pointer;
 }
@@ -26,7 +26,7 @@ opacity: 0.8;
 .btn-New.active, .btn-PriceAsc.active, .btn-PriceDesc.active,
 .btn-Rating.active {
     background: #313131f4 ;
-    color:#fffdfdbd
+    color:#202020;
 }
 .no-results {
     padding-left: 250px;
@@ -100,16 +100,19 @@ cursor: pointer;
     display: inline-block;
 }
 /* basket product counter  */
-#basket-count {
+/* OVERRIDE: Force basket-count badge to grey, defeating all previous styles */
+#basket-count, .basket-icon #basket-count, header .basket-icon #basket-count {
     position: absolute;
     top: -5px;
     right: -5px;
-    background: #ff6f61;  
-    color: white;
+    background: #a2a2a2 !important;
+    color: white !important;
     font-size: 12px;
     font-weight: bold;
     border-radius: 50%;
     padding: 2px 6px;
+    box-shadow: none !important;
+    border: none !important;
 }
 
 /* image */
@@ -205,4 +208,27 @@ input[type="checkbox"]:checked + .tag:hover {
 .fav-icon-btn:hover {
     background-color: #d2d2c1;
     transform: scale(1.1);
+}
+
+/* hide X by default */
+.button-sort .X {
+    display: none;
+    font-size: 14px;
+    opacity: 0.6;
+    margin-left: 5px;
+}
+
+/* show X when active */
+.button-sort.active .X {
+    display: inline;
+}
+
+/* active background */
+.button-sort.active {
+    background-color: #bab7b7bd;
+}
+
+/* hover effect */
+.button-sort.active:hover {
+    opacity: 0.8;
 }

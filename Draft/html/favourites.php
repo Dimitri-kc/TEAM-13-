@@ -78,8 +78,8 @@ while ($row = $res->fetch_assoc()) {
           background: #111;
           color: #fff;
           font-size: 11px;
-          cursor: pointer;
           white-space: nowrap;
+          margin-left: 10px; /* shift button a few pixels to the right */
         }
 
         .removeBtn {
@@ -180,8 +180,9 @@ while ($row = $res->fetch_assoc()) {
 
 
             <!-- ADD TO BASKET -->
-            <form method="post" action="basket.php" style="margin:0;">
+            <form method="post" action="basket.php?action=add" style="margin:0;">
                 <input type="hidden" name="product_id" value="<?= $pid ?>">
+                <input type="hidden" name="qty" value="1">
                 <button class="btn" type="submit">Add to bag</button>
             </form>
 

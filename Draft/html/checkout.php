@@ -6,35 +6,42 @@ if (!isset($_SESSION['user_ID'])) {
     header("Location: signin.php");
     exit();
 }
+//commented out while testing
+/* if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["place_order"])) {
 
-$user_ID = isset($_SESSION["user_ID"]) ? (int)$_SESSION["user_ID"] : null;
-$cart = ($user_ID > 0) ? ($_SESSION["cart"] ?? []) : ($_SESSION["guest_basket"] ?? []);
+  // Collects customer info 
+  $customer = [
+    "name"     => $_POST["name"] ?? "",
+    "email"    => $_POST["email"] ?? "",
+    "address1" => $_POST["address1"] ?? "",
+    "address2" => $_POST["address2"] ?? "",
+    "city"     => $_POST["city"] ?? "",
+    "state"    => $_POST["state"] ?? "",
+    "postcode" => $_POST["postcode"] ?? "",
+    "phone"    => $_POST["phone"] ?? "",
+  ];
 
-function money($n){ return "£" . number_format((float)$n, 2); }
+  // Collect items from session cart 
 
-$subtotal = 0.0;
-$delivery = 0.0;
-$total = 0.0;
+  $items = $_SESSION["cart_items"] ?? [];
 
-$ids = array_keys($cart);
-if (count($ids) > 0) {
-    $placeholders = implode(",", array_fill(0, count($ids), "?"));
-    $sql = "SELECT product_ID, price FROM products WHERE product_ID IN ($placeholders)";
-    $stmt = $conn->prepare($sql);
-    if ($stmt) {
-        $stmt->bind_param(str_repeat("i", count($ids)), ...$ids);
-        $stmt->execute();
-        $res = $stmt->get_result();
-        while ($row = $res->fetch_assoc()) {
-            $pid = (int)$row["product_ID"];
-            $qty = (int)($cart[$pid] ?? 0);
-            $price = (float)$row["price"];
-            $subtotal += ($price * $qty);
-        }
-        $stmt->close();
-    }
-}
-$total = $subtotal + $delivery;
+  // Store order for confirmation page
+  $_SESSION["order"] = [
+    "number" => (string)random_int(100000, 999999),
+    "date" => date("F j, Y"),
+    "currency" => "£",
+    "payment_method" => "Card",
+    "customer" => $customer,
+    "items" => $items,
+    "shipping" => 0,
+    "tax" => 0,
+    "discount" => 0,
+    "continue_url" => "homepage.php"
+  ];
+
+  header("Location: orderconfirmation.php");
+  exit;
+} */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -142,67 +149,48 @@ $total = $subtotal + $delivery;
 
 </aside>
 
-<section class="details-column">
+        <section class="details-column">
+            
+    <form method="post" id="checkout-form">
+  <section class="review-box">
+    <h1 class="form-title">YOUR DETAILS</h1>
 
-<form method="post" id="checkout-form">
+    <div class="review-details">
+      <label><strong>Name *</strong></label>
+      <input type="text" name="name" required>
 
-<section class="review-box">
-<h1 class="form-title">YOUR DETAILS</h1>
+      <label><strong>Email *</strong></label>
+      <input type="email" name="email" required>
 
-<div class="review-details">
-<label><strong>Name *</strong></label>
-<input type="text" name="name" required>
+      <label><strong>Phone</strong></label>
+      <input type="text" name="phone">
 
-<label><strong>Email *</strong></label>
-<input type="email" name="email" required>
+      <label><strong>Address line 1 *</strong></label>
+      <input type="text" name="address1" required>
 
-<label><strong>Phone</strong></label>
-<input type="text" name="phone">
-</div>
-</section>
+      <label><strong>Address line 2</strong></label>
+      <input type="text" name="address2">
 
-<section class="review-box">
-<h1 class="form-title">ADDRESS</h1>
-
-<div class="review-details">
-
-<label><strong>Address line 1 *</strong></label>
-<input type="text" name="address1" required>
-
-<label><strong>Address line 2</strong></label>
-<input type="text" name="address2">
-
-<label><strong>City *</strong></label>
-<input type="text" name="city" required>
+      <label><strong>City *</strong></label>
+      <input type="text" name="city" required>
 
 <label><strong>County/Region *</strong></label>
 <input type="text" name="county_region" required>
 
-<label><strong>Postcode *</strong></label>
-<input type="text" name="postcode" required>
+      <label><strong>Postcode *</strong></label>
+      <input type="text" name="postcode" required>
+    </div>
+  </section>
 
-</div>
-</section>
 
 <div class="card-fields">
 
 <h1 class="form-title">CARD DETAILS</h1>
 
-<input type="text" name="card_number" placeholder="Card Number (16 Digits)" maxlength="19" inputmode="numeric" required>
-
-<input type="text" name="expiry" placeholder="Expiry Date (MM/YY)" pattern="(0[1-9]|1[0-2])/[0-9]{2}" required>
-
-<input type="text" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required>
-
-<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin:12px 0;">
-<a href="basket.php" class="view-basket-btn" style="text-decoration:none;">View Basket</a>
-
-<div style="font-weight:700;">
-Total: <span id="total-above-checkout"><?= money($total) ?></span>
-</div>
-</div>
-
-<button type="submit" name="place_order" class="checkout-btn" value="1">Checkout</button>
+        <input type="text" name="card_number" placeholder="Card Number (16 Digits)" maxlength="19" inputmode="numeric" required />
+        <input type="text" name="expiry" placeholder="Expiry Date (MM/YY)" pattern="(0[1-9]|1[0-2])/[0-9]{2}" required />
+        <input type="text" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />
+        <button type="submit" name="place_order" class="submit-btn">Submit</button>
 
 <div class="pay-buttons">
 <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
