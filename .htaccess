@@ -15,8 +15,8 @@ AddDefaultCharset UTF-8
     AddType application/javascript .js
 </IfModule>
 
-# Prevent access to hidden files
-<FilesMatch "^\.|\.php$|\.sql$">
+# Prevent access to hidden files and SQL files
+<FilesMatch "^\.|\.sql$">
     Order allow,deny
     Deny from all
 </FilesMatch>
