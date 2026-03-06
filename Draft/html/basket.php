@@ -24,12 +24,12 @@ $user_ID = isset($_SESSION["user_ID"]) ? (int)$_SESSION["user_ID"] : null; //get
 $basketModel = new Basket(); //
 
 //use guest_basket for guests (not saved to DB), cart for logged in users (syncs with DB)
-$cart = ($user_ID > 0) ? ($_SESSION["cart"] ?? []) : ($_SESSION["guest_basket"] ?? []); //logged in users have cart that syncs with DB
-
-/* if ($user_ID > 0 && empty($_SESSION["cart"])) {
+//For logged in users, always sync from database to ensure session is up to date
+if ($user_ID > 0) {
     $basket = $basketModel->fetchUserBasket($user_ID);
     if ($basket && !empty($basket['basket_ID'])) {
         $items = $basketModel->fetchBasketItems((int)$basket['basket_ID']);
+        $_SESSION["cart"] = []; //reset session cart
         foreach ($items as $it) {
             $pid = (int)($it['product_ID'] ?? 0);
             $qty = (int)($it['quantity'] ?? 0);
@@ -37,8 +37,12 @@ $cart = ($user_ID > 0) ? ($_SESSION["cart"] ?? []) : ($_SESSION["guest_basket"] 
                 $_SESSION["cart"][$pid] = $qty;
             }
         }
+    } else {
+        $_SESSION["cart"] = []; //ensure empty array if no basket
     }
-} */
+}
+
+$cart = ($user_ID > 0) ? ($_SESSION["cart"] ?? []) : ($_SESSION["guest_basket"] ?? []); //logged in users have cart that syncs with DB
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 

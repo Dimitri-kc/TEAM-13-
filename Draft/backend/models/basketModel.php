@@ -52,11 +52,26 @@ class Basket {
     }
 
     public function addItemToBasket($basket_ID, $product_ID, $quantity) {
-        //check if item already in basket
-        $stmt = $this->conn->prepare("INSERT INTO basket_items (basket_ID, product_ID, quantity) VALUES (?, ?, ?)
-                                      ON DUPLICATE KEY UPDATE quantity = quantity + ?"); //if item exists, update quantity
-        $stmt->bind_param("iiii", $basket_ID, $product_ID, $quantity, $quantity); //binding parameters for INSERT and UPDATE
-        return $stmt->execute(); //add item or update quantity if item exists in basket
+        //First check if item already exists in basket
+        $checkStmt = $this->conn->prepare("SELECT quantity FROM basket_items WHERE basket_ID = ? AND product_ID = ?");
+        $checkStmt->bind_param("ii", $basket_ID, $product_ID);
+        $checkStmt->execute();
+        $result = $checkStmt->get_result();
+        $existing = $result->fetch_assoc();
+        $checkStmt->close();
+        
+        if ($existing) {
+            //Item exists, update quantity by adding to existing
+            $newQuantity = (int)$existing['quantity'] + $quantity;
+            $stmt = $this->conn->prepare("UPDATE basket_items SET quantity = ? WHERE basket_ID = ? AND product_ID = ?");
+            $stmt->bind_param("iii", $newQuantity, $basket_ID, $product_ID);
+            return $stmt->execute();
+        } else {
+            //Item doesn't exist, insert new row
+            $stmt = $this->conn->prepare("INSERT INTO basket_items (basket_ID, product_ID, quantity) VALUES (?, ?, ?)");
+            $stmt->bind_param("iii", $basket_ID, $product_ID, $quantity);
+            return $stmt->execute();
+        }
     }
 
     public function updateItemQuantity($basket_ID, $product_ID, $quantity) {

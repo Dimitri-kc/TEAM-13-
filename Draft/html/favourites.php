@@ -70,53 +70,116 @@ try {
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 22px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
         }
 
         .fav-card {
           position: relative;
           border: 1px solid #eaeaea;
           border-radius: 6px;
-          padding: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
+          overflow: hidden;
           background: #ffffff;
-          min-height: 200px;
+          display: flex;
+          flex-direction: column;
+          text-decoration: none;
+          color: inherit;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .fav-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .fav-card-link {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          text-decoration: none;
+          color: inherit;
         }
 
         .thumb {
-          width: 200px; height: 200px;
-          border-radius: 4px;
+          width: 100%; 
+          height: 300px;
+          border-radius: 0;
           background: #e9e9e9;
           overflow: hidden;
-          display:flex; align-items:center; justify-content:center;
+          display: flex; 
+          align-items: center; 
+          justify-content: center;
         }
-        .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+        .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .fav-card-content {
+          padding: 16px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          flex: 1;
+        }
+
+        .fav-card-title {
+          font-size: 15px;
+          font-weight: 500;
+          color: #2B2B2B;
+          margin: 0 0 8px 0;
+          line-height: 1.4;
+        }
+
+        .fav-card-price {
+          font-size: 18px;
+          font-weight: 600;
+          color: #2B2B2B;
+          margin: 0;
+        }
+
+        .fav-card-actions {
+          display: flex;
+          gap: 8px;
+          padding: 0 16px 16px 16px;
+        }
 
         .btn {
-          padding: 7px 10px;
+          padding: 10px 14px;
           border: none;
           border-radius: 6px;
           background: #111;
           color: #fff;
-          font-size: 11px;
+          font-size: 12px;
           white-space: nowrap;
-          margin-left: 10px;
+          margin: 0;
+          flex: 1;
+          cursor: pointer;
+          font-weight: 500;
+        }
+
+        .btn:hover {
+          background: #333;
         }
 
         .removeBtn {
-          position:absolute;
-          top: 8px; right: 8px;
-          width: 26px; height: 26px;
-          border-radius: 7px;
-          border: 1px solid #e1e1e1;
-          background:#fff;
-          cursor:pointer;
-          font-size: 16px;
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          width: 32px;
+          height: 32px;
+          border-radius: 8px;
+          border: 1px solid #ddd;
+          background: #fff;
+          cursor: pointer;
+          font-size: 18px;
           line-height: 1;
-          display:flex; align-items:center; justify-content:center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+        }
+
+        .removeBtn:hover {
+          background: #f5f5f5;
+          border-color: #999;
         }
 
         .empty { padding: 18px; border: 1px dashed #ddd; border-radius: 8px; color:#666; }
@@ -184,30 +247,36 @@ try {
                 <?php foreach ($favs as $p): ?>
                     <?php 
                         $pid = (int)$p["product_ID"]; 
-                        $imagePath = "../images/livingroom-images/" . $p["image"];
                     ?>
                     
                     <div class="fav-card">
-                        <form method="post" action="favourite_remove.php" style="margin:0;">
-                            <input type="hidden" name="product_id" value="<?= $pid ?>">
-                            <input type="hidden" name="redirect" value="favourites.php">
-                            <button class="removeBtn" type="submit" title="Remove">×</button>
-                        </form>
+                        <a href="product.php?id=<?= $pid ?>" class="fav-card-link">
+                            <div class="thumb">
+                                <?php if (!empty($p["image"])): ?>
+                                    <img src="../images/<?= htmlspecialchars($p["image"]) ?>" alt="<?= htmlspecialchars($p["name"]) ?>">
+                                <?php else: ?>
+                                    <span style="color:#cfcfcf; font-size:12px;">IMG</span>
+                                <?php endif; ?>
+                            </div>
+                            <div class="fav-card-content">
+                                <h3 class="fav-card-title"><?= htmlspecialchars($p["name"]) ?></h3>
+                                <p class="fav-card-price">£<?= htmlspecialchars($p["price"]) ?></p>
+                            </div>
+                        </a>
 
-                        <div class="thumb">
-                            <?php if (!empty($p["image"])): ?>
-                                <img src="../images/<?= htmlspecialchars($p["image"]) ?>" alt="">
-                            <?php else: ?>
-                                <span style="color:#cfcfcf; font-size:12px;">IMG</span>
-                            <?php endif; ?>
+                        <div class="fav-card-actions">
+                            <form method="post" action="basket.php?action=add" style="margin:0; flex: 1;">
+                                <input type="hidden" name="product_id" value="<?= $pid ?>">
+                                <input type="hidden" name="qty" value="1">
+                                <input type="hidden" name="redirect" value="favourites.php?basket_added=1">
+                                <button class="btn" type="submit">Add to bag</button>
+                            </form>
+                            <form method="post" action="favourite_remove.php" style="margin:0;">
+                                <input type="hidden" name="product_id" value="<?= $pid ?>">
+                                <input type="hidden" name="redirect" value="favourites.php">
+                                <button class="removeBtn" type="submit" title="Remove from Favourites">×</button>
+                            </form>
                         </div>
-
-                        <form method="post" action="basket.php?action=add" style="margin:0;">
-                            <input type="hidden" name="product_id" value="<?= $pid ?>">
-                            <input type="hidden" name="qty" value="1">
-                            <input type="hidden" name="redirect" value="favourites.php?basket_added=1">
-                            <button class="btn" type="submit">Add to bag</button>
-                        </form>
                     </div>
                 <?php endforeach; ?>
             </div>

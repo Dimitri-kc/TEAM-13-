@@ -3,12 +3,17 @@ session_start();
 include "../backend/config/db_connect.php"; // adjust path if needed
 
 if (!isset($_SESSION['user_ID'])) {
+    http_response_code(401);
     exit("Not logged in");
 }
 
 $redirect = $_POST['redirect'] ?? 'favourites.php';
-if (!is_string($redirect) || preg_match('/^https?:\/\//i', $redirect)) {
-    $redirect = 'favourites.php';
+$noRedirect = $redirect === 'false' || $redirect === false;
+
+if (!$noRedirect) {
+    if (!is_string($redirect) || preg_match('/^https?:\/\//i', $redirect)) {
+        $redirect = 'favourites.php';
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
@@ -30,7 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
     }
 }
 
-header("Location: $redirect");
-exit;
+if ($noRedirect) {
+    http_response_code(200);
+    exit;
+} else {
+    header("Location: $redirect");
+    exit;
+}
 ?>
 

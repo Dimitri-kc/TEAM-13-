@@ -4,16 +4,20 @@ include '../backend/config/db_connect.php';
 
 // User must be logged in
 if (!isset($_SESSION['user_ID'])) {
-    header("Location: signin.php");
-    exit;
+    http_response_code(401);
+    exit("Not logged in");
 }
 
 $user_id = $_SESSION['user_ID'];
 $product_id = (int)($_POST['product_id'] ?? 0);
 $redirect = $_POST['redirect'] ?? 'favourites.php';
 
-if (!is_string($redirect) || preg_match('/^https?:\/\//i', $redirect)) {
-    $redirect = 'favourites.php';
+$noRedirect = $redirect === 'false' || $redirect === false;
+
+if (!$noRedirect) {
+    if (!is_string($redirect) || preg_match('/^https?:\/\//i', $redirect)) {
+        $redirect = 'favourites.php';
+    }
 }
 
 if ($product_id > 0) {
@@ -44,5 +48,10 @@ if ($product_id > 0) {
     }
 }
 
-header("Location: $redirect");
-exit;
+if ($noRedirect) {
+    http_response_code(200);
+    exit;
+} else {
+    header("Location: $redirect");
+    exit;
+}

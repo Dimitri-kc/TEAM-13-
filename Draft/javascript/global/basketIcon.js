@@ -118,4 +118,106 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 window.addToBasket = addToBasket; //make function globally accessible for product pages
+
+//Toast notification for favourites
+function showFavouriteToast(message) {
+    let toast = document.getElementById('fav-toggle-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'fav-toggle-toast';
+        toast.style.cssText = `
+            position: fixed;
+            top: 110px;
+            right: 24px;
+            background: rgba(33, 33, 33, 0.95);
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            z-index: 5000;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            animation: fadeInOut 2s ease-in-out;
+        `;
+        document.body.appendChild(toast);
+        
+        // Add animation styles if not already present
+        if (!document.getElementById('fav-toast-styles')) {
+            const style = document.createElement('style');
+            style.id = 'fav-toast-styles';
+            style.textContent = `
+                @keyframes fadeInOut {
+                    0% { opacity: 0; transform: translateY(-10px); }
+                    10% { opacity: 1; transform: translateY(0); }
+                    90% { opacity: 1; transform: translateY(0); }
+                    100% { opacity: 0; transform: translateY(-10px); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+    
+    toast.textContent = message;
+    setTimeout(() => {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+    }, 2000);
+}
+
+//Toggle favourite function for category pages
+async function toggleFavourite(button, event) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const productId = button.getAttribute('data-product-id');
+    const isFavourite = button.classList.contains('is-favourite');
+    const heart = button.querySelector('.fav-heart');
+    
+    if (!productId) {
+        console.error("No product ID found on button");
+        return;
+    }
+    
+    try {
+        // Determine if we're in a subdirectory by checking current location
+        const pathParts = window.location.pathname.split('/');
+        let basePath = '';
+        for (let i = 0; i < pathParts.length - 1; i++) {
+            if (pathParts[i]) basePath += '/' + pathParts[i];
+        }
+        
+        const endpoint = isFavourite ? 
+            basePath + '/favourite_remove.php' : 
+            basePath + '/favourites_add.php';
+        
+        console.log('Toggling favourite for product:', productId, 'Endpoint:', endpoint);
+        
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'product_id=' + encodeURIComponent(productId) + '&redirect=false'
+        });
+        
+        console.log('Response status:', response.status);
+        
+        if (response.ok) {
+            if (isFavourite) {
+                button.classList.remove('is-favourite');
+                heart.textContent = '♡';
+                showFavouriteToast('Removed from favourites');
+            } else {
+                button.classList.add('is-favourite');
+                heart.textContent = '♥';
+                showFavouriteToast('Added to favourites');
+            }
+        } else {
+            console.error('Failed to toggle favourite:', response.status, response.statusText);
+            showFavouriteToast('Error updating favourites');
+        }
+    } catch (error) {
+        console.error("Error toggling favourite: ", error);
+        showFavouriteToast('Error updating favourites');
+    }
+}
+window.toggleFavourite = toggleFavourite; //make function globally accessible
+
 //document.addEventListener('DOMContentLoaded', updateBasketCounter); //update counter upon page load

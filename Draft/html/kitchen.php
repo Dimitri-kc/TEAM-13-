@@ -19,7 +19,7 @@ include '../backend/config/db_connect.php';
 
     <link rel="stylesheet" href="../css/category-css/livingroom-base.css">
     <link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
-    <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">
+    <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css?v=4">
     <link rel="stylesheet" href="../css/category-css/livingroom-page.css">
 
     <style>
@@ -370,16 +370,11 @@ include '../backend/config/db_connect.php';
          <p style="grid-row:3;">£<?php echo $row['price']; ?></p>
      </a>
 
-     <form method="post" action="favourites_add.php" class="fav-form">
-         <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
-         <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
-         <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
-         <input type="hidden" name="product_image" value="../images/<?= htmlspecialchars($row['image']) ?>">
-         <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
-         <button type="submit" class="fav-icon-btn<?= $isFavourite ? ' is-favourite' : '' ?>" title="Add to Favourites">
+     <div style="position: absolute; top: 8px; left: 8px; z-index: 20;">
+         <button class="fav-icon-btn<?= $isFavourite ? ' is-favourite' : '' ?>" data-product-id="<?= $row['product_ID'] ?>" title="Add to Favourites" onclick="toggleFavourite(this, event)">
              <span class="fav-heart" aria-hidden="true"><?= $isFavourite ? '♥' : '♡' ?></span>
          </button>
-     </form>
+     </div>
 
      <button class="add-to-basket" onclick="addToBasket(<?= $row['product_ID'] ?>, 1, this)" title="Add to basket">
          <img src="../images/add-button-icon.png" alt="Add" style="width:18px!important;height:18px!important;">
@@ -447,8 +442,63 @@ include '../backend/config/db_connect.php';
         </div>
     </footer>
 
-    <script src="../javascript/header_footer_script.js"></script>
-    <script src="../javascript/global/basketIcon.js"></script>
+  <script src="../javascript/header_footer_script.js"></script>
+  <script>
+    // Simple favourite toggle handler
+    window.toggleFavourite = async function(button, event) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        const productId = button.getAttribute('data-product-id');
+        const isFavourite = button.classList.contains('is-favourite');
+        const heart = button.querySelector('.fav-heart');
+        
+        if (!productId) {
+            alert('Error: Product ID not found');
+            return;
+        }
+        
+        try {
+            const endpoint = isFavourite ? './favourite_remove.php' : './favourites_add.php';
+            
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'product_id=' + productId + '&redirect=false'
+            });
+            
+            if (response.ok) {
+                if (isFavourite) {
+                    button.classList.remove('is-favourite');
+                    heart.textContent = '♡';
+                    showToast('Removed from favourites');
+                } else {
+                    button.classList.add('is-favourite');
+                    heart.textContent = '♥';
+                    showToast('Added to favourites');
+                }
+            } else {
+                alert('Error updating favourite: ' + response.status);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert('Error: ' + error.message);
+        }
+    };
+    
+    function showToast(message) {
+        let toast = document.getElementById('fav-toggle-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'fav-toggle-toast';
+            toast.style.cssText = 'position: fixed; top: 110px; right: 24px; background: rgba(33, 33, 33, 0.95); color: #fff; padding: 10px 14px; border-radius: 10px; font-size: 13px; z-index: 5000; box-shadow: 0 6px 16px rgba(0,0,0,0.2);';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 2000);
+    }
+  </script>
+  <script src="../javascript/global/basketIcon.js"></script>
     <script type="module" src="../javascript/kitchen-js/filters.js"></script>
     <script type="module" src="../javascript/kitchen-js/sorting.js"></script>
     <script type="module" src="../javascript/kitchen-js/price-range.js"></script>
