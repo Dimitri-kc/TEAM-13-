@@ -12,7 +12,8 @@ AddDefaultCharset UTF-8
     AddType application/x-httpd-php .php
     AddType text/html .html
     AddType text/css .css
-    AddType application/javascript .js
+    AddType text/javascript .js
+    AddType application/json .json
 </IfModule>
 
 # Prevent access to hidden files and SQL files
@@ -23,7 +24,21 @@ AddDefaultCharset UTF-8
 
 # Set HTTP headers for proper charset and caching
 <IfModule mod_headers.c>
-    Header set Content-Type "text/html; charset=UTF-8"
+    # Set Content-Type only for PHP/HTML files
+    <FilesMatch "\.(php|html)$">
+        Header set Content-Type "text/html; charset=UTF-8"
+    </FilesMatch>
+    
+    # Set Content-Type for JavaScript files
+    <FilesMatch "\.js$">
+        Header set Content-Type "text/javascript; charset=UTF-8"
+    </FilesMatch>
+    
+    # Set Content-Type for CSS files
+    <FilesMatch "\.css$">
+        Header set Content-Type "text/css; charset=UTF-8"
+    </FilesMatch>
+    
     Header always set X-Content-Type-Options "nosniff"
     Header always set X-Frame-Options "SAMEORIGIN"
     Header always set X-XSS-Protection "1; mode=block"

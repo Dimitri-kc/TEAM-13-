@@ -23,6 +23,8 @@ include '../backend/config/db_connect.php';
     <link rel="stylesheet" href="../css/category-css/livingroom-page.css">
 
     <style>
+        .filter-hidden { display: none !important; }
+        
         /* Fixed Header Pill Style */
         body {
             padding-top: 120px;
@@ -506,10 +508,120 @@ include '../backend/config/db_connect.php';
         setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 2000);
     }
   </script>
-  <script src="../javascript/global/basketIcon.js"></script>
-  <script type="module" src="../javascript/livingroom-js/filters.js"></script>
-  <script type="module" src="../javascript/livingroom-js/sorting.js"></script>
-  <script type="module" src="../javascript/livingroom-js/price-range.js"></script>
-  <script type="module" src="../javascript/livingroom-js/search.js"></script>
+  
+  <script>
+  // INLINE FILTERING - Directly in HTML to ensure it works
+  (function() {
+      console.log("INLINE FILTER SCRIPT STARTING");
+      
+      function initFilters() {
+          console.log("Init filters called, readyState:", document.readyState);
+          
+          // Get elements
+          const sidebar = document.querySelector(".side-bar");
+          const keywordCheckboxes = document.querySelectorAll(".tags input[type='checkbox']");
+          const categoryCheckboxes = document.querySelectorAll(".category-filter");
+          const colourCheckboxes = document.querySelectorAll(".colour-filter");
+          const searchInput = document.querySelector(".search");
+          const noResults = document.getElementById("no-results");
+          const minSlider = document.getElementById("price-min");
+          const maxSlider = document.getElementById("price-max");
+          const priceLabel = document.getElementById("price-num");
+          const rangeDisplay = document.getElementById("range-display");
+          
+          console.log("Found:", {
+              keywords: keywordCheckboxes.length,
+              categories: categoryCheckboxes.length,
+              colours: colourCheckboxes.length,
+              search: !!searchInput,
+              minSlider: !!minSlider,
+              maxSlider: !!maxSlider
+          });
+          
+          function applyFilters() {
+              const products = document.querySelectorAll(".item");
+              const activeKeywords = Array.from(document.querySelectorAll(".tags input[type='checkbox']:checked")).map(cb => cb.value);
+              const activeCategories = Array.from(document.querySelectorAll(".category-filter:checked")).map(cb => cb.value);
+              const activeColours = Array.from(document.querySelectorAll(".colour-filter:checked")).map(cb => cb.value);
+              const searchQuery = (searchInput?.value || "").toLowerCase().trim();
+              const minPrice = minSlider ? Number(minSlider.value) : 0;
+              const maxPrice = maxSlider ? Number(maxSlider.value) : 999999;
+              
+              let visible = 0;
+              products.forEach(product => {
+                  const keywords = (product.dataset.keywords || "").split(" ");
+                  const category = product.dataset.category || "";
+                  const colours = (product.dataset.colour || "").split(" ");
+                  const name = product.querySelector("h2")?.textContent.toLowerCase() || "";
+                  const price = Number(product.dataset.price || 0);
+                  
+                  const catMatch = !category || activeCategories.length === 0 || activeCategories.includes(category);
+                  const keyMatch = activeKeywords.length === 0 || activeKeywords.some(k => keywords.includes(k));
+                  const colMatch = activeColours.length === 0 || activeColours.some(c => colours.includes(c));
+                  const searchMatch = !searchQuery || name.includes(searchQuery) || keywords.join(' ').includes(searchQuery);
+                  const priceMatch = price >= minPrice && price <= maxPrice;
+                  
+                  const show = catMatch && keyMatch && colMatch && searchMatch && priceMatch;
+                  product.classList.toggle('filter-hidden', !show);
+                  if (show) visible++;
+              });
+              if (noResults) noResults.style.display = visible === 0 ? "block" : "none";
+          }
+          
+          function updatePriceDisplay() {
+              let min = Number(minSlider.value);
+              let max = Number(maxSlider.value);
+              
+              if (min > max) [min, max] = [max, min];
+              
+              if (priceLabel) priceLabel.textContent = `£${min} - £${max}`;
+              
+              if (rangeDisplay) {
+                  const percentMin = (min / minSlider.max) * 100;
+                  const percentMax = (max / maxSlider.max) * 100;
+                  rangeDisplay.style.left = percentMin + "%";
+                  rangeDisplay.style.width = (percentMax - percentMin) + "%";
+              }
+              
+              // Fix z-index overlap
+              if (parseInt(minSlider.value) >= parseInt(maxSlider.value) - 5) {
+                  minSlider.style.zIndex = 4;
+                  maxSlider.style.zIndex = 3;
+              } else {
+                  minSlider.style.zIndex = 2;
+                  maxSlider.style.zIndex = 3;
+              }
+              
+              applyFilters();
+          }
+          
+          // Event delegation - listen on sidebar for all checkbox changes
+          sidebar?.addEventListener("change", (e) => {
+              if (e.target.type === "checkbox") {
+                  applyFilters();
+              }
+          });
+          
+          // Search input
+          searchInput?.addEventListener("input", applyFilters);
+          
+          // Price sliders
+          minSlider?.addEventListener("input", updatePriceDisplay);
+          maxSlider?.addEventListener("input", updatePriceDisplay);
+          
+          // Initial update
+          updatePriceDisplay();
+      }
+      
+      if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initFilters);
+      } else {
+          initFilters();
+      }
+  })();
+  </script>
+  
+  <script src="../javascript/global/basketIcon.js?v=2"></script>
+  <script src="../javascript/livingroom-js/sorting.js?v=2"></script>
 </body>
 </html>
