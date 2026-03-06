@@ -1,0 +1,49 @@
+# TEAM-13- Compatibility Configuration
+# Ensures consistent rendering across all platforms and browsers
+
+# Enable UTF-8 encoding for all content
+AddDefaultCharset UTF-8
+<IfModule mod_mime.c>
+    AddCharset UTF-8 .html .php .txt .css .js .json
+</IfModule>
+
+# Set proper MIME types
+<IfModule mod_mime.c>
+    AddType application/x-httpd-php .php
+    AddType text/html .html
+    AddType text/css .css
+    AddType application/javascript .js
+</IfModule>
+
+# Prevent access to hidden files
+<FilesMatch "^\.|\.php$|\.sql$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Set HTTP headers for proper charset and caching
+<IfModule mod_headers.c>
+    Header set Content-Type "text/html; charset=UTF-8"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Cache control for static assets
+    <FilesMatch "\.(jpg|jpeg|png|gif|ico|css|js|svg|webp)$">
+        Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+    
+    # No cache for PHP files
+    <FilesMatch "\.php$">
+        Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    </FilesMatch>
+</IfModule>
+
+# Rewrite URLs (if needed for routing)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Don't rewrite real files or directories
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+</IfModule>
