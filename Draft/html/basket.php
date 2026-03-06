@@ -24,12 +24,12 @@ $user_ID = isset($_SESSION["user_ID"]) ? (int)$_SESSION["user_ID"] : null; //get
 $basketModel = new Basket(); //
 
 //use guest_basket for guests (not saved to DB), cart for logged in users (syncs with DB)
-$cart = ($user_ID > 0) ? ($_SESSION["cart"] ?? []) : ($_SESSION["guest_basket"] ?? []); //logged in users have cart that syncs with DB
-
-/* if ($user_ID > 0 && empty($_SESSION["cart"])) {
+//For logged in users, always sync from database to ensure session is up to date
+if ($user_ID > 0) {
     $basket = $basketModel->fetchUserBasket($user_ID);
     if ($basket && !empty($basket['basket_ID'])) {
         $items = $basketModel->fetchBasketItems((int)$basket['basket_ID']);
+        $_SESSION["cart"] = []; //reset session cart
         foreach ($items as $it) {
             $pid = (int)($it['product_ID'] ?? 0);
             $qty = (int)($it['quantity'] ?? 0);
@@ -37,8 +37,12 @@ $cart = ($user_ID > 0) ? ($_SESSION["cart"] ?? []) : ($_SESSION["guest_basket"] 
                 $_SESSION["cart"][$pid] = $qty;
             }
         }
+    } else {
+        $_SESSION["cart"] = []; //ensure empty array if no basket
     }
-} */
+}
+
+$cart = ($user_ID > 0) ? ($_SESSION["cart"] ?? []) : ($_SESSION["guest_basket"] ?? []); //logged in users have cart that syncs with DB
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -46,14 +50,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   if ($action === "add") {
     $id = (int)($_POST["product_id"] ?? 0);
     $qty = max(1, (int)($_POST["qty"] ?? 1));
+    $redirect = $_POST["redirect"] ?? "basket.php";
+    if (!is_string($redirect) || preg_match('/^https?:\/\//i', $redirect)) {
+      $redirect = "basket.php";
+    }
+
     if ($id > 0) {
       if ($user_ID > 0) {
         $_SESSION["cart"][$id] = ($_SESSION["cart"][$id] ?? 0) + $qty; //update session cart for logged in user
+        $basket = $basketModel->fetchUserBasket($user_ID);
+        if ($basket && !empty($basket['basket_ID'])) {
+          $basketModel->addItemToBasket((int)$basket['basket_ID'], $id, $qty);
+        }
       } else {
         $_SESSION["guest_basket"][$id] = ($_SESSION["guest_basket"][$id] ?? 0) + $qty;
       }
     }
-    header("Location: basket.php");
+    header("Location: $redirect");
     exit;
   }
 

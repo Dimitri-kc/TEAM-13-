@@ -1,4 +1,3 @@
-cs2team13.cs2410-web01pvm.aston.ac.uk
 <?php
 // Redirect to homepage
 header("Location: /TEAM-13-/Draft/html/homepage.php");

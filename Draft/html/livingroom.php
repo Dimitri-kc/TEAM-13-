@@ -15,14 +15,16 @@ include '../backend/config/db_connect.php';
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
-    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=10">
 
     <link rel="stylesheet" href="../css/category-css/livingroom-base.css">
     <link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
-    <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">
+    <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css?v=4">
     <link rel="stylesheet" href="../css/category-css/livingroom-page.css">
 
     <style>
+        .filter-hidden { display: none !important; }
+        
         /* Fixed Header Pill Style */
         body {
             padding-top: 120px;
@@ -339,11 +341,24 @@ include '../backend/config/db_connect.php';
 
             <div class="product-grid" id="product-grid" style="display:grid!important;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))!important;gap:24px!important;width:100%!important;">
                 <?php
+                $favouriteProductIds = [];
+                if (!empty($_SESSION['user_ID'])) {
+                    $favUserId = (int)$_SESSION['user_ID'];
+                    $favIdsResult = mysqli_query($conn, "SELECT product_ID FROM favourites WHERE user_ID = {$favUserId}");
+                    if ($favIdsResult instanceof mysqli_result) {
+                        while ($favRow = mysqli_fetch_assoc($favIdsResult)) {
+                            $favouriteProductIds[] = (int)$favRow['product_ID'];
+                        }
+                        mysqli_free_result($favIdsResult);
+                    }
+                }
+
                 $query = "SELECT * FROM products WHERE category_id = 1";
                 $result = mysqli_query($conn, $query);
 
                 if (mysqli_num_rows($result) > 0) {
                     while($row = mysqli_fetch_assoc($result)) {
+                        $isFavourite = in_array((int)$row['product_ID'], $favouriteProductIds, true);
                         ?>
 <div class="item" style="display:grid;grid-template-rows:280px auto 1fr;position:relative;"
      data-price="<?php echo $row['price']; ?>" 
@@ -360,16 +375,11 @@ include '../backend/config/db_connect.php';
          <p style="grid-row:3;">£<?php echo $row['price']; ?></p>
      </a>
 
-     <form method="post" action="favourites_add.php" class="fav-form">
-         <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
-         <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
-         <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
-         <input type="hidden" name="product_image" value="../images/<?= htmlspecialchars($row['image']) ?>">
-         <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
-         <button type="submit" class="fav-icon-btn" title="Add to Favourites">
-             <img src="../images/heart-icon.png" alt="Favourite">
+     <div style="position: absolute; top: 8px; left: 8px; z-index: 20;">
+         <button class="fav-icon-btn<?= $isFavourite ? ' is-favourite' : '' ?>" data-product-id="<?= $row['product_ID'] ?>" title="Add to Favourites" onclick="toggleFavourite(this, event)">
+             <span class="fav-heart" aria-hidden="true"><?= $isFavourite ? '♥' : '♡' ?></span>
          </button>
-     </form>
+     </div>
 
      <button class="add-to-basket" onclick="addToBasket(<?= $row['product_ID'] ?>, 1, this)" title="Add to basket">
          <img src="../images/add-button-icon.png" alt="Add" style="width:18px!important;height:18px!important;">
@@ -443,10 +453,175 @@ include '../backend/config/db_connect.php';
 
 
   <script src="../javascript/header_footer_script.js"></script>
-  <script src="../javascript/global/basketIcon.js"></script>
-  <script type="module" src="../javascript/livingroom-js/filters.js"></script>
-  <script type="module" src="../javascript/livingroom-js/sorting.js"></script>
-  <script type="module" src="../javascript/livingroom-js/price-range.js"></script>
-  <script type="module" src="../javascript/livingroom-js/search.js"></script>
+  <script>
+    // Simple favourite toggle handler
+    window.toggleFavourite = async function(button, event) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        const productId = button.getAttribute('data-product-id');
+        const isFavourite = button.classList.contains('is-favourite');
+        const heart = button.querySelector('.fav-heart');
+        
+        if (!productId) {
+            alert('Error: Product ID not found');
+            return;
+        }
+        
+        try {
+            const endpoint = isFavourite ? './favourite_remove.php' : './favourites_add.php';
+            
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'product_id=' + productId + '&redirect=false'
+            });
+            
+            if (response.ok) {
+                if (isFavourite) {
+                    button.classList.remove('is-favourite');
+                    heart.textContent = '♡';
+                    showToast('Removed from favourites');
+                } else {
+                    button.classList.add('is-favourite');
+                    heart.textContent = '♥';
+                    showToast('Added to favourites');
+                }
+            } else {
+                alert('Error updating favourite: ' + response.status);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert('Error: ' + error.message);
+        }
+    };
+    
+    function showToast(message) {
+        let toast = document.getElementById('fav-toggle-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'fav-toggle-toast';
+            toast.style.cssText = 'position: fixed; top: 110px; right: 24px; background: rgba(33, 33, 33, 0.95); color: #fff; padding: 10px 14px; border-radius: 10px; font-size: 13px; z-index: 5000; box-shadow: 0 6px 16px rgba(0,0,0,0.2);';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 2000);
+    }
+  </script>
+  
+  <script>
+  // INLINE FILTERING - Directly in HTML to ensure it works
+  (function() {
+      console.log("INLINE FILTER SCRIPT STARTING");
+      
+      function initFilters() {
+          console.log("Init filters called, readyState:", document.readyState);
+          
+          // Get elements
+          const sidebar = document.querySelector(".side-bar");
+          const keywordCheckboxes = document.querySelectorAll(".tags input[type='checkbox']");
+          const categoryCheckboxes = document.querySelectorAll(".category-filter");
+          const colourCheckboxes = document.querySelectorAll(".colour-filter");
+          const searchInput = document.querySelector(".search");
+          const noResults = document.getElementById("no-results");
+          const minSlider = document.getElementById("price-min");
+          const maxSlider = document.getElementById("price-max");
+          const priceLabel = document.getElementById("price-num");
+          const rangeDisplay = document.getElementById("range-display");
+          
+          console.log("Found:", {
+              keywords: keywordCheckboxes.length,
+              categories: categoryCheckboxes.length,
+              colours: colourCheckboxes.length,
+              search: !!searchInput,
+              minSlider: !!minSlider,
+              maxSlider: !!maxSlider
+          });
+          
+          function applyFilters() {
+              const products = document.querySelectorAll(".item");
+              const activeKeywords = Array.from(document.querySelectorAll(".tags input[type='checkbox']:checked")).map(cb => cb.value);
+              const activeCategories = Array.from(document.querySelectorAll(".category-filter:checked")).map(cb => cb.value);
+              const activeColours = Array.from(document.querySelectorAll(".colour-filter:checked")).map(cb => cb.value);
+              const searchQuery = (searchInput?.value || "").toLowerCase().trim();
+              const minPrice = minSlider ? Number(minSlider.value) : 0;
+              const maxPrice = maxSlider ? Number(maxSlider.value) : 999999;
+              
+              let visible = 0;
+              products.forEach(product => {
+                  const keywords = (product.dataset.keywords || "").split(" ");
+                  const category = product.dataset.category || "";
+                  const colours = (product.dataset.colour || "").split(" ");
+                  const name = product.querySelector("h2")?.textContent.toLowerCase() || "";
+                  const price = Number(product.dataset.price || 0);
+                  
+                  const catMatch = !category || activeCategories.length === 0 || activeCategories.includes(category);
+                  const keyMatch = activeKeywords.length === 0 || activeKeywords.some(k => keywords.includes(k));
+                  const colMatch = activeColours.length === 0 || activeColours.some(c => colours.includes(c));
+                  const searchMatch = !searchQuery || name.includes(searchQuery) || keywords.join(' ').includes(searchQuery);
+                  const priceMatch = price >= minPrice && price <= maxPrice;
+                  
+                  const show = catMatch && keyMatch && colMatch && searchMatch && priceMatch;
+                  product.classList.toggle('filter-hidden', !show);
+                  if (show) visible++;
+              });
+              if (noResults) noResults.style.display = visible === 0 ? "block" : "none";
+          }
+          
+          function updatePriceDisplay() {
+              let min = Number(minSlider.value);
+              let max = Number(maxSlider.value);
+              
+              if (min > max) [min, max] = [max, min];
+              
+              if (priceLabel) priceLabel.textContent = `£${min} - £${max}`;
+              
+              if (rangeDisplay) {
+                  const percentMin = (min / minSlider.max) * 100;
+                  const percentMax = (max / maxSlider.max) * 100;
+                  rangeDisplay.style.left = percentMin + "%";
+                  rangeDisplay.style.width = (percentMax - percentMin) + "%";
+              }
+              
+              // Fix z-index overlap
+              if (parseInt(minSlider.value) >= parseInt(maxSlider.value) - 5) {
+                  minSlider.style.zIndex = 4;
+                  maxSlider.style.zIndex = 3;
+              } else {
+                  minSlider.style.zIndex = 2;
+                  maxSlider.style.zIndex = 3;
+              }
+              
+              applyFilters();
+          }
+          
+          // Event delegation - listen on sidebar for all checkbox changes
+          sidebar?.addEventListener("change", (e) => {
+              if (e.target.type === "checkbox") {
+                  applyFilters();
+              }
+          });
+          
+          // Search input
+          searchInput?.addEventListener("input", applyFilters);
+          
+          // Price sliders
+          minSlider?.addEventListener("input", updatePriceDisplay);
+          maxSlider?.addEventListener("input", updatePriceDisplay);
+          
+          // Initial update
+          updatePriceDisplay();
+      }
+      
+      if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initFilters);
+      } else {
+          initFilters();
+      }
+  })();
+  </script>
+  
+  <script src="../javascript/global/basketIcon.js?v=2"></script>
+  <script src="../javascript/livingroom-js/sorting.js?v=2"></script>
 </body>
 </html>

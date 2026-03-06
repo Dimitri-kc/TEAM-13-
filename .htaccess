@@ -1,0 +1,64 @@
+# TEAM-13- Compatibility Configuration
+# Ensures consistent rendering across all platforms and browsers
+
+# Enable UTF-8 encoding for all content
+AddDefaultCharset UTF-8
+<IfModule mod_mime.c>
+    AddCharset UTF-8 .html .php .txt .css .js .json
+</IfModule>
+
+# Set proper MIME types
+<IfModule mod_mime.c>
+    AddType application/x-httpd-php .php
+    AddType text/html .html
+    AddType text/css .css
+    AddType text/javascript .js
+    AddType application/json .json
+</IfModule>
+
+# Prevent access to hidden files and SQL files
+<FilesMatch "^\.|\.sql$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Set HTTP headers for proper charset and caching
+<IfModule mod_headers.c>
+    # Set Content-Type only for PHP/HTML files
+    <FilesMatch "\.(php|html)$">
+        Header set Content-Type "text/html; charset=UTF-8"
+    </FilesMatch>
+    
+    # Set Content-Type for JavaScript files
+    <FilesMatch "\.js$">
+        Header set Content-Type "text/javascript; charset=UTF-8"
+    </FilesMatch>
+    
+    # Set Content-Type for CSS files
+    <FilesMatch "\.css$">
+        Header set Content-Type "text/css; charset=UTF-8"
+    </FilesMatch>
+    
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Cache control for static assets
+    <FilesMatch "\.(jpg|jpeg|png|gif|ico|css|js|svg|webp)$">
+        Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+    
+    # No cache for PHP files
+    <FilesMatch "\.php$">
+        Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    </FilesMatch>
+</IfModule>
+
+# Rewrite URLs (if needed for routing)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Don't rewrite real files or directories
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+</IfModule>

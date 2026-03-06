@@ -425,3 +425,137 @@ html.dark-mode .add-review-btn::before {
 html.dark-mode .add-review-btn:hover {
     background-color: #444 !important;
 }
+
+/* Category Pages - Title and Description */
+html.dark-mode h1,
+html.dark-mode p {
+    color: #e0e0e0 !important;
+}
+
+/* Category Pages - Product Cards */
+html.dark-mode .item {
+    background-color: #242424 !important;
+    border-color: #333 !important;
+}
+
+html.dark-mode .item h2 {
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .item p {
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .item:hover {
+    border-color: #555 !important;
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Category Pages - Add to Basket Button */
+html.dark-mode .add-to-basket {
+    background-color: #333 !important;
+    color: #e0e0e0 !important;
+    border-color: #555 !important;
+}
+
+html.dark-mode .add-to-basket:hover {
+    background-color: #444 !important;
+}
+
+html.dark-mode .add-to-basket img {
+    filter: brightness(0) invert(1) !important;
+}
+
+/* Category Pages - Keywords/Tags */
+html.dark-mode .tag {
+    background-color: #333 !important;
+    color: #e0e0e0 !important;
+    border-color: #555 !important;
+}
+
+html.dark-mode .tag.active {
+    background-color: #555 !important;
+    color: #fff !important;
+}
+
+/* Category Pages - Sidebar */
+html.dark-mode .side-bar {
+    background-color: #1a1a1a !important;
+    border-color: #333 !important;
+}
+
+html.dark-mode .side-bar h3 {
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .side-bar label {
+    color: #d0d0d0 !important;
+}
+
+html.dark-mode .side-bar input[type="checkbox"] {
+    filter: brightness(1.2);
+}
+
+/* Category Pages - Top Bar */
+html.dark-mode .top-bar .search {
+    background-color: #2a2a2a !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+}
+
+html.dark-mode .top-bar .search::placeholder {
+    color: #888 !important;
+}
+
+html.dark-mode .btn-New,
+html.dark-mode .btn-PriceAsc,
+html.dark-mode .btn-PriceDesc,
+html.dark-mode .btn-Rating {
+    background-color: #2a2a2a !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+}
+
+html.dark-mode .btn-New:hover,
+html.dark-mode .btn-PriceAsc:hover,
+html.dark-mode .btn-PriceDesc:hover,
+html.dark-mode .btn-Rating:hover {
+    background-color: #333 !important;
+}
+
+html.dark-mode .btn-New.active,
+html.dark-mode .btn-PriceAsc.active,
+html.dark-mode .btn-PriceDesc.active,
+html.dark-mode .btn-Rating.active {
+    background-color: #555 !important;
+    color: #fff !important;
+    border-color: #666 !important;
+}
+
+/* Category Pages - No Results Message */
+html.dark-mode #no-results {
+    color: #d0d0d0 !important;
+}
+
+/* Category Pages - Price Range Labels */
+html.dark-mode #price-num {
+    color: #e0e0e0 !important;
+}
+
+/* Category Pages - Favourite Button */
+html.dark-mode .fav-icon-btn {
+    background-color: rgba(42, 42, 42, 0.9) !important;
+}
+
+html.dark-mode .fav-icon-btn:hover {
+    background-color: rgba(51, 51, 51, 0.95) !important;
+}
+
+html.dark-mode .fav-heart {
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .fav-icon-btn.is-favourite .fav-heart {
+    color: #ff6b6b !important;
+}
+
