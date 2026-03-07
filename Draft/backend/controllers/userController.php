@@ -113,12 +113,8 @@ class UserController {
             return;
         }
         $user_ID = (int)$_SESSION['user_ID']; //get user ID from session
-
-        //check if password change needed for fisrt login
-        if (!isset($_SESSION['must_change_password']) || (int)$_SESSION['must_change_password'] !== 1) {
-            echo json_encode(["success" => false, "message" => "Password change not required."]);
-            return;
-        }
+        //forced log in flag
+        $isForcedChange = isset($_SESSION['must_change_password']) && (int)$_SESSION['must_change_password'] === 1;
 
         $newPassword = trim($data['newPassword'] ?? ''); //get new password from input, trim whitespace
         if (!$newPassword) { //check valid input
@@ -126,30 +122,66 @@ class UserController {
             return;
         }
 
-        $minLength = strlen($newPassword) >=8; //minimum length must be longer than 8
-        $uppercase = preg_match('/[A-Z]/', $newPassword); //uppercase required
-        $lowercase = preg_match('/[a-z]/', $newPassword); //lowercase required
-        $numbers = preg_match('/[0-9]/', $newPassword); //must contain numbers
-        $specialChar = preg_match('/[!@#$%^&*()?]/', $newPassword); //must contain special characters such as !@#$%^&*()
-        if (!$minLength || !$uppercase || !$lowercase || !$numbers || !$specialChar) {
-            echo json_encode([
-                "success" => false,
-                "message" => "Password must be atleast 8 characters long and contain uppercase, lowercase, numbers and a special character."
-            ]);
+        //adding server-side validation with detailed error msgs for user
+        if (strlen($newPassword) < 8) {
+            echo json_encode(["success" => false, "message" => "Password must be at least 8 characters."]);
+            return;
+        }
+        if (!preg_match('/[A-Z]/', $newPassword)) {
+            echo json_encode(["success" => false, "message" => "Password must include an uppercase character."]);
+            return;
+        }
+        if (!preg_match('/[a-z]/', $newPassword)) {
+            echo json_encode(["success" => false, "message" => "Password must include a lowercase character."]);
+            return;
+        }
+        if (!preg_match('/[0-9]/', $newPassword)) {
+            echo json_encode(["success" => false, "message" => "Password must include a number."]);
+            return;
+        }
+        if (!preg_match('/[^A-Za-z0-9]/', $newPassword)) { //changed regex to allow any special character rather than set specifics for convenience
+            echo json_encode(["success" => false, "message" => "Password must include a special character."]);
+            return;
+        }
+        
+        $userModel = new User(); //for database connection
+        global $conn;
+        //check if user is reusing their old password
+        $stmt = $conn->prepare("SELECT password FROM users WHERE user_ID = ?"); //fetch current hashed password from database
+        $stmt->bind_param("i", $user_ID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $currentPasswordData = $result->fetch_assoc();
+        $stmt->close();
+        //if new password matches current password then reject change for security
+        if ($currentPasswordData &&password_verify($newPassword, $currentPasswordData['password'])) {
+            echo json_encode(["success" => false, "message" => "New password must be different from the current password."]);
             return;
         }
 
         $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT); //hash new password for security
-
-        $userModel = new User(); //for database connection
         $changeSuccess = $userModel->changePassword($user_ID, $hashedPassword); //call changePassword method in model to update password in database
 
         if ($changeSuccess) {
             $_SESSION['must_change_password'] = 0; //syncs session flag with DB after successful forced password change
+            
+            //if this wasn't forced change for first-login
+            $returnTo = trim((string)($data['returnTo'] ?? '')); //returnTo parameter for redirect if optional password change
+            if (!$isForcedChange && $returnTo !== '') { //if not forced change and returnTo provided
+                $isSafeRelative = 
+                    preg_match('/^[A-Za-z0-9._\-\/]+(?:\?.*)?(?:#.*)?$/', $returnTo) && //basic relative URL structure check
+                    stripos($returnTo, 'changePassword.php') === false && //prevent redirect loops to change password page
+                    stripos($returnTo, 'http://') === false && stripos($returnTo, 'https://') === false && //prevent absolute URLs to avoid open redirect vulnerabilities
+                    stripos($returnTo, '..') === false; //prevent directory traversal attempts
+                    
+                    if ($isSafeRelative) {
+                        $redirect = '/' . ltrim($returnTo, '/'); //construct safe redirect path
+                    }
+            }
             echo json_encode([
                 "success" => true,
-                "redirect" => "homepage.php", //redirect to homepage after successful password change
-                "message" => "Password changed successfully."
+                "message" => "Password changed successfully.",
+                "redirect" => $redirect ?? "homepage.php" //redirect to returnTo if provided and safe, otherwise homepage
             ]);
             return;
         } else {
