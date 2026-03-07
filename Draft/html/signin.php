@@ -466,7 +466,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
                     }
 
                     // Always go to dashboard after login
-                    window.location.href = "user_dash.php";
+                   window.history.back();
                     return;
                 }
 
@@ -481,7 +481,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
 
         // Profile dropdown handling
         document.addEventListener("DOMContentLoaded", () => {
-            const profileToggleBtn = document.getElementById("profile-toggle-btn");
+            const profileToggleBtn = dozzcument.getElementById("profile-toggle-btn");
             const profileDropdown = document.getElementById("profile-dropdown");
             const profileWrapper = document.getElementById("profile-wrapper");
 
