@@ -1,5 +1,6 @@
 <?php
 include '../backend/config/db_connect.php';
+include "header.php";
 
 $id = intval($_GET['id']);
 $query = "SELECT * FROM products WHERE product_ID = $id";
@@ -83,6 +84,7 @@ if (!$product) {
     });
 </script>
 
+<?php include 'footer.php'; ?>
 <style>
 /* Wrapper */
 .admin-wrapper {

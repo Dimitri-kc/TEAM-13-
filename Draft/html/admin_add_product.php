@@ -1,4 +1,5 @@
-<?php include '../backend/config/db_connect.php'; ?>
+<?php include '../backend/config/db_connect.php';
+include "header.php";?>
 <div class="admin-wrapper">
     <h1 class="title">Add New Product</h1>
     <p class="subtitle">Fill in the details below to add a new product</p>
@@ -37,6 +38,7 @@
 </form>
 </div>
 
+<?php include 'footer.php'; ?>
 
 <style>
 /* Center wrapper like a card, smaller than before */
