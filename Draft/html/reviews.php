@@ -1,5 +1,13 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 include '../backend/config/db_connect.php';
+
+$isLoggedIn = !empty($_SESSION['user_ID']);
+$userName   = $_SESSION['name'] ?? '';
+$headerName = ($userName !== '') ? $userName : 'Guest';
 
 $message = "";
 $product_id = $_GET['product_id'] ?? null;
@@ -54,18 +62,56 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Leave a Review</title>
+<title>Leave a Review | LOFT & LIVING</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/header_footer_style.css?v=12">
+<link rel="stylesheet" href="../css/dark-mode.css?v=9">
+<script src="../javascript/dark-mode.js"></script>
+
 <style>
 body {
     font-family: Arial, sans-serif;
     background: #d9d6cf;
     margin: 0;
     padding: 0;
+    padding-top: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
 }
+.site-header {
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    right: 40px;
+    z-index: 1000;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 50px;
+    height: 80px;
+}
+.header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+.header-left-tools { display: flex; align-items: center; gap: 25px; }
+.logo-wrapper { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.main-logo { height: 50px !important; width: auto !important; max-width: 280px; object-fit: contain; display: block; filter: invert(1); opacity: 0.95; }
+.ui-icon { width: 20px; height: 20px; object-fit: contain; display: block; }
+.header-actions { display: flex; align-items: center; gap: 25px; }
+html.dark-mode .site-header { background-color: #1a1a1a; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
+html.dark-mode .ui-icon { filter: invert(1); }
+html.dark-mode .main-logo { filter: invert(0); }
+html.dark-mode body { background-color: #1a1a1a; color: #e0e0e0; }
+html.dark-mode .review-container { background-color: #242424; color: #e0e0e0; }
+html.dark-mode .review-container input, html.dark-mode .review-container textarea, html.dark-mode .review-container select { background-color: #1a1a1a; border-color: #444; color: #e0e0e0; }
 
 /* Compact Container */
 .review-container {

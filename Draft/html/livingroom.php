@@ -252,7 +252,7 @@ include '../backend/config/db_connect.php';
                             <a class="profile-link" href="signup.php">Sign Up</a>
                         <?php endif; ?>
 
-                        <a class="profile-link" href="user_dash.php">My account</a>
+                        <a class="profile-link" href="user_dash.php">My Account</a>
 
                         <?php if ($isLoggedIn): ?>
                             <a class="profile-link" href="user_order_history.php">My Orders</a>
@@ -276,7 +276,7 @@ include '../backend/config/db_connect.php';
                 <li><a href="bedroom.php">Bedroom</a></li>
                 <li><a href="office.php">Office</a></li>
                 <li><a href="kitchen.php">Kitchen</a></li>
-                <li class="nav-divider"><a href="signin.php">My Account</a></li>
+
             </ul>
         </nav>
     </header>
@@ -621,7 +621,7 @@ include '../backend/config/db_connect.php';
   })();
   </script>
   
-  <script src="../javascript/global/basketIcon.js?v=2"></script>
+  <script src="../javascript/global/basketIcon.js?v=3"></script>
   <script src="../javascript/livingroom-js/sorting.js?v=2"></script>
 </body>
 </html>

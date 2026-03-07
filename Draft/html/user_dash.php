@@ -17,24 +17,90 @@ if (empty($_SESSION['user_ID'])) {
 $userName = $_SESSION['name'] ?? 'User';
 $userRole = $_SESSION['role'] ?? 'customer';
 $isLoggedIn = !empty($_SESSION['user_ID']);
+$headerName = ($userName !== '') ? $userName : 'Guest';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Account | LOFT &amp; LIVING BIRMINGHAM</title>
+    <title>My Account | LOFT &amp; LIVING</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Main site header/footer styling -->
-    <link rel="stylesheet" href="../css/header_footer_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
     <style>
-        /* ===============================
-           Dashboard page specific styling
-           =============================== */
+        body { 
+            padding-top: 120px;
+            font-family: "Ibarra Real Nova", serif;
+            background-color: #F4F1EC;
+            color: #2B2B2B;
+        }
+        .site-header {
+            position: fixed;
+            top: 20px;
+            left: 40px;
+            right: 40px;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-radius: 50px;
+            height: 80px;
+        }
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+        .header-left-tools {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        .logo-wrapper {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .main-logo {
+            height: 50px !important;
+            width: auto !important;
+            max-width: 280px;
+            object-fit: contain;
+            display: block;
+            filter: invert(1);
+            opacity: 0.95;
+        }
+        .ui-icon {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            display: block;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        html.dark-mode .site-header { background-color: #1a1a1a; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
+        html.dark-mode .ui-icon { filter: invert(1); }
+        html.dark-mode .main-logo { filter: invert(0); }
+        html.dark-mode body { background-color: #1a1a1a; color: #e0e0e0; }
+        html.dark-mode .site-footer { background-color: #1a1a1a; border-top: 1px solid #333; }
+        html.dark-mode .dash-card { background-color: #242424; border-color: #444; }
+        html.dark-mode .dash-card h3 { color: #e0e0e0; }
+        html.dark-mode .dashboard-wrap { background: #1a1a1a; }
+
+        /* =============================== Dashboard page specific styling =============================== */
 
         .dashboard-wrap {
-            background: #ffffff;
+            background: #F4F1EC;
             padding: 60px 24px 80px;
         }
 
@@ -126,75 +192,27 @@ $isLoggedIn = !empty($_SESSION['user_ID']);
         @media (max-width: 560px) {
             .dash-grid { grid-template-columns: 1fr; }
         }
-
-
-        .user-icon-wrap {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .user-icon-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .user-dropdown {
-            position: absolute;
-            top: 40px;
-            right: 0;
-            width: 260px;
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            padding: 18px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            display: none;
-            z-index: 3000; /* keeps it above other header elements */
-        }
-
-        .user-dropdown.open {
-            display: block;
-        }
-
-        .user-dropdown-greeting {
-            font-size: 14px;
-            font-weight: 700;
-            color: #000;
-            margin-bottom: 14px;
-        }
-
-        .user-dropdown-btn {
-            display: block;
-            font-size: 14px;
-            color: #444;
-            padding: 10px 0;
-        }
-
-        .user-dropdown-btn + .user-dropdown-btn {
-            border-top: 1px solid #eee;
-        }
-
-        .user-dropdown-btn.signout {
-            color: #b00020;
-        }
     </style>
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 
 <body>
 
     <header class="site-header">
         <div class="header-inner">
-            <button class="menu-btn" id="menu-toggle-btn">
-                <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
-            </button>
+            <div class="header-left-tools">
+                <button class="menu-btn" id="menu-toggle-btn" type="button" aria-label="Open menu">
+                    <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
+                </button>
+                <img src="../images/header_footer_images/icon-moon.png" alt="Dark Mode" class="ui-icon" id="moon-icon" data-light-src="../images/header_footer_images/icon-moon.png" data-dark-src="../images/header_footer_images/icon-moon2.png" style="margin-left: 8px; margin-right: 8px; vertical-align: middle; cursor: pointer;">
+                <a class="mini-search" href="search.php" aria-label="Search">
+                    <img src="../images/header_footer_images/icon-search.png" alt="Search" class="ui-icon" id="search-icon" style="vertical-align: middle;">
+                </a>
+            </div>
 
             <div class="logo-wrapper">
                 <a href="homepage.php">
-                    <img src="../images/header_footer_images/logo.png" alt="LOFT &amp; LIVING" class="main-logo">
+                    <img src="../images/header_footer_images/logo1.png" alt="LOFT &amp; LIVING" class="main-logo">
                 </a>
             </div>
 
@@ -203,28 +221,16 @@ $isLoggedIn = !empty($_SESSION['user_ID']);
                     <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
                 </a>
 
-                <!-- Profile icon dropdown (FIXED) -->
-                <div class="user-icon-wrap" id="user-icon-wrap">
-                    <button class="user-icon-btn" id="user-icon-btn" aria-label="My Account" type="button">
+                <div class="profile-wrapper" id="profile-wrapper">
+                    <button class="profile-btn" id="profile-toggle-btn" type="button" aria-haspopup="true" aria-expanded="false">
                         <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
                     </button>
 
-                    <div class="user-dropdown" id="user-dropdown">
-                        <div class="user-dropdown-greeting">
-                            Welcome, <?php echo htmlspecialchars($userName); ?>
-                        </div>
-
-                        <?php if (!$isLoggedIn): ?>
-                            <a href="signin.php" class="user-dropdown-btn">Sign in</a>
-                            <a class="profile-link" href="signup.php">Sign Up</a>
-                        <?php endif; ?>
-
-                        <a href="user_dash.php" class="user-dropdown-btn">My account</a>
-
-                        <!-- Sign out should go to signout.php (destroys session) -->
-                        <?php if ($isLoggedIn): ?>
-                            <a href="signout.php" class="user-dropdown-btn signout">Sign out</a>
-                        <?php endif; ?>
+                    <div class="profile-dropdown" id="profile-dropdown">
+                        <div class="profile-welcome">Welcome, <?php echo htmlspecialchars($headerName); ?></div>
+                        <a class="profile-link" href="user_dash.php">My Account</a>
+                        <a class="profile-link" href="user_order_history.php">My Orders</a>
+                        <a class="profile-link" href="signout.php">Sign out</a>
                     </div>
                 </div>
 
@@ -242,7 +248,7 @@ $isLoggedIn = !empty($_SESSION['user_ID']);
                 <li><a href="bedroom.php">Bedroom</a></li>
                 <li><a href="office.php">Office</a></li>
                 <li><a href="kitchen.php">Kitchen</a></li>
-                <li class="nav-divider"><a href="user_dash.php">My Account</a></li>
+
             </ul>
         </nav>
     </header>

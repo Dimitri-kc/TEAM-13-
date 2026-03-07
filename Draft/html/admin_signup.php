@@ -1,4 +1,14 @@
-<?php include '../backend/config/db_connect.php'; ?>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+include '../backend/config/db_connect.php';
+
+$isLoggedIn = !empty($_SESSION['user_ID']);
+$userName   = $_SESSION['name'] ?? '';
+$headerName = ($userName !== '') ? $userName : 'Guest';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +20,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../css/header_footer_style.css">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
     <link rel="stylesheet" href="../css/signup.style.css">
 
     <style>
@@ -20,24 +31,35 @@
             min-height: 100vh;
             margin: 0;
             background-color: #EAE8E4;
+            padding-top: 120px !important;
         }
 
         .site-header {
-            position: relative !important;
-            width: 100%;
-            background-color: #ffffff !important;
-            z-index: 1000;
-            padding: 15px 0;
+            position: fixed !important;
+            top: 20px !important;
+            left: 40px !important;
+            right: 40px !important;
+            z-index: 1000 !important;
+            background: white !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+            border-radius: 50px !important;
+            height: 80px !important;
         }
 
         .header-inner {
+            max-width: 1400px !important;
+            margin: 0 auto !important;
+            height: 100% !important;
             display: flex !important;
             justify-content: space-between !important;
             align-items: center !important;
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 0 40px !important;
         }
+
+        .header-left-tools { display: flex !important; align-items: center !important; gap: 25px !important; }
+        .logo-wrapper { position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; }
+        .main-logo { height: 50px !important; width: auto !important; max-width: 280px !important; object-fit: contain !important; display: block !important; filter: invert(1) !important; opacity: 0.95 !important; }
+        .ui-icon { width: 20px !important; height: 20px !important; object-fit: contain !important; display: block !important; }
 
         .header-actions {
             display: flex !important;
@@ -46,6 +68,16 @@
             justify-content: flex-end !important;
             gap: 20px;
         }
+
+        html.dark-mode .site-header { background-color: #1a1a1a !important; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important; }
+        html.dark-mode .ui-icon { filter: invert(1) !important; }
+        html.dark-mode .main-logo { filter: invert(0) !important; }
+        html.dark-mode body.page-background { background-color: #1a1a1a !important; color: #e0e0e0 !important; }
+        html.dark-mode .form-box { background-color: #242424 !important; color: #e0e0e0 !important; }
+        html.dark-mode .input-group input { background-color: #1a1a1a !important; border-color: #444 !important; color: #e0e0e0 !important; }
+        html.dark-mode .site-footer { background-color: #1a1a1a !important; border-top: 1px solid #333 !important; }
+
+        #basket-count { display: none !important; }
 
         .header-actions a {
             display: inline-flex;
@@ -123,25 +155,58 @@
             flex: 1;
         }
     </style>
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 
 <body class="page-background">
     <header class="site-header">
         <div class="header-inner">
-            <button class="menu-btn" id="menu-toggle-btn">
-                <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
-            </button>
+            <div class="header-left-tools">
+                <button class="menu-btn" id="menu-toggle-btn" type="button" aria-label="Open menu">
+                    <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
+                </button>
+                <img src="../images/header_footer_images/icon-moon.png" alt="Dark Mode" class="ui-icon" id="moon-icon" data-light-src="../images/header_footer_images/icon-moon.png" data-dark-src="../images/header_footer_images/icon-moon2.png" style="margin-left: 8px; margin-right: 8px; vertical-align: middle; cursor: pointer;">
+                <a class="mini-search" href="search.php" aria-label="Search">
+                    <img src="../images/header_footer_images/icon-search.png" alt="Search" class="ui-icon" id="search-icon" style="vertical-align: middle;">
+                </a>
+            </div>
 
             <div class="logo-wrapper">
                 <a href="homepage.php">
-                    <img src="../images/header_footer_images/logo.png" alt="Loft & Living" class="main-logo">
+                    <img src="../images/header_footer_images/logo1.png" alt="Loft & Living" class="main-logo">
                 </a>
             </div>
 
             <div class="header-actions">
                 <a href="favourites.php"><img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon"></a>
-                <a href="adminlogin.php"><img src="../images/header_footer_images/icon-user.png" alt="Admin Login" class="ui-icon"></a>
-                <a href="basket.php"><img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon"></a>
+
+                <div class="profile-wrapper" id="profile-wrapper">
+                    <button class="profile-btn" id="profile-toggle-btn" type="button" aria-haspopup="true" aria-expanded="false">
+                        <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
+                    </button>
+
+                    <div class="profile-dropdown" id="profile-dropdown">
+                        <?php if ($isLoggedIn): ?>
+                            <div class="profile-welcome">Welcome, <?php echo htmlspecialchars($headerName); ?></div>
+                        <?php else: ?>
+                            <div class="profile-welcome">Welcome to Loft & Living</div>
+                        <?php endif; ?>
+
+                        <?php if (!$isLoggedIn): ?>
+                            <a class="profile-link" href="signin.php">Sign in</a>
+                            <a class="profile-link" href="signup.php">Sign Up</a>
+                        <?php endif; ?>
+
+                        <a class="profile-link" href="user_dash.php">My Account</a>
+
+                        <?php if ($isLoggedIn): ?>
+                            <a class="profile-link" href="user_order_history.php">My Orders</a>
+                            <a class="profile-link" href="signout.php">Sign out</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <a href="basket.php" class="basket-icon"><img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon"><span id="basket-count">0</span></a>
             </div>
         </div>
 
@@ -152,7 +217,7 @@
                 <li><a href="bedroom.php">Bedroom</a></li>
                 <li><a href="office.php">Office</a></li>
                 <li><a href="kitchen.php">Kitchen</a></li>
-                <li class="nav-divider"><a href="adminlogin.php">Admin Login</a></li>
+                <li class="nav-divider"><a href="admin_login.php">Admin Login</a></li>
             </ul>
         </nav>
     </header>
@@ -202,7 +267,7 @@
 
                 <p class="form-footer">
                     Already have an admin account?
-                    <a href="adminlogin.php" class="link-primary">Sign in</a>
+                    <a href="admin_login.php" class="link-primary">Sign in</a>
                 </p>
             </form>
         </section>
@@ -219,7 +284,7 @@
                 <h4>Navigation</h4>
                 <ul>
                     <li><a href="homepage.php">Homepage</a></li>
-                    <li><a href="adminlogin.php">Admin Login</a></li>
+                    <li><a href="admin_login.php">Admin Login</a></li>
                     <li><a href="favourites.php">Favourites</a></li>
                     <li><a href="basket.php">Basket</a></li>
                 </ul>
@@ -328,7 +393,7 @@
 
                 if (data.success) {
                     sessionStorage.setItem("adminSignupSuccessMessage", "Admin account created successfully. Please sign in.");
-                    window.location.href = data.redirect || "adminlogin.php";
+                    window.location.href = data.redirect || "admin_login.php";
                     return;
                 }
 

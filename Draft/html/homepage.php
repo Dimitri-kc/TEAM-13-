@@ -425,7 +425,7 @@ if ($showWelcomeToast) {
                         <a class="profile-link" href="signup.php">Sign Up</a>
                     <?php endif; ?>
 
-                    <a class="profile-link" href="user_dash.php">My account</a>
+                    <a class="profile-link" href="user_dash.php">My Account</a>
 
                     <?php if ($isLoggedIn): ?>
                         <a class="profile-link" href="user_order_history.php">My Orders</a>
@@ -449,7 +449,7 @@ if ($showWelcomeToast) {
             <li><a href="bedroom.php">Bedroom</a></li>
             <li><a href="office.php">Office</a></li>
             <li><a href="kitchen.php">Kitchen</a></li>
-            <li class="nav-divider"><a href="signin.php">My Account</a></li>
+
         </ul>
     </nav>
 </header>
@@ -667,7 +667,7 @@ if ($showWelcomeToast) {
 </footer>
 
 <script src="../javascript/header_footer_script.js"></script>
-<script src="../javascript/global/basketIcon.js"></script>
+<script src="../javascript/global/basketIcon.js?v=3"></script>
 
 <script>
     // Review modal logic

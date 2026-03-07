@@ -5,7 +5,7 @@ include '../backend/config/db_connect.php';
 // User must be logged in
 if (!isset($_SESSION['user_ID'])) {
     http_response_code(401);
-    exit("Not logged in");
+    exit("Must be signed in to favourite");
 }
 
 $user_id = $_SESSION['user_ID'];

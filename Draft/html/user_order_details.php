@@ -1,22 +1,62 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$isLoggedIn = !empty($_SESSION['user_ID']);
+$userName   = $_SESSION['name'] ?? '';
+$headerName = ($userName !== '') ? $userName : 'Guest';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Order History Details | Admin</title>
+<title>Order Details | LOFT & LIVING</title>
 
-<link rel="stylesheet" href="../css/header_footer_style.css">
-<link rel="stylesheet" href="../css/category-css/livingroom-base.css">
-<link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
-<link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">
-<link rel="stylesheet" href="../css/category-css/livingroom-page.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/header_footer_style.css?v=12">
+<link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
 <style>
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Ibarra Real Nova", serif;
+  padding-top: 120px;
   margin: 40px;
-  color: #1a1a1a;
+  color: #2B2B2B;
+  background: #F4F1EC;
 }
+.site-header {
+  position: fixed;
+  top: 20px;
+  left: 40px;
+  right: 40px;
+  z-index: 1000;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 50px;
+  height: 80px;
+}
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+}
+.header-left-tools { display: flex; align-items: center; gap: 25px; }
+.logo-wrapper { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.main-logo { height: 50px !important; width: auto !important; max-width: 280px; object-fit: contain; display: block; filter: invert(1); opacity: 0.95; }
+.ui-icon { width: 20px; height: 20px; object-fit: contain; display: block; }
+.header-actions { display: flex; align-items: center; gap: 25px; }
+html.dark-mode .site-header { background-color: #1a1a1a; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
+html.dark-mode .ui-icon { filter: invert(1); }
+html.dark-mode .main-logo { filter: invert(0); }
+html.dark-mode body { background-color: #1a1a1a; color: #e0e0e0; }
+html.dark-mode .site-footer { background-color: #1a1a1a; border-top: 1px solid #333; }
+html.dark-mode .left-section, html.dark-mode .right-section { background-color: #242424; border-color: #444; }
 
 .container {
   display: flex;

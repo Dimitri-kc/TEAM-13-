@@ -211,7 +211,12 @@ async function toggleFavourite(button, event) {
             }
         } else {
             console.error('Failed to toggle favourite:', response.status, response.statusText);
-            showFavouriteToast('Error updating favourites');
+            if (response.status === 401) {
+                const errorText = await response.text();
+                showFavouriteToast(errorText || 'Must be signed in to favourite');
+            } else {
+                showFavouriteToast('Error updating favourites');
+            }
         }
     } catch (error) {
         console.error("Error toggling favourite: ", error);

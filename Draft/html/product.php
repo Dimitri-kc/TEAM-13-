@@ -1,5 +1,13 @@
 <?php 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 include '../backend/config/db_connect.php'; 
+
+$isLoggedIn = !empty($_SESSION['user_ID']);
+$userName   = $_SESSION['name'] ?? '';
+$headerName = ($userName !== '') ? $userName : 'Guest';
 
 // Get the ID from the URL link
 $product_id = isset($_GET['id']) ? mysqli_real_escape_string($conn, $_GET['id']) : 0;
@@ -23,7 +31,9 @@ if (!$product) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $product['name']; ?> | LOFT & LIVING</title>
 
-    <link rel="stylesheet" href="../css/header_footer_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
     <link rel="stylesheet" href="../css/sofa_style.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -34,12 +44,36 @@ if (!$product) {
             display: flex !important;
             flex-direction: column !important;
             min-height: 100vh;
+            padding-top: 120px;
         }
         .site-header {
+            position: fixed !important;
+            top: 20px !important;
+            left: 40px !important;
+            right: 40px !important;
             z-index: 1000 !important;
-            position: relative; 
-            background-color: #fff;
+            background: white !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+            border-radius: 50px !important;
+            height: 80px !important;
         }
+        .header-inner {
+            max-width: 1400px !important;
+            margin: 0 auto !important;
+            height: 100% !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            padding: 0 40px !important;
+        }
+        .header-left-tools { display: flex !important; align-items: center !important; gap: 25px !important; }
+        .logo-wrapper { position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; }
+        .main-logo { height: 50px !important; width: auto !important; max-width: 280px !important; object-fit: contain !important; display: block !important; filter: invert(1) !important; opacity: 0.95 !important; }
+        .ui-icon { width: 20px !important; height: 20px !important; object-fit: contain !important; display: block !important; }
+        .header-actions { display: flex !important; align-items: center !important; gap: 25px !important; }
+        html.dark-mode .site-header { background-color: #1a1a1a !important; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important; }
+        html.dark-mode .ui-icon { filter: invert(1) !important; }
+        html.dark-mode .main-logo { filter: invert(0) !important; }
         main.container {
             margin-top: 20px; 
             flex: 1; 
@@ -52,18 +86,25 @@ if (!$product) {
             margin-top: auto;
         }
     </style>
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 <body>
 
     <header class="site-header">
         <div class="header-inner">
-            <button class="menu-btn" id="menu-toggle-btn">
-                <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img"> 
-            </button>
+            <div class="header-left-tools">
+                <button class="menu-btn" id="menu-toggle-btn" type="button" aria-label="Open menu">
+                    <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img"> 
+                </button>
+                <img src="../images/header_footer_images/icon-moon.png" alt="Dark Mode" class="ui-icon" id="moon-icon" data-light-src="../images/header_footer_images/icon-moon.png" data-dark-src="../images/header_footer_images/icon-moon2.png" style="margin-left: 8px; margin-right: 8px; vertical-align: middle; cursor: pointer;">
+                <a class="mini-search" href="search.php" aria-label="Search">
+                    <img src="../images/header_footer_images/icon-search.png" alt="Search" class="ui-icon" id="search-icon" style="vertical-align: middle;">
+                </a>
+            </div>
 
             <div class="logo-wrapper">
                 <a href="homepage.php">
-                    <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
+                    <img src="../images/header_footer_images/logo1.png" alt="LOFT &amp; LIVING" class="main-logo">
                 </a>
             </div>
 
@@ -71,9 +112,33 @@ if (!$product) {
                 <a href="favourites.php">
                     <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
                 </a>
-                <a href="signin.php">
-                    <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
-                </a>
+
+                <div class="profile-wrapper" id="profile-wrapper">
+                    <button class="profile-btn" id="profile-toggle-btn" type="button" aria-haspopup="true" aria-expanded="false">
+                        <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
+                    </button>
+
+                    <div class="profile-dropdown" id="profile-dropdown">
+                        <?php if ($isLoggedIn): ?>
+                            <div class="profile-welcome">Welcome, <?php echo htmlspecialchars($headerName); ?></div>
+                        <?php else: ?>
+                            <div class="profile-welcome">Welcome to Loft & Living</div>
+                        <?php endif; ?>
+
+                        <?php if (!$isLoggedIn): ?>
+                            <a class="profile-link" href="signin.php">Sign in</a>
+                            <a class="profile-link" href="signup.php">Sign Up</a>
+                        <?php endif; ?>
+
+                        <a class="profile-link" href="user_dash.php">My Account</a>
+
+                        <?php if ($isLoggedIn): ?>
+                            <a class="profile-link" href="user_order_history.php">My Orders</a>
+                            <a class="profile-link" href="signout.php">Sign out</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
                 <a href="basket.php" class="basket-icon">
                     <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
                     <span id="basket-count">0</span>
@@ -88,7 +153,7 @@ if (!$product) {
                 <li><a href="bedroom.php">Bedroom</a></li>
                 <li><a href="office.php">Office</a></li>
                 <li><a href="kitchen.php">Kitchen</a></li>
-                <li class="nav-divider"><a href="signin.php">My Account</a></li>
+
             </ul>
         </nav>
     </header>
@@ -243,7 +308,7 @@ if (!$product) {
 
     <script src="../javascript/sofa_script.js"></script>
     <script src="../javascript/header_footer_script.js"></script>
-    <script src="../javascript/global/basketIcon.js"></script>
+    <script src="../javascript/global/basketIcon.js?v=3"></script>
     <script src="../javascript/image_zoom.js"></script>
     
 <script>
