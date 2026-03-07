@@ -3,34 +3,38 @@
     <h1 class="title">Add New Product</h1>
     <p class="subtitle">Fill in the details below to add a new product</p>
 
-    <form class="admin-form" method="POST" action="admin_insert_product.php" enctype="multipart/form-data">
-        
-        <label>Name:</label>
-        <input type="text" name="name" placeholder="Enter product name" required>
+<form class="admin-form" method="POST" action="admin_insert_product.php" enctype="multipart/form-data">
+    
+    <label>Name:</label>
+    <input type="text" name="name" placeholder="Enter product name" required>
 
-        <label>Price (£):</label>
-        <input type="number" step="0.01" name="price" placeholder="0.00" required>
+    <label>Price (£):</label>
+    <input type="number" step="0.01" name="price" placeholder="0.00" required>
 
-        <label>Stock:</label>
-        <input type="number" name="stock" placeholder="Quantity in stock" required>
+    <label>Stock:</label>
+    <input type="number" name="stock" placeholder="Quantity in stock" required>
 
-        <label>Category:</label>
-        <select name="category_id" required>
-            <option value="">-- Select Category --</option>
-            <option value="1">Living Room</option>
-            <option value="2">Kitchen</option>
-            <option value="3">Office</option>
-            <option value="4">Bathroom</option>
-            <option value="5">Bedroom</option>
-        </select>
+    <label>Category:</label>
+    <select name="category_id" required>
+        <option value="">-- Select Category --</option>
+        <option value="1">Living Room</option>
+        <option value="2">Kitchen</option>
+        <option value="3">Office</option>
+        <option value="4">Bathroom</option>
+        <option value="5">Bedroom</option>
+    </select>
 
-        <label>Image:</label>
-        <input type="file" name="image" accept="image/*" required>
+    <label>Image:</label>
+    <input type="file" name="image" accept="image/*" required>
 
-        <button type="submit" class="submit-btn">Add Product</button>
-        <button type="button" class="cancel-btn" onclick="window.location.href='admin_product_inventory.php'">
-    Cancel</button>
-    </form>
+    <label>Description:</label>
+    <textarea name="description" placeholder="Enter product description" required></textarea>
+
+    <button type="submit" class="submit-btn">Add Product</button>
+    <button type="button" class="cancel-btn" onclick="window.location.href='admin_product_inventory.php'">
+        Cancel
+    </button>
+</form>
 </div>
 
 
