@@ -31,6 +31,12 @@ class UserController {
             return;
         }
 
+        //email validation included
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { //validate email format
+            echo json_encode(["success" => false, "message" => "Invalid email address"]);
+            return;
+        }
+
         //hashed password for security
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         //create User model instance
@@ -48,14 +54,98 @@ class UserController {
             return;
 
         } else { //if registration failure
+            if (isset($registrationSuccess['error']) && $registrationSuccess['error'] === 'exists') {
+                echo json_encode([
+                    "success" => false,
+                    "message" => "Registration failed. Email already exists."
+                ]);
+            } else {
+                echo json_encode([
+                    "success" => false,
+                    "message" => "Registration failed. Please try again."
+                ]);
+            }
+            return;
+        }
+    }
+
+    //method to register an admin user
+    public function registerAdmin($data) {
+        //collect data from admin_signup.php
+        $name = trim($data['name'] ?? '');
+        $surname = trim($data['surname'] ?? '');
+        $email = trim($data['email'] ?? '');
+        $phone = trim($data['phone'] ?? '');
+        $password = trim($data['password'] ?? '');
+
+        //basic validation
+        if (!$name || !$surname || !$email || !$phone || !$password) {
             echo json_encode([
                 "success" => false,
-                "message" => "Registration failed. Email already exists."
+                "message" => "All fields are required."
             ]);
             return;
         }
 
- }
+        //email validation included
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { //validate email format
+            echo json_encode(["success" => false, "message" => "Invalid email address"]);
+            return;
+        }
+        //password validation for server-side for admin
+        if (strlen($password) < 8) {
+            echo json_encode(["success" => false, "message" => "Password must be at least 8 characters."]);
+            return;
+        }
+        if (!preg_match('/[A-Z]/', $password)) {
+            echo json_encode(["success" => false, "message" => "Password must include an uppercase character."]);
+            return;
+        }
+        if (!preg_match('/[a-z]/', $password)) {
+            echo json_encode(["success" => false, "message" => "Password must include a lowercase character."]);
+            return;
+        }
+        if (!preg_match('/[0-9]/', $password)) {
+            echo json_encode(["success" => false, "message" => "Password must include a number."]);
+            return;
+        }
+        if (!preg_match('/[^A-Za-z0-9]/', $password)) { //changed regex to allow any special character rather than set specifics for convenience
+            echo json_encode(["success" => false, "message" => "Password must include a special character."]);
+            return;
+        }
+
+        //hashed password for security
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        //create User model instance
+        $userModel = new User(); //for database connection via user model User.php holding user class
+
+        //ADMIN role
+        $role = 'admin';
+        $address = ''; //admin doesn't need address
+        $registrationSuccess = $userModel->register($name, $surname, $email, $phone, $address, $hashedPassword, $role);
+        if (!empty($registrationSuccess['success'])) { //if registration successful
+            echo json_encode([
+            "success" => true,   //page tbc as currently admin_login.php & admin_sigin.php
+            "redirect" => "admin_login.php", //redirect to signin page after registration 
+            "message" => "Admin account created successfully. You can now login."
+            ]);
+            return;
+
+        } else { //if registration failure
+            if (isset($registrationSuccess['error']) && $registrationSuccess['error'] === 'exists') {
+                echo json_encode([
+                    "success" => false,
+                    "message" => "Email already exists. Please use a different email."
+                ]);
+            } else {
+                echo json_encode([
+                    "success" => false,
+                    "message" => "Admin registration failed. Please try again."
+                ]);
+            }
+        }
+
+    }
 
     //method to login a user  
     public function login($data) {
@@ -76,6 +166,14 @@ class UserController {
     $userModel = new User(); //for database connection via user model User.php holding user class
     $user = $userModel->login($email); //fetches user data by email only
         
+    //block admins from customer login page
+    if (($user['role'] ?? '') === 'admin') {
+        echo json_encode([
+            "success" => false,
+            "message" => "Admins must sign in via the admin login page."
+        ]);
+        return;
+    }
     //verify password
     if ($user && password_verify($password, $user['password'])) {
         //setting session details
@@ -103,6 +201,76 @@ class UserController {
         }
     }
 
+    public function adminLogin($data) { //admin-specific login method with admin role check
+
+        $email = trim($data['email'] ?? '');
+        $password = trim($data['password'] ?? ''); //remove spaces
+
+        //basic validation
+        if (!$email || !$password) {
+            echo json_encode([
+            "success" => false,
+            "message" => "All fields are required."
+            ]);
+            return;
+        }
+
+        //create User model instance
+        $userModel = new User(); //for DB connection
+        $user = $userModel->login($email); //fetches user data by email only
+
+        if (!$user) { //if user not found
+            echo json_encode([
+                "success" => false,
+                "message" => "Invalid email or password."
+            ]);
+            return;
+        }
+
+        //check if user is an admin
+        if ($user['role'] !== 'admin') {
+            echo json_encode([
+                "success" => false,
+                "message" => "Access denied. Admin credentials required."
+            ]);
+            return;
+        }
+
+        //verify password
+        if (!password_verify($password, $user['password'])) {
+            echo json_encode([
+                "success" => false,
+                "message" => "Invalid email or password."
+            ]);
+            return;
+        }
+
+        //set session variables
+        $_SESSION['user_ID'] = (int)$user['user_ID'];
+        $_SESSION['name'] = $user['name'];
+        $_SESSION['surname'] = $user['surname'];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['role'] = $user['role']; //admin session also stored in session for role-based access control
+        $_SESSION['must_change_password'] = (int)$user['must_change_password'];
+        //check if password change required for first login
+        if ((int)$user['must_change_password'] === 1) {
+            echo json_encode(["success" => true, "redirect" => "changepassword.php",
+                "message" => "Login successful. Please change your password before proceeding."]);
+            return;
+        }
+
+        echo json_encode([
+            "success" => true, "redirect" => "admin_dash.php", "user" => ["user_ID" => $_SESSION['user_ID'], "name" => $_SESSION['name'], "role" => $_SESSION['role'], "must_change_password" => $_SESSION['must_change_password']],
+            "message" => "Admin login successful."
+        ]);
+        return;
+        
+        echo json_encode([
+            "success" => false, "message" => "Login failed. Invalid email, password, or insufficient privileges."
+        ]);
+        return; 
+    }
+
     public function changePassword($data) { //change user password upon first login only 
 
         if (session_status() === PHP_SESSION_NONE) {//start session if not already
@@ -113,6 +281,7 @@ class UserController {
             return;
         }
         $user_ID = (int)$_SESSION['user_ID']; //get user ID from session
+        $role = $_SESSION['role'] ?? ''; //get user role from session
         //forced log in flag
         $isForcedChange = isset($_SESSION['must_change_password']) && (int)$_SESSION['must_change_password'] === 1;
 
@@ -164,7 +333,9 @@ class UserController {
 
         if ($changeSuccess) {
             $_SESSION['must_change_password'] = 0; //syncs session flag with DB after successful forced password change
-            
+            //redirect determined by role for security - admins>admin_dash & users>user_dash
+            $redirect = ($role === 'admin') ? 'admin_dash.php' : 'user_dash.php';
+
             //if this wasn't forced change for first-login
             $returnTo = trim((string)($data['returnTo'] ?? '')); //returnTo parameter for redirect if optional password change
             if (!$isForcedChange && $returnTo !== '') { //if not forced change and returnTo provided

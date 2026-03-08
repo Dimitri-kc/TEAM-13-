@@ -50,7 +50,7 @@ switch ($data['action'] ?? '') {
         $adminController->getCustomerOrders($data);
         break;
 
-    //inventory
+/*     //inventory
     case 'inventory_list':
         $adminController->getInventoryList($data);
         break;
@@ -74,7 +74,7 @@ switch ($data['action'] ?? '') {
     case 'inventory_set_stock_level':
         $adminController->setInventoryStockLevel($data);
         break;
-
+ */
     //reports
     case 'report_stock_level':
         $adminController->reportStockLevel($data);
@@ -88,14 +88,14 @@ switch ($data['action'] ?? '') {
         $adminController->reportTotalRevenue($data);
         break;
 
-    //orders
+/*     //orders
     case 'orders_list':
         $adminController->ordersList($data);
         break;
     
     case 'order_update_status':
         $adminController->updateOrderStatus($data);
-        break;
+        break; */
 
     default:
         echo json_encode(["success" => false, "message" => "Invalid action."]);

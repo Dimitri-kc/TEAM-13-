@@ -202,7 +202,7 @@
 
                 <p class="form-footer">
                     Already have an admin account?
-                    <a href="adminlogin.php" class="link-primary">Sign in</a>
+                    <a href="admin_login.php" class="link-primary">Sign in</a>
                 </p>
             </form>
         </section>
@@ -219,7 +219,7 @@
                 <h4>Navigation</h4>
                 <ul>
                     <li><a href="homepage.php">Homepage</a></li>
-                    <li><a href="adminlogin.php">Admin Login</a></li>
+                    <li><a href="admin_login.php">Admin Login</a></li>
                     <li><a href="favourites.php">Favourites</a></li>
                     <li><a href="basket.php">Basket</a></li>
                 </ul>
@@ -247,7 +247,7 @@
     </footer>
 
     <script>
-        const API_URL = "/Team-13-/Draft/backend/routes/userRoutes.php";
+        const API_URL = "../backend/routes/userRoutes.php";
         const form = document.getElementById("adminSignupForm");
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -299,14 +299,12 @@
             if (!confirmPassword) { showPopup("Please confirm your password."); confirmPasswordField.focus(); return; }
             if (password !== confirmPassword) { showPopup("Passwords do not match."); confirmPasswordField.focus(); return; }
 
-            const hasMinLength = password.length >= 8;
-            const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
-
-            if (!hasMinLength || !hasSpecialChar) {
-                showPopup("Password must be at least 8 characters and include a special character.");
-                passwordField.focus();
-                return;
-            }
+            //updated password validation to match backend immediate feedback
+            if (password.length < 8) { showPopup("Password must be at least 8 characters."); passwordField.focus(); return; }
+            if (!/[A-Z]/.test(password)) { showPopup("Password must include an uppercase character."); passwordField.focus(); return; }
+            if (!/[a-z]/.test(password)) { showPopup("Password must include a lowercase character."); passwordField.focus(); return; }
+            if (!/[0-9]/.test(password)) { showPopup("Password must include a number."); passwordField.focus(); return; }
+            if (!/[^A-Za-z0-9]/.test(password)) { showPopup("Password must include a special character."); passwordField.focus(); return; }
 
             const payload = {
                 action: "register_admin",
@@ -328,7 +326,7 @@
 
                 if (data.success) {
                     sessionStorage.setItem("adminSignupSuccessMessage", "Admin account created successfully. Please sign in.");
-                    window.location.href = data.redirect || "adminlogin.php";
+                    window.location.href = data.redirect || "admin_login.php";
                     return;
                 }
 
