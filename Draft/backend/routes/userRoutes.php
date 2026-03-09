@@ -34,12 +34,20 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
     //switch to call relevant controller method based on action in .html
     switch ($data['action']) {
-        case 'register': //register action called from signup.html
+        case 'register': //register action called from signup.php
             $userController->register($data);//call register method in controller
             break;
 
-        case 'login': //login action called from signin.html
+        case 'register_admin': //admin registration action called from admin_signup.php
+            $userController->registerAdmin($data); //call registerAdmin method in controller
+            break;
+
+        case 'login': //login action called from signin.php & admin_signin.php
             $userController->login($data); //calling login method in controller
+            break;
+
+        case 'admin_login': //admin-only login
+            $userController->adminLogin($data); //calling adminLogin method in controller with admin-specific authentication logic
             break;
 
         case 'change_password': //change password action called from changePassword.php

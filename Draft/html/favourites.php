@@ -59,16 +59,16 @@ try {
         }
 
         .fav-card {
-          position: relative;
-          border: 1px solid #eaeaea;
-          border-radius: 6px;
-          padding: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          background: #ffffff;
-          min-height: 200px;
-        }
+  position: relative;
+  border: 1px solid #eaeaea;
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #ffffff;
+  text-align: center;
+}
 
         .thumb {
           width: 200px; height: 200px;
@@ -164,27 +164,39 @@ try {
                         $imagePath = "../images/livingroom-images/" . $p["image"];
                     ?>
                     
-                    <div class="fav-card">
-                        <form method="post" action="favourite_remove.php" style="margin:0;">
-                            <input type="hidden" name="product_id" value="<?= $pid ?>">
-                            <input type="hidden" name="redirect" value="favourites.php">
-                            <button class="removeBtn" type="submit" title="Remove">×</button>
-                        </form>
+                   <div class="fav-card">
 
-                        <div class="thumb">
-                            <?php if (!empty($p["image"])): ?>
-                                <img src="../images/<?= htmlspecialchars($p["image"]) ?>" alt="">
-                            <?php else: ?>
-                                <span style="color:#cfcfcf; font-size:12px;">IMG</span>
-                            <?php endif; ?>
-                        </div>
+    <form method="post" action="favourite_remove.php" style="margin:0;">
+        <input type="hidden" name="product_id" value="<?= $pid ?>">
+        <input type="hidden" name="redirect" value="favourites.php">
+        <button class="removeBtn" type="submit" title="Remove">×</button>
+    </form>
 
-                        <form method="post" action="basket.php?action=add" style="margin:0;">
-                            <input type="hidden" name="product_id" value="<?= $pid ?>">
-                            <input type="hidden" name="qty" value="1">
-                            <button class="btn" type="submit">Add to bag</button>
-                        </form>
-                    </div>
+    <div class="thumb">
+        <?php if (!empty($p["image"])): ?>
+            <img src="../images/<?= htmlspecialchars($p["image"]) ?>" alt="">
+        <?php else: ?>
+            <span style="color:#cfcfcf; font-size:12px;">IMG</span>
+        <?php endif; ?>
+    </div>
+
+    <div style="font-size:13px; font-weight:600; margin-top:10px;">
+        <?= htmlspecialchars($p["name"]) ?>
+    </div>
+
+
+    <div style="font-size:12px; color:#666;">
+        £<?= number_format($p["price"],2) ?>
+    </div>
+
+    <form method="post" action="basket.php?action=add" style="margin-top:10px;">
+        <input type="hidden" name="product_id" value="<?= $pid ?>">
+        <input type="hidden" name="qty" value="1">
+        <button class="btn" type="submit">Add to bag</button>
+    </form>
+
+</div>
+
                 <?php endforeach; ?>
             </div>
 

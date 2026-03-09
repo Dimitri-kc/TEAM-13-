@@ -258,7 +258,7 @@
       const data = await readJsonSafely(res);
 
       if (data.success) {
-        window.location.href = data.redirect || "admin_dashboard.php";
+        window.location.href = data.redirect || "admin_dash.php";
         return;
       }
 
