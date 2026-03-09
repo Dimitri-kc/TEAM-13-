@@ -2,9 +2,8 @@
 require_once 'db_connect.php'; // adjust if needed
 include "header.php";
 
-// ─────────────────────────────────────────────
-// PRODUCT STOCK QUERY
-// ─────────────────────────────────────────────
+
+// product stock query
 $query1 = "
     SELECT p.name, p.stock, c.name AS category
     FROM products p
@@ -32,7 +31,7 @@ while ($row = $result1->fetch_assoc()) {
     $productStock[] = (int)$row['stock'];
     $productCategories[] = $row['category'];
 
-    // LOW STOCK ALERT
+    // low stock alert, change to red if stock is below 5
     if ((int)$row['stock'] < 5) {
         $productColors[] = "#d9534f";
     } else {
@@ -40,9 +39,9 @@ while ($row = $result1->fetch_assoc()) {
     }
 }
 
-// ─────────────────────────────────────────────
-// DAILY SIGN‑UPS QUERY
-// ─────────────────────────────────────────────
+
+// daily customer sign up query
+
 $query2 = "
     SELECT DATE(created_at) AS signup_date, COUNT(*) AS signups
     FROM users
@@ -69,7 +68,7 @@ while ($row = $result2->fetch_assoc()) {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* GLOBAL PAGE STYLE */
+        
         body {
             margin: 90px 0 0;
             padding: 0;
@@ -87,7 +86,7 @@ while ($row = $result2->fetch_assoc()) {
         }
 
 
-        /* CHART CARDS */
+        
         .chart-container {
             background: #fff;
             padding: 40px;
@@ -104,7 +103,7 @@ while ($row = $result2->fetch_assoc()) {
             margin-bottom: 25px;
         }
 
-        /* FILTER */
+        
         #categoryFilter {
             padding: 10px 15px;
             border-radius: 8px;
@@ -117,7 +116,7 @@ while ($row = $result2->fetch_assoc()) {
 </head>
 
 <body>
-<!-- MAIN CONTENT -->
+
 <div class="content-wrapper">
 
     <label for="categoryFilter">Filter by Category:</label>
@@ -143,12 +142,12 @@ while ($row = $result2->fetch_assoc()) {
 </div>
 
 <script>
-// PROFILE DROPDOWN
+// profile dropdown
 document.getElementById("profile-toggle-btn").addEventListener("click", () => {
     document.getElementById("profile-dropdown").classList.toggle("open");
 });
 
-// PRODUCT STOCK CHART
+// product stock chart data
 const productLabels = <?php echo json_encode($productLabels); ?>;
 const productStock = <?php echo json_encode($productStock); ?>;
 const productColors = <?php echo json_encode($productColors); ?>;
@@ -175,7 +174,7 @@ const stockChart = new Chart(document.getElementById('stockChart'), {
     }
 });
 
-// CATEGORY FILTER
+// category filters
 document.getElementById("categoryFilter").addEventListener("change", function () {
     const selected = this.value;
 
@@ -198,7 +197,7 @@ document.getElementById("categoryFilter").addEventListener("change", function ()
     stockChart.update();
 });
 
-// DAILY SIGN‑UPS CHART
+// daily customer sign up chart 
 const dayLabels = <?php echo json_encode($dayLabels); ?>;
 const signupCounts = <?php echo json_encode($signupCounts); ?>;
 
