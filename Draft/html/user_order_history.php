@@ -1,252 +1,295 @@
+<?php
+include '../backend/config/db_connect.php';
+session_start();
+
+if (!isset($_SESSION['user_ID']) || !is_numeric($_SESSION['user_ID'])) {
+    header("Location: signin.php?redirect=orders");
+    exit();
+}
+
+$user_ID = (int)$_SESSION['user_ID'];
+
+$stmt = $conn->prepare("
+    SELECT 
+        o.order_ID, 
+        o.order_status, 
+        o.order_date,
+        (
+            SELECT p.image
+            FROM order_items oi
+            JOIN products p ON oi.product_ID = p.product_ID
+            WHERE oi.order_ID = o.order_ID
+            LIMIT 1
+        ) AS product_image
+    FROM orders o
+    WHERE o.user_ID = ?
+    ORDER BY o.order_date DESC
+");
+
+$stmt->bind_param("i", $user_ID);
+$stmt->execute();
+$result = $stmt->get_result();
+$orders = $result->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>User - My Recent Orders</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOFT & LIVING - My Recent Orders</title>
 
 <link rel="stylesheet" href="../css/header_footer_style.css">
 
-<link rel="stylesheet" href="../css/category-css/livingroom-base.css">
-<link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
-<link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">
-<link rel="stylesheet" href="../css/category-css/livingroom-page.css">
-
 <style>
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+body {
+    font-family: 'Inter', Arial, sans-serif;
     background: #fff;
     margin: 0;
-    padding: 40px 20px;
     color: #1a1a1a;
-  }
+}
 
-  .admin-container {
-    max-width: 900px;
-    margin: 0 auto;
-  }
 
-  h1 {
+.user-container {
+    max-width: 1100px;
+    margin: 50px auto 100px auto; 
+    padding: 0 40px;
+}
+
+h1 {
+    font-size: 22px;
     font-weight: 700;
-    text-align: left;
-    font-size: 30px;
-    margin-bottom: 4px;
-  }
+    margin-bottom: 6px;
+}
 
-  p.subheader {
-    color: #6c6c6c;
-    font-weight: 400;
+.subheader {
+    color: #888;
     font-size: 14px;
-    margin-top: 0;
-    margin-bottom: 24px;
-  }
+    margin-bottom: 35px;
+}
 
-  .orders-grid {
+.orders-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-bottom: 50px;
-  }
+    gap: 24px;
+}
 
-  .order-card {
-    border: 1px solid #e2e2e2;
-    border-radius: 6px;
-    padding: 12px 16px;
+.order-card {
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    padding: 24px;
     display: flex;
     align-items: center;
-    gap: 12px;
-  }
+    gap: 30px;
+    transition: 0.2s ease;
+}
 
-  .order-card img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 4px;
-    background: #eee;
-    flex-shrink: 0;
-  }
+.order-card:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+}
 
-  .order-details {
-    flex-grow: 1;
-    font-size: 14px;
-  }
-
-  .order-status {
-    font-weight: 600;
-    font-size: 12px;
-    color: #333;
-    margin-bottom: 4px;
-  }
-
-  .order-number {
-    font-weight: 700;
-    font-size: 16px;
-    margin: 0 0 4px 0;
-  }
-
-  .customer-name {
-    margin: 0;
-    font-weight: 500;
-    color: #555;
-  }
-
-  .order-actions {
-    display: flex;
-    gap: 10px;
-  }
-
-  button {
+.order-image-box {
+    width: 120px;
+    height: 120px;
+    background-color: #f5f5f5;
     border-radius: 6px;
-    border: none;
-    padding: 6px 14px;
-    font-size: 13px;
-    font-weight: 600;
+    overflow: hidden;
+}
+
+.order-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.order-content {
+    flex-grow: 1;
+}
+
+.order-date-label {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.order-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-action {
+    padding: 10px 18px;
+    font-size: 12px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.2s;
-    white-space: nowrap;
-  }
+    text-decoration: none;
+    font-weight: 600;
+    border: none;
+    transition: 0.2s ease;
+}
 
-  .btn-view-edit {
+.btn-add-bag {
+    background-color: #e8e8e8;
+    color: #1a1a1a;
+}
+
+.btn-add-bag:hover {
     background-color: #ddd;
-    color: #333;
-  }
+}
 
-  .btn-view-edit:hover {
-    background-color: #ccc;
-  }
+.btn-view-order {
+    background-color: #2b2b2b;
+    color: #fff;
+}
 
-  .btn-cancel {
-    background-color: #2C2C2C;
-    color: white;
-  }
+.btn-view-order:hover {
+    background-color: #000;
+}
 
-  .btn-cancel:hover {
-    background-color: #1a1a1a;
-  }
 
-  /* Responsive: single column on small screens */
-  @media (max-width: 600px) {
+.custom-footer {
+    border-top: 1px solid #f0f0f0;
+    padding: 60px 0;
+}
+
+.footer-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 120px 1fr 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+}
+
+.footer-social {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.footer-social img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.footer-column h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column li {
+    margin-bottom: 12px;
+}
+
+.footer-column a {
+    text-decoration: none;
+    color: #666;
+    font-size: 13px;
+}
+
+.footer-column a:hover {
+    color: #000;
+}
+
+@media (max-width: 900px) {
     .orders-grid {
-      grid-template-columns: 1fr;
+        grid-template-columns: 1fr;
     }
-  }
+
+    .footer-wrapper {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+}
 </style>
 </head>
-<body data-category="livingroom">
 
-<!-- Header -->
+<body>
+
 <header class="site-header">
   <div class="header-inner">
-    <button class="menu-btn" id="menu-toggle-btn">
-      <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img" />
+    <button class="menu-btn">
+        <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon">
     </button>
 
     <div class="logo-wrapper">
       <a href="homepage.php">
-        <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo" />
+        <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
       </a>
     </div>
 
     <div class="header-actions">
       <a href="favourites.php">
-        <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon" />
+        <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
       </a>
       <a href="signin.php">
-        <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon" />
+        <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
       </a>
       <a href="basket.php" class="basket-icon">
-        <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon" />
-        <span id="basket-count">0</span>
+          <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
+          <span id="basket-count">0</span>
       </a>
     </div>
   </div>
-
-  <nav class="dropdown-panel" id="dropdown-nav">
-    <ul class="nav-links">
-      <li><a href="livingroom.php">Living Room</a></li>
-      <li><a href="bathroom.php">Bathroom</a></li>
-      <li><a href="bedroom.php">Bedroom</a></li>
-      <li><a href="office.php">Office</a></li>
-      <li><a href="kitchen.php">Kitchen</a></li>
-      <li class="nav-divider"><a href="signin.php">My Account</a></li>
-    </ul>
-  </nav>
 </header>
 
 <div class="user-container">
-  <h1>My Recent orders </h1>
-  <p class="subheader">View recent customer orders and add to bag if you want to purchase it again</p>
+    <h1>My Recent Orders</h1>
+    <p class="subheader">View your recent orders and add to your bag if you want to purchase it again</p>
 
-  <div class="orders-grid">
+    <div class="orders-grid">
+        <?php if (empty($orders)): ?>
+            <p>You haven't placed any orders yet.</p>
+        <?php else: ?>
+            <?php foreach ($orders as $order): 
+                $date = date("jS F Y", strtotime($order['order_date']));
+                $imagePath = !empty($order['product_image'])
+                    ? htmlspecialchars($order['product_image'])
+                    : '../images/basket-images/placeholder.png';
+            ?>
+            <div class="order-card">
+                <div class="order-image-box">
+                    <img src="<?= $imagePath ?>" alt="Product Image">
+                </div>
 
-    <div class="order-card">
-      <img src="https://via.placeholder.com/80" alt="Product Image" />
-      <div class="order-details">
-        <!-- <p class="order-status">Order Status: Pending</p> -->
-        <p class="order-number">Order Status: delivered </p>
-        <p class="customer-name">Date: 28 October 2025 </p>
-      </div>
-      <div class="order-actions">
-        <button class="btn-view-edit">View & Edit</button>
-        <button class="btn-cancel">Cancel</button>
-      </div>
+                <div class="order-content">
+                    <span class="order-date-label"><?= $date ?></span>
+
+                    <div class="order-actions">
+                        <form action="basket.php" method="POST" style="display:inline;">
+                            <input type="hidden" name="reorder" value="1">
+                            <input type="hidden" name="order_id" value="<?= $order['order_ID'] ?>">
+                            <button type="submit" class="btn-action btn-add-bag">Add to bag</button>
+                        </form>
+
+                        <a href="user_order_details.php?order_id=<?= $order['order_ID'] ?>" class="btn-action btn-view-order">View</a>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
-
-    <div class="order-card">
-      <img src="https://via.placeholder.com/80" alt="Product Image" />
-      <div class="order-details">
-        <!-- <p class="order-status">Order Status: Shipped</p> -->
-        <p class="order-number">Order Status: delivered </p>
-        <p class="customer-name">Date: 17 November 2025 </p>
-      </div>
-      <div class="order-actions">
-        <button class="btn-view-edit">View & Edit</button>
-        <button class="btn-cancel">Cancel</button>
-      </div>
-    </div>
-
-    <div class="order-card">
-      <img src="https://via.placeholder.com/80" alt="Product Image" />
-      <div class="order-details">
-        <!-- <p class="order-status">Order Status: Pending</p> -->
-        <p class="order-number">Order Status: delivered </p>
-        <p class="customer-name">Date: 12 January 2026 </p>
-      </div>
-      <div class="order-actions">
-        <button class="btn-view-edit">View & Edit</button>
-        <button class="btn-cancel">Cancel</button>
-      </div>
-    </div>
-
-    <div class="order-card">
-      <img src="https://via.placeholder.com/80" alt="Product Image" />
-      <div class="order-details">
-        <!-- <p class="order-status">Order Status: Pending</p> -->
-        <p class="order-number">Order Status: delivered </p>
-        <p class="customer-name"> Date: 2 February 2026 </p>
-      </div>
-      <div class="order-actions">
-        <button class="btn-view-edit">View & Edit</button>
-        <button class="btn-cancel">Cancel</button>
-      </div>
-    </div>
-
-  </div>
 </div>
 
-<!-- Footer -->
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-section social-links">
-      <a href="#">
-        <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon" />
-      </a>
-      <a href="#">
-        <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon" />
-      </a>
+<footer class="custom-footer">
+  <div class="footer-wrapper">
+
+    <div class="footer-social">
+      <a href="#"><img src="../images/header_footer_images/icon-twitter.png" alt="X"></a>
+      <a href="#"><img src="../images/header_footer_images/icon-instagram.png" alt="Instagram"></a>
     </div>
 
-    <div class="footer-section">
+    <div class="footer-column">
       <h4>Navigation</h4>
       <ul>
         <li><a href="homepage.php">Homepage</a></li>
@@ -256,7 +299,7 @@
       </ul>
     </div>
 
-    <div class="footer-section">
+    <div class="footer-column">
       <h4>Categories</h4>
       <ul>
         <li><a href="livingroom.php">Living Room</a></li>
@@ -267,14 +310,16 @@
       </ul>
     </div>
 
-    <div class="footer-section">
+    <div class="footer-column">
       <h4>More...</h4>
       <ul>
         <li><a href="contact.php">Contact Us</a></li>
         <li><a href="about.php">About Us</a></li>
       </ul>
     </div>
+
   </div>
 </footer>
+
 </body>
 </html>

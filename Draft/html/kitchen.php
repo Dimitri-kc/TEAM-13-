@@ -198,7 +198,7 @@ include '../backend/config/db_connect.php';
     </style>
     <script src="../javascript/dark-mode.js"></script>
 </head>
-<body>
+<body data-category="kitchen">
 
     <header class="site-header">
         <div class="header-inner">
