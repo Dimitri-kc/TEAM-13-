@@ -2,6 +2,23 @@
 include '../backend/config/db_connect.php';
 session_start();
 
+//fetch user details for pre-filling form
+$user_ID = $_SESSION['user_ID'] ?? null;
+$stmt = $conn->prepare("SELECT name, surname, email, phone, address FROM users WHERE user_ID = ?");
+$stmt->bind_param("i", $user_ID);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+//prepares variables for form pre-fill > null handles missing data
+$userName = trim(($user['name'] ?? '') . ' ' . ($user['surname'] ?? ''));//combine name + surname stored in DB
+$userEmail = $user['email'] ?? '';
+$userPhone = $user['phone'] ?? '';
+$userAddress1 = $user['address'] ?? ''; //DB has single address field
+$userAddress2 = '';
+$userCity = '';
+$userCountyRegion = '';
+$userPostcode = '';
+
 function money($n){
     return "£" . number_format((float)$n, 2);
 }
@@ -205,29 +222,29 @@ input[name="postcode"]{
 <h1 class="form-title">YOUR DETAILS</h1>
 
 <div class="review-details">
-<label><strong>Name *</strong></label>
-<input type="text" name="name" required>
+<label><strong>Full Name *</strong></label>
+<input type="text" name="name" value="<?php echo htmlspecialchars($userName); ?>" required>
 
 <label><strong>Email *</strong></label>
-<input type="email" name="email" required>
+<input type="email" name="email" value="<?php echo htmlspecialchars($userEmail); ?>" required>
 
 <label><strong>Phone</strong></label>
-<input type="text" name="phone">
+<input type="text" name="phone" value="<?php echo htmlspecialchars($userPhone); ?>">
 
 <label><strong>Address line 1 *</strong></label>
-<input type="text" name="address1" required>
+<input type="text" name="address1" value="<?php echo htmlspecialchars($userAddress1); ?>" required>
 
 <label><strong>Address line 2</strong></label>
-<input type="text" name="address2">
+<input type="text" name="address2" value="<?php echo htmlspecialchars($userAddress2); ?>">
 
 <label><strong>City *</strong></label>
-<input type="text" name="city" required>
+<input type="text" name="city" value="<?php echo htmlspecialchars($userCity); ?>" required>
 
 <label><strong>County/Region *</strong></label>
-<input type="text" name="county_region" required>
+<input type="text" name="county_region" value="<?php echo htmlspecialchars($userCountyRegion); ?>" required>
 
 <label><strong>Postcode *</strong></label>
-<input type="text" name="postcode" required>
+<input type="text" name="postcode" value="<?php echo htmlspecialchars($userPostcode); ?>" required>
 </div>
 </section>
 
@@ -235,9 +252,9 @@ input[name="postcode"]{
 
 <h1 class="form-title">CARD DETAILS</h1>
 
-<input type="text" name="card_number" placeholder="Card Number (16 Digits)" maxlength="19" inputmode="numeric" required />
-<input type="text" name="expiry" placeholder="Expiry Date (MM/YY)" pattern="(0[1-9]|1[0-2])/[0-9]{2}" required />
-<input type="text" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />
+<input type="text" id="card_number" name="card_number" placeholder="Card Number (1234 4567 8901 2345)" maxlength="19" inputmode="numeric" required />
+<input type="text" id="expiry" name="expiry" placeholder="Expiry Date (MM/YY)" maxlength="5" pattern="(0[1-9]|1[0-2])/[0-9]{2}" required />
+<input type="text" id="cvv" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />
 
 <div class="payment-summary">
     <div class="row">
@@ -326,6 +343,7 @@ input[name="postcode"]{
 
 <script src="../javascript/header_footer_script.js"></script>
 <script src="../javascript/global/basketIcon.js"></script>
+<script src="../javascript/checkout.js"></script>
 
 </body>
 </html>

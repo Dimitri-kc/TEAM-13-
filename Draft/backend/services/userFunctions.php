@@ -43,6 +43,16 @@ function require_admin() {
     }
 }
 
+//admin page access with alert and redirection if not admin
+function require_admin_page($redirect = '/TEAM-13-/Draft/html/signin.php') { //
+    if (empty($_SESSION['user_ID']) || ($_SESSION['role'] ?? '') !== 'admin') {
+        $msg = json_encode("Access Denied. Admin privileges required.");
+        $to  = json_encode($redirect);
+        echo "<script>alert($msg); window.location.href = $to;</script>";
+        exit;
+    }
+}
+
 //check if user is a customer
 function require_customer() {
     if(empty($_SESSION['user_ID'])) {
