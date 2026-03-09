@@ -94,6 +94,15 @@
     .error-text {
       flex: 1;
     }
+
+    /* styling for error popup success */
+    .error-popup.success {
+      border-color: #2e7d32;
+      background: #f1fff3;
+    }
+    .error-popup.success .error-icon {
+      background: #2e7d32;
+    }
   </style>
 </head>
 
@@ -201,13 +210,28 @@
   const API_URL = "../backend/routes/userRoutes.php";
   const form = document.getElementById("changePasswordForm");
 
-  function showPopup(message){
+  function showPopup(message, type = "error"){
     document.getElementById("errorText").textContent = message;
     document.getElementById("errorPopup").style.display = "flex";
+    document.getElementById("errorPopup").classList.toggle("success", type === "success");
   }
 
   function hidePopup(){
+    document.getElementById("errorPopup").classList.remove("success");
     document.getElementById("errorPopup").style.display = "none";
+  }
+
+  //get safe returnTo path for redirect after password change
+  function getSafeReturnTo() {
+    try {
+      if (!document.referrer) return "";
+      const ref = new URL(document.referrer);
+      if (ref.origin !== window.location.origin) return ""; //only allow same-origin redirects
+      if (ref.pathname.toLowerCase().includes("changepassword.php")) return ""; //prevent redirect loops back to change password page
+      return ref.pathname.split("/").pop() + ref.search + ref.hash; //return path + query + hash for redirect e.g. "profile.php?tab=orders#section2"
+    } catch {
+      return ""; //if any error occurs (invalid URL etc.) return empty string to prevent redirect
+    }
   }
 
   async function readJsonSafely(res){
@@ -225,9 +249,17 @@
 
     const newPassword = form.querySelector('input[name="newPassword"]').value;
     const confirmPassword = form.querySelector('input[name="confirmPassword"]').value;
+    const returnTo = getSafeReturnTo();//get safe returnTo path for redirect
 
     if (!newPassword || !confirmPassword) return showPopup("Please fill in both fields.");
     if (newPassword !== confirmPassword) return showPopup("Passwords do not match.");
+
+    //added client-side validation with specific error messages for user convenience / instant feedback
+    if (newPassword.length < 8) return showPopup("Password must be at least 8 characters.");
+    if (!/[A-Z]/.test(newPassword)) return showPopup("Password must include an uppercase character.");
+    if (!/[a-z]/.test(newPassword)) return showPopup("Password must include a lowercase character.");
+    if (!/[0-9]/.test(newPassword)) return showPopup("Password must include a number.");
+    if (!/[^A-Za-z0-9]/.test(newPassword)) return showPopup("Password must include a special character.");
 
     try{
       const res = await fetch(API_URL, {
@@ -236,7 +268,8 @@
         body: JSON.stringify({
           action: "change_password",
           newPassword,
-          confirmPassword
+          confirmPassword,
+          returnTo //include returnTo in request for server to determine safe redirect
         })
       });
 

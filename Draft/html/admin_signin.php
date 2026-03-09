@@ -434,7 +434,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
 
             // Gather form data
             const payload = {
-                action: "login",
+                action: "admin_login",
                 email: document.getElementById("email").value.trim(),
                 password: document.getElementById("password").value.trim()
             };
