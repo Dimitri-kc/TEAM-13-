@@ -152,6 +152,36 @@ class CheckoutController {
             $this->basketModel->clearBasket($basket_ID); //clear basket items in DB
 
             clearSessionBasket(); //clear guest basket or any leftover session basket data
+            
+            //store order data for confirmation page
+            $_SESSION["order"] = [
+                "number" => (string)$order_ID,
+                "date" => date("F j, Y"),
+                "currency" => "£",
+                "payment_method" => "Card ending in " . substr($cardNumber, -4),
+                "customer" => [
+                    "name" => "",
+                    "email" => "",
+                    "phone" => "",
+                    "address1" => $address,
+                    "address2" => "",
+                    "city" => "",
+                    "state" => "",
+                    "postcode" => ""
+                ],
+                "items" => array_map(function($item) {
+                    return [
+                        'name' => $item['name'] ?? 'Product',
+                        'qty' => (int)($item['quantity'] ?? 1),
+                        'price' => (float)($item['price'] ?? 0),
+                        'sku' => 'SKU-' . ($item['product_ID'] ?? 0)
+                    ];
+                }, $basketItems),
+                "shipping" => 0.0,
+                "tax" => $total_sum * 0.10,
+                "discount" => 0,
+                "continue_url" => "homepage.php"
+            ];
             $conn->commit(); //commit transaction after all steps successful
             //return success message with order and payment IDs for reference
             echo json_encode(['success' => true, 'message' => "Checkout successful. Your order ID is $order_ID.", 'data' => ['order_ID' => (int)$order_ID, 'payment_ID' => (int)$payment_ID, 'total_sum' => (float)$total_sum]]); 

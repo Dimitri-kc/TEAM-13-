@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const result = await response.json();
         if (result.success) {
             //redirect to confirmation with order ID
-          window.location.href = `orderconfirmation.php?order_id=${result.data.order_ID}`; // Redirect on success with order ID
+          window.location.href = `orderconfirmation.php`; // Redirect on success with order ID
         } else {
           alert('Checkout failed: ' + result.message); // Show error message
           console.error('Stock issues: ', result.data?.stock_issues); // Log stock issues if any > DEBUG

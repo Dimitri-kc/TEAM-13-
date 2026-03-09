@@ -3,12 +3,26 @@ include '../backend/config/db_connect.php';
 session_start();
 
 //fetch user details for pre-filling form
-$user_ID = $_SESSION['user_ID'] ?? null;
+$userName = '';
+$userEmail = '';
+$userPhone = '';
+$userAddress1 = '';
+$userAddress2 = '';
+$userCity = '';
+$userCountyRegion = '';
+$userPostcode = '';
+
+if (!isset($_SESSION['user_ID'])) {
+    header("Location: signin.php");
+    exit();
+}
+
+$user_ID = (int)$_SESSION['user_ID'];
 $stmt = $conn->prepare("SELECT name, surname, email, phone, address FROM users WHERE user_ID = ?");
 $stmt->bind_param("i", $user_ID);
 $stmt->execute();
 $result = $stmt->get_result();
-$user = $result->fetch_assoc();
+if ($user = $result->fetch_assoc()) {
 //prepares variables for form pre-fill > null handles missing data
 $userName = trim(($user['name'] ?? '') . ' ' . ($user['surname'] ?? ''));//combine name + surname stored in DB
 $userEmail = $user['email'] ?? '';
@@ -18,11 +32,15 @@ $userAddress2 = '';
 $userCity = '';
 $userCountyRegion = '';
 $userPostcode = '';
+}
+$stmt->close();
 
 function money($n){
     return "£" . number_format((float)$n, 2);
 }
 
+// Only calculate totals for display if NOT processing an order
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 if (!isset($_SESSION['user_ID'])) {
     header("Location: signin.php");
     exit();
@@ -59,7 +77,9 @@ if (count($ids) > 0) {
 
 $tax = $subtotal * 0.10;
 $total = $subtotal + $tax + $delivery;
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
