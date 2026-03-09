@@ -75,7 +75,7 @@
 </head>
 <body>
 
-<?php include '../includes/header.php'; ?>
+
 
 <main class="container">
     <h1>Privacy Policy</h1>
@@ -96,19 +96,19 @@
 
     <div class="faq">
         <div class="faq-item">
-            <div class="faq-question">1. What personal data do you collect?</div>
+            <div class="faq-question">1. What personal data do we collect?</div>
             <div class="faq-answer">
                 <p>We collect information such as your name, email address, phone number, and any data you provide when using our website or services.</p>
             </div>
         </div>
         <div class="faq-item">
-            <div class="faq-question">2. How do you use my personal data?</div>
+            <div class="faq-question">2. How do we use your personal data?</div>
             <div class="faq-answer">
                 <p>Your data is used to provide our services, process orders, communicate with you, improve our offerings, and comply with legal obligations.</p>
             </div>
         </div>
         <div class="faq-item">
-            <div class="faq-question">3. Who do you share my data with?</div>
+            <div class="faq-question">3. Who do we share your data with?</div>
             <div class="faq-answer">
                 <p>We may share your data with trusted service providers, partners, or as required by law. We do not sell your personal information.</p>
             </div>
@@ -116,7 +116,6 @@
     </div>
 </main>
 
-<?php include '../includes/footer.php'; ?>
 
 <script>
     // FAQ toggle
