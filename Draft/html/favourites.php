@@ -185,11 +185,6 @@ try {
     </div>
 
 
-
-
-
-    
-
     <div style="font-size:12px; color:#666;">
         £<?= number_format($p["price"],2) ?>
     </div>
@@ -201,11 +196,7 @@ try {
     </form>
 
 </div>
-                            <input type="hidden" name="product_id" value="<?= $pid ?>">
-                            <input type="hidden" name="qty" value="1">
-                            <button class="btn" type="submit">Add to bag</button>
-                        </form>
-                    </div>
+
                 <?php endforeach; ?>
             </div>
 
