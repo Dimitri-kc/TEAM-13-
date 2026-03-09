@@ -351,7 +351,6 @@ include '../backend/config/db_connect.php';
      data-keywords="<?php echo $row['keywords']; ?>" 
      data-category="<?php echo $row['categories']; ?>"
      data-colour="<?php echo $row['colour']; ?>"
-     data-new="<?php echo $row['is_new'] ? 'true' : 'false'; ?>"
      data-id="<?php echo $row['product_ID']; ?>">
      
      <a href="product.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit; display: contents;">
