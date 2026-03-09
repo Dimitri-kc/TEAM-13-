@@ -1,4 +1,7 @@
 <?php
+require_once '../backend/services/userFunctions.php';
+require_admin_page('/TEAM-13-/Draft/html/signin.php');
+
 include '../backend/config/db_connect.php';
 include "header.php";
 
@@ -179,7 +182,7 @@ if (!$product) {
     border-radius: 6px;
     cursor: pointer;
 }
-.change-image-btn:hover { background: ##393939; }
+.change-image-btn:hover { background: #393939; }
 
 /* Responsive */
 @media (max-width: 768px) {

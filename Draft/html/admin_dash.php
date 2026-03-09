@@ -2,6 +2,9 @@
 // user_dash.php
 // User dashboard page - shows account shortcuts once a user is logged in
 
+require_once '../backend/services/userFunctions.php';
+require_admin_page('/TEAM-13-/Draft/html/signin.php');
+
 // Start session to access logged-in user information (set during login)
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
