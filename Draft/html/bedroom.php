@@ -200,7 +200,7 @@ include '../backend/config/db_connect.php';
   <script src="../javascript/dark-mode.js"></script>
 </head>
 
-<body data-category="bedroom">
+<body>
 
 <header class="site-header">
   <div class="header-inner">

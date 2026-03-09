@@ -1,4 +1,5 @@
 <?php include '../backend/config/db_connect.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | LOFT & LIVING</title>
 
+    <!-- Header CSS -->
     <link rel="stylesheet" href="../css/header_footer_style.css">
 
+    <!-- Page-specific CSS -->
     <link rel="stylesheet" href="../css/contact-css/contact-base.css">
     <link rel="stylesheet" href="../css/contact-css/contact-structure.css">
     <link rel="stylesheet" href="../css/contact-css/contact-reusable.css">
@@ -15,115 +18,44 @@
 </head>
 <body>
 
-    <header class="site-header">
-        <div class="header-inner">
-            <button class="menu-btn" id="menu-toggle-btn">
-                <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img"> 
-            </button>
+<?php include 'header.php'; ?>  <!-- Include site header here -->
 
-            <div class="logo-wrapper">
-                <a href="homepage.php">
-                    <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
-                </a>
-            </div>
-
-            <div class="header-actions">
-                <a href="favourites.php">
-                    <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
-                </a>
-                <a href="signin.php">
-                    <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
-                </a>
-                <a href="basket.php" class="basket-icon">
-                    <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
-                    <span id="basket-count">0</span>
-                </a>
-            </div>
-        </div>
-
-        <nav class="dropdown-panel" id="dropdown-nav">
-            <ul class="nav-links">
-                <li><a href="livingroom.php">Living Room</a></li>
-                <li><a href="bathroom.php">Bathroom</a></li>
-                <li><a href="bedroom.php">Bedroom</a></li>
-                <li><a href="office.php">Office</a></li>
-                <li><a href="kitchen.php">Kitchen</a></li>
-                <li class="nav-divider"><a href="signin.php">My Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<main>
     <header id="main-header">
         <h1 class="title">CONTACT US</h1>
     </header>
 
-    <main>
-        <section>
-            <div class="form-container">
-                <form id="contact-form" action="https://formspree.io/f/xzzlerol" method="POST">
-                    <input type="text" name="_gotcha" style="display: none;" />
-                    
-                    <label for="first">Name<span class="required">*</span> </label>
-                    <input type="text" id="first" name="first" placeholder="First Name" required>
-                    
-                    <label for="last">Surname<span class="required">*</span></label>
-                    <input type="text" id="last" name="last" placeholder="Last Name" required>
-                    
-                    <label for="email">Email<span class="required">*</span></label>
-                    <input type="email" id="email" name="email" placeholder="Email Address" required>
+    <section>
+        <div class="form-container">
+            <form id="contact-form" action="https://formspree.io/f/xzzlerol" method="POST">
+                <input type="text" name="_gotcha" style="display: none;" />
 
-                    <label for="order">Order Number (If Applicable)</label>
-                    <input type="text" id="order" name="order" placeholder="Enter Order Number">
+                <label for="first">Name<span class="required">*</span> </label>
+                <input type="text" id="first" name="first" placeholder="First Name" required>
 
-                    <label for="message">Message<span class="required">*</span></label>
-                    <textarea id="message" name="message" placeholder="Enter message or enquiry" required></textarea>
+                <label for="last">Surname<span class="required">*</span></label>
+                <input type="text" id="last" name="last" placeholder="Last Name" required>
 
-                    <button type="submit">Submit</button>
-                </form>
-            </div>
-        </section>
-    </main>
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-section social-links">
-                <a href="#">
-                    <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon">
-                </a>
-                <a href="#">
-                    <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon">
-                </a>
-            </div>
+                <label for="email">Email<span class="required">*</span></label>
+                <input type="email" id="email" name="email" placeholder="Email Address" required>
 
-            <div class="footer-section">
-                <h4>Navigation</h4>
-                <ul>
-                    <li><a href="homepage.php">Homepage</a></li>
-                    <li><a href="signin.php">My Account</a></li>
-                    <li><a href="favourites.php">Favourites</a></li>
-                    <li><a href="basket.php">Basket</a></li>
-                </ul>
-            </div>
+                <label for="order">Order Number (If Applicable)</label>
+                <input type="text" id="order" name="order" placeholder="Enter Order Number">
 
-            <div class="footer-section">
-                <h4>Categories</h4>
-                <ul>
-                    <li><a href="livingroom.php">Living Room</a></li>
-                    <li><a href="office.php">Offices</a></li>
-                    <li><a href="kitchen.php">Kitchen</a></li>
-                    <li><a href="bathroom.php">Bathrooms</a></li>
-                    <li><a href="bedroom.php">Bedrooms</a></li>
-                </ul>
-            </div>
+                <label for="message">Message<span class="required">*</span></label>
+                <textarea id="message" name="message" placeholder="Enter message or enquiry" required></textarea>
 
-            <div class="footer-section">
-                <h4>More...</h4>
-                <ul>
-                    <li><a href="contact.php">Contact Us</a></li>
-                    <li><a href="about.php">About Us</a></li>
-                </ul>
-            </div>
+                <button type="submit">Submit</button>
+            </form>
         </div>
-    </footer>
-    <script src="../javascript/header_footer_script.js"></script>
-    <script src="../javascript/global/basketIcon.js"></script>
+    </section>
+</main>
+
+<?php include 'footer.php'; ?>  <!-- Include site footer here -->
+
+<!-- JS Scripts -->
+<script src="../javascript/header_footer_script.js"></script>
+<script src="../javascript/global/basketIcon.js"></script>
+
 </body>
 </html>
