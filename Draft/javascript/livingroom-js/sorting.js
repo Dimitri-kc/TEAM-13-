@@ -9,15 +9,16 @@ const btnRating     = document.querySelector(".btn-Rating");
 let originalProducts = [];
 
 // Capture original DOM order once
-document.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", () => {
   originalProducts = [...document.querySelectorAll(".item")];
 });
+
 
 // Reset grid to original order
 function resetGrid() {
   productGrid.innerHTML = "";
   originalProducts.forEach(p => {
-    p.style.display = "";
+    p.style.display = "block";
     productGrid.appendChild(p);
   });
 
@@ -33,7 +34,7 @@ btnNew.addEventListener("click", () => {
     setActiveButton(btnNew);
 
     getProductsArray().forEach(p => {
-      p.style.display = p.dataset.new === "true" ? "" : "none";
+      p.style.display = p.dataset.new === "true" ? "block" : "none";
     });
   }
 });

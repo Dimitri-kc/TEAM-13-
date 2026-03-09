@@ -278,10 +278,9 @@ include '../backend/config/db_connect.php';
             </ul>
         </nav>
     </header>
-    <div style="max-width: 800px; margin: 40px auto 50px; text-align: center; padding: 0 40px;">
-        <h1 style="font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 600; margin-bottom: 20px; color: #2B2B2B; letter-spacing: 1px;">LIVING ROOM</h1>
-        <p style="font-family: 'Ibarra Real Nova', serif; font-size: 16px; line-height: 1.7; color: #2B2B2B; font-weight: 400;">Discover our curated collection of living room essentials designed to transform your space into a haven of comfort and style. From elegant sofas and plush throw pillows to luxurious rugs and statement console tables, find everything you need to create the perfect living room.</p>
-    </div>
+    <a href="../html/homepage.php" style="text-decoration: none; color: inherit;">
+        <h1 style="text-align: center; margin-top: 20px;">LIVING ROOM</h1>
+    </a>
 
     <!-- section added below to fix format (removed duplicate of product grid which was causing shrunken look on page) -->
   <div class="content-wrap">
@@ -337,44 +336,51 @@ include '../backend/config/db_connect.php';
                 Uh oh! No products matched your search.
             </p>
 
-            <div class="product-grid" id="product-grid" style="display:grid!important;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))!important;gap:24px!important;width:100%!important;">
+            <div class="product-grid" id="product-grid">
                 <?php
                 $query = "SELECT * FROM products WHERE category_id = 1";
                 $result = mysqli_query($conn, $query);
+            
 
                 if (mysqli_num_rows($result) > 0) {
                     while($row = mysqli_fetch_assoc($result)) {
                         ?>
-<div class="item" style="display:grid;grid-template-rows:280px auto 1fr;position:relative;"
+                      <!-- line added for better filtering due to php -->
+<div class="item" 
      data-price="<?php echo $row['price']; ?>" 
      data-rating="<?php echo $row['rating']; ?>"     
      data-keywords="<?php echo $row['keywords']; ?>" 
-     data-category="<?php echo $row['categories']; ?>"
+     data-category="<?php echo ($row['categories']); ?>"
      data-colour="<?php echo $row['colour']; ?>"
-     data-id="<?php echo $row['product_ID']; ?>">
+    
+     >
+
+
      
-     <a href="product.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit; display: contents;">
-         <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>" style="grid-row:1;width:100%;height:280px;object-fit:cover;">
-         <h2 style="grid-row:2;"><?php echo $row['name']; ?></h2>
-         <p style="grid-row:3;">£<?php echo $row['price']; ?></p>
+     <a href="product.php?id=<?php echo $row['product_ID']; ?>" style="text-decoration: none; color: inherit;">
+         <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
+         <div class="product-text">
+             <h2><?php echo $row['name']; ?></h2>
+             <p>£<?php echo $row['price']; ?></p>
+         </div>
      </a>
 
-     <form method="post" action="favourites_add.php" class="fav-form">
-         <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
-         <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
-         <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
-         <input type="hidden" name="product_image" value="../images/<?= htmlspecialchars($row['image']) ?>">
-         <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
-         <button type="submit" class="fav-icon-btn" title="Add to Favourites">
-             <img src="../images/heart-icon.png" alt="Favourite">
-         </button>
-     </form>
-
-     <button class="add-to-basket" onclick="addToBasket(<?= $row['product_ID'] ?>, 1, this)" title="Add to basket">
-         <img src="../images/add-button-icon.png" alt="Add" style="width:18px!important;height:18px!important;">
-     </button>
+<div class="action-buttons">
+<form method="post" action="favourites_add.php" style="position: absolute; top: 18px; left: 18px; z-index: 999; margin: 0; padding: 0; pointer-events: auto;">
+    <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
+    <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
+    <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
+    <input type="hidden" name="product_image" value="../images/<?= htmlspecialchars($row['image']) ?>">
+    <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+    <button type="submit" title="Add to Favourites" style="background: rgb(217, 217, 222); border: none; border-radius: 60%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">♡</button>
+</form>
+    <!--onclick to pass product_ID in function - API fetch details from DB-->
+    <button type="submit" onclick="addToBasket(<?= $row['product_ID'] ?>, 1)" title="Add to basket" style="background: rgba(0,0,0,0.08); border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">+</button>
 </div>
-<?php
+
+
+     </div>
+     <?php
                     }
                 } else {
                     echo "<p>No products found in the database.</p>";
@@ -443,9 +449,7 @@ include '../backend/config/db_connect.php';
 
   <script src="../javascript/header_footer_script.js"></script>
   <script src="../javascript/global/basketIcon.js"></script>
-  <script type="module" src="../javascript/livingroom-js/filters.js"></script>
-  <script type="module" src="../javascript/livingroom-js/sorting.js"></script>
-  <script type="module" src="../javascript/livingroom-js/price-range.js"></script>
-  <script type="module" src="../javascript/livingroom-js/search.js"></script>
+  <script type="module" src="../javascript/livingroom-js/main.js"></script>
 </body>
 </html>
+

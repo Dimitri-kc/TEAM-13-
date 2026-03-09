@@ -10,10 +10,16 @@ document.addEventListener("DOMContentLoaded", function() {
         return document.querySelectorAll(".item");
     }
 
+    // Store original display type for each product
+    const products = getProductsArray();
+    products.forEach(product => {
+        product.dataset.originalDisplay = window.getComputedStyle(product).display;
+    });
+
     // Set slider max to highest product price
     function setMaxPriceFromProducts() {
         let highestPrice = 0;
-        getProductsArray().forEach(product => {
+        products.forEach(product => {
             const price = Number(product.dataset.price);
             if (price > highestPrice) highestPrice = price;
         });
@@ -55,14 +61,14 @@ document.addEventListener("DOMContentLoaded", function() {
         rangeDisplay.style.left = percentMin + "%";
         rangeDisplay.style.width = (percentMax - percentMin) + "%";
 
-        getProductsArray().forEach(product => {
-            const price = Number(product.dataset.price);
-            if (price >= min && price <= max) {
-                product.style.display = "";
-            } else {
-                product.style.display = "none";
-            }
-        });
+products.forEach(product => {
+    const price = Number(product.dataset.price);
+    if (price >= min && price <= max) {
+product.style.display = product.dataset.originalDisplay;
+    } else {
+        product.style.display = "none"; // hide
+    }
+});
         fixThumbOverlap();
     }
 

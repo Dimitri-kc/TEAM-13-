@@ -13,7 +13,7 @@ searchInput.addEventListener("input", () => {
     const keywords = (product.dataset.keywords || "").toLowerCase();
 
     if (name.includes(query) || keywords.includes(query)) {
-      product.style.display = "";
+      product.style.display = "block";
       anyVisible = true;
     } else {
       product.style.display = "none";
