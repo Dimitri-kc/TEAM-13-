@@ -152,6 +152,11 @@ try {
         <h1>My Favourites</h1>
         <div class="sub">See an item you like? Come back to it later at any time</div>
 
+      <form method="post" style="margin-bottom:15px;">
+    <button type="submit" name="clear_favs" class="btn" onclick="return confirm('Clear all favourites?')">
+        Clear All Favourites
+    </button>
+</form>
         <?php if (empty($favs)): ?>
             <div class="empty">No favourites yet. Go to categories and like a product.</div>
             <div class="actions"><a href="homepage.php">Back to Homepage</a></div>
