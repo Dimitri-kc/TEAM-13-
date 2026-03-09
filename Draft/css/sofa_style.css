@@ -31,29 +31,23 @@ body {
     margin-bottom: 80px;
 }
 
-/* Product Image */
-/* .product-image {
-    flex: 1;
+.product-image {
+    width: 600px;     
+    height: 600px;   
+    overflow: hidden;  
+    border-radius: 6px;
     position: relative;
-} */
- .product-image {
-    position: relative;
-    /* z-index: 10001; above modal */
 }
 
 
-/* .product-image img {
+ .product-image img {
     width: 100%;
     height: auto;
     border-radius: 4px;
     display: block;
-} */
-.product-image img {
-    position: relative;
-    z-index: 1;
 }
 
-.wishlist-icon {
+ .wishlist-icon {
     position: absolute;
     top: 20px;
     left: 20px;

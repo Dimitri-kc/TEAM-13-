@@ -1,4 +1,5 @@
-<?php include '../backend/config/db_connect.php'; ?>
+<?php include '../backend/config/db_connect.php';
+include "header.php";?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,11 +10,11 @@
 </head>
 <body>
 
-    <div class="admin-wrapper">
-    <h1 class="title">Product Inventory</h1>
+    <div class="admin-wrapper"style="margin-top: 125px;">
+    <h1 class="title">Product Inventory </h1>
     <p class="subtitle">View current product inventory, edit product information and add more products </p>
 
-<div class="filter-wrapper">
+<div class="filter-wrapper" >
         <input 
         type="text" 
         id="search-bar" 
@@ -54,20 +55,6 @@ fetch('admin_get_products.php')
     // Function to render products
     function renderProducts(filteredData) {
         container.innerHTML = ''; // clear previous cards
-
-        // Add "Add New Product" card first
-        // const addCard = document.createElement('div');
-        // addCard.classList.add('product-card', 'add-product-card');
-        // addCard.innerHTML = `
-        //     <div class="add-product-inner">
-        //         <p>+ Add New Product</p>
-        //     </div>
-        // `;
-        // addCard.addEventListener('click', () => {
-        //     window.location.href = 'admin_add_product.php';
-        // });
-        // container.appendChild(addCard);
-
         // Add product cards
         filteredData.forEach(product => {
 
@@ -182,6 +169,7 @@ document.getElementById('add-product-btn').addEventListener('click', () => {
 });
 </script>
 
+
 </body>
 </html>
-
+<?php include 'footer.php'; ?>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +7,7 @@
     <title>About Us | LOFT & LIVING</title>
 
     <link rel="stylesheet" href="../css/header_footer_style.css">
-
-    <link rel="stylesheet" href="../css/About-styles.css" />
+    <link rel="stylesheet" href="../css/homepage-css/homepage-about.css" />
 </head>
 <body>
 
@@ -48,7 +48,7 @@
             </ul>
         </nav>
     </header>
-    <div class="split-page">
+    <div class="split-page about-container">
         <div class="left">
             <h1>ABOUT US</h1>
             <p>
@@ -67,13 +67,79 @@
             </p>
         </div>
 
-        <div class="right">
-            <div class="image-place">
-                <img src="../images/about-logo.png" alt="logo">
+<div class="right">
+    <div class="image-place">
+<img src="../images/homepage-images/aboutus.png" alt="Loft & Living Logo" class="main-logo">
+    </div>
+</div>
+    </div>
+<div class="container">
+     <h2 class="section-title">Our Mission</h2>
+    <div class="mission-wrapper split-page">
+        <div class="left">
+            <div class="mission-image">
+                <img src="../images/stock-living-room.jpeg" alt="Living Room">
             </div>
+        </div>
+
+        <div class="right">
+           
+            <p>
+                At Loft & Living, our mission is to help you create a home that feels uniquely yours — 
+                whether you’re stepping into your first apartment, setting up a dorm, or moving into a new house.
+            </p>
+            <p>
+                That’s why we focus on offering modern, stylish homeware that doesn’t break the bank. 
+                From compact dorm essentials to chic living room pieces, every product is carefully curated 
+                to combine functionality, comfort, and contemporary design.
+            </p>
+            <p>
+                Our goal is to provide affordable solutions that help you transform any space into a stylish, 
+                welcoming home, no matter your budget or square footage.
+            </p>
         </div>
     </div>
 
+    <h2 class="section-title">Our Vision</h2>
+<p>
+    At Loft & Living, we envision becoming the ultimate online destination for young adults seeking stylish, affordable, and practical homeware. Our focus is on creating a seamless shopping experience for students, first-time renters, and new homeowners who want to make their spaces feel modern, personal, and inviting.
+    <br><br>
+    We aim to combine contemporary design with smart functionality, offering everything from compact dorm essentials to trendy living room décor and kitchen accessories. By curating products that suit both small apartments and larger homes, we empower young adults to transform their living spaces without compromising style or budget. Our long-term goal is to build a community of inspired home decorators, where customers can discover, share, and create spaces they truly love. With Loft & Living, modern, stylish, and affordable living isn’t just a dream — it’s accessible to everyone.
+</p>
+</div>
+    <div class="container">
+    <div class="location-section">
+<div class="map-container">
+    <h2>Find Us</h2>
+    <div class="map-wrapper">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2429.573452936337!2d-1.8882173999999992!3d52.486858399999974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4870bc9ae4f2e4b3%3A0x9a670ba18e08a084!2sAston%20University!5e0!3m2!1sen!2suk!4v1773011216461!5m2!1sen!2suk"
+            width="600"
+            height="300"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+</div>
+
+
+ <div class="info-side">
+        <h2>Opening Times</h2>
+        <ul class="opening-times">
+            <li>Monday: 9:00 AM – 6:00 PM</li>
+            <li>Tuesday: 9:00 AM – 6:00 PM</li>
+            <li>Wednesday: 9:00 AM – 6:00 PM</li>
+            <li>Thursday: 9:00 AM – 6:00 PM</li>
+            <li>Friday: 9:00 AM – 6:00 PM</li>
+            <li>Saturday: 10:00 AM – 4:00 PM</li>
+            <li>Sunday: Closed</li>
+        </ul>
+    </div>
+</div>
+</div>
+</div>
     <div class="faq-background">
         <div class="faq-section">
             <h2>Frequently Asked Questions:</h2>
@@ -156,5 +222,40 @@
     </footer>
     <script src="../javascript/header_footer_script.js"></script>
     <script src="../javascript/global/basketIcon.js"></script>
+
+
+    <script>
+        const faqItems = document.querySelectorAll(".faq-item");
+
+faqItems.forEach(item => {
+    const question = item.querySelector(".faq-question");
+
+    question.addEventListener("click", () => {
+        item.classList.toggle("active");
+    });
+});
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const about = document.querySelector(".about-container");
+        setTimeout(() => {
+            about.classList.add("visible");
+        }, 200); // delay optional, 200ms for smooth effect
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+    const titles = document.querySelectorAll(".section-title");
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+            }
+        });
+    });
+
+    titles.forEach(title => observer.observe(title));
+});
+
+    </script>
 </body>
 </html>
