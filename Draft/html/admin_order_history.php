@@ -351,8 +351,8 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          action: "get_customer_full_details",
-          customer_id: customerId
+          action: "customer_details",
+          customer_ID: customerId
         })
       });
 
