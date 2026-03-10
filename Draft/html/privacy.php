@@ -71,13 +71,26 @@
         .faq-question.active::after {
             transform: rotate(-180deg);
         }
+        .back-dashboard {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #2C6E49;
+    transition: 0.2s ease;
+}
+
+.back-dashboard:hover {
+    text-decoration: underline;
+}
     </style>
 </head>
 <body>
 
 
-
-<main class="container">
+    <main class="container">
+    <a href="user_dash.php" class="back-dashboard">← Back to Dashboard</a>
     <h1>Privacy Policy</h1>
 
     <p>We are committed to handling your personal information responsibly and securely. We will:</p>

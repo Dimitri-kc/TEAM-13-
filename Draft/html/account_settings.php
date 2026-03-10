@@ -1,114 +1,515 @@
+<?php
+session_start();
+header('Content-Type: text/html; charset=UTF-8');
+
+require_once '../backend/config/db_connect.php';
+
+$user_ID = $_SESSION['user_ID'] ?? null;
+
+// If not logged in, redirect ─
+if (!$user_ID) {
+    header("Location: signin.php");
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    header('Content-Type: application/json');
+    $raw  = file_get_contents("php://input");
+    $data = json_decode($raw, true);
+    $action = $data['action'] ?? '';
+
+    // Get personal info
+    if ($action === 'get_personal_info') {
+        $stmt = $conn->prepare("SELECT name, surname, email, address FROM users WHERE user_ID = ?");
+        $stmt->bind_param("i", $user_ID);
+        $stmt->execute();
+        $user = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        echo json_encode($user
+            ? ["success" => true, "user" => $user]
+            : ["success" => false, "message" => "User not found."]);
+        exit();
+    }
+
+    // ── Update personal info ──
+    if ($action === 'update_personal_info') {
+        $name    = trim($data['name']    ?? '');
+        $surname = trim($data['surname'] ?? '');
+        $email   = trim($data['email']   ?? '');
+        $address = trim($data['address'] ?? '');
+
+        if (!$name || !$surname || !$email) {
+            echo json_encode(["success" => false, "message" => "Name, surname and email are required."]);
+            exit();
+        }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode(["success" => false, "message" => "Invalid email address."]);
+            exit();
+        }
+
+        // Check email not taken by another user
+        $check = $conn->prepare("SELECT user_ID FROM users WHERE email = ? AND user_ID != ?");
+        $check->bind_param("si", $email, $user_ID);
+        $check->execute();
+        $check->store_result();
+        if ($check->num_rows > 0) {
+            $check->close();
+            echo json_encode(["success" => false, "message" => "That email address is already in use."]);
+            exit();
+        }
+        $check->close();
+
+        $stmt = $conn->prepare("UPDATE users SET name = ?, surname = ?, email = ?, address = ? WHERE user_ID = ?");
+        $stmt->bind_param("ssssi", $name, $surname, $email, $address, $user_ID);
+        $ok = $stmt->execute();
+        $stmt->close();
+
+        if ($ok) {
+            $_SESSION['name'] = $name; 
+            echo json_encode(["success" => true, "message" => "Personal information updated."]);
+        } else {
+            echo json_encode(["success" => false, "message" => "Update failed. Please try again."]);
+        }
+        exit();
+    }
+
+    // update password 
+    if ($action === 'update_password') {
+        $currentPassword = trim($data['currentPassword'] ?? '');
+        $newPassword     = trim($data['newPassword']     ?? '');
+        $confirmPassword = trim($data['confirmPassword'] ?? '');
+
+        if (!$currentPassword || !$newPassword || !$confirmPassword) {
+            echo json_encode(["success" => false, "message" => "All password fields are required."]);
+            exit();
+        }
+        if ($newPassword !== $confirmPassword) {
+            echo json_encode(["success" => false, "message" => "New passwords do not match."]);
+            exit();
+        }
+        if (strlen($newPassword) < 8) {
+            echo json_encode(["success" => false, "message" => "Password must be at least 8 characters."]);
+            exit();
+        }
+        if (!preg_match('/[A-Z]/', $newPassword)) {
+            echo json_encode(["success" => false, "message" => "Password must include an uppercase letter."]);
+            exit();
+        }
+        if (!preg_match('/[a-z]/', $newPassword)) {
+            echo json_encode(["success" => false, "message" => "Password must include a lowercase letter."]);
+            exit();
+        }
+        if (!preg_match('/[0-9]/', $newPassword)) {
+            echo json_encode(["success" => false, "message" => "Password must include a number."]);
+            exit();
+        }
+        if (!preg_match('/[^A-Za-z0-9]/', $newPassword)) {
+            echo json_encode(["success" => false, "message" => "Password must include a special character."]);
+            exit();
+        }
+
+        // Fetch current hashed password
+        $stmt = $conn->prepare("SELECT password FROM users WHERE user_ID = ?");
+        $stmt->bind_param("i", $user_ID);
+        $stmt->execute();
+        $row = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+
+        if (!$row || !password_verify($currentPassword, $row['password'])) {
+            echo json_encode(["success" => false, "message" => "Current password is incorrect."]);
+            exit();
+        }
+        if (password_verify($newPassword, $row['password'])) {
+            echo json_encode(["success" => false, "message" => "New password must differ from your current one."]);
+            exit();
+        }
+
+        $hashed = password_hash($newPassword, PASSWORD_BCRYPT);
+        $stmt = $conn->prepare("UPDATE users SET password = ? WHERE user_ID = ?");
+        $stmt->bind_param("si", $hashed, $user_ID);
+        $ok = $stmt->execute();
+        $stmt->close();
+
+        echo json_encode($ok
+            ? ["success" => true,  "message" => "Password updated successfully."]
+            : ["success" => false, "message" => "Failed to update password. Please try again."]);
+        exit();
+    }
+
+    // ─Forgot password
+    if ($action === 'forgot_password') {
+        $email = trim($data['email'] ?? '');
+        if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode(["success" => false, "message" => "Please enter a valid email address."]);
+            exit();
+        }
+        echo json_encode(["success" => true, "message" => "If that email exists, a reset link has been sent."]);
+        exit();
+    }
+
+    echo json_encode(["success" => false, "message" => "Unknown action."]);
+    exit();
+}
+
+// ── Load user for initial page render ──
+$stmt = $conn->prepare("SELECT name, surname, email, address FROM users WHERE user_ID = ?");
+$stmt->bind_param("i", $user_ID);
+$stmt->execute();
+$user = $stmt->get_result()->fetch_assoc();
+$stmt->close();
+
+if (!$user) {
+    header("Location: signin.php");
+    exit();
+}
+
+// Split address back into parts
+$addressParts = array_map('trim', explode(',', $user['address'] ?? '', 4));
+$addr1     = $addressParts[0] ?? '';
+$addr2     = $addressParts[1] ?? '';
+$addrCity  = $addressParts[2] ?? '';
+$addrPost  = $addressParts[3] ?? '';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Settings</title>
-    <style>
-        /* Wrapper */
-        .admin-wrapper {
-            max-width: 900px;
-            margin: 50px auto;
-            padding: 30px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
-        }
-
-        /* Titles */
-        .title { font-size: 28px; margin-bottom: 5px; color: #333; }
-        .subtitle { font-size: 15px; color: #666; margin-bottom: 25px; }
-
-        /* Form grid */
-        .form-grid {
-            display: flex;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-        .form-left {
-            flex: 2;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .form-right {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-        }
-
-        /* Buttons / Links */
-        .link-btn {
-            display: block;
-            padding: 12px;
-            border-radius: 6px;
-            background: #5c5c5c;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-            text-align: center;
-            transition: 0.2s ease;
-        }
-        .link-btn:hover { background: #1f8438; }
-
-        /* Profile summary */
-        .profile-card {
-            width: 100%;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            text-align: center;
-            box-sizing: border-box;
-        }
-        .profile-card img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 15px;
-        }
-        .profile-card h3 {
-            margin: 0;
-            color: #333;
-            font-size: 20px;
-        }
-        .profile-card p {
-            margin: 5px 0 0;
-            color: #666;
-            font-size: 14px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .form-grid { flex-direction: column; }
-            .form-right { align-items: flex-start; }
-        }
-    </style>
+    <title>Account Settings | LOFT & LIVING</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/account_settings.css">
 </head>
 <body>
-    <div class="admin-wrapper">
-        <h1 class="title">Account Settings</h1>
-        <p class="subtitle">Manage your account preferences</p>
 
-        <div class="form-grid">
-            <!-- Left Column: Account Links -->
-            <div class="form-left">
-                <a href="/account/change-info" class="link-btn">Change Personal Information</a>
-                <a href="/account/change-password" class="link-btn">Change Password</a>
-                <a href="/account/recent-orders" class="link-btn">My Recent Orders</a>
+<div class="page-header">
+    <a href="user_dash.php" class="back-dashboard">← Back to Dashboard</a>
+    <!-- <div class="brand">Loft &amp; Living</div> -->
+    <h1>Account Settings</h1>
+    <p>Manage your personal information, security and preferences.</p>
+</div>
+
+<div class="settings-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="profile-card">
+            <div class="avatar" id="profileAvatar"></div>
+            <h3 id="profileName"><?php echo htmlspecialchars($user['name'] . ' ' . $user['surname']); ?></h3>
+            <p id="profileEmail"><?php echo htmlspecialchars($user['email']); ?></p>
+        </div>
+        <nav class="sidebar-nav">
+            <button class="nav-item active" onclick="switchPanel('personal', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                Personal Info
+            </button>
+            <button class="nav-item" onclick="switchPanel('password', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                Password
+            </button>
+            <button class="nav-item" onclick="switchPanel('forgot', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+                Forgot Password
+            </button>
+        </nav>
+    </aside>
+
+  
+    <main class="main-panel">
+
+        <!-- Personal Info -->
+        <section class="panel active" id="panel-personal">
+            <div class="panel-header">
+                <h2>Personal Information</h2>
+                <p>Update your name, email address and delivery details.</p>
             </div>
+            <div class="panel-body">
+                <div class="form-row">
+                    <div class="field">
+                        <label>First Name</label>
+                        <input type="text" id="firstName" value="<?php echo htmlspecialchars($user['name']); ?>">
+                    </div>
+                    <div class="field">
+                        <label>Last Name</label>
+                        <input type="text" id="lastName" value="<?php echo htmlspecialchars($user['surname']); ?>">
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="field">
+                        <label>Email Address</label>
+                        <input type="email" id="email" value="<?php echo htmlspecialchars($user['email']); ?>">
+                    </div>
+                </div>
 
-            <!-- Right Column: Profile Summary -->
-            <div class="form-right">
-                <div class="profile-card">
-                    <img src="/images/default-avatar.png" alt="User Avatar" id="profileAvatar">
-                    <h3 id="profileName">John Doe</h3>
-                    <p id="profileEmail">johndoe@example.com</p>
+                <div class="section-divider">Delivery Address</div>
+
+                <div class="form-row full">
+                    <div class="field">
+                        <label>Address Line 1</label>
+                        <input type="text" id="address1" placeholder="123 High Street" value="<?php echo htmlspecialchars($addr1); ?>">
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="field">
+                        <label>Address Line 2 <span style="font-weight:300;text-transform:none;letter-spacing:0">(optional)</span></label>
+                        <input type="text" id="address2" placeholder="Apartment, suite, etc." value="<?php echo htmlspecialchars($addr2); ?>">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>City</label>
+                        <input type="text" id="city" placeholder="London" value="<?php echo htmlspecialchars($addrCity); ?>">
+                    </div>
+                    <div class="field">
+                        <label>Postcode</label>
+                        <input type="text" id="postcode" placeholder="SW1A 1AA" value="<?php echo htmlspecialchars($addrPost); ?>">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn-primary" id="savePersonalBtn" onclick="savePersonal()">Save Changes</button>
+                    <button class="btn-ghost" onclick="resetPersonal()">Cancel</button>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+
+        <!-- Change Password -->
+        <section class="panel" id="panel-password">
+            <div class="panel-header">
+                <h2>Change Password</h2>
+                <p>Choose a strong, unique password to keep your account secure.</p>
+            </div>
+            <div class="panel-body">
+                <div class="form-row full">
+                    <div class="field">
+                        <label>Current Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="currentPw" placeholder="Enter current password">
+                            <!-- <button class="toggle-pw" onclick="togglePw('currentPw', this)" type="button">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="field">
+                        <label>New Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="newPw" placeholder="Min. 8 characters" oninput="checkStrength(this.value)">
+                            <!-- <button class="toggle-pw" onclick="togglePw('newPw', this)" type="button">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button> -->
+                        </div>
+                        <div class="strength-bar">
+                            <div class="strength-seg" id="s1"></div>
+                            <div class="strength-seg" id="s2"></div>
+                            <div class="strength-seg" id="s3"></div>
+                            <div class="strength-seg" id="s4"></div>
+                        </div>
+                        <div class="strength-label" id="strengthLabel"></div>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="field">
+                        <label>Confirm New Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="confirmPw" placeholder="Repeat new password">
+                            <!-- <button class="toggle-pw" onclick="togglePw('confirmPw', this)" type="button">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn-primary" id="savePwBtn" onclick="savePassword()">Update Password</button>
+                    <button class="btn-ghost" onclick="clearPasswordForm()">Cancel</button>
+                    <button class="btn-link" onclick="switchPanel('forgot', document.querySelectorAll('.nav-item')[2])">Forgot password?</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Forgot Password -->
+        <section class="panel" id="panel-forgot">
+            <div class="panel-header">
+                <h2>Forgot Password</h2>
+                <p>We'll send a reset link to your registered email address.</p>
+            </div>
+            <div class="panel-body">
+                <div class="info-box">
+                    Enter your email address and we'll send you a secure link to reset your password. The link will expire after 30 minutes.
+                </div>
+                <div class="form-row full">
+                    <div class="field">
+                        <label>Email Address</label>
+                        <input type="email" id="forgotEmail" placeholder="you@example.com">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn-primary" onclick="sendResetLink()">Send Reset Link</button>
+                    <button class="btn-ghost" onclick="switchPanel('password', document.querySelectorAll('.nav-item')[1])">Back to Password</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<div class="toast" id="toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastMsg"></span>
+</div>
+
+<script>
+
+    const SELF = 'account_settings.php';
+
+    function switchPanel(name, btn) {
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById('panel-' + name).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    // Avatar initials 
+    function getInitials(name) {
+        const parts = name.trim().split(' ').filter(Boolean);
+        return (parts[0][0] + (parts.length > 1 ? parts[parts.length - 1][0] : '')).toUpperCase();
+    }
+
+    // Set avatar on load from PHP name
+    const initialName = document.getElementById('profileName').textContent;
+    document.getElementById('profileAvatar').textContent = getInitials(initialName);
+
+    function showToast(msg, type = 'success') {
+        const t = document.getElementById('toast');
+        document.getElementById('toastMsg').textContent = msg;
+        t.className = 'toast ' + type + ' show';
+        setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    async function apiCall(action, payload = {}) {
+        const res = await fetch(SELF, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action, ...payload })
+        });
+        return res.json();
+    }
+
+    // ── Save Personal Info ──
+    async function savePersonal() {
+        const name    = document.getElementById('firstName').value.trim();
+        const surname = document.getElementById('lastName').value.trim();
+        const email   = document.getElementById('email').value.trim();
+        const address = [
+            document.getElementById('address1').value.trim(),
+            document.getElementById('address2').value.trim(),
+            document.getElementById('city').value.trim(),
+            document.getElementById('postcode').value.trim()
+        ].filter(Boolean).join(', ');
+
+        if (!name || !surname || !email) return showToast('Name, surname and email are required.', 'error');
+
+        const btn = document.getElementById('savePersonalBtn');
+        btn.disabled = true;
+        btn.textContent = 'Saving…';
+
+        const data = await apiCall('update_personal_info', { name, surname, email, address });
+
+        btn.disabled = false;
+        btn.textContent = 'Save Changes';
+
+        if (data.success) {
+            showToast('Personal information updated.');
+            const fullName = name + ' ' + surname;
+            document.getElementById('profileName').textContent   = fullName;
+            document.getElementById('profileEmail').textContent  = email;
+            document.getElementById('profileAvatar').textContent = getInitials(fullName);
+        } else {
+            showToast(data.message || 'Update failed.', 'error');
+        }
+    }
+
+    function resetPersonal() {
+        // Reset to the PHP-rendered values (original page load values)
+        document.getElementById('firstName').value = '<?php echo addslashes($user['name']); ?>';
+        document.getElementById('lastName').value  = '<?php echo addslashes($user['surname']); ?>';
+        document.getElementById('email').value     = '<?php echo addslashes($user['email']); ?>';
+        document.getElementById('address1').value  = '<?php echo addslashes($addr1); ?>';
+        document.getElementById('address2').value  = '<?php echo addslashes($addr2); ?>';
+        document.getElementById('city').value      = '<?php echo addslashes($addrCity); ?>';
+        document.getElementById('postcode').value  = '<?php echo addslashes($addrPost); ?>';
+    }
+
+    // ── Password strength ──
+    const strengthColors = ['#e74c3c', '#e67e22', '#f1c40f', '#2C6E49'];
+    const strengthLabels = ['Weak', 'Fair', 'Good', 'Strong'];
+
+    function checkStrength(val) {
+        let score = 0;
+        if (val.length >= 8)          score++;
+        if (/[A-Z]/.test(val))        score++;
+        if (/[0-9]/.test(val))        score++;
+        if (/[^A-Za-z0-9]/.test(val)) score++;
+        for (let i = 1; i <= 4; i++) {
+            document.getElementById('s' + i).style.background =
+                i <= score ? strengthColors[score - 1] : 'var(--light)';
+        }
+        const label = document.getElementById('strengthLabel');
+        label.textContent = val.length ? (strengthLabels[score - 1] || '') : '';
+        label.style.color = score ? strengthColors[score - 1] : 'var(--mid)';
+    }
+
+    // ── Password visibility toggle ──
+    // function togglePw(id, btn) {
+    //     const input = document.getElementById(id);
+    //     input.type  = input.type === 'text' ? 'password' : 'text';
+    //     btn.style.opacity = input.type === 'text' ? '0.5' : '1';
+    // }
+
+    // ── Update Password ──
+    async function savePassword() {
+        const currentPassword = document.getElementById('currentPw').value;
+        const newPassword     = document.getElementById('newPw').value;
+        const confirmPassword = document.getElementById('confirmPw').value;
+
+        if (!currentPassword || !newPassword || !confirmPassword)
+            return showToast('Please fill in all password fields.', 'error');
+        if (newPassword !== confirmPassword)
+            return showToast('New passwords do not match.', 'error');
+
+        const btn = document.getElementById('savePwBtn');
+        btn.disabled = true;
+        btn.textContent = 'Updating…';
+
+        const data = await apiCall('update_password', { currentPassword, newPassword, confirmPassword });
+
+        btn.disabled = false;
+        btn.textContent = 'Update Password';
+
+        if (data.success) {
+            showToast('Password updated successfully.');
+            clearPasswordForm();
+        } else {
+            showToast(data.message || 'Update failed.', 'error');
+        }
+    }
+
+    function clearPasswordForm() {
+        ['currentPw', 'newPw', 'confirmPw'].forEach(id => document.getElementById(id).value = '');
+        checkStrength('');
+    }
+
+    // Forgot Password 
+    async function sendResetLink() {
+        const email = document.getElementById('forgotEmail').value.trim();
+        if (!email || !email.includes('@'))
+            return showToast('Please enter a valid email address.', 'error');
+
+        const data = await apiCall('forgot_password', { email });
+        showToast(data.message || 'Reset link sent — check your inbox.');
+        document.getElementById('forgotEmail').value = '';
+    }
+</script>
 </body>
 </html>
