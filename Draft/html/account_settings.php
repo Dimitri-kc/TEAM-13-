@@ -6,7 +6,6 @@ require_once '../backend/config/db_connect.php';
 
 $user_ID = $_SESSION['user_ID'] ?? null;
 
-// If not logged in, redirect ─
 if (!$user_ID) {
     header("Location: signin.php");
     exit();
@@ -18,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode($raw, true);
     $action = $data['action'] ?? '';
 
-    // Get personal info
     if ($action === 'get_personal_info') {
         $stmt = $conn->prepare("SELECT name, surname, email, address FROM users WHERE user_ID = ?");
         $stmt->bind_param("i", $user_ID);
@@ -31,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // ── Update personal info ──
     if ($action === 'update_personal_info') {
         $name    = trim($data['name']    ?? '');
         $surname = trim($data['surname'] ?? '');
@@ -47,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
 
-        // Check email not taken by another user
         $check = $conn->prepare("SELECT user_ID FROM users WHERE email = ? AND user_ID != ?");
         $check->bind_param("si", $email, $user_ID);
         $check->execute();
@@ -65,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
 
         if ($ok) {
-            $_SESSION['name'] = $name; 
+            $_SESSION['name'] = $name;
             echo json_encode(["success" => true, "message" => "Personal information updated."]);
         } else {
             echo json_encode(["success" => false, "message" => "Update failed. Please try again."]);
@@ -73,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // update password 
     if ($action === 'update_password') {
         $currentPassword = trim($data['currentPassword'] ?? '');
         $newPassword     = trim($data['newPassword']     ?? '');
@@ -108,7 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
 
-        // Fetch current hashed password
         $stmt = $conn->prepare("SELECT password FROM users WHERE user_ID = ?");
         $stmt->bind_param("i", $user_ID);
         $stmt->execute();
@@ -136,14 +130,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // ─Forgot password
     if ($action === 'forgot_password') {
         $email = trim($data['email'] ?? '');
         if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             echo json_encode(["success" => false, "message" => "Please enter a valid email address."]);
             exit();
         }
+        // TODO: generate token, store in DB, send reset email
         echo json_encode(["success" => true, "message" => "If that email exists, a reset link has been sent."]);
+        exit();
+    }
+
+    // ── Delete account ──
+    if ($action === 'delete_account') {
+        $password = trim($data['password'] ?? '');
+
+        if (!$password) {
+            echo json_encode(["success" => false, "message" => "Please enter your password to confirm."]);
+            exit();
+        }
+
+        // Verify password before deleting
+        $stmt = $conn->prepare("SELECT password FROM users WHERE user_ID = ?");
+        $stmt->bind_param("i", $user_ID);
+        $stmt->execute();
+        $row = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+
+        if (!$row || !password_verify($password, $row['password'])) {
+            echo json_encode(["success" => false, "message" => "Incorrect password. Account not deleted."]);
+            exit();
+        }
+
+        // Delete the user row — if you have FK constraints with CASCADE DELETE set, related rows
+        // (basket, orders etc.) will be removed automatically. Otherwise add DELETE statements here first.
+        $stmt = $conn->prepare("DELETE FROM users WHERE user_ID = ?");
+        $stmt->bind_param("i", $user_ID);
+        $ok = $stmt->execute();
+        $stmt->close();
+
+        if ($ok) {
+            $_SESSION = [];
+            session_destroy();
+            echo json_encode(["success" => true, "redirect" => "homepage.php"]);
+        } else {
+            echo json_encode(["success" => false, "message" => "Failed to delete account. Please try again."]);
+        }
         exit();
     }
 
@@ -151,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
-// ── Load user for initial page render ──
+// Load user for initial page render
 $stmt = $conn->prepare("SELECT name, surname, email, address FROM users WHERE user_ID = ?");
 $stmt->bind_param("i", $user_ID);
 $stmt->execute();
@@ -163,12 +195,11 @@ if (!$user) {
     exit();
 }
 
-// Split address back into parts
 $addressParts = array_map('trim', explode(',', $user['address'] ?? '', 4));
-$addr1     = $addressParts[0] ?? '';
-$addr2     = $addressParts[1] ?? '';
-$addrCity  = $addressParts[2] ?? '';
-$addrPost  = $addressParts[3] ?? '';
+$addr1    = $addressParts[0] ?? '';
+$addr2    = $addressParts[1] ?? '';
+$addrCity = $addressParts[2] ?? '';
+$addrPost = $addressParts[3] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -183,14 +214,12 @@ $addrPost  = $addressParts[3] ?? '';
 
 <div class="page-header">
     <a href="user_dash.php" class="back-dashboard">← Back to Dashboard</a>
-    <!-- <div class="brand">Loft &amp; Living</div> -->
     <h1>Account Settings</h1>
     <p>Manage your personal information, security and preferences.</p>
 </div>
 
 <div class="settings-layout">
 
-    <!-- Sidebar -->
     <aside class="sidebar">
         <div class="profile-card">
             <div class="avatar" id="profileAvatar"></div>
@@ -210,10 +239,13 @@ $addrPost  = $addressParts[3] ?? '';
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
                 Forgot Password
             </button>
+            <button class="nav-item nav-item--danger" onclick="switchPanel('delete', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                Delete Account
+            </button>
         </nav>
     </aside>
 
-  
     <main class="main-panel">
 
         <!-- Personal Info -->
@@ -284,9 +316,6 @@ $addrPost  = $addressParts[3] ?? '';
                         <label>Current Password</label>
                         <div class="password-wrapper">
                             <input type="password" id="currentPw" placeholder="Enter current password">
-                            <!-- <button class="toggle-pw" onclick="togglePw('currentPw', this)" type="button">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
-                            </button> -->
                         </div>
                     </div>
                 </div>
@@ -295,9 +324,6 @@ $addrPost  = $addressParts[3] ?? '';
                         <label>New Password</label>
                         <div class="password-wrapper">
                             <input type="password" id="newPw" placeholder="Min. 8 characters" oninput="checkStrength(this.value)">
-                            <!-- <button class="toggle-pw" onclick="togglePw('newPw', this)" type="button">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
-                            </button> -->
                         </div>
                         <div class="strength-bar">
                             <div class="strength-seg" id="s1"></div>
@@ -313,9 +339,6 @@ $addrPost  = $addressParts[3] ?? '';
                         <label>Confirm New Password</label>
                         <div class="password-wrapper">
                             <input type="password" id="confirmPw" placeholder="Repeat new password">
-                            <!-- <button class="toggle-pw" onclick="togglePw('confirmPw', this)" type="button">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
-                            </button> -->
                         </div>
                     </div>
                 </div>
@@ -351,7 +374,51 @@ $addrPost  = $addressParts[3] ?? '';
             </div>
         </section>
 
+        <!-- Delete Account -->
+        <section class="panel" id="panel-delete">
+            <div class="panel-header panel-header--danger">
+                <h2>Delete Account</h2>
+                <p>Permanently remove your account and all associated data.</p>
+            </div>
+            <div class="panel-body">
+                <div class="danger-box">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" flex-shrink="0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    <div>
+                        <strong>This action is permanent and cannot be undone.</strong>
+                        <p>Deleting your account will remove all your personal data, order history, saved addresses and preferences from our system.</p>
+                    </div>
+                </div>
+
+                <div class="form-row full" style="margin-top: 28px;">
+                    <div class="field">
+                        <label>Confirm your password to continue</label>
+                        <input type="password" id="deletePassword" placeholder="Enter your current password">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn-danger" id="deleteAccountBtn" onclick="openDeleteModal()">Delete My Account</button>
+                    <button class="btn-ghost" onclick="switchPanel('personal', document.querySelectorAll('.nav-item')[0])">Cancel</button>
+                </div>
+            </div>
+        </section>
+
     </main>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal-box">
+        <div class="modal-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        </div>
+        <h3>Are you sure you want to delete your account?</h3>
+        <p>Your account will be <strong>permanently deleted</strong>. This action cannot be undone.</p>
+        <div class="modal-actions">
+            <button class="btn-danger" id="confirmDeleteBtn" onclick="confirmDelete()">Delete Account</button>
+            <button class="btn-ghost" onclick="closeDeleteModal()">CANCEL</button>
+        </div>
+    </div>
 </div>
 
 <div class="toast" id="toast">
@@ -360,7 +427,6 @@ $addrPost  = $addressParts[3] ?? '';
 </div>
 
 <script>
-
     const SELF = 'account_settings.php';
 
     function switchPanel(name, btn) {
@@ -370,13 +436,11 @@ $addrPost  = $addressParts[3] ?? '';
         btn.classList.add('active');
     }
 
-    // Avatar initials 
     function getInitials(name) {
         const parts = name.trim().split(' ').filter(Boolean);
         return (parts[0][0] + (parts.length > 1 ? parts[parts.length - 1][0] : '')).toUpperCase();
     }
 
-    // Set avatar on load from PHP name
     const initialName = document.getElementById('profileName').textContent;
     document.getElementById('profileAvatar').textContent = getInitials(initialName);
 
@@ -396,7 +460,6 @@ $addrPost  = $addressParts[3] ?? '';
         return res.json();
     }
 
-    // ── Save Personal Info ──
     async function savePersonal() {
         const name    = document.getElementById('firstName').value.trim();
         const surname = document.getElementById('lastName').value.trim();
@@ -411,13 +474,9 @@ $addrPost  = $addressParts[3] ?? '';
         if (!name || !surname || !email) return showToast('Name, surname and email are required.', 'error');
 
         const btn = document.getElementById('savePersonalBtn');
-        btn.disabled = true;
-        btn.textContent = 'Saving…';
-
+        btn.disabled = true; btn.textContent = 'Saving…';
         const data = await apiCall('update_personal_info', { name, surname, email, address });
-
-        btn.disabled = false;
-        btn.textContent = 'Save Changes';
+        btn.disabled = false; btn.textContent = 'Save Changes';
 
         if (data.success) {
             showToast('Personal information updated.');
@@ -431,7 +490,6 @@ $addrPost  = $addressParts[3] ?? '';
     }
 
     function resetPersonal() {
-        // Reset to the PHP-rendered values (original page load values)
         document.getElementById('firstName').value = '<?php echo addslashes($user['name']); ?>';
         document.getElementById('lastName').value  = '<?php echo addslashes($user['surname']); ?>';
         document.getElementById('email').value     = '<?php echo addslashes($user['email']); ?>';
@@ -441,7 +499,6 @@ $addrPost  = $addressParts[3] ?? '';
         document.getElementById('postcode').value  = '<?php echo addslashes($addrPost); ?>';
     }
 
-    // ── Password strength ──
     const strengthColors = ['#e74c3c', '#e67e22', '#f1c40f', '#2C6E49'];
     const strengthLabels = ['Weak', 'Fair', 'Good', 'Strong'];
 
@@ -460,14 +517,6 @@ $addrPost  = $addressParts[3] ?? '';
         label.style.color = score ? strengthColors[score - 1] : 'var(--mid)';
     }
 
-    // ── Password visibility toggle ──
-    // function togglePw(id, btn) {
-    //     const input = document.getElementById(id);
-    //     input.type  = input.type === 'text' ? 'password' : 'text';
-    //     btn.style.opacity = input.type === 'text' ? '0.5' : '1';
-    // }
-
-    // ── Update Password ──
     async function savePassword() {
         const currentPassword = document.getElementById('currentPw').value;
         const newPassword     = document.getElementById('newPw').value;
@@ -479,13 +528,9 @@ $addrPost  = $addressParts[3] ?? '';
             return showToast('New passwords do not match.', 'error');
 
         const btn = document.getElementById('savePwBtn');
-        btn.disabled = true;
-        btn.textContent = 'Updating…';
-
+        btn.disabled = true; btn.textContent = 'Updating…';
         const data = await apiCall('update_password', { currentPassword, newPassword, confirmPassword });
-
-        btn.disabled = false;
-        btn.textContent = 'Update Password';
+        btn.disabled = false; btn.textContent = 'Update Password';
 
         if (data.success) {
             showToast('Password updated successfully.');
@@ -500,15 +545,44 @@ $addrPost  = $addressParts[3] ?? '';
         checkStrength('');
     }
 
-    // Forgot Password 
     async function sendResetLink() {
         const email = document.getElementById('forgotEmail').value.trim();
         if (!email || !email.includes('@'))
             return showToast('Please enter a valid email address.', 'error');
-
         const data = await apiCall('forgot_password', { email });
         showToast(data.message || 'Reset link sent — check your inbox.');
         document.getElementById('forgotEmail').value = '';
+    }
+
+    // ── Delete Account ──
+    function openDeleteModal() {
+        const password = document.getElementById('deletePassword').value;
+        if (!password) return showToast('Please enter your password first.', 'error');
+        document.getElementById('deleteModal').classList.add('active');
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.remove('active');
+    }
+
+    document.getElementById('deleteModal').addEventListener('click', function(e) {
+        if (e.target === this) closeDeleteModal();
+    });
+
+    async function confirmDelete() {
+        const password = document.getElementById('deletePassword').value;
+        const btn = document.getElementById('confirmDeleteBtn');
+        btn.disabled = true; btn.textContent = 'Deleting…';
+
+        const data = await apiCall('delete_account', { password });
+
+        if (data.success) {
+            window.location.href = data.redirect || 'homepage.php';
+        } else {
+            closeDeleteModal();
+            btn.disabled = false; btn.textContent = 'Yes, Delete My Account';
+            showToast(data.message || 'Deletion failed.', 'error');
+        }
     }
 </script>
 </body>
