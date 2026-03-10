@@ -229,7 +229,7 @@ class AdminController {
         if ($limit > 250) $limit = 250; //set maximum limit to 250 to prevent excessive data retrieval
     
         //select order details for specific customer, sort by newest first, limit results to specified limit (default 50, max 250) to prevent excessive data retrieval
-        $sql = "SELECT order_ID as order_id, created_at as order_date, status, total_amount FROM orders WHERE user_ID = ? ORDER BY created_at DESC LIMIT ?";
+        $sql = "SELECT order_ID as order_id, order_date, order_status as status, total_price as total_amount FROM orders WHERE user_ID = ? ORDER BY order_date DESC LIMIT ?";
     
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ii", $customerID, $limit);
