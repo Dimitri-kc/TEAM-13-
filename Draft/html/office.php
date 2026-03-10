@@ -4,6 +4,21 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 include '../backend/config/db_connect.php';
+
+$favouriteProductIds = [];
+
+if (!empty($_SESSION['user_ID'])) {
+    $favouritesStatement = $conn->prepare('SELECT product_ID FROM favourites WHERE user_ID = ?');
+    $favouritesStatement->bind_param('i', $_SESSION['user_ID']);
+    $favouritesStatement->execute();
+    $favouritesResult = $favouritesStatement->get_result();
+
+    while ($favouriteRow = $favouritesResult->fetch_assoc()) {
+        $favouriteProductIds[] = (int) $favouriteRow['product_ID'];
+    }
+
+    $favouritesStatement->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +36,7 @@ include '../backend/config/db_connect.php';
     <link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
     <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">
     <link rel="stylesheet" href="../css/category-css/livingroom-page.css">
+    <link rel="stylesheet" href="../css/favourites-toggle.css">
 
     <style>
         /* Fixed Header Pill Style */
@@ -346,6 +362,7 @@ include '../backend/config/db_connect.php';
 
     if ($result && mysqli_num_rows($result) > 0) {
         while($row = mysqli_fetch_assoc($result)) {
+            $isFavourite = in_array((int) $row['product_ID'], $favouriteProductIds, true);
             ?>
             <div class="item" 
      data-price="<?php echo $row['price']; ?>" 
@@ -363,13 +380,16 @@ include '../backend/config/db_connect.php';
                  </a>
 
 <div class="action-buttons">
-<form method="post" action="favourites_add.php" style="position: absolute; top: 18px; left: 18px; z-index: 999; margin: 0; padding: 0; pointer-events: auto;">
+<form method="post" action="favourite_toggle.php" class="favourite-toggle-form js-favourite-form">
     <input type="hidden" name="product_id" value="<?= $row['product_ID'] ?>">
-    <input type="hidden" name="product_name" value="<?= htmlspecialchars($row['name']) ?>">
-    <input type="hidden" name="product_price" value="<?= htmlspecialchars($row['price']) ?>">
-    <input type="hidden" name="product_image" value="../images/<?= htmlspecialchars($row['image']) ?>">
     <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
-    <button type="submit" title="Add to Favourites" style="background: rgb(217, 217, 222); border: none; border-radius: 60%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">♡</button>
+    <button
+        type="submit"
+        class="favourite-toggle-btn js-favourite-button<?= $isFavourite ? ' is-active' : '' ?>"
+        data-favourite-state="<?= $isFavourite ? 'true' : 'false' ?>"
+        aria-pressed="<?= $isFavourite ? 'true' : 'false' ?>"
+        title="<?= $isFavourite ? 'Remove from favourites' : 'Add to favourites' ?>"
+    ><?= $isFavourite ? '♥' : '♡' ?></button>
 </form>
 
 <!--onclick to pass product_ID in function - API fetch details from DB-->
@@ -446,6 +466,7 @@ include '../backend/config/db_connect.php';
     <script type="module" src="../javascript/livingroom-js/main.js"></script>
     <script src="../javascript/header_footer_script.js"></script>
     <script src="../javascript/global/basketIcon.js"></script>
+    <script src="../javascript/favourites-toggle.js"></script>
 
 </body>
 </html>
