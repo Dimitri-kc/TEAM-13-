@@ -9,18 +9,21 @@ if (session_status() === PHP_SESSION_NONE) {
 $isLoggedIn = !empty($_SESSION['user_ID']);
 $userName   = $_SESSION['name'] ?? '';
 $headerName = ($userName !== '') ? $userName : 'Guest';
+$pageTitle = $pageTitle ?? 'LOFT &amp; LIVING BIRMINGHAM';
+$extraHeadContent = $extraHeadContent ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Title</title>
+    <title><?php echo $pageTitle; ?></title>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
     <link rel="stylesheet" href="../css/reusable_header.css">
+    <?php echo $extraHeadContent; ?>
     <script src="../javascript/dark-mode.js"></script>
 </head>
 
