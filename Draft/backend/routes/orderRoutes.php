@@ -4,7 +4,7 @@ session_start();
 
 header('Content-Type: application/json');
 
-require_once __DIR__ . '/OrderController.php';
+require_once __DIR__ . '/../controllers/orderController.php';
 
 $orderController = new OrderController();
 
@@ -14,7 +14,11 @@ $action = $method === 'POST'
     ? ($_POST['action'] ?? '')
     : ($_GET['action'] ?? '');
 
-// Handle POST requests
+
+/* =========================
+   POST REQUESTS
+=========================*/
+
 if ($method === 'POST') {
 
     switch ($action) {
@@ -29,13 +33,17 @@ if ($method === 'POST') {
 
         default:
             echo json_encode([
-                "status"  => "error",
-                "message" => "Invalid POST action"
+                "status"=>"error",
+                "message"=>"Invalid POST action"
             ]);
     }
 }
 
-// Handle GET requests
+
+/* =========================
+   GET REQUESTS
+=========================*/
+
 elseif ($method === 'GET') {
 
     switch ($action) {
@@ -48,19 +56,22 @@ elseif ($method === 'GET') {
             $orderController->fetchAll();
             break;
 
+        case 'dashboardStats':
+            $orderController->dashboardStats();
+            break;
+
         default:
             echo json_encode([
-                "status"  => "error",
-                "message" => "Invalid GET action"
+                "status"=>"error",
+                "message"=>"Invalid GET action"
             ]);
     }
 }
 
-// Invalid request method
 else {
 
     echo json_encode([
-        "status"  => "error",
-        "message" => "Invalid request method"
+        "status"=>"error",
+        "message"=>"Invalid request method"
     ]);
 }
