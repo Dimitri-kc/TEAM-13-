@@ -80,7 +80,11 @@ $extraHeadContent = $extraHeadContent ?? '';
                         <a class="profile-link" href="signup.php">Sign Up</a>
                     <?php endif; ?>
 
-                    <a class="profile-link" href="<?php echo $isAdmin ? 'admin_dash.php' : 'user_dash.php'; ?>"><?php echo $isAdmin ? 'Admin Dashboard' : 'My Account'; ?></a>
+                    <?php if ($isAdmin): ?>
+                        <a class="profile-link" href="admin_dash.php">Admin Dashboard</a>
+                    <?php endif; ?>
+
+                    <a class="profile-link" href="user_dash.php">My Account</a>
 
                     <?php if ($isLoggedIn): ?>
                         <a class="profile-link" href="user_order_history.php">My Orders</a>
