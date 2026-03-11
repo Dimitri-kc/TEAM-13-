@@ -164,7 +164,7 @@
 
       <div class="small-links">
         <a href="signin.php">Customer login</a>
-        <a href="forgot_password.php">Forgot password</a>
+        <a href="forgotpassword.php">Forgot password</a>
       </div>
     </form>
   </section>

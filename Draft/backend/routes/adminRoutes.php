@@ -30,23 +30,27 @@ switch ($data['action'] ?? '') {
         break;
 
     //customers
-    case 'customers_list':
+    case 'customers_list': //gets list of all customer in DB and their details (name, email, phone, address etc)
         $adminController->getCustomersList($data);
         break;
 
-    case 'customer_update':
+    case 'customer_details': //gets details of a specific customer
+        $adminController->getCustomerDetails($data);
+        break;
+
+    case 'update_customer': //update customer personal details (name, email, phone etc)
         $adminController->updateCustomer($data);
         break;
 
-    case 'customer_dectivate':
+    case 'deactivate_customer': //deactivate customer acc (soft delete as data retained but account deactivated)
         $adminController->deactivateCustomer($data);
         break;
 
-    case 'customer_role_update':
+    case 'update_customer_role': //update customer role (user>admin or vice versa)
         $adminController->updateCustomerRole($data);
         break;
 
-    case 'customer_orders':
+    case 'customer_orders': //get list of order for a specific customer
         $adminController->getCustomerOrders($data);
         break;
 
@@ -55,19 +59,19 @@ switch ($data['action'] ?? '') {
         $adminController->getInventoryList($data);
         break;
 
-    case 'inventory_add':
+    case 'add_inventory':
         $adminController->addInventory($data);
         break;
 
-    case 'inventory_update':
+    case 'update_inventory':
         $adminController->updateInventory($data);
         break;
 
-    case 'inventory_delete':
+    case 'delete_inventory':
         $adminController->deleteInventory($data);
         break;
     
-    case 'inventory_adjust_stock':
+    case 'adjust_inventory_stock':
         $adminController->adjustInventoryStock($data);
         break;
 
@@ -80,7 +84,7 @@ switch ($data['action'] ?? '') {
         $adminController->reportStockLevel($data);
         break;
 
-    case 'report_customer_signups':
+    case 'report_customer_signups': //report total customers
         $adminController->reportCustomerSignups($data);
         break;
 
@@ -88,14 +92,14 @@ switch ($data['action'] ?? '') {
         $adminController->reportTotalRevenue($data);
         break;
 
-/*     //orders
+    //orders
     case 'orders_list':
-        $adminController->ordersList($data);
+        $adminController->getOrdersList($data);
         break;
     
-    case 'order_update_status':
+    case 'update_order_status':
         $adminController->updateOrderStatus($data);
-        break; */
+        break;
 
     default:
         echo json_encode(["success" => false, "message" => "Invalid action."]);

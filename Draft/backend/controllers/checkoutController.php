@@ -81,7 +81,10 @@ class CheckoutController {
          }
          //"Product ID $pid has only $inStock items in stock, but you requested $quantity."
 
-        $total_sum = basket_total($basketItems);
+        $subtotal = basket_total($basketItems);
+        $tax = $subtotal * 0.10;
+        $total_sum = $subtotal + $tax;
+
          //transaction
         try {
             $conn->begin_transaction();
@@ -140,14 +143,15 @@ class CheckoutController {
 
             //success > mark order status paid
             $this->orderModel->updateOrderStatus((int)$order_ID, 'Paid'); //update order status to paid
-/* COMMENTED OUT UNTIL updateStock() FUNCTION ADDED             //deduct stock for each item
+            
+            //deduct stock for each item
             require_once __DIR__ . '/../models/productModel.php';
             $productModel = new ProductModel();
             foreach ($basketItems as $item) {
                 $pid = (int)($item['product_ID'] ?? 0);
                 $quantity = (int)($item['quantity'] ?? 0);
                 $productModel->updateStock($pid, -$quantity); // Assuming this method exists
-            } */
+            }
             //clear basket in DB & session
             $this->basketModel->clearBasket($basket_ID); //clear basket items in DB
 
@@ -178,7 +182,7 @@ class CheckoutController {
                     ];
                 }, $basketItems),
                 "shipping" => 0.0,
-                "tax" => $total_sum * 0.10,
+                "tax" => $tax,
                 "discount" => 0,
                 "continue_url" => "homepage.php"
             ];

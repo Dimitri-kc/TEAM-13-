@@ -1,4 +1,8 @@
 <?php
+
+require_once '../backend/services/userFunctions.php';
+require_admin_page('/TEAM-13-/Draft/html/signin.php');
+
 include '../backend/config/db_connect.php';
 
 // Get form data

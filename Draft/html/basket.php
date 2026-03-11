@@ -4,6 +4,7 @@ session_start();
 
 require_once __DIR__ . '/../backend/models/basketModel.php';
 require_once __DIR__ . '/../backend/services/basketFunctions.php'; //guest_basket
+require_once __DIR__ . '/../backend/services/authGuard.php'; //getValidSessionUser
 
 /* FIX 1: make sure both carts are always initialised as arrays */
 if (!isset($_SESSION["cart"]) || !is_array($_SESSION["cart"])) {
@@ -20,7 +21,7 @@ function money($n){ return "£" . number_format((float)$n, 2); }
 /* FIX 2: allow action to come from POST too (so add works even without ?action=add) */
 $action = $_GET["action"] ?? ($_POST["action"] ?? "");
 
-$user_ID = isset($_SESSION["user_ID"]) ? (int)$_SESSION["user_ID"] : null; //get user_ID from session if logged in, otherwise null
+$user_ID = getValidSessionUser($conn); //get valid user_ID from session if logged in, otherwise null
 $basketModel = new Basket(); //
 
 if ($user_ID > 0) {

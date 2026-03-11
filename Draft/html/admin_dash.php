@@ -2,6 +2,9 @@
 // user_dash.php
 // User dashboard page - shows account shortcuts once a user is logged in
 
+require_once '../backend/services/userFunctions.php';
+require_admin_page('/TEAM-13-/Draft/html/signin.php');
+
 // Start session to access logged-in user information (set during login)
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -15,23 +18,9 @@ if (empty($_SESSION['user_ID'])) {
 
 // Pull user details from session (already set in UserController login method)
 $userName = $_SESSION['name'] ?? 'User';
-$userRole = $_SESSION['role'] ?? 'customer';
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>My Account | LOFT &amp; LIVING BIRMINGHAM</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Main site header/footer styling -->
-    <link rel="stylesheet" href="../css/header_footer_style.css">
-
+$pageTitle = 'Admin Dashboard | LOFT &amp; LIVING BIRMINGHAM';
+$extraHeadContent = <<<'HTML'
     <style>
-        /* ===============================
-           Dashboard page specific styling
-           =============================== */
-
         .dashboard-wrap {
             background: #ffffff;
             padding: 60px 24px 80px;
@@ -58,7 +47,6 @@ $userRole = $_SESSION['role'] ?? 'customer';
             font-size: 14px;
         }
 
-        /* Grid layout for dashboard cards */
         .dash-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
@@ -91,7 +79,6 @@ $userRole = $_SESSION['role'] ?? 'customer';
             align-items: center;
         }
 
-        /* Dashboard images (dash1 - dash5) */
         .card-media img {
             width: 92px;
             height: 92px;
@@ -101,7 +88,7 @@ $userRole = $_SESSION['role'] ?? 'customer';
         }
 
         .dash-card h3 {
-            margin: 6px 0 6px 0;
+            margin: 6px 0;
             font-size: 16px;
             font-weight: 700;
         }
@@ -125,122 +112,11 @@ $userRole = $_SESSION['role'] ?? 'customer';
         @media (max-width: 560px) {
             .dash-grid { grid-template-columns: 1fr; }
         }
-
-
-        .user-icon-wrap {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .user-icon-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .user-dropdown {
-            position: absolute;
-            top: 40px;
-            right: 0;
-            width: 260px;
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            padding: 18px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            display: none;
-            z-index: 3000; /* keeps it above other header elements */
-        }
-
-        .user-dropdown.open {
-            display: block;
-        }
-
-        .user-dropdown-greeting {
-            font-size: 14px;
-            font-weight: 700;
-            color: #000;
-            margin-bottom: 14px;
-        }
-
-        .user-dropdown-btn {
-            display: block;
-            font-size: 14px;
-            color: #444;
-            padding: 10px 0;
-        }
-
-        .user-dropdown-btn + .user-dropdown-btn {
-            border-top: 1px solid #eee;
-        }
-
-        .user-dropdown-btn.signout {
-            color: #b00020;
-        }
     </style>
-</head>
+HTML;
 
-<body>
-
-    <header class="site-header">
-        <div class="header-inner">
-            <button class="menu-btn" id="menu-toggle-btn">
-                <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
-            </button>
-
-            <div class="logo-wrapper">
-                <a href="homepage.php">
-                    <img src="../images/header_footer_images/logo.png" alt="LOFT &amp; LIVING" class="main-logo">
-                </a>
-            </div>
-
-            <div class="header-actions">
-                <a href="favourites.php">
-                    <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
-                </a>
-
-                <!-- Profile icon dropdown (FIXED) -->
-                <div class="user-icon-wrap" id="user-icon-wrap">
-                    <button class="user-icon-btn" id="user-icon-btn" aria-label="My Account" type="button">
-                        <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
-                    </button>
-
-                    <div class="user-dropdown" id="user-dropdown">
-                        <div class="user-dropdown-greeting">
-                            Welcome, <?php echo htmlspecialchars($userName); ?>
-                        </div>
-
-                        
-                        <a href="signin.php" class="user-dropdown-btn">Sign in</a>
-                        <a class="profile-link" href="signup.php">Sign Up</a>
-                        <a href="user_dash.php" class="user-dropdown-btn">My account</a>
-
-                        <!-- Sign out should go to signout.php (destroys session) -->
-                        <a href="signout.php" class="user-dropdown-btn signout">Sign out</a>
-                    </div>
-                </div>
-
-                <a href="basket.php" class="basket-icon">
-                    <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
-                    <span id="basket-count">0</span>
-                </a>
-            </div>
-        </div>
-
-        <nav class="dropdown-panel" id="dropdown-nav">
-            <ul class="nav-links">
-                <li><a href="livingroom.php">Living Room</a></li>
-                <li><a href="bathroom.php">Bathroom</a></li>
-                <li><a href="bedroom.php">Bedroom</a></li>
-                <li><a href="office.php">Office</a></li>
-                <li><a href="kitchen.php">Kitchen</a></li>
-                <li class="nav-divider"><a href="user_dash.php">My Account</a></li>
-            </ul>
-        </nav>
-    </header>
+include 'header.php';
+?>
 
     <main class="dashboard-wrap">
         <div class="dashboard-container">
@@ -325,77 +201,4 @@ $userRole = $_SESSION['role'] ?? 'customer';
         </div>
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-section social-links">
-                <a href="#">
-                    <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon">
-                </a>
-                <a href="#">
-                    <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon">
-                </a>
-            </div>
-
-            <div class="footer-section">
-                <h4>Navigation</h4>
-                <ul>
-                    <li><a href="homepage.php">Homepage</a></li>
-                    <li><a href="user_dash.php">My Account</a></li>
-                    <li><a href="favourites.php">Favourites</a></li>
-                    <li><a href="basket.php">Basket</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Categories</h4>
-                <ul>
-                    <li><a href="livingroom.php">Living Room</a></li>
-                    <li><a href="office.php">Offices</a></li>
-                    <li><a href="kitchen.php">Kitchen</a></li>
-                    <li><a href="bathroom.php">Bathrooms</a></li>
-                    <li><a href="bedroom.php">Bedrooms</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>More...</h4>
-                <ul>
-                    <li><a href="contact.php">Contact Us</a></li>
-                    <li><a href="about.php">About Us</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-
-    <script src="../javascript/header_footer_script.js"></script>
-    <script src="../javascript/global/basketIcon.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const profileToggleBtn = document.getElementById('user-icon-btn');
-            const profileDropdown = document.getElementById('user-dropdown');
-            const profileWrapper = document.getElementById('user-icon-wrap');
-
-            if (!profileToggleBtn || !profileDropdown || !profileWrapper) return;
-
-            profileToggleBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                profileDropdown.classList.toggle('open');
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!profileWrapper.contains(e.target)) {
-                    profileDropdown.classList.remove('open');
-                }
-            });
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    profileDropdown.classList.remove('open');
-                }
-            });
-        });
-    </script>
-
-</body>
-</html>
+<?php include 'footer.php'; ?>

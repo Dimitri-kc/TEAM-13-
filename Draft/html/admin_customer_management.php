@@ -1,4 +1,7 @@
-<?php include '../backend/config/db_connect.php'; ?>
+<?php include '../backend/config/db_connect.php'; 
+require_once '../backend/services/userFunctions.php';
+require_admin_page('/TEAM-13-/Draft/html/signin.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -386,7 +389,7 @@
   </footer>
 
   <script>
-    const API_URL = "/TEAM-13-/Draft/backend/routes/userRoutes.php";
+    const API_URL = "/TEAM-13-/Draft/backend/routes/adminRoutes.php";
     const recentList = document.getElementById("recentList");
     const searchInput = document.getElementById("searchInput");
     const noResults = document.getElementById("noResults");
@@ -482,7 +485,7 @@
       hidePopup();
 
       const payload = {
-        action: "get_last_10_customers"
+        action: "customers_list"
       };
 
       try {

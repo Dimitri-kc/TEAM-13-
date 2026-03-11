@@ -7,7 +7,7 @@
     <title>About Us | LOFT & LIVING</title>
 
     <link rel="stylesheet" href="../css/header_footer_style.css">
-    <link rel="stylesheet" href="../css/homepage-css/homepage-about.css" />
+    <link rel="stylesheet" href="../css/about.css" />
 </head>
 <body>
 

@@ -1,4 +1,7 @@
-<?php include '../backend/config/db_connect.php'; ?>
+<?php include '../backend/config/db_connect.php'; 
+require_once '../backend/services/userFunctions.php';
+require_admin_page('/TEAM-13-/Draft/html/signin.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -270,7 +273,7 @@
 </footer>
 
 <script>
-  const API_URL = "/TEAM-13-/Draft/backend/routes/userRoutes.php";
+  const API_URL = "/TEAM-13-/Draft/backend/routes/adminRoutes.php";
 
   const params = new URLSearchParams(window.location.search);
   const customerId = params.get("user_id") || params.get("id");
@@ -318,7 +321,7 @@
         <div class="order-grid">
           <div class="order-field">
             <span class="order-label">Date</span>
-            <span class="order-value">${order.date ?? "-"}</span>
+            <span class="order-value">${order.order_date ?? "-"}</span>
           </div>
           <div class="order-field">
             <span class="order-label">Status</span>
@@ -326,17 +329,33 @@
           </div>
           <div class="order-field">
             <span class="order-label">Total</span>
-            <span class="order-value">${order.total ?? "-"}</span>
-          </div>
-          <div class="order-field">
-            <span class="order-label">Payment Method</span>
-            <span class="order-value">${order.payment_method ?? "-"}</span>
+            <span class="order-value">${order.total_amount ?? "-"}</span>
           </div>
         </div>
-      `;
+      `;//removed payment method as data not stored in DB
       ordersList.appendChild(card);
     });
   }
+
+  async function fetchCustomerLabel(customerId) {
+  const res = await fetch(API_URL, { //fetch customer details to get name for customer line label
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      action: "customer_details",
+      customer_ID: Number(customerId)
+    })
+  });
+
+  const data = await readJsonSafely(res);
+  if (!data?.success || !data?.customer) return `Order history for user ID: ${customerId}`;
+
+  const c = data.customer;
+  const fullName = `${c.name ?? ""} ${c.surname ?? ""}`.trim(); //show name with user id
+  return fullName
+    ? `Order history for ${fullName} (ID: ${customerId})`
+    : `Order history for user ID: ${customerId}`;
+}
 
   async function loadOrderHistory() {
     hidePopup();
@@ -351,21 +370,19 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          action: "get_customer_full_details",
-          customer_id: customerId
+          action: "customer_orders",
+          customer_ID: customerId
         })
       });
 
       const data = await readJsonSafely(res);
 
-      if (!data.success || !data.customer) {
-        showPopup(data.message || "Customer not found.");
+      if (!data.success) {
+        showPopup(data.message || "Failed to load orders.");
         return;
       }
 
-      const c = data.customer;
-      const fullName = `${c.name ?? ""} ${c.surname ?? ""}`.trim();
-      customerLine.textContent = fullName ? `View orders for ${fullName}` : "View customer orders";
+      customerLine.textContent = await fetchCustomerLabel(customerId);
 
       renderOrders(data.orders || []);
     } catch (err) {

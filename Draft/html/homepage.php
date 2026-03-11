@@ -521,7 +521,7 @@ if ($showWelcomeToast) {
                 </a>
             </div>
             <div class="card">
-                <a href="livingroom.php">
+                  <a href="product.php?id=4">
                     <img src="../images/livingroom-images/rug.png" alt="Faux Fur Rug">
                     <h3>FAUX FUR RUG</h3>
                 </a>

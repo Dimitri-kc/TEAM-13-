@@ -322,7 +322,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
                     </div>
 
                     <div class="auth-links">
-                        <a href="signup.php">Create an account</a>
+                        <a href="admin_signup.php">Create an account</a>
                         <a href="forgotpassword.php">Forgot password?</a>
                     </div>
                 </form>

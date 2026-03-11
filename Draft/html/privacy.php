@@ -22,7 +22,7 @@
         }
         main.container {
             max-width: 900px;
-            margin: 80px auto 40px;
+            margin: 40px auto 40px;
             padding: 30px;
             background: #fff;
             border-radius: 8px;
@@ -71,13 +71,26 @@
         .faq-question.active::after {
             transform: rotate(-180deg);
         }
+        .back-dashboard {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #2C6E49;
+    transition: 0.2s ease;
+}
+
+.back-dashboard:hover {
+    text-decoration: underline;
+}
     </style>
 </head>
 <body>
 
-<?php include '../includes/header.php'; ?>
-
-<main class="container">
+<?php include 'header.php'; ?>
+    <main class="container">
+    <a href="user_dash.php" class="back-dashboard">← Back to Dashboard</a>
     <h1>Privacy Policy</h1>
 
     <p>We are committed to handling your personal information responsibly and securely. We will:</p>
@@ -96,19 +109,19 @@
 
     <div class="faq">
         <div class="faq-item">
-            <div class="faq-question">1. What personal data do you collect?</div>
+            <div class="faq-question">1. What personal data do we collect?</div>
             <div class="faq-answer">
                 <p>We collect information such as your name, email address, phone number, and any data you provide when using our website or services.</p>
             </div>
         </div>
         <div class="faq-item">
-            <div class="faq-question">2. How do you use my personal data?</div>
+            <div class="faq-question">2. How do we use your personal data?</div>
             <div class="faq-answer">
                 <p>Your data is used to provide our services, process orders, communicate with you, improve our offerings, and comply with legal obligations.</p>
             </div>
         </div>
         <div class="faq-item">
-            <div class="faq-question">3. Who do you share my data with?</div>
+            <div class="faq-question">3. Who do we share your data with?</div>
             <div class="faq-answer">
                 <p>We may share your data with trusted service providers, partners, or as required by law. We do not sell your personal information.</p>
             </div>
@@ -116,7 +129,6 @@
     </div>
 </main>
 
-<?php include '../includes/footer.php'; ?>
 
 <script>
     // FAQ toggle
@@ -132,5 +144,6 @@
     });
 </script>
 
+<?php include 'footer.php'; ?>
 </body>
 </html>

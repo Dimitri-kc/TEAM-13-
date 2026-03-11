@@ -1,4 +1,7 @@
-<?php include '../backend/config/db_connect.php'; ?>
+<?php include '../backend/config/db_connect.php'; 
+require_once '../backend/services/userFunctions.php';
+require_admin_page('/TEAM-13-/Draft/html/signin.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -148,25 +151,30 @@
       font-weight: 600;
       font-size: 15px;
       margin: 0;
+      border: 1px solid #b8b8b8;
+      background: #f3f3f3;
+      color: #111;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
     }
 
-    .warning-button {
-      border: none;
-      background: #f0b400;
+    .secondary-button:hover {
+      background: #dcdcdc;
+      border-color: #a8a8a8;
       color: #111;
     }
 
-    .danger-button {
-      border: none;
+    .warning-button:hover {
+      background: #f0b400;
+      border-color: #f0b400;
+      color: #111;
+    }
+
+    .danger-button:hover {
       background: #c62828;
+      border-color: #c62828;
       color: #fff;
     }
 
-    .secondary-button {
-     background: #f3f3f3;
-     border: 1px solid #b8b8b8;
-     color: #111;
-   }
     @media (max-width: 760px) {
       .action-row {
         grid-template-columns: 1fr;
@@ -305,7 +313,7 @@
 </footer>
 
 <script>
-  const API_URL = "/TEAM-13-/Draft/backend/routes/userRoutes.php";
+  const API_URL = "/TEAM-13-/Draft/backend/routes/adminRoutes.php";
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const params = new URLSearchParams(window.location.search);
@@ -353,8 +361,8 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          action: "get_customer_full_details",
-          customer_id: customerId
+          action: "customer_details",
+          customer_ID: customerId
         })
       });
 
@@ -410,7 +418,7 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           action: "update_customer",
-          customer_id: customerId,
+          customer_ID: customerId,
           role: document.getElementById("role").value,
           name,
           surname,
@@ -446,8 +454,8 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          action: "customer_account_action",
-          customer_id: customerId,
+          action: "deactivate_customer",
+          customer_ID: customerId,
           mode
         })
       });
@@ -482,8 +490,8 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          action: "customer_account_action",
-          customer_id: customerId,
+          action: "deactivate_customer",
+          customer_ID: customerId,
           mode: "remove"
         })
       });
@@ -491,7 +499,7 @@
       const data = await readJsonSafely(res);
 
       if (data.success) {
-        window.location.href = "admin_customer.php";
+        window.location.href = "admin_customer_management.php";
         return;
       }
 
