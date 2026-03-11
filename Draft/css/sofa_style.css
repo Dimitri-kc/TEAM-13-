@@ -1,9 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-
-/* This CSS file styles the product example page for a sofa */
-/* General */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -19,12 +16,8 @@ body {
     padding: 40px 20px;
 }
 
-.container {
-    max-width: 1200px;
-    width: 100%;
-}
+.container { max-width: 1200px; width: 100%; }
 
-/* Top Section for Products */
 .product-wrapper {
     display: flex;
     gap: 50px;
@@ -32,45 +25,30 @@ body {
 }
 
 .product-image {
-    width: 550px;     
-    height: 550px;   
-    overflow: hidden;  
+    width: 550px;
+    height: 550px;
+    overflow: hidden;
     border-radius: 6px;
     position: relative;
 }
 
-
- .product-image img {
+.product-image img {
     width: 100%;
     height: 100%;
     border-radius: 4px;
     display: block;
 }
 
- .wishlist-icon {
+.wishlist-icon {
     position: absolute;
     top: 20px;
     left: 20px;
-    z-index: 5;   /* higher than image */
+    z-index: 5;
 }
 
-/* .zoom-icon {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    font-size: 24px;
-    cursor: pointer;
-} */
-.product-image .zoom-icon {
-    pointer-events: none;
-}
+.product-image .zoom-icon { pointer-events: none; }
 
-
-/* Product Info Side */
-.product-info {
-    flex: 1;
-    padding-top: 10px;
-}
+.product-info { flex: 1; padding-top: 10px; }
 
 h1 {
     font-size: 24px;
@@ -79,35 +57,12 @@ h1 {
     text-transform: uppercase;
 }
 
-.price {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 10px;
-}
+.price { font-size: 32px; font-weight: 700; margin-bottom: 10px; }
+.tagline { color: #777; margin-bottom: 30px; }
 
-.tagline {
-    color: #777;
-    margin-bottom: 30px;
-}
-
-/* Selectors (Size/Qty) */
-.selectors {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.select-group {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.select-group label {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
+.selectors { display: flex; gap: 20px; margin-bottom: 20px; }
+.select-group { flex: 1; display: flex; flex-direction: column; }
+.select-group label { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
 
 select {
     padding: 12px;
@@ -118,9 +73,16 @@ select {
     cursor: pointer;
 }
 
-/* Buttons */
+ACTION BUTTONS — basket full width, heart on the right
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
 .add-to-basket {
-    width: 100%;
+    flex: 1;                  /* takes all remaining width */
     background-color: #2c2c2c;
     color: white;
     padding: 15px;
@@ -128,15 +90,13 @@ select {
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    margin-bottom: 30px;
     transition: background 0.3s;
 }
 
-.add-to-basket:hover {
-    background-color: #000;
-}
+.add-to-basket:hover { background-color: #000; }
 
-/* Description Box */
+
+
 .description-box {
     border: 1px solid #eee;
     padding: 20px;
@@ -151,23 +111,11 @@ select {
     font-size: 14px;
 }
 
-.description-box p {
-    font-size: 14px;
-    line-height: 1.6;
-    color: #555;
-}
+.description-box p { font-size: 14px; line-height: 1.6; color: #555; }
 
-/* Bottom Section: Reviews */
-.reviews-section h2 {
-    font-size: 20px;
-    margin-bottom: 20px;
-}
+.reviews-section h2 { font-size: 20px; margin-bottom: 20px; }
 
-.reviews-slider-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+.reviews-slider-wrapper { display: flex; align-items: center; gap: 10px; }
 
 .reviews-container {
     display: flex;
@@ -175,12 +123,9 @@ select {
     overflow-x: auto;
     scroll-behavior: smooth;
     padding: 10px 0;
-    /* Hide scrollbar */
-    scrollbar-width: none; 
+    scrollbar-width: none;
 }
-.reviews-container::-webkit-scrollbar { 
-    display: none; 
-}
+.reviews-container::-webkit-scrollbar { display: none; }
 
 .review-card {
     min-width: 300px;
@@ -190,66 +135,155 @@ select {
     flex-shrink: 0;
 }
 
-.stars {
-    margin-bottom: 10px;
-    font-size: 18px;
-}
+.stars { margin-bottom: 10px; font-size: 18px; }
+.review-card h3 { font-size: 16px; margin-bottom: 5px; }
+.review-card p { font-size: 14px; color: #555; margin-bottom: 20px; }
 
-.review-card h3 {
-    font-size: 16px;
-    margin-bottom: 5px;
-}
-
-.review-card p {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-.reviewer {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.reviewer img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-
-.reviewer div {
-    display: flex;
-    flex-direction: column;
-}
-
-.reviewer .name {
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.reviewer .date {
-    font-size: 12px;
-    color: #999;
-}
+.reviewer { display: flex; align-items: center; gap: 12px; }
+.reviewer img { width: 40px; height: 40px; border-radius: 50%; }
+.reviewer div { display: flex; flex-direction: column; }
+.reviewer .name { font-size: 12px; font-weight: 700; }
+.reviewer .date { font-size: 12px; color: #999; }
 
 .nav-btn {
     background: none;
     border: 1px solid #333;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    font-size: 18px;
+    width: 40px; height: 40px;
+    cursor: pointer; font-size: 18px;
     flex-shrink: 0;
 }
-.nav-btn:hover {
-    background-color: #f0f0f0;
+.nav-btn:hover { background-color: #f0f0f0; }
+
+@media (max-width: 768px) {
+    .product-wrapper { flex-direction: column; }
+    .action-buttons { flex-wrap: wrap; }
+    .add-to-basket { flex: 1 1 100%; }
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-    .product-wrapper {
-        flex-direction: column;
-    }
+.favourite-popup{
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #111;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: all .25s ease;
+    z-index: 9999;
+}
+
+.favourite-popup.visible{
+    opacity: 1;
+    transform: translateY(0);
+}.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+/* .add-to-basket {
+    flex: 1;
+    background-color: #2c2c2c;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.add-to-basket:hover { background-color: #000; } */
+
+.favourite-toggle-btn {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1.5px solid #ddd;
+    background: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #bbb;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.favourite-toggle-btn:hover {
+    border-color: #111;
+    color: #111;
+}
+
+.favourite-toggle-btn.is-active,
+.favourite-toggle-btn.is-favourited {
+    color: #111;
+    border-color: #111;
+    background: #f3f3f3;
+}
+/* BASKET */
+
+/* Modal overlay */
+.basket-modal {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5); 
+    z-index: 9999; 
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal content box */
+.basket-modal-content {
+    background: #fff;
+    padding: 40px 20px;
+    border-radius: 4px;
+    text-align: center;
+    width: 290px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: slideIn 0.3s ease-out;
+
+
+}
+
+/* Buttons container */
+.basket-modal-buttons {
+    display: flex;
+    flex-direction: column; /* vertical stacking */
+    gap: 10px;
+}
+
+/* Buttons */
+.basket-modal-buttons button {
+    padding: 10px 0;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    font-size: 14px;
+}
+
+#go-to-basket {
+    background: #ff6f61;
+    color: #fff;
+}
+
+#continue-shopping {
+    background: #ccc;
+    color: #000;
 }
