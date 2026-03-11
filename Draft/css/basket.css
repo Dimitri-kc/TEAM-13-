@@ -3,14 +3,14 @@
 body {
     font-family: "Ibarra Real Nova", serif;
     margin: 0;
-    padding: 0;
+    padding: 120px 0 0;
     background: #ffffff;
 }
 
 .basket-container {
     width: 90%;
     max-width: 1200px;
-    margin: auto;
+    margin: 40px auto 0;
 }
 
 .basket-title {

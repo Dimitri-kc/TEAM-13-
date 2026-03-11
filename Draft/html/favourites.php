@@ -39,15 +39,12 @@ try {
     $favs = [];
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>My Favourites | LOFT & LIVING</title>
-    <link rel="stylesheet" href="../css/header_footer_style.css">
+<?php
+$pageTitle = 'My Favourites | LOFT &amp; LIVING';
+$extraHeadContent = <<<'HTML'
     <style>
         body { font-family: Arial, sans-serif; margin: 0; background:#fff; color:#111; }
+        .favourites-main { padding: 50px; min-height: 600px; }
         .wrap { max-width: 980px; margin: 0 auto; padding: 26px 18px 40px; }
         h1 { font-size: 18px; margin: 0 0 4px; font-weight: 700; }
         .sub { font-size: 12px; color: #666; margin-bottom: 18px; }
@@ -59,48 +56,61 @@ try {
         }
 
         .fav-card {
-  position: relative;
-  border: 1px solid #eaeaea;
-  border-radius: 6px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #ffffff;
-  text-align: center;
-}
+            position: relative;
+            border: 1px solid #eaeaea;
+            border-radius: 6px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #ffffff;
+            text-align: center;
+        }
 
         .thumb {
-          width: 200px; height: 200px;
-          border-radius: 4px;
-          background: #e9e9e9;
-          overflow: hidden;
-          display:flex; align-items:center; justify-content:center;
+            width: 200px;
+            height: 200px;
+            border-radius: 4px;
+            background: #e9e9e9;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
 
         .btn {
-          padding: 7px 10px;
-          border: none;
-          border-radius: 6px;
-          background: #111;
-          color: #fff;
-          font-size: 11px;
-          white-space: nowrap;
-          margin-left: 10px;
+            padding: 7px 10px;
+            border: none;
+            border-radius: 6px;
+            background: #111;
+            color: #fff;
+            font-size: 11px;
+            white-space: nowrap;
+            margin-left: 10px;
         }
 
         .removeBtn {
-          position:absolute;
-          top: 8px; right: 8px;
-          width: 26px; height: 26px;
-          border-radius: 7px;
-          border: 1px solid #e1e1e1;
-          background:#fff;
-          cursor:pointer;
-          font-size: 16px;
-          line-height: 1;
-          display:flex; align-items:center; justify-content:center;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
+            border: 1px solid #e1e1e1;
+            background: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .empty { padding: 18px; border: 1px dashed #ddd; border-radius: 8px; color:#666; }
@@ -110,44 +120,12 @@ try {
         @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 580px) { .grid { grid-template-columns: 1fr; } }
     </style>
-</head>
-<body>
+HTML;
 
-<header class="site-header">
-    <div class="header-inner">
-        <button class="menu-btn" id="menu-toggle-btn">
-            <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon">
-        </button>
+include 'header.php';
+?>
 
-        <div class="logo-wrapper">
-            <a href="homepage.php">
-                <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
-            </a>
-        </div>
-
-        <div class="header-actions">
-            <a href="favourites.php"><img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon"></a>
-            <a href="signin.php"><img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon"></a>
-            <a href="basket.php" class="basket-icon">
-                <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
-                <span id="basket-count">0</span>
-            </a>
-        </div>
-    </div>
-
-    <nav class="dropdown-panel" id="dropdown-nav">
-        <ul class="nav-links">
-            <li><a href="livingroom.php">Living Room</a></li>
-            <li><a href="bathroom.php">Bathroom</a></li>
-            <li><a href="bedroom.php">Bedroom</a></li>
-            <li><a href="office.php">Office</a></li>
-            <li><a href="kitchen.php">Kitchen</a></li>
-            <li class="nav-divider"><a href="signin.php">My Account</a></li>
-        </ul>
-    </nav>
-</header>
-
-<main style="padding: 50px; min-height: 600px;">
+<main class="favourites-main">
     <div class="wrap">
         <h1>My Favourites</h1>
         <div class="sub">See an item you like? Come back to it later at any time</div>
@@ -193,12 +171,14 @@ try {
     <div style="font-size:12px; color:#666;">
         £<?= number_format($p["price"],2) ?>
     </div>
-
-    <form method="post" action="basket.php?action=add" style="margin-top:10px;">
-        <input type="hidden" name="product_id" value="<?= $pid ?>">
-        <input type="hidden" name="qty" value="1">
-        <button class="btn" type="submit">Add to bag</button>
-    </form>
+            
+    <button
+        class="btn js-add-to-bag"
+        type="button"
+        data-product-id="<?= $pid ?>"
+        style="margin-top:10px;"
+        >Add to bag
+    </button>
 
 </div>
 
@@ -212,45 +192,20 @@ try {
     </div>
 </main>
 
-<footer class="site-footer">
-    <div class="footer-inner">
-        <div class="footer-section social-links">
-            <a href="#"><img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon"></a>
-            <a href="#"><img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon"></a>
-        </div>
+<?php include 'footer.php'; ?>
 
-        <div class="footer-section">
-            <h4>Navigation</h4>
-            <ul>
-                <li><a href="homepage.php">Homepage</a></li>
-                <li><a href="signin.php">My Account</a></li>
-                <li><a href="favourites.php">Favourites</a></li>
-                <li><a href="basket.php">Basket</a></li>
-            </ul>
-        </div>
+<script> 
+//add to bag functionality 
+document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.js-add-to-bag');
+    if (!btn) return;
 
-        <div class="footer-section">
-            <h4>Categories</h4>
-            <ul>
-                <li><a href="livingroom.php">Living Room</a></li>
-                <li><a href="office.php">Office</a></li>
-                <li><a href="kitchen.php">Kitchen</a></li>
-                <li><a href="bathroom.php">Bathroom</a></li>
-                <li><a href="bedroom.php">Bedroom</a></li>
-            </ul>
-        </div>
+    const productId = parseInt(btn.dataset.productId, 10);
+    if (!productId || typeof window.addToBasket !== 'function') return;
 
-        <div class="footer-section">
-            <h4>More...</h4>
-            <ul>
-                <li><a href="contact.php">Contact Us</a></li>
-                <li><a href="about.php">About Us</a></li>
-            </ul>
-        </div>
-    </div>
-</footer>
-
-<script src="../javascript/header_footer_script.js"></script>
-<script src="../javascript/global/basketIcon.js"></script>
-</body>
-</html>
+    btn.disabled = true;
+    const ok = await window.addToBasket(productId, 1, btn);
+    if (ok) btn.textContent = 'Added';
+    btn.disabled = false;
+});
+</script>
