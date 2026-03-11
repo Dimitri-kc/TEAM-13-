@@ -1,5 +1,5 @@
 <?php
-require_once 'db_connect.php'; // adjust if needed
+require_once 'db_connect.php'; 
 include "header.php";
 
 
@@ -19,11 +19,11 @@ $productColors = [];
 $productCategories = [];
 
 $categoryColors = [
-    "Living room" => "#da953b",
-    "Kitchen"     => "#9de364",
-    "Office"      => "#3aaece",
-    "Bathroom"    => "#5338cb",
-    "Bedroom"     => "#bc4bd3"
+    "Living room" => "#0d436e",
+    "Kitchen"     => "#0d436e",
+    "Office"      => "#0d436e",
+    "Bathroom"    => "#0d436e",
+    "Bedroom"     => "#0d436e"
 ];
 
 while ($row = $result1->fetch_assoc()) {
@@ -80,7 +80,7 @@ while ($row = $result2->fetch_assoc()) {
 
         .content-wrapper {
             width: calc(100% - 48px);
-            max-width: 1400px;
+            max-width: 1050px;
             margin: 0 auto;
             padding: 40px 0 60px;
         }
@@ -89,7 +89,9 @@ while ($row = $result2->fetch_assoc()) {
         
         .chart-container {
             background: #fff;
-            padding: 40px;
+            max-width: 1075px;
+            margin: 0 auto;
+            padding: 30px;
             border-radius: 20px;
             box-shadow: 0 4px 18px rgba(0,0,0,0.08);
             margin-bottom: 60px;
@@ -97,7 +99,7 @@ while ($row = $result2->fetch_assoc()) {
 
         h1 {
             font-family: "Ibarra Real Nova", serif;
-            font-size: 32px;
+            font-size: 20px;
             font-weight: 700;
             letter-spacing: 0.5px;
             margin-bottom: 25px;
@@ -108,7 +110,7 @@ while ($row = $result2->fetch_assoc()) {
             padding: 10px 15px;
             border-radius: 8px;
             border: 1px solid #ccc;
-            font-size: 16px;
+            font-size: 14px;
             margin-bottom: 25px;
             font-family: "Ibarra Real Nova", serif;
         }
