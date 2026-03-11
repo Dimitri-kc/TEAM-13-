@@ -95,7 +95,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const formData = new FormData(this);
 
     //combine address fields into one string for BE
-    const address = [formData.get('address1'), formData.get('address2'), formData.get('city'), formData.get('state'), formData.get('postcode')].filter(Boolean).join(', '); 
+    const address = [formData.get('address1'), formData.get('address2'), formData.get('city'), formData.get('county_region'), formData.get('postcode') 
+    ].filter(value => value && String(value).trim() !== '').join(', '); //only include non-empty fields, separated by commas
+
     const data = { 
         action: 'checkout',
         address: address,
@@ -111,9 +113,9 @@ document.addEventListener('DOMContentLoaded', function() {
           body: JSON.stringify(data)
         });
         const result = await response.json();
-        if (result.success) {
+        if (result.success && result.data && result.data.order_ID) {
             //redirect to confirmation with order ID
-          window.location.href = `orderconfirmation.php`; // Redirect on success with order ID
+          window.location.href = `orderconfirmation.php?order_id=${encodeURIComponent(result.data.order_ID)}`; // Redirect on success with order ID
         } else {
           alert('Checkout failed: ' + result.message); // Show error message
           console.error('Stock issues: ', result.data?.stock_issues); // Log stock issues if any > DEBUG
