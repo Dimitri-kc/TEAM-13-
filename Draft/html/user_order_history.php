@@ -20,7 +20,12 @@ $stmt = $conn->prepare("
             JOIN products p ON oi.product_ID = p.product_ID
             WHERE oi.order_ID = o.order_ID
             LIMIT 1
-        ) AS product_image
+        ) AS product_image,
+        (
+            SELECT GROUP_CONCAT(CONCAT(oi.product_ID, ':', oi.quantity) SEPARATOR ',')
+            FROM order_items oi
+            WHERE oi.order_ID = o.order_ID
+        ) AS order_items_csv
     FROM orders o
     WHERE o.user_ID = ?
     ORDER BY o.order_date DESC
@@ -266,11 +271,12 @@ h1 {
                     <span class="order-date-label"><?= $date ?></span>
 
                     <div class="order-actions">
-                        <form action="basket.php" method="POST" style="display:inline;">
-                            <input type="hidden" name="reorder" value="1">
-                            <input type="hidden" name="order_id" value="<?= $order['order_ID'] ?>">
-                            <button type="submit" class="btn-action btn-add-bag">Add to bag</button>
-                        </form>
+                        <button
+                            type="button"
+                            class="btn-action btn-add-bag js-reorder"
+                            data-items="<?= htmlspecialchars($order['order_items_csv'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                            >Add to bag
+                        </button>
 
                         <a href="user_order_details.php?order_id=<?= $order['order_ID'] ?>" class="btn-action btn-view-order">View</a>
                     </div>
@@ -321,5 +327,35 @@ h1 {
   </div>
 </footer>
 
+<script src="../javascript/global/basketIcon.js"></script>
+<script>
+    //add to bag functionality
+    document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.js-reorder'); //
+    if (!btn) return;
+
+    const raw = btn.dataset.items || '';
+    console.log('reorder raw:', raw);
+    if (!raw) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Adding...';
+
+    const pairs = raw.split(',').map(s => s.trim()).filter(Boolean); // "productID:qty"
+
+    for (const pair of pairs) {
+        const [pidStr, qtyStr] = pair.split(':');
+        const productId = parseInt(pidStr, 10);
+        const qty = Math.max(1, parseInt(qtyStr, 10) || 1);
+
+        if (productId && typeof window.addToBasket === 'function') {
+            await window.addToBasket(productId, qty, btn);
+        }
+    }
+
+    btn.textContent = 'Added';
+    btn.disabled = false;
+});
+</script>
 </body>
 </html>

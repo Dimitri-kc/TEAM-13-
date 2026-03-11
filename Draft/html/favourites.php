@@ -193,12 +193,14 @@ try {
     <div style="font-size:12px; color:#666;">
         £<?= number_format($p["price"],2) ?>
     </div>
-
-    <form method="post" action="basket.php?action=add" style="margin-top:10px;">
-        <input type="hidden" name="product_id" value="<?= $pid ?>">
-        <input type="hidden" name="qty" value="1">
-        <button class="btn" type="submit">Add to bag</button>
-    </form>
+            
+    <button
+        class="btn js-add-to-bag"
+        type="button"
+        data-product-id="<?= $pid ?>"
+        style="margin-top:10px;"
+        >Add to bag
+    </button>
 
 </div>
 
@@ -252,5 +254,21 @@ try {
 
 <script src="../javascript/header_footer_script.js"></script>
 <script src="../javascript/global/basketIcon.js"></script>
+
+<script> 
+//add to bag functionality 
+document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.js-add-to-bag');
+    if (!btn) return;
+
+    const productId = parseInt(btn.dataset.productId, 10);
+    if (!productId || typeof window.addToBasket !== 'function') return;
+
+    btn.disabled = true;
+    const ok = await window.addToBasket(productId, 1, btn);
+    if (ok) btn.textContent = 'Added';
+    btn.disabled = false;
+});
+</script>
 </body>
 </html>
