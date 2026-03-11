@@ -29,23 +29,39 @@ function basketToastStyle() {
             z-index: 10000;
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
-            .basket-toast.show { animation: toastFadeIn 0.3s ease-out forwards;
-            .basket-toast.hide { animation: toastFadeOut 0.3s ease-in forwards;
+            .basket-toast.show { animation: toastFadeIn 0.3s ease-out forwards; }
+            .basket-toast.hide { animation: toastFadeOut 0.3s ease-in forwards; }
             @keyframes toastFadeIn {
-            to {opacity: 1; transform: translateY(0) scale(1);}}
+            to { opacity: 1; transform: translateY(0) scale(1); } }
             @keyframes toastFadeOut {
-            to {opacity: 0; transform: translateY(-10px) scale(0.8);}}
+            to { opacity: 0; transform: translateY(-10px) scale(0.8); } }
     `;
     document.head.appendChild(bToastStyle); //add styles to document head
 }
 
 function basketToastEl() {
     if (!basketIcon) return null; //ensure basket icon exists
-    if (basketToastEl) return basketToastEl; //return existing toast element if already created
+    let existing = basketIcon.querySelector('.basket-toast');  // check for existing element
+    if (existing) return existing; 
+    //if (basketToastEl) return basketToastEl; //return existing toast element if already created
     basketToastStyle(); //ensure styles are added before creating toast element
+    const toast = document.createElement('div');
+    toast.className = 'basket-toast';
+    basketIcon.appendChild(toast);
+    return toast;
 }
 
-function showBasketToast() {}
+function showBasketToast(message = 'Item added to basket') {
+    const toast = basketToastEl();
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.remove('hide');
+    toast.classList.add('show');
+    setTimeout(() => {
+        toast.classList.remove('show');
+        toast.classList.add('hide');
+    }, 2500);
+}
 
 //fetch curent basket and update counter icon
 async function updateBasketCounter() { //asynchronous as waiting for response from server
