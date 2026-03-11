@@ -465,8 +465,12 @@ if ($showWelcomeToast) {
         id="hero-media"
         role="img"
         aria-label="Hero background"
-        data-light-src="../images/homepage-images/light.jpg?v=20260305b"
+        data-light-src="../images/homepage-images/light.jpg"
         data-dark-src="../images/homepage-images/dark-home.jpg"
+        data-light-size="cover"
+        data-dark-size="cover"
+        data-light-position="center"
+        data-dark-position="center"
     ></div>
 </section>
 
@@ -850,6 +854,17 @@ if ($showWelcomeToast) {
                 ? heroMedia.dataset.darkSrc
                 : heroMedia.dataset.lightSrc;
 
+            const heroSize = useDarkSet
+                ? (heroMedia.dataset.darkSize || 'cover')
+                : (heroMedia.dataset.lightSize || 'cover');
+
+            const heroPosition = useDarkSet
+                ? (heroMedia.dataset.darkPosition || 'center')
+                : (heroMedia.dataset.lightPosition || 'center');
+
+            heroMedia.style.backgroundSize = heroSize;
+            heroMedia.style.backgroundPosition = heroPosition;
+
             fadeSwapHero(heroSrc);
 
             categoryImages.forEach((imageElement) => {
@@ -862,6 +877,8 @@ if ($showWelcomeToast) {
         };
 
         heroMedia.style.backgroundImage = `url("${heroMedia.dataset.lightSrc}")`;
+        heroMedia.style.backgroundSize = heroMedia.dataset.lightSize || 'cover';
+        heroMedia.style.backgroundPosition = heroMedia.dataset.lightPosition || 'center';
 
         setInterval(() => {
             showDark = !showDark;
