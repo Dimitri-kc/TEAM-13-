@@ -547,7 +547,7 @@ function scrollReviews(direction) {
     box-shadow: 0 8px 32px rgba(0,0,0,0.15);
     min-width: 280px;
 }
-.basket-modal-content p { font-size: 16px; font-weight: 600; margin-bottom: 20px; color: #111; }
+.basket-modal-content p { font-size: 16px; font-weight: 600; margin-bottom: 10px; color: #111; }
 .basket-modal-buttons { display: flex; gap: 10px; justify-content: center; }
 .basket-modal-buttons button {
     padding: 10px 18px; border: none; border-radius: 6px;
