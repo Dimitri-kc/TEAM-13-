@@ -192,6 +192,47 @@ body {
     z-index: 1;
 }
 
+.homepage-quote {
+    width: 100%;
+    max-width: 100%;
+    min-height: 170px;
+    margin: 0 auto 58px;
+    padding: 0 24px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center !important;
+    gap: 12px;
+}
+
+.homepage-quote-text {
+    margin: 0;
+    font-family: 'Ibarra Real Nova', serif;
+    width: 100%;
+    font-size: clamp(28px, 4.1vw, 54px);
+    font-style: italic !important;
+    font-weight: 600;
+    color: #6f6f6f;
+    text-align: center !important;
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+    max-width: 1200px;
+}
+
+.homepage-quote-caption {
+    margin: 0;
+    font-family: 'Ibarra Real Nova', serif;
+    font-size: clamp(14px, 1.6vw, 22px);
+    font-style: normal;
+    font-weight: 400;
+    color: #9f9f9f;
+    text-align: center;
+    line-height: 1.5;
+    max-width: 760px;
+}
+
 /* FAVOURITES */
 .grey-section {
     background-color: #E5E1DB;

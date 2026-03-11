@@ -24,7 +24,7 @@ if ($showWelcomeToast) {
     <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
-    <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=20">
+    <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=21">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
     <style>
@@ -532,6 +532,11 @@ if ($showWelcomeToast) {
         </div>
     </a>
 </div>
+
+<section class="homepage-quote" aria-label="Brand quote">
+    <p class="homepage-quote-text">"Modern Living Made Simple"</p>
+    <p class="homepage-quote-caption">From timeless designs to everyday essentials, we make modern living effortless.</p>
+</section>
 
 <section class="grey-section">
     <div class="grey-inner">
