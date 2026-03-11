@@ -205,6 +205,11 @@ if ($showWelcomeToast) {
             font-size: 13px;
             color: #2B2B2B;
             margin-bottom: 15px;
+             word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+     min-height: 70px;
+
         }
 
         .reviewer {
@@ -604,7 +609,8 @@ if ($showWelcomeToast) {
             <input type="text" id="reviewTitle" required>
 
             <label>Review:</label>
-            <textarea id="reviewText" required></textarea>
+<textarea id="reviewText" maxlength="200" required></textarea>
+<small id="charCounter">0 / 200 characters</small>
 
             <label>Your Name:</label>
             <input type="text" id="reviewName" required>
@@ -727,6 +733,8 @@ if ($showWelcomeToast) {
         const stars = document.getElementById("reviewStars").value;
         const title = document.getElementById("reviewTitle").value;
         const text = document.getElementById("reviewText").value;
+
+
         const name = document.getElementById("reviewName").value;
 
         fetch("../html/submit_general_review.php", {
@@ -868,6 +876,23 @@ if ($showWelcomeToast) {
             applyImageSet(showDark);
         }, ROTATION_MS);
     })();
+const reviewText = document.getElementById("reviewText");
+const charCounter = document.getElementById("charCounter");
+const MAX_CHARS = 200;
+
+reviewText.addEventListener("input", function () {
+    const count = reviewText.value.length;
+
+    charCounter.textContent = `${count} / ${MAX_CHARS} characters`;
+
+    if (count >= MAX_CHARS) {
+        charCounter.style.color = "red";
+    } else if (count >= 160) {
+        charCounter.style.color = "orange";
+    } else {
+        charCounter.style.color = "";
+    }
+});
 </script>
 
 </body>
