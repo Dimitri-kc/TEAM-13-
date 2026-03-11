@@ -15,7 +15,7 @@ function basketToastStyle() {
         .basket-toast {
             position:absolute;
             top: calc(100% + 8px);
-            right 0;
+            right: 0;
             background: #333; 
             color: #fff;
             font-size: 12px;
