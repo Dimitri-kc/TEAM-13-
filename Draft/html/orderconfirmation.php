@@ -24,6 +24,8 @@ $orderDate = date("F j, Y");
 $orderStatus = "pending";
 $address = "No address available";
 $total = 0.0;
+$taxRate = 0.10;
+$tax = 0.0;
 
 try {
     include '../backend/config/db_connect.php';
@@ -86,8 +88,8 @@ try {
 
             $items_stmt->close();
             
-            
-            $total = $subtotal;
+            $tax = $subtotal * $taxRate;
+            $total = $subtotal + $tax;
         }
     }
 
@@ -179,12 +181,24 @@ body { margin:0; background:var(--bg); color:var(--text); font-family:system-ui,
                     </div>
                     <?php endforeach; ?>
 
-                    <div class="totals">
-                        <div class="grand">
-                            <span>Total</span>
-                            <span><?= e(money($total, $currency)) ?></span>
-                        </div>
-                    </div>
+                   <div class="totals">
+
+    <div class="kvRow">
+        <span>Subtotal</span>
+        <span><?= e(money($subtotal, $currency)) ?></span>
+    </div>
+
+    <div class="kvRow">
+        <span>Tax (10%)</span>
+        <span><?= e(money($tax, $currency)) ?></span>
+    </div>
+
+    <div class="grand">
+        <span>Total</span>
+        <span><?= e(money($total, $currency)) ?></span>
+    </div>
+
+</div>
 
                     <div class="actions">
                         <a href="homepage.php" class="btn btnGhost">Continue shopping</a>
