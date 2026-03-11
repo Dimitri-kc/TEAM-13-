@@ -435,18 +435,35 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
     }
   });
 
-  saveOrderChanges.addEventListener('click', function () {
+  saveOrderChanges.addEventListener('click', async function () {
     if (!currentOrderCard) return;
 
     const newStatus = editOrderStatus.value;
+    const orderId = currentOrderCard.dataset.orderId;
 
-    currentOrderCard.dataset.status = newStatus;
+    try {
+      await fetch('/backend/update_order_status.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          orderId: orderId,
+          status: newStatus
+        })
+      });
 
-    const statusText = currentOrderCard.querySelector('.order-status');
-    statusText.textContent = 'Order Status: ' + newStatus;
+      currentOrderCard.dataset.status = newStatus;
 
-    editPanelOverlay.style.display = 'none';
-    currentOrderCard = null;
+      const statusText = currentOrderCard.querySelector('.order-status');
+      statusText.textContent = 'Order Status: ' + newStatus;
+
+      editPanelOverlay.style.display = 'none';
+      currentOrderCard = null;
+
+    } catch (error) {
+      console.error("Failed to update order", error);
+    }
   });
 
   document.querySelectorAll('.btn-cancel').forEach((button) => {
