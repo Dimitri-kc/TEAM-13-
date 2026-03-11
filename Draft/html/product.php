@@ -58,6 +58,66 @@ if (isset($_SESSION['user_ID'])) {
             width: 100%;
             margin-top: auto;
         }
+
+        /* ── Stock Indicator ── */
+        .stock-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: 0.3px;
+        }
+        .stock-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* In Stock — green */
+        .stock-in {
+            background-color: #e6f4ea;
+            color: #2e7d32;
+        }
+        .stock-in .stock-dot {
+            background-color: #2e7d32;
+            box-shadow: 0 0 0 3px rgba(46,125,50,0.2);
+        }
+
+        /* Low Stock — amber */
+        .stock-low {
+            background-color: #fff8e1;
+            color: #e65100;
+        }
+        .stock-low .stock-dot {
+            background-color: #e65100;
+            box-shadow: 0 0 0 3px rgba(230,81,0,0.2);
+        }
+
+        /* Out of Stock — red */
+        .stock-out {
+            background-color: #fdecea;
+            color: #c62828;
+        }
+        .stock-out .stock-dot {
+            background-color: #c62828;
+            box-shadow: 0 0 0 3px rgba(198,40,40,0.2);
+        }
+
+        /* Disabled basket button */
+        .add-to-basket:disabled {
+            background-color: #ccc;
+            color: #888;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .add-to-basket:disabled:hover {
+            background-color: #ccc;
+        }
     </style>
 </head>
 <body>
@@ -80,6 +140,24 @@ if (isset($_SESSION['user_ID'])) {
             <div class="price">£<?php echo htmlspecialchars($product['price']); ?></div>
             <p class="tagline">Bold, Modern, Elegant</p>
 
+            <?php
+                $stock = (int)$product['stock'];
+                if ($stock <= 0) {
+                    $stockLabel = 'Out of Stock';
+                    $stockClass = 'stock-out';
+                } elseif ($stock <= 5) {
+                    $stockLabel = 'Low Stock (' . $stock . ' left)';
+                    $stockClass = 'stock-low';
+                } else {
+                    $stockLabel = 'In Stock';
+                    $stockClass = 'stock-in';
+                }
+            ?>
+            <div class="stock-indicator <?php echo $stockClass; ?>">
+                <span class="stock-dot"></span>
+                <span class="stock-text"><?php echo $stockLabel; ?></span>
+            </div>
+
             <div class="selectors">
                 <div class="select-group">
                     <label>Size</label>
@@ -96,8 +174,10 @@ if (isset($_SESSION['user_ID'])) {
             </div>
 
 <div class="action-buttons">
-    <button class="add-to-basket basket-btn" data-id="<?= $product['product_ID'] ?>">
-        Add to Basket
+    <button class="add-to-basket basket-btn"
+            data-id="<?= $product['product_ID'] ?>"
+            <?= $stock <= 0 ? 'disabled' : '' ?>>
+        <?= $stock <= 0 ? 'Out of Stock' : 'Add to Basket' ?>
     </button>
 
     <form method="post" action="favourite_toggle.php" 
@@ -231,8 +311,6 @@ document.getElementById("basket-modal").addEventListener("click", (e) => {
         document.getElementById("basket-modal").classList.remove("active");
     }
 });
-
-    
 
 document.getElementById("go-to-favourites").addEventListener("click", () => {
     window.location.href = "favourites.php";
