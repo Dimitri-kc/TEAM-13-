@@ -212,6 +212,8 @@ $addrPost = $addressParts[3] ?? '';
 </head>
 <body>
 
+<?php include 'header.php'; ?>
+
 <div class="page-header">
     <a href="user_dash.php" class="back-dashboard">← Back to Dashboard</a>
     <h1>Account Settings</h1>
@@ -585,5 +587,7 @@ $addrPost = $addressParts[3] ?? '';
         }
     }
 </script>
+
+<?php include 'footer.php'; ?>
 </body>
 </html>

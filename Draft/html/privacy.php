@@ -22,7 +22,7 @@
         }
         main.container {
             max-width: 900px;
-            margin: 80px auto 40px;
+            margin: 40px auto 40px;
             padding: 30px;
             background: #fff;
             border-radius: 8px;
@@ -88,7 +88,7 @@
 </head>
 <body>
 
-
+<?php include 'header.php'; ?>
     <main class="container">
     <a href="user_dash.php" class="back-dashboard">← Back to Dashboard</a>
     <h1>Privacy Policy</h1>
@@ -144,5 +144,6 @@
     });
 </script>
 
+<?php include 'footer.php'; ?>
 </body>
 </html>
