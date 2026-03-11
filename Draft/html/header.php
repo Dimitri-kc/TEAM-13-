@@ -10,6 +10,11 @@ $isLoggedIn = !empty($_SESSION['user_ID']);
 $isAdmin = (($_SESSION['role'] ?? '') === 'admin');
 $userName   = $_SESSION['name'] ?? '';
 $headerName = ($userName !== '') ? $userName : 'Guest';
+$lastSearchQuery = trim((string)($_SESSION['last_search_query'] ?? ''));
+$searchHref = 'search.php';
+if ($lastSearchQuery !== '') {
+    $searchHref .= '?q=' . urlencode($lastSearchQuery);
+}
 $pageTitle = $pageTitle ?? 'LOFT &amp; LIVING BIRMINGHAM';
 $extraHeadContent = $extraHeadContent ?? '';
 ?>
@@ -40,7 +45,7 @@ $extraHeadContent = $extraHeadContent ?? '';
             </button>
             <img src="../images/header_footer_images/icon-moon.png" alt="Dark Mode" class="ui-icon" id="moon-icon" data-light-src="../images/header_footer_images/icon-moon.png" data-dark-src="../images/header_footer_images/icon-moon2.png" style="margin-left: 8px; margin-right: 8px; vertical-align: middle; cursor: pointer;">
             <!-- Replace search pill with search icon -->
-            <a class="mini-search" href="search.php" aria-label="Search">
+            <a class="mini-search" href="<?php echo htmlspecialchars($searchHref); ?>" aria-label="Search">
                 <img src="../images/header_footer_images/icon-search.png" alt="Search" class="ui-icon" id="search-icon" style="vertical-align: middle;">
             </a>
         </div>
