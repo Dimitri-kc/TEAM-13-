@@ -97,14 +97,9 @@ try {
     $hasOrder = false;
 }
 ?>
-
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Order Confirmation</title>
-
+<?php
+$pageTitle = 'Order Confirmation | LOFT &amp; LIVING';
+$extraHeadContent = <<<'HTML'
 <style>
 :root {
     --bg:#ffffff; --text:#0b0b0b; --muted:#555; --line:#e9e9e9;
@@ -190,9 +185,10 @@ body { margin:0; background:var(--bg); color:var(--text); font-family:system-ui,
     color:#222;
 }
 </style>
-</head>
+HTML;
 
-<body>
+include 'header.php';
+?>
 <div class="wrap">
 
 <?php if (!$hasOrder): ?>
@@ -320,5 +316,4 @@ body { margin:0; background:var(--bg); color:var(--text); font-family:system-ui,
 <?php endif; ?>
 
 </div>
-</body>
-</html>
+<?php include 'footer.php'; ?>

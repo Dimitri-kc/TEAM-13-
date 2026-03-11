@@ -78,11 +78,11 @@ $extraHeadContent = $extraHeadContent ?? '';
                         <a class="profile-link" href="signup.php">Sign Up</a>
                     <?php endif; ?>
 
-                    <a class="profile-link" href="user_dash.php">My account</a>
+                    <a class="profile-link" href="user_dash.php">My Account</a>
 
                     <?php if ($isLoggedIn): ?>
                         <a class="profile-link" href="user_order_history.php">My Orders</a>
-                        <a class="profile-link" href="signout.php">Sign out</a>
+                        <a class="profile-link" href="signout.php">Sign Out</a>
                         
                     <?php endif; ?>
                 </div>
@@ -102,7 +102,6 @@ $extraHeadContent = $extraHeadContent ?? '';
             <li><a href="bedroom.php">Bedroom</a></li>
             <li><a href="office.php">Office</a></li>
             <li><a href="kitchen.php">Kitchen</a></li>
-            <li class="nav-divider"><a href="signin.php">My Account</a></li>
         </ul>
     </nav>
 </header>

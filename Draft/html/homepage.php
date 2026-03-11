@@ -425,11 +425,11 @@ if ($showWelcomeToast) {
                         <a class="profile-link" href="signup.php">Sign Up</a>
                     <?php endif; ?>
 
-                    <a class="profile-link" href="user_dash.php">My account</a>
+                    <a class="profile-link" href="user_dash.php">My Account</a>
 
                     <?php if ($isLoggedIn): ?>
                         <a class="profile-link" href="user_order_history.php">My Orders</a>
-                        <a class="profile-link" href="signout.php">Sign out</a>
+                        <a class="profile-link" href="signout.php">Sign Out</a>
                         
                     <?php endif; ?>
                 </div>
@@ -449,14 +449,20 @@ if ($showWelcomeToast) {
             <li><a href="bedroom.php">Bedroom</a></li>
             <li><a href="office.php">Office</a></li>
             <li><a href="kitchen.php">Kitchen</a></li>
-            <li class="nav-divider"><a href="signin.php">My Account</a></li>
         </ul>
     </nav>
 </header>
 
 <!-- HERO -->
 <section class="homepage-hero" aria-label="Homepage hero">
-    <div class="hero-media" role="img" aria-label="Hero background"></div>
+    <div
+        class="hero-media"
+        id="hero-media"
+        role="img"
+        aria-label="Hero background"
+        data-light-src="../images/homepage-images/light.jpg?v=20260305b"
+        data-dark-src="../images/homepage-images/dark-home.jpg"
+    ></div>
 </section>
 
 <!-- CATEGORIES -->
@@ -464,35 +470,60 @@ if ($showWelcomeToast) {
     <a class="category living" href="livingroom.php">
         <div class="title-box">LIVING ROOM</div>
         <div class="image-box">
-            <img src="../images/homepage-images/livingroom.png?v=3" alt="Living Room">
+            <img
+                src="../images/homepage-images/livingroom.png?v=3"
+                alt="Living Room"
+                data-light-src="../images/homepage-images/livingroom.png?v=3"
+                data-dark-src="../images/homepage-images/dark-living.png"
+            >
         </div>
     </a>
 
     <a class="category kitchen" href="kitchen.php">
         <div class="title-box">KITCHEN</div>
         <div class="image-box">
-            <img src="../images/homepage-images/kitchen.png?v=3" alt="Kitchen">
+            <img
+                src="../images/homepage-images/kitchen.png?v=3"
+                alt="Kitchen"
+                data-light-src="../images/homepage-images/kitchen.png?v=3"
+                data-dark-src="../images/homepage-images/dark-kitchen.png"
+            >
         </div>
     </a>
 
     <a class="category office" href="office.php">
         <div class="title-box">OFFICE</div>
         <div class="image-box">
-            <img src="../images/homepage-images/officefinal.png?v=3" alt="Office">
+            <img
+                src="../images/homepage-images/officefinal.png?v=3"
+                alt="Office"
+                data-light-src="../images/homepage-images/officefinal.png?v=3"
+                data-dark-src="../images/homepage-images/dark-office.png"
+            >
         </div>
     </a>
 
     <a class="category bathroom" href="bathroom.php">
         <div class="title-box">BATHROOM</div>
         <div class="image-box">
-            <img src="../images/homepage-images/bathroom.png?v=3" alt="Bathroom">
+            <img
+                src="../images/homepage-images/bathroom.png?v=3"
+                alt="Bathroom"
+                data-light-src="../images/homepage-images/bathroom.png?v=3"
+                data-dark-src="../images/homepage-images/dark-bathroom.png"
+            >
         </div>
     </a>
 
     <a class="category bedroom" href="bedroom.php">
         <div class="title-box">BEDROOM</div>
         <div class="image-box">
-            <img src="../images/homepage-images/bedroom.png?v=3" alt="Bedroom">
+            <img
+                src="../images/homepage-images/bedroom.png?v=3"
+                alt="Bedroom"
+                data-light-src="../images/homepage-images/bedroom.png?v=3"
+                data-dark-src="../images/homepage-images/dark-bedroom.png"
+            >
         </div>
     </a>
 </div>
@@ -768,6 +799,64 @@ if ($showWelcomeToast) {
         const scrollAmount = 280;
         container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
     }
+
+    // Homepage hero/category image rotation (every 7s, with slower fade)
+    (function startHomepageImageRotation() {
+        const heroMedia = document.getElementById('hero-media');
+        const categoryImages = document.querySelectorAll('.category-row .image-box img[data-light-src][data-dark-src]');
+
+        if (!heroMedia || !categoryImages.length) {
+            return;
+        }
+
+        const ROTATION_MS = 7000;
+        const FADE_MS = 900;
+        let showDark = false;
+
+        heroMedia.style.transition = `opacity ${FADE_MS}ms ease-in-out`;
+        categoryImages.forEach((imageElement) => {
+            imageElement.style.transition = `opacity ${FADE_MS}ms ease-in-out`;
+        });
+
+        const fadeSwapHero = (nextSrc) => {
+            heroMedia.style.opacity = '0';
+            window.setTimeout(() => {
+                heroMedia.style.backgroundImage = `url("${nextSrc}")`;
+                heroMedia.style.opacity = '1';
+            }, FADE_MS);
+        };
+
+        const fadeSwapImage = (imageElement, nextSrc) => {
+            imageElement.style.opacity = '0';
+            window.setTimeout(() => {
+                imageElement.src = nextSrc;
+                imageElement.style.opacity = '1';
+            }, FADE_MS);
+        };
+
+        const applyImageSet = (useDarkSet) => {
+            const heroSrc = useDarkSet
+                ? heroMedia.dataset.darkSrc
+                : heroMedia.dataset.lightSrc;
+
+            fadeSwapHero(heroSrc);
+
+            categoryImages.forEach((imageElement) => {
+                const nextSrc = useDarkSet
+                    ? imageElement.dataset.darkSrc
+                    : imageElement.dataset.lightSrc;
+
+                fadeSwapImage(imageElement, nextSrc);
+            });
+        };
+
+        heroMedia.style.backgroundImage = `url("${heroMedia.dataset.lightSrc}")`;
+
+        setInterval(() => {
+            showDark = !showDark;
+            applyImageSet(showDark);
+        }, ROTATION_MS);
+    })();
 </script>
 
 </body>
