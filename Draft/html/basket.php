@@ -224,7 +224,7 @@ include 'header.php';
 
                             <div class="item-details">
                                 <h3 class="item-name"><?= e($p["name"]) ?></h3>
-                                <p class="price"><?= money($p["price"]) ?></p>
+                                <p class="price"><?= money($p["line"]) ?></p>
 
                                 <div class="quant-controls">
                                     <input
@@ -235,7 +235,7 @@ include 'header.php';
                                         name="qty[<?= (int)$p["id"] ?>]"
                                         value="<?= (int)$p["qty"] ?>"
                                     />
-                                    <span style="color:#555; margin-left:10px;">Line: <?= money($p["line"]) ?></span>
+                                    <span style="color:#555; margin-left:10px;">Unit: <?= money($p["price"]) ?></span>
                                 </div>
 
                                 <div style="margin-top:10px;">

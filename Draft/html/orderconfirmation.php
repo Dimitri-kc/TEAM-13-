@@ -108,7 +108,7 @@ $extraHeadContent = <<<'HTML'
 }
 body { margin:0; background:var(--bg); color:var(--text); font-family:system-ui,sans-serif; line-height:1.45; }
 .wrap { width:min(980px,92vw); margin:28px auto 50px; }
-.hero { padding:18px 0 22px; border-bottom:1px solid var(--line); margin-bottom:22px; }
+.hero { padding:18px 0 28px; border-bottom:1px solid var(--line); margin-bottom:22px; }
 .hero h1 { margin:0; font-size:clamp(24px,3vw,36px); letter-spacing:-.02em; }
 .grid { display:grid; grid-template-columns:1.1fr .9fr; gap:16px; }
 @media (max-width:860px) { .grid { grid-template-columns:1fr; } }
@@ -128,6 +128,62 @@ body { margin:0; background:var(--bg); color:var(--text); font-family:system-ui,
 .btn { display:inline-flex; padding:11px 14px; border-radius:12px; background:var(--btn); color:var(--btnText); text-decoration:none; font-weight:800; border:1px solid #000; }
 .btnGhost { background:transparent; color:#000; }
 .note { border:1px solid var(--line); border-radius:var(--radius); padding:14px; color:var(--muted); text-align:center; }
+.track {
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:0;
+    margin-top:18px;
+}
+
+.trackStep {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:120px;
+    position:relative;
+}
+
+.trackIcon {
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    border:2px solid #d9d9d9;
+    background:#fff;
+    color:#999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+    font-weight:700;
+    z-index:2;
+}
+
+.trackStep.active .trackIcon {
+    background:#8bc34a;
+    border-color:#8bc34a;
+    color:#fff;
+}
+
+.trackLine {
+    width:70px;
+    height:2px;
+    background:#d9d9d9;
+    margin-top:16px;
+}
+
+.trackLabel {
+    margin-top:8px;
+    text-align:center;
+    font-size:14px;
+    color:#999;
+    font-weight:600;
+    line-height:1.25;
+}
+
+.trackStep.active .trackLabel {
+    color:#222;
+}
 </style>
 HTML;
 
@@ -143,9 +199,30 @@ include 'header.php';
 
 <?php else: ?>
 
-    <div class="hero">
-        <h1>Thank you for your order!</h1>
+   <div class="hero">
+    <h1>Thank you for your order!</h1>
+
+    <div class="track">
+        <div class="trackStep active">
+            <div class="trackIcon">✓</div>
+            <div class="trackLabel">Order<br>Confirmed</div>
+        </div>
+
+        <div class="trackLine"></div>
+
+        <div class="trackStep">
+            <div class="trackIcon">🚚</div>
+            <div class="trackLabel">Shipped</div>
+        </div>
+
+        <div class="trackLine"></div>
+
+        <div class="trackStep">
+            <div class="trackIcon">📦</div>
+            <div class="trackLabel">Delivered</div>
+        </div>
     </div>
+</div>
 
     <div class="grid">
 
