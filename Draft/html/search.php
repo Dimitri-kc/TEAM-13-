@@ -320,6 +320,9 @@ if (isset($_GET['ajax']) && $_GET['ajax'] === '1') {
     exit;
 }
 
+header('Location: homepage.php');
+exit;
+
 $pageTitle = 'Search | LOFT &amp; LIVING';
 $extraHeadContent = <<<'HTML'
 <link rel="stylesheet" href="../css/favourites-toggle.css">

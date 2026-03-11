@@ -45,6 +45,7 @@
 
 <script src="../javascript/header_footer_script.js"></script>
 <script src="../javascript/global/basketIcon.js"></script>
+<script src="../javascript/global/search-modal.js"></script>
 
 </body>
 </html>

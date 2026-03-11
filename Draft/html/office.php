@@ -224,7 +224,7 @@ if (!empty($_SESSION['user_ID'])) {
                     <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
                 </button>
                 <img src="../images/header_footer_images/icon-moon.png" alt="Dark Mode" class="ui-icon" id="moon-icon" data-light-src="../images/header_footer_images/icon-moon.png" data-dark-src="../images/header_footer_images/icon-moon2.png" style="margin-left: 8px; margin-right: 8px; vertical-align: middle; cursor: pointer;">
-                <a class="mini-search" href="search.php" aria-label="Search">
+                <a class="mini-search" href="search.php" aria-label="Search" data-search-trigger="modal">
                     <img src="../images/header_footer_images/icon-search.png" alt="Search" class="ui-icon" id="search-icon" style="vertical-align: middle;">
                 </a>
             </div>
@@ -467,6 +467,7 @@ if (!empty($_SESSION['user_ID'])) {
     <script src="../javascript/header_footer_script.js"></script>
     <script src="../javascript/global/basketIcon.js"></script>
     <script src="../javascript/favourites-toggle.js"></script>
+    <script src="../javascript/global/search-modal.js"></script>
 
 </body>
 </html>
