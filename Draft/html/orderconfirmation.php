@@ -21,11 +21,12 @@ $subtotal = 0.0;
 $currency = "£";
 $orderNumber = "";
 $orderDate = date("F j, Y");
-$orderStatus = "pending";
+$orderStatus = "Pending";
 $address = "No address available";
 $total = 0.0;
 $taxRate = 0.10;
 $tax = 0.0;
+$statusKey = "pending";
 
 try {
     include '../backend/config/db_connect.php';
@@ -54,9 +55,27 @@ try {
             $hasOrder    = true;
             $orderNumber = (string)$order['order_ID'];
             $orderDate   = date("F j, Y", strtotime($order['order_date'] ?? $order['created_at'] ?? 'now'));
-            $orderStatus = "Preparing your order";
             $address     = $order['address'] ?? 'No address saved';
             $total       = (float)($order['total_price'] ?? 0.0);
+
+            $rawStatus = strtolower(trim((string)($order['status'] ?? $order['order_status'] ?? 'pending')));
+
+            if ($rawStatus === 'preparing your order') {
+                $rawStatus = 'processing';
+            }
+
+            $allowedStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+            $statusKey = in_array($rawStatus, $allowedStatuses, true) ? $rawStatus : 'pending';
+
+            $statusLabels = [
+                'pending'    => 'Pending',
+                'processing' => 'Processing',
+                'shipped'    => 'Shipped',
+                'delivered'  => 'Delivered',
+                'cancelled'  => 'Cancelled',
+            ];
+
+            $orderStatus = $statusLabels[$statusKey];
 
             $items_stmt = $conn->prepare("
                 SELECT oi.quantity, oi.unit_price,
@@ -203,21 +222,21 @@ include 'header.php';
     <h1>Thank you for your order!</h1>
 
     <div class="track">
-        <div class="trackStep active">
+        <div class="trackStep <?= in_array($statusKey, ['pending', 'processing', 'shipped', 'delivered'], true) ? 'active' : '' ?>">
             <div class="trackIcon">✓</div>
             <div class="trackLabel">Order<br>Confirmed</div>
         </div>
 
         <div class="trackLine"></div>
 
-        <div class="trackStep">
+        <div class="trackStep <?= in_array($statusKey, ['shipped', 'delivered'], true) ? 'active' : '' ?>">
             <div class="trackIcon">🚚</div>
             <div class="trackLabel">Shipped</div>
         </div>
 
         <div class="trackLine"></div>
 
-        <div class="trackStep">
+        <div class="trackStep <?= $statusKey === 'delivered' ? 'active' : '' ?>">
             <div class="trackIcon">📦</div>
             <div class="trackLabel">Delivered</div>
         </div>
@@ -298,7 +317,7 @@ include 'header.php';
 
                 <div class="kvRow">
                     <strong>Status</strong>
-                    <span><?= e(ucfirst($orderStatus)) ?></span>
+                    <span><?= e($orderStatus) ?></span>
                 </div>
 
                 <div style="margin-top:14px;">

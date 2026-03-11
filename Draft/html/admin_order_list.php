@@ -1,6 +1,7 @@
 <?php
 require_once '../backend/services/userFunctions.php';
-require_admin_page('/TEAM-13-/Draft/html/signin.php'); ?>
+require_admin_page('/TEAM-13-/Draft/html/signin.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -126,7 +127,77 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php'); ?>
     background-color: #1a1a1a;
   }
 
-  /* Responsive: single column on small screens */
+  .edit-panel-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .edit-panel {
+    background: #fff;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  }
+
+  .edit-panel h2 {
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 24px;
+  }
+
+  .edit-field {
+    margin-bottom: 16px;
+  }
+
+  .edit-field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
+  .edit-field input,
+  .edit-field select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d8d8d8;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  .edit-panel-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .btn-save {
+    background: #2C2C2C;
+    color: #fff;
+  }
+
+  .btn-save:hover {
+    background: #1a1a1a;
+  }
+
+  .btn-close {
+    background: #ddd;
+    color: #333;
+  }
+
+  .btn-close:hover {
+    background: #ccc;
+  }
+
   @media (max-width: 600px) {
     .orders-grid {
       grid-template-columns: 1fr;
@@ -136,7 +207,6 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php'); ?>
 </head>
 <body data-category="livingroom">
 
-<!-- Header -->
 <header class="site-header">
   <div class="header-inner">
     <button class="menu-btn" id="menu-toggle-btn">
@@ -176,12 +246,16 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php'); ?>
 </header>
 
 <div class="admin-container">
-  <h1>Order and Shipments</h1>
+  <h1>Orders and Shipments</h1>
   <p class="subheader">View recent customer orders and make edits or cancel</p>
 
   <div class="orders-grid">
 
-    <div class="order-card">
+    <div class="order-card"
+         data-order-id="UK12345"
+         data-customer-name="FirstName LastName"
+         data-status="Pending"
+         data-image="https://via.placeholder.com/80">
       <img src="https://via.placeholder.com/80" alt="Product Image" />
       <div class="order-details">
         <p class="order-status">Order Status: Pending</p>
@@ -189,54 +263,97 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php'); ?>
         <p class="customer-name">Customer: FirstName LastName</p>
       </div>
       <div class="order-actions">
-        <button class="btn-view-edit">View & Edit</button>
-        <button class="btn-cancel">Cancel</button>
+        <button class="btn-view-edit" type="button">View & Edit</button>
+        <button class="btn-cancel" type="button">Cancel</button>
       </div>
     </div>
 
-    <div class="order-card">
+    <div class="order-card"
+         data-order-id="UK12346"
+         data-customer-name="FirstName LastName"
+         data-status="Shipped"
+         data-image="https://via.placeholder.com/80">
       <img src="https://via.placeholder.com/80" alt="Product Image" />
       <div class="order-details">
         <p class="order-status">Order Status: Shipped</p>
-        <p class="order-number">Order #UK12345</p>
+        <p class="order-number">Order #UK12346</p>
         <p class="customer-name">Customer: FirstName LastName</p>
       </div>
       <div class="order-actions">
-        <button class="btn-view-edit">View & Edit</button>
-        <button class="btn-cancel">Cancel</button>
+        <button class="btn-view-edit" type="button">View & Edit</button>
+        <button class="btn-cancel" type="button">Cancel</button>
       </div>
     </div>
 
-    <div class="order-card">
+    <div class="order-card"
+         data-order-id="UK12347"
+         data-customer-name="FirstName LastName"
+         data-status="Pending"
+         data-image="https://via.placeholder.com/80">
       <img src="https://via.placeholder.com/80" alt="Product Image" />
       <div class="order-details">
         <p class="order-status">Order Status: Pending</p>
-        <p class="order-number">Order #UK12345</p>
+        <p class="order-number">Order #UK12347</p>
         <p class="customer-name">Customer: FirstName LastName</p>
       </div>
       <div class="order-actions">
-        <button class="btn-view-edit">View & Edit</button>
-        <button class="btn-cancel">Cancel</button>
+        <button class="btn-view-edit" type="button">View & Edit</button>
+        <button class="btn-cancel" type="button">Cancel</button>
       </div>
     </div>
 
-    <div class="order-card">
+    <div class="order-card"
+         data-order-id="UK12348"
+         data-customer-name="FirstName LastName"
+         data-status="Pending"
+         data-image="https://via.placeholder.com/80">
       <img src="https://via.placeholder.com/80" alt="Product Image" />
       <div class="order-details">
         <p class="order-status">Order Status: Pending</p>
-        <p class="order-number">Order #UK12345</p>
+        <p class="order-number">Order #UK12348</p>
         <p class="customer-name">Customer: FirstName LastName</p>
       </div>
       <div class="order-actions">
-        <button class="btn-view-edit">View & Edit</button>
-        <button class="btn-cancel">Cancel</button>
+        <button class="btn-view-edit" type="button">View & Edit</button>
+        <button class="btn-cancel" type="button">Cancel</button>
       </div>
     </div>
 
   </div>
 </div>
 
-<!-- Footer -->
+<div class="edit-panel-overlay" id="editPanelOverlay">
+  <div class="edit-panel">
+    <h2>View & Edit Order</h2>
+
+    <div class="edit-field">
+      <label for="editOrderId">Order Number</label>
+      <input type="text" id="editOrderId" readonly>
+    </div>
+
+    <div class="edit-field">
+      <label for="editCustomerName">Customer Name</label>
+      <input type="text" id="editCustomerName" readonly>
+    </div>
+
+    <div class="edit-field">
+      <label for="editOrderStatus">Order Status</label>
+      <select id="editOrderStatus">
+        <option value="Pending">Pending</option>
+        <option value="Processing">Processing</option>
+        <option value="Shipped">Shipped</option>
+        <option value="Delivered">Delivered</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+    </div>
+
+    <div class="edit-panel-actions">
+      <button class="btn-save" type="button" id="saveOrderChanges">Save Changes</button>
+      <button class="btn-close" type="button" id="closeEditPanel">Close</button>
+    </div>
+  </div>
+</div>
+
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-section social-links">
@@ -278,5 +395,87 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php'); ?>
     </div>
   </div>
 </footer>
+
+<script>
+  const editPanelOverlay = document.getElementById('editPanelOverlay');
+  const editOrderId = document.getElementById('editOrderId');
+  const editCustomerName = document.getElementById('editCustomerName');
+  const editOrderStatus = document.getElementById('editOrderStatus');
+  const closeEditPanel = document.getElementById('closeEditPanel');
+  const saveOrderChanges = document.getElementById('saveOrderChanges');
+
+  let currentOrderCard = null;
+
+  document.querySelectorAll('.btn-view-edit').forEach((button) => {
+    button.addEventListener('click', function () {
+      const orderCard = this.closest('.order-card');
+      currentOrderCard = orderCard;
+
+      const orderId = orderCard.dataset.orderId;
+      const customerName = orderCard.dataset.customerName;
+      const status = orderCard.dataset.status;
+
+      editOrderId.value = orderId;
+      editCustomerName.value = customerName;
+      editOrderStatus.value = status;
+
+      editPanelOverlay.style.display = 'flex';
+    });
+  });
+
+  closeEditPanel.addEventListener('click', function () {
+    editPanelOverlay.style.display = 'none';
+    currentOrderCard = null;
+  });
+
+  editPanelOverlay.addEventListener('click', function (event) {
+    if (event.target === editPanelOverlay) {
+      editPanelOverlay.style.display = 'none';
+      currentOrderCard = null;
+    }
+  });
+
+  saveOrderChanges.addEventListener('click', async function () {
+    if (!currentOrderCard) return;
+
+    const newStatus = editOrderStatus.value;
+    const orderId = currentOrderCard.dataset.orderId;
+
+    try {
+      await fetch('/backend/update_order_status.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          orderId: orderId,
+          status: newStatus
+        })
+      });
+
+      currentOrderCard.dataset.status = newStatus;
+
+      const statusText = currentOrderCard.querySelector('.order-status');
+      statusText.textContent = 'Order Status: ' + newStatus;
+
+      editPanelOverlay.style.display = 'none';
+      currentOrderCard = null;
+
+    } catch (error) {
+      console.error("Failed to update order", error);
+    }
+  });
+
+  document.querySelectorAll('.btn-cancel').forEach((button) => {
+    button.addEventListener('click', function () {
+      const orderCard = this.closest('.order-card');
+      orderCard.dataset.status = 'Cancelled';
+
+      const statusText = orderCard.querySelector('.order-status');
+      statusText.textContent = 'Order Status: Cancelled';
+    });
+  });
+</script>
+
 </body>
 </html>
