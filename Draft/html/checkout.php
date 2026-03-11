@@ -27,11 +27,13 @@ if ($user = $result->fetch_assoc()) {
 $userName = trim(($user['name'] ?? '') . ' ' . ($user['surname'] ?? ''));//combine name + surname stored in DB
 $userEmail = $user['email'] ?? '';
 $userPhone = $user['phone'] ?? '';
-$userAddress1 = $user['address'] ?? ''; //DB has single address field
+//matching account_settings.php logic
+$addressParts = array_map('trim', explode(',', $user['address'] ?? '',3));
+$userAddress1 = $addressParts[0] ?? ''; //DB has single address field so split input by commas
 $userAddress2 = '';
-$userCity = '';
-$userCountyRegion = '';
-$userPostcode = '';
+$userCity = $addressParts[1] ?? '';
+$userCountyRegion = ''; //not stored in DB or account_settings
+$userPostcode = $addressParts[2] ?? '';
 }
 $stmt->close();
 
