@@ -155,6 +155,11 @@ foreach ($productRows as $row) {
         $suggestionCandidatesMap[mb_strtolower($name)] = $name;
     }
 
+    $colour = trim((string)($row['colour'] ?? ''));
+    if ($colour !== '') {
+        $suggestionCandidatesMap[mb_strtolower($colour)] = $colour;
+    }
+
     $keywords = (string)($row['keywords'] ?? '');
     $keywordParts = preg_split('/[,;|\/]+/', $keywords) ?: [];
     foreach ($keywordParts as $part) {
@@ -176,6 +181,7 @@ foreach ($productRows as $row) {
     $name = (string)($row['name'] ?? '');
     $keywords = (string)($row['keywords'] ?? '');
     $description = (string)($row['description'] ?? '');
+    $colour = (string)($row['colour'] ?? '');
     $categoryId = (int)($row['category_id'] ?? 0);
     $categoryName = $categoryLabels[$categoryId] ?? 'Uncategorised';
 
@@ -186,6 +192,7 @@ foreach ($productRows as $row) {
     $nameLower = mb_strtolower($name);
     $keywordsLower = mb_strtolower($keywords);
     $descriptionLower = mb_strtolower($description);
+    $colourLower = mb_strtolower($colour);
     $categoryLower = mb_strtolower($categoryName);
 
     $score = 0;
@@ -201,6 +208,7 @@ foreach ($productRows as $row) {
         $isExactName = ($nameLower === $searchQueryLower);
         $isNameContains = str_contains($nameLower, $searchQueryLower);
         $isKeywordContains = str_contains($keywordsLower, $searchQueryLower);
+        $isColourContains = str_contains($colourLower, $searchQueryLower);
         $isCategoryContains = str_contains($categoryLower, $searchQueryLower);
 
         if ($isExactName) {
@@ -215,6 +223,10 @@ foreach ($productRows as $row) {
             $score += 70;
             $isStrongMatch = true;
         }
+        if ($isColourContains) {
+            $score += 70;
+            $isStrongMatch = true;
+        }
         if ($isCategoryContains) {
             $score += 60;
             $isStrongMatch = true;
@@ -223,16 +235,20 @@ foreach ($productRows as $row) {
         foreach ($tokens as $token) {
             $isTokenInName = has_word_token($nameLower, $token);
             $isTokenInKeywords = has_word_token($keywordsLower, $token);
+            $isTokenInColour = has_word_token($colourLower, $token);
             $isTokenInCategory = has_word_token($categoryLower, $token);
             $isTokenInDescription = has_word_token($descriptionLower, $token);
 
-            $isCoreTokenHit = $isTokenInName || $isTokenInKeywords || $isTokenInCategory;
+            $isCoreTokenHit = $isTokenInName || $isTokenInKeywords || $isTokenInColour || $isTokenInCategory;
 
             if ($isTokenInName) {
                 $score += 32;
                 $nameTokenHitCount++;
             }
             if ($isTokenInKeywords) {
+                $score += 24;
+            }
+            if ($isTokenInColour) {
                 $score += 24;
             }
             if ($isTokenInCategory) {
@@ -243,7 +259,7 @@ foreach ($productRows as $row) {
                 $tokenCoreHitCount++;
             }
 
-            if (in_array($token, $nonCategoryTokens, true) && ($isTokenInName || $isTokenInKeywords)) {
+            if (in_array($token, $nonCategoryTokens, true) && ($isTokenInName || $isTokenInKeywords || $isTokenInColour)) {
                 $nonCategoryTokenHitCount++;
             }
 
@@ -268,7 +284,10 @@ foreach ($productRows as $row) {
         }
 
         if ($isStrictSingleTokenSearch) {
-            $isStrongMatch = $nameTokenHitCount > 0 || $isExactName || has_word_token($nameLower, $tokens[0]);
+            $isStrongMatch = $nameTokenHitCount > 0
+                || $isExactName
+                || has_word_token($nameLower, $tokens[0])
+                || has_word_token($colourLower, $tokens[0]);
         }
     }
 

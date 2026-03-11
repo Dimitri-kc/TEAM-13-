@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         closeButton,
         meta,
         resultsRegion,
+        feedback,
     } = elements;
 
     let debounceId = null;
@@ -25,6 +26,20 @@ document.addEventListener('DOMContentLoaded', () => {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
+
+    function showFeedback(message) {
+        if (!feedback) {
+            return;
+        }
+
+        feedback.textContent = message;
+        feedback.classList.add('is-visible');
+
+        window.clearTimeout(showFeedback.timeoutId);
+        showFeedback.timeoutId = window.setTimeout(() => {
+            feedback.classList.remove('is-visible');
+        }, 1500);
+    }
 
     function renderPlaceholder() {
         meta.textContent = 'Start typing to search products live.';
@@ -143,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (wasAdded) {
                     button.textContent = 'Added';
+                    showFeedback('Added to basket');
                     window.setTimeout(() => {
                         button.textContent = originalText;
                     }, 1100);
@@ -195,6 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     button.setAttribute('aria-pressed', isFavourite ? 'true' : 'false');
                     button.setAttribute('title', isFavourite ? 'Remove from favourites' : 'Add to favourites');
                     button.textContent = isFavourite ? '♥' : '♡';
+                    showFeedback(isFavourite ? 'Added to favourites' : 'Removed from favourites');
                 } catch (error) {
                     form.submit();
                     return;
@@ -292,19 +309,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeButton.addEventListener('click', closeModal);
 
-    overlay.addEventListener('click', (event) => {
-        if (event.target === overlay) {
-            closeModal();
-        }
-    });
-
     dialog.addEventListener('click', (event) => {
         event.stopPropagation();
     });
 
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && overlay.classList.contains('is-open')) {
-            closeModal();
+    overlay.addEventListener('mousedown', (event) => {
+        if (event.target === overlay) {
+            event.preventDefault();
         }
     });
 
@@ -321,6 +332,7 @@ function ensureSearchModalMarkup() {
             closeButton: existingOverlay.querySelector('.search-modal-close'),
             meta: existingOverlay.querySelector('#global-search-meta'),
             resultsRegion: existingOverlay.querySelector('#global-search-results'),
+            feedback: existingOverlay.querySelector('.search-modal-feedback'),
         };
     }
 
@@ -338,6 +350,7 @@ function ensureSearchModalMarkup() {
                     </div>
                     <div id="global-search-meta" class="search-modal-meta"></div>
                 </div>
+                <div class="search-modal-feedback" aria-live="polite"></div>
                 <div id="global-search-results" class="search-modal-results"></div>
             </div>
         </div>
@@ -353,6 +366,7 @@ function ensureSearchModalMarkup() {
         closeButton: overlay.querySelector('.search-modal-close'),
         meta: overlay.querySelector('#global-search-meta'),
         resultsRegion: overlay.querySelector('#global-search-results'),
+        feedback: overlay.querySelector('.search-modal-feedback'),
     };
 }
 
@@ -387,8 +401,8 @@ function ensureSearchModalStyles() {
             flex-direction: column;
         }
         .search-modal-header {
+            position: relative;
             display: flex;
-            justify-content: space-between;
             align-items: center;
             padding: 18px 22px 12px;
             border-bottom: 1px solid #ececec;
@@ -398,6 +412,9 @@ function ensureSearchModalStyles() {
             font-size: 24px;
         }
         .search-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 14px;
             border: none;
             background: transparent;
             font-size: 32px;
@@ -425,6 +442,26 @@ function ensureSearchModalStyles() {
             margin-top: 10px;
             color: #555;
             font-size: 14px;
+        }
+        .search-modal-feedback {
+            position: absolute;
+            top: 18px;
+            left: 50%;
+            transform: translate(-50%, -12px);
+            background: rgba(17, 17, 17, 0.92);
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+            z-index: 2;
+        }
+        .search-modal-feedback.is-visible {
+            opacity: 1;
+            transform: translate(-50%, 0);
         }
         .search-modal-results {
             overflow: auto;
