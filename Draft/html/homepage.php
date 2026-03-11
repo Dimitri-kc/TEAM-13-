@@ -449,7 +449,6 @@ if ($showWelcomeToast) {
             <li><a href="bedroom.php">Bedroom</a></li>
             <li><a href="office.php">Office</a></li>
             <li><a href="kitchen.php">Kitchen</a></li>
-            <li class="nav-divider"><a href="signin.php">My Account</a></li>
         </ul>
     </nav>
 </header>
