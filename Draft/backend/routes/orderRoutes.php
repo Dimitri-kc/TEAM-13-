@@ -15,9 +15,7 @@ $action = $method === 'POST'
     : ($_GET['action'] ?? '');
 
 
-/* =========================
-   POST REQUESTS
-=========================*/
+/* POST REQUESTS*/
 
 if ($method === 'POST') {
 
@@ -40,9 +38,7 @@ if ($method === 'POST') {
 }
 
 
-/* =========================
-   GET REQUESTS
-=========================*/
+/*  REQUESTS*/
 
 elseif ($method === 'GET') {
 
