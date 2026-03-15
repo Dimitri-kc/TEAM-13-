@@ -32,16 +32,44 @@ $extraHeadContent = <<<'HTML'
             margin-bottom: 26px;
         }
 
+        .dashboard-heading-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 6px;
+        }
+
         .dashboard-heading h2 {
             font-size: 20px;
             font-weight: 700;
-            margin: 0 0 6px 0;
+            margin: 0;
         }
 
         .dashboard-heading p {
             margin: 0;
             color: #777;
             font-size: 14px;
+        }
+
+        .return-home-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background: #2B2B2B;
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+            transition: background-color 120ms ease, transform 120ms ease;
+        }
+
+        .return-home-btn:hover {
+            background: #1f8438;
+            transform: translateY(-1px);
         }
 
         .dash-grid {
@@ -108,6 +136,11 @@ $extraHeadContent = <<<'HTML'
 
         @media (max-width: 560px) {
             .dash-grid { grid-template-columns: 1fr; }
+
+            .dashboard-heading-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 HTML;
@@ -119,7 +152,10 @@ include 'header.php';
         <div class="dashboard-container">
 
             <div class="dashboard-heading">
-                <h2>Welcome, <?php echo htmlspecialchars($userName); ?></h2>
+                <div class="dashboard-heading-top">
+                    <h2>Welcome, <?php echo htmlspecialchars($userName); ?></h2>
+                    <a class="return-home-btn" href="homepage.php">Return to Homepage</a>
+                </div>
                 <p>My Account</p>
             </div>
 
@@ -188,7 +224,7 @@ include 'header.php';
                             </div>
                             <div>
                                 <h3>Privacy</h3>
-                                <p>Make any changes to your privacy settings here</p>
+                                <p>View our privacy policies here</p>
                             </div>
                         </div>
                     </div>
