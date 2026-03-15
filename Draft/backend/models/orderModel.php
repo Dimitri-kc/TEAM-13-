@@ -57,16 +57,18 @@ class OrderModel {
         $chart = [];
 
         while ($row = $result->fetch_assoc()) {
+
             $chart[] = [
                 "label" => $row['label'],
                 "value" => $row['value']
             ];
+
         }
 
         return $chart;
     }
 
-    /* ORDER SYSTEM*/
+    /* CREATE ORDER*/
 
     public function createOrder($user_ID, $total_price, $address) {
 
@@ -80,11 +82,15 @@ class OrderModel {
         $stmt->bind_param("ids", $user_ID, $total_price, $address);
 
         if ($stmt->execute()) {
+
             return $this->conn->insert_id;
+
         }
 
         return false;
     }
+
+    /* USER ORDERS */
 
     public function getOrdersByUser($user_ID) {
 
@@ -98,25 +104,64 @@ class OrderModel {
         if (!$stmt) return [];
 
         $stmt->bind_param("i", $user_ID);
-        $stmt->execute();
-
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
-
-    public function getAllOrders() {
-
-        $stmt = $this->conn->prepare(
-            "SELECT *
-             FROM orders
-             ORDER BY order_date DESC"
-        );
-
-        if (!$stmt) return [];
 
         $stmt->execute();
 
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+
+    /* ADMIN - GET ALL ORDERS */
+
+public function getAllOrders() {
+
+$sql = "
+
+SELECT 
+    o.order_ID,
+    o.user_ID,
+    o.order_date,
+    o.total_price,
+    o.order_status,
+    o.address,
+
+    CONCAT(u.name,' ',u.surname) AS customer_name,
+
+    p.image
+
+FROM orders o
+
+LEFT JOIN users u 
+ON o.user_ID = u.user_ID
+
+LEFT JOIN order_items oi 
+ON o.order_ID = oi.order_ID
+
+LEFT JOIN products p 
+ON oi.product_ID = p.product_ID
+
+ORDER BY o.order_date DESC
+
+";
+
+$result = $this->conn->query($sql);
+
+$orders = [];
+
+if($result){
+
+while ($row = $result->fetch_assoc()){
+
+$orders[] = $row;
+
+}
+
+}
+
+return $orders;
+
+}
+
+    /*UPDATE ORDER STATUS */
 
     public function updateOrderStatus($order_ID, $status) {
 
@@ -132,4 +177,5 @@ class OrderModel {
 
         return $stmt->execute();
     }
+
 }

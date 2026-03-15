@@ -1,4 +1,5 @@
-<?php include '../backend/config/db_connect.php'; 
+<?php
+include '../backend/config/db_connect.php';
 require_once '../backend/services/userFunctions.php';
 require_admin_page('/TEAM-13-/Draft/html/signin.php');
 ?>
@@ -95,10 +96,23 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
 
     .search-row {
       margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
-    .search-row input {
-      width: 190px;
+    .search-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-row input,
+    .search-row select,
+    .add-customer-btn {
       height: 32px;
       border: 1px solid #9f9f9f;
       background: #fff;
@@ -106,7 +120,33 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
       font-size: 12px;
       outline: none;
       border-radius: 0;
-      display: block;
+    }
+
+    .search-row input {
+      width: 190px;
+    }
+
+    .search-row select {
+      width: 130px;
+      cursor: pointer;
+    }
+
+    .add-customer-btn {
+      min-width: 120px;
+      text-decoration: none;
+      color: #111;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .add-customer-btn:hover {
+      background: #000;
+      color: #fff;
+      border-color: #000;
     }
 
     .error-popup {
@@ -293,6 +333,24 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
       .footer-inner {
         grid-template-columns: 1fr;
       }
+
+      .search-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .search-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      .search-row input,
+      .search-row select,
+      .add-customer-btn {
+        width: 100%;
+        max-width: 220px;
+      }
     }
   </style>
 </head>
@@ -331,10 +389,19 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
   <main class="page-wrap">
     <section class="page-shell">
       <h1 class="page-title">Customer Management</h1>
-      <p class="page-sub">View current list of customers, organised by recently signed up</p>
+      <p class="page-sub">View current list of users, organised by recently signed up</p>
 
       <div class="search-row">
-        <input type="text" id="searchInput" placeholder="Search">
+        <div class="search-controls">
+          <input type="text" id="searchInput" placeholder="Search">
+          <select id="roleFilter">
+            <option value="all">All</option>
+            <option value="customer">Customers</option>
+            <option value="admin">Admins</option>
+          </select>
+        </div>
+
+        <a href="admin_add_customer.php" class="add-customer-btn">Add Customer</a>
       </div>
 
       <div id="errorPopup" class="error-popup">
@@ -345,7 +412,7 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
       <div class="recent-card">
         <h2 class="recent-heading">Last 10 Signed Up Users</h2>
         <div class="recent-list" id="recentList"></div>
-        <p class="no-results" id="noResults">No customers found.</p>
+        <p class="no-results" id="noResults">No users found.</p>
       </div>
     </section>
   </main>
@@ -392,6 +459,7 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
     const API_URL = "/TEAM-13-/Draft/backend/routes/adminRoutes.php";
     const recentList = document.getElementById("recentList");
     const searchInput = document.getElementById("searchInput");
+    const roleFilter = document.getElementById("roleFilter");
     const noResults = document.getElementById("noResults");
 
     let customers = [];
@@ -471,11 +539,17 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
 
     function applySearch() {
       const query = searchInput.value.trim().toLowerCase();
+      const selectedRole = roleFilter.value.toLowerCase();
 
       const filtered = customers.filter(customer => {
         const fullName = `${customer.name || ""} ${customer.surname || ""}`.trim().toLowerCase();
         const email = (customer.email || "").toLowerCase();
-        return fullName.includes(query) || email.includes(query);
+        const role = (customer.role || "").toLowerCase();
+
+        const matchesSearch = fullName.includes(query) || email.includes(query);
+        const matchesRole = selectedRole === "all" || role === selectedRole;
+
+        return matchesSearch && matchesRole;
       });
 
       renderCustomers(filtered);
@@ -516,6 +590,7 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
     }
 
     searchInput.addEventListener("input", applySearch);
+    roleFilter.addEventListener("change", applySearch);
     loadCustomers();
   </script>
 
