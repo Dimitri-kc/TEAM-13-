@@ -1,3 +1,108 @@
+<?php // billings.php > Billing & Payment Methods — view/add/remove saved cards, view payment history etc
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once '../backend/config/db_connect.php';
+require_once '../backend/models/paymentModel.php';
+
+$user_ID = $_SESSION['user_ID'] ?? null; //check user signed in
+if (!$user_ID) {
+    header("Location: signin.php");
+    exit();
+}
+
+//api call
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpoint
+    header('Content-Type: application/json');
+    $raw    = file_get_contents("php://input");
+    $data   = json_decode($raw, true);
+    $action = $data['action'] ?? '';
+
+    //check if any cards & fetch
+    if ($action === 'get_cards') {
+        $stmt = $conn->prepare(
+            "SELECT card_ID, last_four, expiry_month, expiry_year, cardholder_name, is_default
+             FROM user_payment_cards
+             WHERE user_ID = ?
+             ORDER BY is_default DESC, card_ID ASC"
+        );
+        $stmt->bind_param("i", $user_ID);
+        $stmt->execute();
+        $cards = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        echo json_encode(["success" => true, "cards" => $cards]);
+        exit();
+    }
+
+    //add a card
+    if ($action === 'add_card') {
+        $cardNumber     = preg_replace('/\s+/', '', trim($data['card_number'] ?? ''));
+        $expiry         = trim($data['expiry'] ?? '');
+        $cvv            = trim($data['cvv'] ?? '');
+        $cardholderName = trim($data['cardholder_name'] ?? '');
+        $setDefault     = !empty($data['is_default']);
+
+        //paymentModel validation
+        $paymentModel = new Payment();
+        if (!$cardholderName) {
+            echo json_encode(["success" => false, "message" => "Cardholder name is required."]);
+            exit();
+        }
+        if (!$paymentModel->validatePayment($cardNumber, $expiry, $cvv)) {
+            echo json_encode(["success" => false, "message" => "Invalid. Please check your card details."]);
+            exit();
+        }
+
+        //count existing cards (max 5)
+        $cnt = $conn->prepare("SELECT COUNT(*) AS c FROM user_payment_cards WHERE user_ID = ?"); //count cards user already has
+        $cnt->bind_param("i", $user_ID); //bind
+        $cnt->execute();
+        $count = (int)$cnt->get_result()->fetch_assoc()['c'];
+        $cnt->close();
+
+        if ($count >= 5) { //if moretthan 5
+            echo json_encode(["success" => false, "message" => "You can save a maximum of 5 payment cards."]);
+            exit();
+        }
+        // If first card, force default
+        if ($count === 0) $setDefault = true;
+        if ($setDefault) {
+            $clr = $conn->prepare("UPDATE user_payment_cards SET is_default = 0 WHERE user_ID = ?");
+            $clr->bind_param("i", $user_ID);
+            $clr->execute();
+            $clr->close();
+        }
+    }
+    //remove card from saved payment methods
+    if ($action === 'remove_card') {
+        $cardID = (int)($data['card_ID'] ?? 0);
+
+        $chk = $conn->prepare("SELECT is_default FROM user_payment_cards WHERE card_ID = ? AND user_ID = ?");
+        $chk->bind_param("ii", $cardID, $user_ID); //check if card exists and belongs to user, also get if it's default
+        $chk->execute();
+        $existing = $chk->get_result()->fetch_assoc();
+        $chk->close();
+
+        if (!$existing) {
+            echo json_encode(["success" => false, "message" => "Card not found."]);
+            exit();
+        }
+        
+        $stmt = $conn->prepare("DELETE FROM user_payment_cards WHERE card_ID = ? AND user_ID = ?");
+        $stmt->bind_param("ii", $cardID, $user_ID);
+        $ok = $stmt->execute();
+        $stmt->close();
+        echo json_encode($ok 
+            ? ["success" => true,  "message" => "Card removed."]
+            : ["success" => false, "message" => "Could not remove card. Please try again."]);
+        exit();
+    }
+    echo json_encode(["success" => false, "message" => "Unknown action."]);
+    exit();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,14 +148,12 @@
             </div>
             <div class="panel-body">
                 <div class="info-box">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     <span>Your card details are stored securely. Your full card number is never retained.</span>
                 </div>
                 <div class="cards-list" id="cardsList">
-                    <div style="text-align:center;padding:30px;color:var(--mid);font-size:14px;">Loading…</div> <!-- if not found -->
+                    <div style="text-align:center;padding:30px;color:var(--mid);font-size:14px;">No cards saved.</div> <!-- if not found -->
                 </div>
                 <button class="btn-primary" onclick="switchPanel('add', document.querySelectorAll('.nav-item')[1])" style="margin-top:4px;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                     Add New Card
                 </button>
             </div>
@@ -83,7 +186,7 @@
                         </div>
                         <div class="field">
                             <label>CVV</label>
-                            <input type="text" id="cardCvv" placeholder="•••" maxlength="3" inputmode="numeric" autocomplete="cc-csc">
+                            <input type="text" id="cardCvv" placeholder="***" maxlength="3" inputmode="numeric" autocomplete="cc-csc">
                         </div>
                     </div>
 
@@ -91,7 +194,6 @@
                         <input type="checkbox" id="cardDefault">
                         <div>
                             <label for="cardDefault">Set as default payment method</label>
-                            <span>Used automatically at checkout</span>
                         </div>
                     </label>
 
@@ -111,7 +213,7 @@
             </div>
             <div class="panel-body" style="padding: 0;">
                 <div id="historyContainer">
-                    <div style="text-align:center;padding:40px;color:var(--mid);font-size:14px;">Loading…</div>
+                    <div style="text-align:center;padding:40px;color:var(--mid);font-size:14px;">No billing history available.</div>
                 </div>
             </div>
         </section>
@@ -140,6 +242,77 @@
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
     <span id="toastMsg"></span>
 </div>
+
+<script>
+    const SELF = 'billings.php';
+    let removingCardID = null;
+
+    //panel switcher for cards/history/add
+    function switchPanel(name, btn) {
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active')); //hide all panels first
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); //deactivate all buttons visually
+        document.getElementById('panel-' + name).classList.add('active'); //show selected panel
+        btn.classList.add('active'); //activate button visually
+        if (name === 'history') loadHistory();
+        if (name === 'cards')   loadCards();
+    }
+    function showToast(msg, type = 'success') { 
+        const t = document.getElementById('toast'); 
+        document.getElementById('toastMsg').textContent = msg; 
+        t.className = 'toast ' + type + ' show';
+        setTimeout(() => t.classList.remove('show'), 3500); //hide after 3.5s
+    }
+    //apicall helper for all API interactions in this panel
+    async function apiCall(action, payload = {}) {
+        const res = await fetch(SELF, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action, ...payload })
+        });
+        return res.json();
+    }
+    //save card details to database and validate using paymentModel
+    async function saveCard() {
+        const cardholderName = document.getElementById('cardholderName').value.trim();
+        const cardNumber     = document.getElementById('cardNumber').value.replace(/\s/g,'');
+        const expiry         = document.getElementById('cardExpiry').value.trim();
+        const cvv            = document.getElementById('cardCvv').value.trim();
+        const isDefault      = document.getElementById('cardDefault').checked;
+
+        if (!cardholderName) return showToast('Please enter the cardholder name.', 'error');
+        if (cardNumber.length !== 16) return showToast('Card number must be 16 digits.', 'error');
+        if (!/^(0[1-9]|1[0-2])\/[0-9]{2}$/.test(expiry)) return showToast('Expiry must be MM/YY format.', 'error');
+        if (!/^[0-9]{3}$/.test(cvv)) return showToast('CVV must be 3 digits.', 'error');
+
+        const btn = document.getElementById('saveCardBtn');
+        btn.disabled = true; btn.textContent = 'Saving...'; //show loading state while processing > keep user informed
+        const data = await apiCall('add_card', { card_number: cardNumber, expiry, cvv, cardholder_name: cardholderName, is_default: isDefault });
+        btn.disabled = false; btn.textContent = 'Save Card';
+
+        if (data.success) {
+            showToast('Card saved successfully.'); //success message
+            clearCardForm(); //clear
+            switchPanel('cards', document.querySelectorAll('.nav-item')[0]); //switch to cards panel to show updated list
+        } else {
+            showToast(data.message || 'Could not save card.', 'error');
+        }
+    }
+
+    function clearCardForm() { //reset form fields and preview after save
+        ['cardholderName','cardNumber','cardExpiry','cardCvv'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('cardDefault').checked = false;
+        document.getElementById('previewNumber').textContent = '•••• •••• •••• ••••'; //reset preview to default
+        document.getElementById('previewName').textContent   = 'FULL NAME'; //reset 
+        document.getElementById('previewExpiry').textContent = 'MM / YY';
+    }
+
+    //note: 
+    // insert/response for addcard
+    // remove card js needed
+    // complete visual preview block
+    //default card handling in both add and remove flows
+    //billing history panel + api call to fetch past bills >orderconfirmation? or recentorders?
+</script>
 
 <?php include 'footer.php'; ?>
 </body>
