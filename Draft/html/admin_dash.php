@@ -49,7 +49,7 @@ $extraHeadContent = <<<'HTML'
 
         .dash-grid {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 22px;
         }
 
@@ -101,12 +101,8 @@ $extraHeadContent = <<<'HTML'
             max-width: 320px;
         }
 
-        .span-2 { grid-column: span 2; }
-        .span-3 { grid-column: span 3; }
-
         @media (max-width: 980px) {
             .dash-grid { grid-template-columns: repeat(2, 1fr); }
-            .span-2, .span-3 { grid-column: span 1; }
         }
 
         @media (max-width: 560px) {
@@ -127,7 +123,7 @@ include 'header.php';
             </div>
 
             <div class="dash-grid">
-                <a class="dash-card span-2" href="admin_order_list.php">
+                <a class="dash-card" href="admin_order_list.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
@@ -141,7 +137,7 @@ include 'header.php';
                     </div>
                 </a>
 
-                <a class="dash-card span-2" href="admin_realtime_reports.php">
+                <a class="dash-card" href="admin_realtime_reports.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
@@ -155,21 +151,7 @@ include 'header.php';
                     </div>
                 </a>
 
-                <a class="dash-card span-2" href="admin_homepage.php">
-                    <div class="dash-card-inner">
-                        <div class="card-top">
-                            <div class="card-media">
-                                <img src="../images/dashboard/admin_dash3.png" alt="My Addresses">
-                            </div>
-                            <div>
-                                <h3>View as Customer Mode</h3>
-                                <p>View the website as a customer would see it and access all customer features</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-                <a class="dash-card span-3" href="admin_customer_management.php">
+                <a class="dash-card" href="admin_customer_management.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
@@ -183,7 +165,7 @@ include 'header.php';
                     </div>
                 </a>
 
-                <a class="dash-card span-3" href="admin_product_inventory.php">
+                <a class="dash-card" href="admin_product_inventory.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
