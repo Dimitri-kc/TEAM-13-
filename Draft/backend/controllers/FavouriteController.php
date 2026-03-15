@@ -10,9 +10,11 @@ class FavouriteController {
         $this->favouriteModel = new FavouriteModel();
     }
 
-    /* CLEAR FAVOURITES*/
+    /* CLEAR FAVOURITES */
 
     public function clear() {
+
+        session_start();
 
         $user_ID = $_SESSION['user_ID'] ?? null;
 
