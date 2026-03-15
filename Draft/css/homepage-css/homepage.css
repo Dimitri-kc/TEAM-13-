@@ -75,6 +75,7 @@ body {
 .ll-homepage .site-header .dropdown-panel{
     position: relative;
     z-index: 1;
+    
 }
 
 .ll-homepage .site-header .ui-icon {
@@ -508,4 +509,6 @@ body {
             color: #b00020;
         }
 
-     
+     .ll-homepage .dropdown-panel {
+    top: -30px;
+}
