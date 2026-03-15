@@ -33,92 +33,10 @@ if (isset($_SESSION['user_ID'])) {
     <link rel="stylesheet" href="../css/header_footer_style.css">
     <link rel="stylesheet" href="../css/sofa_style.css">
     <link rel="stylesheet" href="../css/favourites-toggle.css">
+     <link rel="stylesheet" href="../css/reviews.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body {
-            display: flex !important;
-            flex-direction: column !important;
-            min-height: 100vh;
-            padding: 0;
-        }
-        .site-header {
-            z-index: 1000 !important;
-            position: relative;
-            background-color: #fff;
-        }
-        main.container {
-            margin-top: 20px;
-            flex: 1;
-            width: 100%;
-            max-width: 1200px;
-            align-self: center;
-        }
-        .site-footer {
-            width: 100%;
-            margin-top: auto;
-        }
 
-        /* ── Stock Indicator ── */
-        .stock-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 5px 13px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            letter-spacing: 0.3px;
-        }
-        .stock-dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        /* In Stock — green */
-        .stock-in {
-            background-color: #e6f4ea;
-            color: #2e7d32;
-        }
-        .stock-in .stock-dot {
-            background-color: #2e7d32;
-            box-shadow: 0 0 0 3px rgba(46,125,50,0.2);
-        }
-
-        /* Low Stock — amber */
-        .stock-low {
-            background-color: #fff8e1;
-            color: #e65100;
-        }
-        .stock-low .stock-dot {
-            background-color: #e65100;
-            box-shadow: 0 0 0 3px rgba(230,81,0,0.2);
-        }
-
-        /* Out of Stock — red */
-        .stock-out {
-            background-color: #fdecea;
-            color: #c62828;
-        }
-        .stock-out .stock-dot {
-            background-color: #c62828;
-            box-shadow: 0 0 0 3px rgba(198,40,40,0.2);
-        }
-
-        /* Disabled basket button */
-        .add-to-basket:disabled {
-            background-color: #ccc;
-            color: #888;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-        .add-to-basket:disabled:hover {
-            background-color: #ccc;
-        }
-    </style>
 </head>
 <body>
 
@@ -234,10 +152,11 @@ if (isset($_SESSION['user_ID'])) {
                     <span data-value="5">★</span>
                 </div>
                 <input type="hidden" id="reviewStars" name="stars">
-                <label>Title:</label>
+                <label>Title:</label><script></script>
                 <input type="text" id="reviewTitle" required>
                 <label>Review:</label>
-                <textarea id="reviewText" required></textarea>
+               <textarea id="reviewText" maxlength="200" required></textarea>
+               <small id="charCount">0 / 200 characters</small>
                 <label>Your Name:</label>
                 <input type="text" id="reviewName" required>
                 <button type="submit" class="submit-review-btn">Submit Review</button>
@@ -337,8 +256,7 @@ addBtn.onclick = () => {
     modal.style.display = "block";
 };
 closeModal.onclick = () => modal.style.display = "none";
-window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
-
+modal.addEventListener("click", (e) => { if (e.target === modal) modal.style.display = "none"; });
 // ---------- Submit Review ----------
 document.getElementById("reviewForm").addEventListener("submit", function(e) {
     e.preventDefault();
@@ -416,6 +334,16 @@ document.querySelectorAll(".star-rating span").forEach(star => {
     });
 });
 
+// ---------- Character Counter ----------
+const reviewText = document.getElementById("reviewText");
+const charCount = document.getElementById("charCount");
+
+if (reviewText && charCount) {
+    reviewText.addEventListener("input", () => {
+        charCount.textContent = `${reviewText.value.length} / 200`;
+    });
+}
+
 // ---------- Scroll Reviews ----------
 function scrollReviews(direction) {
     const container = document.getElementById("reviewsContainer");
@@ -423,244 +351,7 @@ function scrollReviews(direction) {
 }
 </script>
 
-<style>
-/* IMAGE MODAL */
-.image-modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.75);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .25s ease;
-    z-index: 9999;
-}
-.image-modal.active { opacity: 1; pointer-events: auto; }
-.modal-image-wrapper {
-    position: relative;
-    width: 60vw;
-    max-width: 600px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-#modalZoomImage {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    transition: transform .25s ease;
-    pointer-events: none;
-}
-.close-modal-image {
-    position: absolute;
-    top: 20px; right: 30px;
-    font-size: 40px;
-    color: white;
-    cursor: pointer;
-    z-index: 10000;
-    font-weight: bold;
-}
-.close-modal-image:hover { opacity: 0.7; }
-.zoom-icon {
-    position: absolute;
-    bottom: 20px; right: 20px;
-    width: 40px;
-    opacity: 0.85;
-    pointer-events: none;
-}
-#zoom-image { cursor: zoom-in; }
-.modal-image-wrapper.zoom-ready { cursor: zoom-in; }
-.modal-image-wrapper.zoomed { cursor: zoom-out; }
 
-/* REVIEWS SECTION */
-.reviews-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.reviews-header h2 { font-size: 22px; font-weight: 700; letter-spacing: 1px; }
-.add-review-btn {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    background: transparent url('../images/plus.png') center/60% no-repeat;
-    border: none; cursor: pointer; position: relative;
-}
-.add-review-btn::after {
-    content: "Add Review";
-    position: absolute;
-    top: -40px; left: 50%;
-    transform: translateX(-50%);
-    background: black; color: white;
-    padding: 6px 10px; border-radius: 6px;
-    font-size: 12px; white-space: nowrap;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.2s ease;
-}
-.add-review-btn::before {
-    content: "";
-    position: absolute;
-    top: -12px; left: 50%;
-    transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-top-color: black;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-.add-review-btn:hover::after,
-.add-review-btn:hover::before { opacity: 1; }
-.add-review-btn:hover { background-color: #d3d3d3; }
-
-.reviews-slider-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    overflow: visible;
-}
-.reviews-container {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    padding: 10px 0;
-    scrollbar-width: none;
-}
-.reviews-container::-webkit-scrollbar { display: none; }
-.review-card {
-    min-width: 260px; max-width: 260px;
-    background: white; padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-    flex-shrink: 0;
-    transition: transform 0.2s ease;
-}
-.review-card:hover { transform: translateY(-4px); }
-.stars {
-    font-size: 28px; margin-bottom: 8px;
-    background: linear-gradient(90deg, #555, #222);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.review-card h3 { margin: 8px 0; font-size: 16px; }
-.review-card p { font-size: 13px; color: #555; margin-bottom: 15px; }
-.reviewer { display: flex; align-items: center; gap: 10px; }
-.reviewer img { width: 35px; height: 35px; border-radius: 50%; }
-.name { display: block; font-weight: 600; font-size: 13px; }
-.date { font-size: 11px; color: #777; }
-.nav-btn {
-    position: absolute;
-    top: 50%; transform: translateY(-50%);
-    background: white; color: black;
-    border: none; width: 40px; height: 40px;
-    border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    cursor: pointer; font-size: 22px; font-weight: bold;
-    display: flex; align-items: center; justify-content: center;
-    z-index: 2;
-}
-.nav-btn:hover { transform: translateY(-50%) scale(1.08); }
-.prev-btn { left: -20px; }
-.next-btn { right: -20px; }
-.reviews-section {
-    background-color: #B6B6B6;
-    padding: 25px 30px;
-    margin: 90px auto;
-    border-radius: 25px;
-    max-width: 1100px;
-    width: 100%;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-}
-
-/* REVIEW MODAL */
-.review-modal {
-    display: none; position: fixed;
-    z-index: 9999; inset: 0;
-    background: rgba(0,0,0,0.45);
-}
-.modal-content {
-    background: #fff;
-    width: 88%; max-width: 300px;
-    margin: 3% auto; padding: 10px 14px;
-    border-radius: 14px;
-    box-shadow: 0 8px 28px rgba(0,0,0,0.15);
-}
-.modal-content h2 { margin: 10px 0 8px; font-size: 22px; font-weight: 700; }
-.close-modal { float: right; font-size: 20px; cursor: pointer; opacity: 0.6; }
-.close-modal:hover { opacity: 1; }
-#reviewForm label { font-size: 12px; font-weight: 600; color: #333; margin-bottom: 2px; display: block; }
-#reviewForm input,
-#reviewForm textarea {
-    width: 100%; margin-bottom: 6px;
-    padding: 6px 8px; border-radius: 8px;
-    border: 1px solid #ddd; font-size: 13px; background: #f7f7f7;
-}
-#reviewForm textarea { height: 55px; resize: vertical; }
-.submit-review-btn {
-    width: 100%; padding: 8px;
-    background: #111; color: white;
-    border: none; border-radius: 8px;
-    cursor: pointer; font-size: 14px; font-weight: 600; margin-top: 4px;
-}
-.submit-review-btn:hover { background: #000; }
-.star-rating { display: flex; gap: 3px; font-size: 22px; cursor: pointer; margin-bottom: 8px; }
-.star-rating span { color: #ccc; transition: color 0.2s, transform 0.15s; }
-.star-rating span.active { color: #111; transform: scale(1.1); }
-.no-reviews-message { padding-left: 80px; font-size: 1.1rem; }
-.no-reviews-message p:first-child { font-weight: 600; margin-bottom: 4px; }
-.no-reviews-message p:last-child { opacity: 0.8; }
-
-/* BASKET MODAL */
-.basket-modal {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 9998;
-    justify-content: center; align-items: center;
-}
-.basket-modal.active { display: flex; }
-.basket-modal-content {
-    background: #fff; border-radius: 12px;
-    padding: 28px 32px; text-align: center;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-    min-width: 280px;
-}
-.basket-modal-content p { font-size: 16px; font-weight: 600; margin-bottom: 10px; color: #111; }
-.basket-modal-buttons { display: flex; gap: 10px; justify-content: center; }
-.basket-modal-buttons button {
-    padding: 10px 18px; border: none; border-radius: 6px;
-    font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s;
-}
-#go-to-basket { background: #111; color: #fff; }
-#go-to-basket:hover { background: #333; }
-#continue-shopping { background: #f0f0f0; color: #111; }
-#continue-shopping:hover { background: #e0e0e0; }
-
-/* FAVOURITE MODAL */
-.favourite-modal {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 9998;
-    justify-content: center; align-items: center;
-}
-.favourite-modal.active { display: flex; }
-.favourite-modal-content {
-    background: #fff; border-radius: 12px;
-    padding: 28px 32px; text-align: center;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-    min-width: 280px;
-}
-.favourite-modal-content p { font-size: 16px; font-weight: 600; margin-bottom: 20px; color: #111; }
-.favourite-modal-buttons { display: flex; gap: 10px; justify-content: center; }
-.favourite-modal-buttons button {
-    padding: 10px 18px; border: none; border-radius: 6px;
-    font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s;
-}
-#go-to-favourites { background: #111; color: #fff; }
-#go-to-favourites:hover { background: #333; }
-#continue-browsing { background: #f0f0f0; color: #111; }
-#continue-browsing:hover { background: #e0e0e0; }
-</style>
 
 </body>
 </html>

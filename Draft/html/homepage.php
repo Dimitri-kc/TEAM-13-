@@ -25,6 +25,7 @@ if ($showWelcomeToast) {
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=21">
+     <link rel="stylesheet" href="../css/reviews.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
     <script src="../javascript/dark-mode.js"></script>
