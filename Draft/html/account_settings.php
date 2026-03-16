@@ -237,10 +237,7 @@ $addrPost = $addressParts[3] ?? '';
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
                 Password
             </button>
-            <button class="nav-item" onclick="switchPanel('forgot', this)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
-                Forgot Password
-            </button>
+
             <button class="nav-item nav-item--danger" onclick="switchPanel('delete', this)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
                 Delete Account
@@ -348,30 +345,6 @@ $addrPost = $addressParts[3] ?? '';
                 <div class="form-actions">
                     <button class="btn-primary" id="savePwBtn" onclick="savePassword()">Update Password</button>
                     <button class="btn-ghost" onclick="clearPasswordForm()">Cancel</button>
-                    <button class="btn-link" onclick="switchPanel('forgot', document.querySelectorAll('.nav-item')[2])">Forgot password?</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Forgot Password -->
-        <section class="panel" id="panel-forgot">
-            <div class="panel-header">
-                <h2>Forgot Password</h2>
-                <p>We'll send a reset link to your registered email address.</p>
-            </div>
-            <div class="panel-body">
-                <div class="info-box">
-                    Enter your email address and we'll send you a secure link to reset your password. The link will expire after 30 minutes.
-                </div>
-                <div class="form-row full">
-                    <div class="field">
-                        <label>Email Address</label>
-                        <input type="email" id="forgotEmail" placeholder="you@example.com">
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <button class="btn-primary" onclick="sendResetLink()">Send Reset Link</button>
-                    <button class="btn-ghost" onclick="switchPanel('password', document.querySelectorAll('.nav-item')[1])">Back to Password</button>
                 </div>
             </div>
         </section>

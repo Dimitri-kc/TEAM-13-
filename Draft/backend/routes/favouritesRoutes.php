@@ -10,11 +10,19 @@ $favouriteController = new FavouriteController();
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-$action = $method === 'POST'
-    ? ($_POST['action'] ?? '')
-    : ($_GET['action'] ?? '');
+/* READ ACTION */
 
-/* POST REQUESTS*/
+$action = '';
+
+if ($method === 'POST') {
+    $action = $_POST['action'] ?? '';
+}
+
+if ($method === 'GET') {
+    $action = $_GET['action'] ?? '';
+}
+
+/* POST REQUESTS */
 
 if ($method === 'POST') {
 
@@ -33,18 +41,14 @@ if ($method === 'POST') {
 
 }
 
-/* GET REQUESTS*/
+/* GET REQUESTS */
 
 elseif ($method === 'GET') {
 
-    switch ($action) {
-
-        default:
-            echo json_encode([
-                "status" => "error",
-                "message" => "Invalid GET action"
-            ]);
-    }
+    echo json_encode([
+        "status" => "error",
+        "message" => "Invalid GET action"
+    ]);
 
 }
 

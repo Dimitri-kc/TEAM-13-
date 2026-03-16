@@ -114,7 +114,7 @@ class OrderController {
         }
 
         $order_ID = $_POST['order_ID'] ?? null;
-        $status = $_POST['status'] ?? null;
+        $status = $_POST['order_status'] ?? null;
 
         $allowed = ['Pending','Shipped','Delivered','Cancelled'];
 

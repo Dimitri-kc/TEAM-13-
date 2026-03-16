@@ -15,7 +15,18 @@ $user_id = $_SESSION['user_ID'];
 
 $favs = [];
 $dbError = null;
+// CLEAR ALL FAVOURITES
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['clear_favs'])) {
 
+    $stmt = $conn->prepare("DELETE FROM favourites WHERE user_ID = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $stmt->close();
+
+    // reload page so favourites disappear
+    header("Location: favourites.php");
+    exit;
+}
 // Load favourites from database
 $sql = "SELECT p.product_ID, p.name, p.price, p.image
         FROM favourites f

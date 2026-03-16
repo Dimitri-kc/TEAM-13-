@@ -75,6 +75,7 @@ body {
 .ll-homepage .site-header .dropdown-panel{
     position: relative;
     z-index: 1;
+    
 }
 
 .ll-homepage .site-header .ui-icon {
@@ -447,42 +448,69 @@ body {
     background-color: #C8B79C;
 }
 
-/* REVIEWS */
-.reviews-section{
-    margin-left: auto !important;
-    margin-right: auto !important;
-    width: calc(100% - 48px) !important;
-    max-width: none !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #E5E1DB;
-    padding: 30px;
-    border-radius: 25px;
-    margin-top: 60px;
-    margin-bottom: 60px;
-}
 
-.reviews-slider-wrapper{
-    position: relative;
-    padding: 0 55px;
-}
 
-.nav-btn{
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    opacity: 1 !important;
-    z-index: 20 !important;
-}
 
-.prev-btn{ left: 10px !important; }
-.next-btn{ right: 10px !important; }
+        /* Profile dropdown styles */
+        .profile-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            z-index: 2000;
+        }
 
-@media (max-width: 900px){
-    .homepage-hero{ height: 420px; }
-}
+        .profile-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+        }
 
-@media (max-width: 600px){
-    .homepage-hero{ height: 340px; }
+        .profile-dropdown {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            width: 260px;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e0e0e0;
+            padding: 18px;
+            display: none;
+            z-index: 3000;
+            font-family: "Ibarra Real Nova", serif;
+        }
+
+        .profile-dropdown.open { display: block; }
+
+        .profile-welcome {
+            font-size: 14px;
+            font-weight: 700;
+            color: #2B2B2B;
+            margin-bottom: 14px;
+            font-family: "Ibarra Real Nova", serif !important;
+        }
+
+        .profile-link {
+            display: block;
+            font-size: 14px;
+            color: #2B2B2B;
+            padding: 10px 0;
+            text-decoration: none;
+            font-family: "Ibarra Real Nova", serif !important;
+        }
+
+        .profile-link + .profile-link {
+            border-top: 1px solid #E5E1DB;
+        }
+
+        .profile-link-danger {
+            color: #b00020;
+        }
+
+
+        /* fixed dropdown which was low */
+     .ll-homepage .dropdown-panel {
+    top: -30px;
 }
