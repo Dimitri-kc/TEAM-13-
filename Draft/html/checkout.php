@@ -55,11 +55,12 @@ $subtotal = 0.0;
 $delivery = 0.0;
 $tax = 0.0;
 $total = 0.0;
+$basketItems = []; // ADDED
 
 $ids = array_keys($cart);
 if (count($ids) > 0) {
     $placeholders = implode(",", array_fill(0, count($ids), "?"));
-    $sql = "SELECT product_ID, price FROM products WHERE product_ID IN ($placeholders)";
+    $sql = "SELECT product_ID, name, price, image FROM products WHERE product_ID IN ($placeholders)";
     $stmt = $conn->prepare($sql);
 
     if ($stmt) {
@@ -71,7 +72,17 @@ if (count($ids) > 0) {
             $pid = (int)$row["product_ID"];
             $qty = (int)($cart[$pid] ?? 0);
             $price = (float)$row["price"];
-            $subtotal += ($price * $qty);
+            $lineTotal = $price * $qty;
+            $subtotal += $lineTotal;
+
+            // ADDED
+            $basketItems[] = [
+                'product_ID' => $pid,
+                'name' => $row['name'] ?? '',
+                'price' => $price,
+                'qty' => $qty,
+                'image' => $row['image'] ?? ''
+            ];
         }
         $stmt->close();
     }
@@ -151,6 +162,116 @@ input[name="postcode"]{
     align-items: center;
     gap: 12px;
     margin: 12px 0;
+}
+
+/* ADDED: basket drawer styles */
+.basket-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: none;
+    justify-content: flex-end;
+    z-index: 99999;
+}
+.basket-overlay.active{
+    display: flex;
+}
+.basket-drawer{
+    width: 650px;
+    max-width: 100%;
+    height: 100%;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: -8px 0 24px rgba(0,0,0,0.12);
+    animation: slideInRight 0.25s ease;
+}
+@keyframes slideInRight{
+    from{ transform: translateX(100%); }
+    to{ transform: translateX(0); }
+}
+.basket-close{
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    border: none;
+    background: transparent;
+    font-size: 36px;
+    line-height: 1;
+    cursor: pointer;
+    color: #222;
+}
+.basket-drawer-content{
+    padding: 56px 28px 24px;
+    flex: 1;
+    overflow-y: auto;
+}
+.basket-drawer-title{
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0 0 28px 0;
+}
+.basket-drawer-item{
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    gap: 16px;
+    align-items: start;
+    margin-bottom: 24px;
+}
+.basket-drawer-item-image{
+    width: 110px;
+    height: 140px;
+    object-fit: cover;
+    background: #f5f1ec;
+}
+.basket-drawer-item-name{
+    font-size: 16px;
+    line-height: 1.3;
+    margin: 0 0 10px 0;
+}
+.basket-drawer-item-meta{
+    font-size: 15px;
+    color: #5c6f82;
+    margin: 0;
+}
+.basket-drawer-item-price{
+    font-size: 18px;
+    font-weight: 600;
+    color: #3f2330;
+    white-space: nowrap;
+}
+.basket-drawer-footer{
+    border-top: 1px solid #ddd;
+    padding: 20px 28px 28px;
+}
+.basket-drawer-total{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+.basket-drawer-btn{
+    width: 100%;
+    height: 56px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 14px;
+}
+.basket-drawer-btn.primary{
+    background: #442732;
+    color: #fff;
+}
+.basket-drawer-btn.secondary{
+    background: #fff;
+    color: #442732;
+    border: 1px solid #442732;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>
 HTML;
@@ -254,7 +375,7 @@ include 'header.php';
 </div>
 
 <div class="payment-actions">
-    <a href="basket.php" class="view-basket-btn">View Basket</a>
+    <a href="#" class="view-basket-btn" id="openBasketBtn">View Basket</a>
     <div style="font-weight:700;">
         Total: <?= money($total) ?>
     </div>
@@ -274,6 +395,85 @@ include 'header.php';
 </section>
 
 </main>
+
+<!-- ADDED: basket drawer -->
+<div id="basketOverlay" class="basket-overlay">
+    <div class="basket-drawer">
+        <button type="button" id="closeBasketBtn" class="basket-close">&times;</button>
+
+        <div class="basket-drawer-content">
+            <h2 class="basket-drawer-title">View your bag (<?= count($basketItems) ?>)</h2>
+
+            <?php if (!empty($basketItems)): ?>
+                <?php foreach ($basketItems as $item): ?>
+                    <?php
+                        $imgPath = !empty($item['image']) ? '../images/' . ltrim($item['image'], '/') : '../images/placeholder.png';
+                    ?>
+                    <div class="basket-drawer-item">
+                        <img src="<?= htmlspecialchars($imgPath) ?>" alt="<?= htmlspecialchars($item['name']) ?>" class="basket-drawer-item-image">
+                        <div>
+                            <p class="basket-drawer-item-name"><?= htmlspecialchars($item['name']) ?></p>
+                            <p class="basket-drawer-item-meta">Qty: <?= (int)$item['qty'] ?></p>
+                        </div>
+                        <div class="basket-drawer-item-price"><?= money($item['price'] * $item['qty']) ?></div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Your basket is empty.</p>
+            <?php endif; ?>
+        </div>
+
+        <div class="basket-drawer-footer">
+            <div class="basket-drawer-total">
+                <span>Total</span>
+                <span><?= money($total) ?></span>
+            </div>
+
+            <button type="button" class="basket-drawer-btn primary" id="backToShippingBtn">Back to shipping</button>
+            <a href="basket.php" class="basket-drawer-btn secondary">Edit your bag</a>
+        </div>
+    </div>
+</div>
+
 <script src="../javascript/checkout.js"></script>
+
+<!-- ADDED: basket drawer script -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const openBasketBtn = document.getElementById('openBasketBtn');
+    const closeBasketBtn = document.getElementById('closeBasketBtn');
+    const backToShippingBtn = document.getElementById('backToShippingBtn');
+    const basketOverlay = document.getElementById('basketOverlay');
+
+    if (openBasketBtn && basketOverlay) {
+        openBasketBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            basketOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
+
+    function closeBasketDrawer() {
+        basketOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if (closeBasketBtn) {
+        closeBasketBtn.addEventListener('click', closeBasketDrawer);
+    }
+
+    if (backToShippingBtn) {
+        backToShippingBtn.addEventListener('click', closeBasketDrawer);
+    }
+
+    if (basketOverlay) {
+        basketOverlay.addEventListener('click', function (e) {
+            if (e.target === basketOverlay) {
+                closeBasketDrawer();
+            }
+        });
+    }
+});
+</script>
 
 <?php include 'footer.php'; ?>
