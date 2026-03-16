@@ -101,7 +101,7 @@ class AdminController {
         $mustChangePassword = 1;
         //insert new customer into database with role 'customer' and status 'active'
         $stmt = $this->conn->prepare("INSERT INTO users (name, surname, email, phone, address, password, role, status, must_change_password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssss", $name, $surname, $email, $phone, $address, $hashedPassword, $role, $status, $mustChangePassword);
+        $stmt->bind_param("ssssssssi", $name, $surname, $email, $phone, $address, $hashedPassword, $role, $status, $mustChangePassword);
         $success = $stmt->execute();
         if (!$success) {
             $stmt->close();
