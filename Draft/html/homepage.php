@@ -20,7 +20,8 @@ if ($showWelcomeToast) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Typekit: ivybodoni, Futura -->
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
@@ -34,6 +35,50 @@ if ($showWelcomeToast) {
 <script src="//code.tidio.co/39jephe3cplamvoahaopa21ssco3ywxf.js" async></script>
 
 <body class="ll-homepage">
+
+<style>
+/* ivybodoni for category boxes, section titles, homepage quote */
+.category .title-box,
+.grey-section h2,
+.reviews-header h2,
+.split-page .left h1,
+.split-page .right h1,
+.homepage-quote-text,
+.homepage-quote-caption {
+    font-family: 'ivybodoni', serif !important;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+/* Futura for all other text */
+body,
+.category-row a,
+.collection-cards .card h3,
+.split-page p,
+.split-page label,
+.split-page input,
+.split-page textarea,
+.split-page button,
+.reviews-section,
+.review-card,
+.review-modal,
+.profile-welcome,
+.nav-links a,
+.footer-section,
+.footer-section h4,
+.footer-section ul,
+.footer-section li,
+.footer-section a {
+    font-family: 'futura-pt', Futura, 'neue-haas-grotesk-text', Arial, sans-serif !important;
+    font-weight: 400;
+}
+
+/* Ensure review card title uses ivybodoni */
+.review-card h3 {
+    font-family: 'ivybodoni', serif !important;
+    font-weight: 700;
+}
+</style>
 
 <header class="site-header">
     <div class="header-inner">
