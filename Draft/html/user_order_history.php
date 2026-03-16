@@ -1,5 +1,5 @@
 <?php
-include '../backend/config/db_connect.php';
+include 'db_connect.php';
 session_start();
 
 if (!isset($_SESSION['user_ID']) || !is_numeric($_SESSION['user_ID'])) {
@@ -205,8 +205,120 @@ h1 {
 .footer-column a:hover {
     color: #000;
 }
+/* RETURNS MODAL — matches review modal styling */
+.return-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+}
 
-@media (max-width: 900px) {
+.return-modal-content {
+    background: #fff;
+    width: 88%;
+    max-width: 300px;
+    margin: 3% auto;
+    padding: 10px 14px;
+    border-radius: 14px;
+    border: 1px solid #E5E1DB;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+}
+
+.close-return {
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+.close-return:hover { opacity: 1; }
+
+#returnForm label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #2B2B2B;
+    margin-bottom: 2px;
+    display: block;
+}
+
+#returnForm select,
+#returnForm textarea,
+#returnForm input {
+    width: 100%;
+    margin-bottom: 6px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid #E5E1DB;
+    font-size: 13px;
+    background: #FFFFFF;
+    color: #2B2B2B;
+}
+
+#returnForm textarea {
+    height: 55px;
+    resize: vertical;
+}
+
+.submit-return-btn {
+    width: 100%;
+    padding: 8px;
+    background: #B8AFA4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 4px;
+    transition: background 0.2s;
+}
+/* SUCCESS MODAL */
+.success-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+}
+
+.success-modal-content {
+    background: #fff;
+    width: 88%;
+    max-width: 250px;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 14px;
+    border: 1px solid #E5E1DB;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+.success-modal-content p {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2B2B2B;
+    margin: 0;
+}
+
+.success-modal-content button {
+    margin-top: 15px;
+    padding: 8px 16px;
+    background: #B8AFA4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+.success-modal-content button:hover { background: #C8B79C; }
     .orders-grid {
         grid-template-columns: 1fr;
     }
@@ -215,9 +327,55 @@ h1 {
         grid-template-columns: 1fr 1fr;
         gap: 40px;
     }
-}
+
 </style>
 </head>
+
+
+<div id="returnModal" class="return-modal">
+  <div class="return-modal-content">
+    <span class="close-return">&times;</span>
+
+    <h2 style="font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 10px;">
+      Return Item
+    </h2>
+
+    <form id="returnForm">
+
+      <label for="returnItem">Select Item</label>
+      <select id="returnItem" required>
+          <option value="">Loading...</option>
+      </select>
+
+      <input type="hidden" id="returnOrderId">
+
+
+      <label for="returnReason">Reason for Return</label>
+      <select id="returnReason" required>
+        <option value="">Select a reason</option>
+        <option value="damaged">Item arrived damaged</option>
+        <option value="wrong">Wrong item received</option>
+        <option value="size">Incorrect size</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="returnDetails">Additional Details</label>
+      <textarea id="returnDetails"></textarea>
+
+      <label for="returnName">Your Name (optional)</label>
+      <input type="text" id="returnName">
+
+      <button type="submit" class="submit-return-btn">Submit Return</button>
+    </form>
+  </div>
+</div>
+
+<div id="successModal" class="success-modal">
+  <div class="success-modal-content">
+    <p>Your return request has been submitted.</p>
+    <button onclick="document.getElementById('successModal').style.display='none'">OK</button>
+  </div>
+</div>
 
 <body>
 
@@ -271,12 +429,11 @@ h1 {
                     <span class="order-date-label"><?= $date ?></span>
 
                     <div class="order-actions">
-                        <button
-                            type="button"
-                            class="btn-action btn-add-bag js-reorder"
-                            data-items="<?= htmlspecialchars($order['order_items_csv'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                            >Add to bag
-                        </button>
+<button data-return data-order-id="<?= $order['order_ID'] ?>">
+    Return Item
+</button>
+
+
 
                         <a href="user_order_details.php?order_id=<?= $order['order_ID'] ?>" class="btn-action btn-view-order">View</a>
                     </div>
@@ -327,34 +484,80 @@ h1 {
   </div>
 </footer>
 
-<script src="../javascript/global/basketIcon.js"></script>
+
 <script>
-    //add to bag functionality
-    document.addEventListener('click', async (e) => {
-    const btn = e.target.closest('.js-reorder'); //
+const returnModal = document.getElementById("returnModal");
+const closeReturn = document.querySelector(".close-return");
+const returnItemSelect = document.getElementById("returnItem");
+
+document.addEventListener("click", async (e) => {
+    const btn = e.target.closest("[data-return]");
     if (!btn) return;
 
-    const raw = btn.dataset.items || '';
-    console.log('reorder raw:', raw);
-    if (!raw) return;
+    const orderId = btn.dataset.orderId;
+    document.getElementById("returnOrderId").value = orderId;
 
-    btn.disabled = true;
-    btn.textContent = 'Adding...';
+    // Load items for this order
+    const response = await fetch("get_order_items.php?order_id=" + orderId);
+    const items = await response.json();
 
-    const pairs = raw.split(',').map(s => s.trim()).filter(Boolean); // "productID:qty"
+    // Populate dropdown
+    returnItemSelect.innerHTML = '<option value="">Select an item</option>';
+    items.forEach(item => {
+        const opt = document.createElement("option");
+        opt.value = item.order_item_ID;
+        opt.textContent = item.name;
+        returnItemSelect.appendChild(opt);
+    });
 
-    for (const pair of pairs) {
-        const [pidStr, qtyStr] = pair.split(':');
-        const productId = parseInt(pidStr, 10);
-        const qty = Math.max(1, parseInt(qtyStr, 10) || 1);
+    returnModal.style.display = "block";
+});
 
-        if (productId && typeof window.addToBasket === 'function') {
-            await window.addToBasket(productId, qty, btn);
-        }
+closeReturn.onclick = () => {
+    returnModal.style.display = "none";
+};
+
+window.onclick = (event) => {
+    if (event.target === returnModal) {
+        returnModal.style.display = "none";
     }
+    if (event.target === document.getElementById("successModal")) {
+        document.getElementById("successModal").style.display = "none";
+    }
+};
 
-    btn.textContent = 'Added';
-    btn.disabled = false;
+document.getElementById("returnForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("order_id", document.getElementById("returnOrderId").value);
+    formData.append("order_item_id", document.getElementById("returnItem").value);
+    formData.append("reason", document.getElementById("returnReason").value);
+    formData.append("details", document.getElementById("returnDetails").value);
+    formData.append("name", document.getElementById("returnName").value);
+
+    try {
+        const response = await fetch("submit_return.php", {
+            method: "POST",
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        if (result.status === "success") {
+            document.getElementById("successModal").style.display = "block";
+            returnModal.style.display = "none";
+            this.reset();
+        } else {
+            alert("Error: " + result.message);
+        }
+    } catch (error) {
+        alert("An error occurred: " + error.message);
+    }
 });
 </script>
 </body>

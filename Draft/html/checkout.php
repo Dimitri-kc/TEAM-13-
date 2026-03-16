@@ -23,16 +23,16 @@ $stmt->bind_param("i", $user_ID);
 $stmt->execute();
 $result = $stmt->get_result();
 if ($user = $result->fetch_assoc()) {
-//prepares variables for form pre-fill > null handles missing data
-$userName = trim(($user['name'] ?? '') . ' ' . ($user['surname'] ?? ''));//combine name + surname stored in DB
+
+$userName = trim(($user['name'] ?? '') . ' ' . ($user['surname'] ?? ''));
 $userEmail = $user['email'] ?? '';
 $userPhone = $user['phone'] ?? '';
-//matching account_settings.php logic
+
 $addressParts = array_map('trim', explode(',', $user['address'] ?? '',3));
-$userAddress1 = $addressParts[0] ?? ''; //DB has single address field so split input by commas
+$userAddress1 = $addressParts[0] ?? ''; 
 $userAddress2 = '';
 $userCity = $addressParts[1] ?? '';
-$userCountyRegion = ''; //not stored in DB or account_settings
+$userCountyRegion = ''; 
 $userPostcode = $addressParts[2] ?? '';
 }
 $stmt->close();
@@ -41,7 +41,7 @@ function money($n){
     return "£" . number_format((float)$n, 2);
 }
 
-// Only calculate totals for display if NOT processing an order
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 if (!isset($_SESSION['user_ID'])) {
     header("Location: signin.php");
@@ -55,7 +55,8 @@ $subtotal = 0.0;
 $delivery = 0.0;
 $tax = 0.0;
 $total = 0.0;
-$basketItems = []; // ADDED
+$basketItems = []; 
+
 
 $ids = array_keys($cart);
 if (count($ids) > 0) {
@@ -75,7 +76,7 @@ if (count($ids) > 0) {
             $lineTotal = $price * $qty;
             $subtotal += $lineTotal;
 
-            // ADDED
+           
             $basketItems[] = [
                 'product_ID' => $pid,
                 'name' => $row['name'] ?? '',
@@ -147,7 +148,6 @@ input[name="postcode"]{
 }
 
 .view-basket-btn{
-    display: inline-block;
     padding: 10px 12px;
     border: 1px solid #111;
     border-radius: 6px;
@@ -155,6 +155,8 @@ input[name="postcode"]{
     color: #111;
     text-decoration: none;
     font-size: 12px;
+    text-align: center;
+    box-sizing: border-box;
 }
 .payment-actions{
     display:flex;
@@ -164,7 +166,7 @@ input[name="postcode"]{
     margin: 12px 0;
 }
 
-/* ADDED: basket drawer styles */
+
 .basket-overlay{
     position: fixed;
     inset: 0;
@@ -276,6 +278,14 @@ input[name="postcode"]{
     align-items: center;
     justify-content: center;
 }
+
+.product-column .view-basket-btn{
+    display:block;
+    width:100%;
+    margin-top:15px;
+    text-align:center;
+}
+
 </style>
 HTML;
 
@@ -313,6 +323,8 @@ include 'header.php';
 </div>
 
 </div>
+
+<a href="#" class="view-basket-btn" id="openBasketBtn2">View Basket</a>
 
 </aside>
 
@@ -399,7 +411,7 @@ include 'header.php';
 
 </main>
 
-<!-- ADDED: basket drawer -->
+<!-- basket side bar  -->
 <div id="basketOverlay" class="basket-overlay">
     <div class="basket-drawer">
         <button type="button" id="closeBasketBtn" class="basket-close">&times;</button>
@@ -432,29 +444,29 @@ include 'header.php';
                 <span><?= money($total) ?></span>
             </div>
 
-            <button type="button" class="basket-drawer-btn primary" id="backToShippingBtn">Back to shipping</button>
-            <a href="basket.php" class="basket-drawer-btn secondary">Edit your bag</a>
+            <button type="button" class="basket-drawer-btn primary" id="backToShippingBtn">Back to checkout</button>
+            <a href="basket.php" class="basket-drawer-btn secondary">Edit basket</a>
         </div>
     </div>
 </div>
 
 <script src="../javascript/checkout.js"></script>
 
-<!-- ADDED: basket drawer script -->
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const openBasketBtn = document.getElementById('openBasketBtn');
+   const openBasketBtns = document.querySelectorAll('#openBasketBtn, #openBasketBtn2');
     const closeBasketBtn = document.getElementById('closeBasketBtn');
     const backToShippingBtn = document.getElementById('backToShippingBtn');
     const basketOverlay = document.getElementById('basketOverlay');
 
-    if (openBasketBtn && basketOverlay) {
-        openBasketBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            basketOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-    }
+    openBasketBtns.forEach(btn => {
+    btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        basketOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+});
 
     function closeBasketDrawer() {
         basketOverlay.classList.remove('active');
