@@ -57,6 +57,7 @@ $tax = 0.0;
 $total = 0.0;
 $basketItems = []; 
 
+
 $ids = array_keys($cart);
 if (count($ids) > 0) {
     $placeholders = implode(",", array_fill(0, count($ids), "?"));
@@ -147,7 +148,6 @@ input[name="postcode"]{
 }
 
 .view-basket-btn{
-    display: inline-block;
     padding: 10px 12px;
     border: 1px solid #111;
     border-radius: 6px;
@@ -155,6 +155,8 @@ input[name="postcode"]{
     color: #111;
     text-decoration: none;
     font-size: 12px;
+    text-align: center;
+    box-sizing: border-box;
 }
 .payment-actions{
     display:flex;
@@ -276,6 +278,14 @@ input[name="postcode"]{
     align-items: center;
     justify-content: center;
 }
+
+.product-column .view-basket-btn{
+    display:block;
+    width:100%;
+    margin-top:15px;
+    text-align:center;
+}
+
 </style>
 HTML;
 
@@ -313,6 +323,8 @@ include 'header.php';
 </div>
 
 </div>
+
+<a href="#" class="view-basket-btn" id="openBasketBtn2">View Basket</a>
 
 </aside>
 
@@ -399,7 +411,7 @@ include 'header.php';
 
 </main>
 
-//basket side bar 
+<!-- basket side bar  -->
 <div id="basketOverlay" class="basket-overlay">
     <div class="basket-drawer">
         <button type="button" id="closeBasketBtn" class="basket-close">&times;</button>
@@ -443,18 +455,18 @@ include 'header.php';
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const openBasketBtn = document.getElementById('openBasketBtn');
+   const openBasketBtns = document.querySelectorAll('#openBasketBtn, #openBasketBtn2');
     const closeBasketBtn = document.getElementById('closeBasketBtn');
     const backToShippingBtn = document.getElementById('backToShippingBtn');
     const basketOverlay = document.getElementById('basketOverlay');
 
-    if (openBasketBtn && basketOverlay) {
-        openBasketBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            basketOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-    }
+    openBasketBtns.forEach(btn => {
+    btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        basketOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+});
 
     function closeBasketDrawer() {
         basketOverlay.classList.remove('active');
