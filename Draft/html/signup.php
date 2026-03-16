@@ -97,6 +97,106 @@
     .error-text {
       flex: 1;
     }
+
+    /* Find Address below */
+    /*Postcode row — input & button side by side */
+    .postcode-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .postcode-row input {
+      flex: 1;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .find-address-btn {
+      padding: 10px 14px;
+      background: #1C1C1E;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .find-address-btn:hover  { background: #000; }
+    .find-address-btn:disabled { background: #999; cursor: not-allowed; }
+
+    /* Dropdown of matching addresses */
+    .address-select-wrap {
+      display: none;
+      margin-top: 8px;
+    }
+    .address-select-wrap.visible { display: block; }
+
+    .address-select-wrap select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    /* manual entry for address */
+    .manual-toggle {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: #666;
+      text-decoration: underline;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    .manual-toggle:hover { color: #000; }
+
+    /* manual address input > hidden, shows if lookup fails */
+    .manual-address-group {
+      display: none;
+      margin-top: 10px;
+    }
+    .manual-address-group.visible { display: block; }
+    .manual-address-group input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* confirmed address display*/
+    .address-confirmed {
+      display: none;
+      margin-top: 8px;
+      padding: 10px 12px;
+      background: #f0f7f3;
+      border: 1px solid #b2d4c0;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #1C1C1E;
+      line-height: 1.5;
+    }
+    .address-confirmed.visible { display: flex; align-items: flex-start; gap: 8px; }
+    .address-confirmed-text { flex: 1; }
+    .address-change-btn {
+      font-size: 12px;
+      color: #666;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      flex-shrink: 0;
+    }
+    .address-change-btn:hover { color: #000; }
   </style>
 </head>
 
@@ -159,9 +259,45 @@
         <input type="tel" id="phone" name="phone" required>
       </div>
 
+      <!--address field replaced with find-address feature ── -->
       <div class="input-group">
         <span class="input-label">Address</span>
-        <input type="text" id="address" name="address" required>
+        <div class="postcode-row"> <!--postcode + lookup button -->
+          <input
+            type="text"
+            id="postcodeInput"
+            placeholder="Enter postcode e.g. NN4 8GR"
+            maxlength="8"
+            autocomplete="postal-code"
+          >
+          <button type="button" class="find-address-btn" id="findAddressBtn" onclick="findAddress()">
+            Find Address
+          </button>
+        </div>
+        <!-- dropdown of matching addresses-->
+        <div class="address-select-wrap" id="addressSelectWrap">
+          <select id="addressSelect" onchange="selectAddress()">
+            <option value="">— Select your address —</option>
+          </select>
+        </div>
+        <!-- Address confirmation-->
+        <div class="address-confirmed" id="addressConfirmed">
+          <span class="address-confirmed-text" id="addressConfirmedText"></span>
+          <button type="button" class="address-change-btn" onclick="resetAddressLookup()">Change</button>
+        </div>
+        <!-- manual entry > if lookup fails-->
+        <div class="manual-address-group" id="manualAddressGroup">
+          <input
+            type="text"
+            id="manualAddress"
+            placeholder="e.g. 26 Lion Ct, Northampton, NN4 8GR"
+            autocomplete="street-address"
+          >
+        </div>
+        <input type="hidden" id="address" name="address">
+        <button type="button" class="manual-toggle" id="manualToggleBtn" onclick="toggleManual()">
+          Enter address manually instead
+        </button>
       </div>
 
       <div class="input-group">
@@ -175,7 +311,7 @@
       </div>
 
       <div id="errorPopup" class="error-popup">
-        <div class="error-icon">!</div>
+        <div class="error-icon" id="errorIcon">!</div>
         <div class="error-text" id="errorText"></div>
       </div>
 
@@ -222,6 +358,114 @@
 </footer>
 
 <script>
+  const ADDRESS_LOOKUP_URL = "/TEAM-13-/Draft/backend/routes/addressLookup.php";
+  let usingManual = false;
+
+  async function findAddress() {
+    const rawPostcode = document.getElementById('postcodeInput').value.trim();
+    if (!rawPostcode) {
+      showPopup('Please enter a postcode first.');
+      return;
+    }
+
+    //UK postcode format check 
+    const postcode = rawPostcode.replace(/\s+/g, ' ').toUpperCase();
+    if (!/^[A-Z]{1,2}[0-9][0-9A-Z]?[0-9][A-Z]{2}$/.test(postcode)) {
+      showPopup('Please enter a valid UK postcode (e.g. NN4 8GR).');
+      return;
+    }
+    const btn = document.getElementById('findAddressBtn');
+    btn.disabled = true;
+    btn.textContent = 'Searching...';
+    hidePopup();
+
+    try {
+      const res = await fetch(`https://api.postcodes.io/postcodes/${encodeURIComponent(postcode)}`);
+      const data = await res.json();
+      if (!res.ok || data.status !== 200) {
+        showManualFallback('Postcode not found. Please enter your address manually.');
+        return;
+      }
+      const town = data.result.admin_district || '';
+      const county = data.result.admin_county || '';
+      const area = [town, county].filter(Boolean).join(', ');
+      document.getElementById('manualAddress').value = area + ', ' + postcode; //prefill manual field with area/postcode
+      hidePopup();
+      showManualFallback(`Postcode confirmed (${area}). Add your house number and street above.`, 'success');
+
+      //populate dropdown with the returned addresses
+      const select = document.getElementById('addressSelect');
+      select.innerHTML = '<option value="">— Select your address —</option>';
+
+    } catch (err) {
+      console.error('Address lookup error:', err);
+      showManualFallback('Address lookup failed. Please enter your address manually.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Find Address';
+    }
+  }
+
+  function selectAddress() {
+    const select = document.getElementById('addressSelect');
+    const chosen = select.value;
+    if (!chosen) return; 
+    usingManual = false; //write the full chosen address into the hidden input that gets submitted
+    document.getElementById('address').value = chosen;//show the confirmed and hide dropdown
+    document.getElementById('addressConfirmedText').textContent = chosen;
+    document.getElementById('addressConfirmed').classList.add('visible');
+    document.getElementById('addressSelectWrap').classList.remove('visible');
+    hidePopup();
+  }
+
+  function resetAddressLookup() {//clear everything so user can start fresh
+    document.getElementById('address').value = '';
+    document.getElementById('postcodeInput').value = '';
+    document.getElementById('addressSelect').innerHTML = '<option value="">— Select your address —</option>';
+    document.getElementById('addressSelectWrap').classList.remove('visible');
+    document.getElementById('addressConfirmed').classList.remove('visible');
+    document.getElementById('manualAddressGroup').classList.remove('visible');
+    document.getElementById('manualAddress').value = '';
+    usingManual = false;
+    document.getElementById('manualToggleBtn').textContent = 'Enter address manually instead';
+  }
+  //show the error in the existing popup and reveal manual field if lookup fails
+  function showManualFallback(message, type = 'error') {
+    if (type !== 'success') showPopup(message);
+    document.getElementById('manualAddressGroup').classList.add('visible');
+    document.getElementById('addressSelectWrap').classList.remove('visible');
+    usingManual = true;
+    document.getElementById('manualToggleBtn').textContent = 'Use postcode lookup instead';
+  }
+
+  function toggleManual() {
+    usingManual = !usingManual;
+    const manualGroup = document.getElementById('manualAddressGroup');
+    const toggleBtn = document.getElementById('manualToggleBtn');
+    const selectWrap = document.getElementById('addressSelectWrap');
+    const confirmed = document.getElementById('addressConfirmed');
+
+    if (usingManual) {
+      manualGroup.classList.add('visible');
+      selectWrap.classList.remove('visible');
+      confirmed.classList.remove('visible');
+      document.getElementById('address').value = '';
+      toggleBtn.textContent = 'Use postcode lookup instead';
+    } else {
+      manualGroup.classList.remove('visible');
+      document.getElementById('manualAddress').value = '';
+      document.getElementById('address').value = '';
+      toggleBtn.textContent = 'Enter address manually instead';
+    }
+  }
+
+  //enter key can trigger postcode lookup for better accessibility/UX
+  document.getElementById('postcodeInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      findAddress();
+    }
+  });
   const API_URL = "/TEAM-13-/Draft/backend/routes/userRoutes.php";
   const form = document.getElementById("signupForm");
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -254,7 +498,6 @@
     const surnameField = document.getElementById("surname");
     const emailField = document.getElementById("email");
     const phoneField = document.getElementById("phone");
-    const addressField = document.getElementById("address");
     const passwordField = document.getElementById("password");
     const confirmPasswordField = document.getElementById("confirmPassword");
 
@@ -262,15 +505,20 @@
     const surname = surnameField.value.trim();
     const email = emailField.value.trim();
     const phone = phoneField.value.trim();
-    const address = addressField.value.trim();
     const password = passwordField.value;
     const confirmPassword = confirmPasswordField.value;
 
-    if (!name) { showPopup("Please enter your name."); nameField.focus(); return; }
+    if (usingManual) {//if manual entry, take that value as the address instead of (empty) hidden field
+      const manualVal = document.getElementById('manualAddress').value.trim();
+      document.getElementById('address').value = manualVal;
+    }
+    const address = document.getElementById('address').value.trim();
+
+    if (!name)    { showPopup("Please enter your name.");    nameField.focus();    return; }
     if (!surname) { showPopup("Please enter your surname."); surnameField.focus(); return; }
     if (!email || !emailPattern.test(email)) { showPopup("Please enter a valid email address."); emailField.focus(); return; }
     if (!phone) { showPopup("Please enter your phone number."); phoneField.focus(); return; }
-    if (!address) { showPopup("Please enter your address."); addressField.focus(); return; }
+    if (!address) { showPopup("Please find or enter your address."); document.getElementById('postcodeInput').focus(); return; } //address required/validated via lookup/manual flow
     if (!password) { showPopup("Please enter a password."); passwordField.focus(); return; }
     if (!confirmPassword) { showPopup("Please confirm your password."); confirmPasswordField.focus(); return; }
     if (password !== confirmPassword) { showPopup("Passwords do not match."); confirmPasswordField.focus(); return; }
@@ -319,4 +567,3 @@
 <script src="../javascript/global/basketIcon.js"></script>
 </body>
 </html>
-
