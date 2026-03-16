@@ -188,7 +188,7 @@ include 'header.php';
                     </div>
                 </a>
 
-                <a class="dash-card span-2" href="addresses.php">
+                <a class="dash-card span-2" href="billings.php">
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
