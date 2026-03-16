@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpo
         exit();
     }
 
-    //add a card
+    //add a card (also checking for duplication and setting default)
     if ($action === 'add_card') {
         $cardNumber     = preg_replace('/\s+/', '', trim($data['card_number'] ?? ''));
         $expiry         = trim($data['expiry'] ?? '');
@@ -66,14 +66,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpo
             echo json_encode(["success" => false, "message" => "You can save a maximum of 5 payment cards."]);
             exit();
         }
+        //check for duplication if card is already in saved
+        $last4 = substr($cardNumber, -4); //same last 4
+        $expiryParts = explode('/', $expiry); //same expiry > split into month/year for DB comparison
+        $expMonth = (int)($expiryParts[0] ?? 0);
+        $expYear = (int)('20' . ($expiryParts[1] ?? '00'));
+        //if user has card with same last 4 or expiry then error
+        $dup = $conn->prepare( "SELECT card_ID FROM user_payment_cards WHERE user_ID = ? AND last_four = ? AND expiry_month = ? AND expiry_year = ?");
+        $dup->bind_param("isii", $user_ID, $last4, $expMonth, $expYear);
+        $dup->execute();
+        if ($dup->get_result()->fetch_assoc()) {
+            $dup->close();
+            echo json_encode(["success" => false, "message" => "This card is already saved to your account."]);
+            exit();
+        }
+        $dup->close();
+
         // If first card, force default
         if ($count === 0) $setDefault = true;
         if ($setDefault) {
-            $clr = $conn->prepare("UPDATE user_payment_cards SET is_default = 0 WHERE user_ID = ?");
+            $clr = $conn->prepare("UPDATE user_payment_cards SET is_default = 0 WHERE user_ID = ?"); //if setting new card as default, unset previous default
             $clr->bind_param("i", $user_ID);
             $clr->execute();
             $clr->close();
         }
+        $isDefault = $setDefault ? 1 : 0; //convert to int for DB
+        $stmt = $conn->prepare( //inserty into DB > only store last 4 digits, expiry, name, default status
+            "INSERT INTO user_payment_cards (user_ID, last_four, expiry_month, expiry_year, cardholder_name, is_default)
+             VALUES (?, ?, ?, ?, ?, ?)" //never store full card number or CVV for security
+        );
+        $stmt->bind_param("isiisi", $user_ID, $last4, $expMonth, $expYear, $cardholderName, $isDefault);
+        $ok = $stmt->execute();
+        $stmt->close(); //json
+        echo json_encode($ok ? ["success" => true,  "message" => "Card saved successfully." ] : ["success" => false, "message" => "Could not save card. Please try again."]);
+        exit();
+    }
+    //set the card as default if option selected
+    if ($action === 'set_default_card') {
+        $cardID = (int)($data['card_ID'] ?? 0);
+        $chk = $conn->prepare("SELECT card_ID FROM user_payment_cards WHERE card_ID = ? AND user_ID = ?");
+        $chk->bind_param("ii", $cardID, $user_ID);
+        $chk->execute();
+        if (!$chk->get_result()->fetch_assoc()) {
+            $chk->close();
+            echo json_encode(["success" => false, "message" => "Card not found."]);
+            exit();
+        }
+        $chk->close();
+        //update default in db > unset previous default and set new one 
+        $clr = $conn->prepare("UPDATE user_payment_cards SET is_default = 0 WHERE user_ID = ?");
+        $clr->bind_param("i", $user_ID);
+        $clr->execute();
+        $clr->close();
+        //set selected card as default
+        $stmt = $conn->prepare("UPDATE user_payment_cards SET is_default = 1 WHERE card_ID = ? AND user_ID = ?");
+        $stmt->bind_param("ii", $cardID, $user_ID);
+        $ok = $stmt->execute();
+        $stmt->close();
+
+        echo json_encode($ok ? ["success" => true,  "message" => "Default payment method updated."] : ["success" => false, "message" => "Could not update default card."]);
+        exit();
     }
     //remove card from saved payment methods
     if ($action === 'remove_card') {
@@ -186,7 +238,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpo
                         </div>
                         <div class="field">
                             <label>CVV</label>
-                            <input type="text" id="cardCvv" placeholder="***" maxlength="3" inputmode="numeric" autocomplete="cc-csc">
+                            <input type="text" id="cardCvv" placeholder="•••" maxlength="3" inputmode="numeric" autocomplete="cc-csc">
                         </div>
                     </div>
 
@@ -305,6 +357,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpo
         document.getElementById('previewName').textContent   = 'FULL NAME'; //reset 
         document.getElementById('previewExpiry').textContent = 'MM / YY';
     }
+
+    async function setDefaultCard(id) { //if selected then set chosen card as default and unset previous
+        const data = await apiCall('set_default_card', { card_ID: id });
+        if (data.success) {
+            showToast('Default payment method updated.');
+            loadCards();
+        } else {
+            showToast(data.message || 'Could not update default.', 'error');
+        }
+    }
+
+    async function confirmRemove() {
+        if (!removingCardID) return;
+        const btn = document.getElementById('confirmRemoveBtn');
+        btn.disabled = true; btn.textContent = 'Removing...';
+
+        const data = await apiCall('remove_card', { card_ID: removingCardID });
+
+        btn.disabled = false; btn.textContent = 'Remove Card';
+        closeRemoveModal();
+
+        if (data.success) {
+            showToast('Card removed.');
+            loadCards();
+        } else {
+            showToast(data.message || 'Could not remove card.', 'error');
+        }
+    }
+
+    document.getElementById('removeModal').addEventListener('click', function(e) {
+        if (e.target === this) closeRemoveModal();
+    });
 
     //note: 
     // insert/response for addcard
