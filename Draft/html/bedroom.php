@@ -46,6 +46,11 @@ if (!empty($_SESSION['user_ID'])) {
       font-family: "Futura", sans-serif;
       font-weight: 100;
       line-height: 1.6;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)), url("../images/bedroom-images/bedroom-back.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
     }
 
     .page-hero-title {
@@ -101,6 +106,66 @@ if (!empty($_SESSION['user_ID'])) {
       line-height: 1.5 !important;
     }
 
+    .top-bar .button-sort {
+      background: #d9d9d9 !important;
+      color: #111111 !important;
+      border: none;
+      border-radius: 999px !important;
+      width: 100%;
+      min-width: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      white-space: nowrap;
+      padding: 10px 12px;
+      transition: background-color 0.2s ease;
+    }
+
+    .tag {
+      background-color: #d9d9d9 !important;
+      border-radius: 999px !important;
+      padding: 8px 14px !important;
+      transition: background-color 0.2s ease;
+    }
+
+    .top-bar {
+      display: grid !important;
+      grid-template-columns: minmax(190px, 1.35fr) repeat(4, minmax(0, 1fr));
+      width: 100%;
+      max-width: 780px !important;
+      gap: 12px;
+      align-items: stretch;
+      margin: 0 auto;
+      padding-bottom: 15px;
+    }
+
+    .top-bar .search {
+      width: 100%;
+      min-width: 0;
+      height: 42px;
+    }
+
+    .top-bar .button-sort:hover {
+      background: #cecece !important;
+    }
+
+    .top-bar .button-sort.active {
+      background: #c2c2c2 !important;
+      color: #111111 !important;
+    }
+
+    .tag:hover,
+    input[type="checkbox"]:checked + .tag {
+      background-color: #c2c2c2 !important;
+    }
+
+    .side-bar {
+      background-color: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+
     .item .product-text {
       padding-bottom: 28px;
     }
@@ -118,8 +183,13 @@ if (!empty($_SESSION['user_ID'])) {
       left: 40px;
       right: 40px;
       z-index: 1000;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow:
+        0 12px 28px rgba(17, 17, 17, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.55);
       border-radius: 50px;
       height: 80px;
     }
@@ -238,8 +308,66 @@ if (!empty($_SESSION['user_ID'])) {
 
     /* Dark mode overrides */
     html.dark-mode .site-header {
-      background-color: #1a1a1a;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      background: rgba(24, 24, 24, 0.55);
+      backdrop-filter: blur(14px) saturate(125%);
+      -webkit-backdrop-filter: blur(14px) saturate(125%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    html.dark-mode body[data-category="bedroom"] {
+      background-image: linear-gradient(rgba(10, 10, 10, 0.74), rgba(10, 10, 10, 0.74)), url("../images/bedroom-images/bedroom-back.jpeg");
+    }
+
+    html.dark-mode .top-bar .button-sort {
+      background: #3a3a3a !important;
+      color: #eeeeee !important;
+      border: 1px solid #4a4a4a !important;
+    }
+
+    html.dark-mode .top-bar .button-sort:hover,
+    html.dark-mode .top-bar .button-sort.active {
+      background: #4a4a4a !important;
+      color: #ffffff !important;
+    }
+
+    html.dark-mode .tag,
+    html.dark-mode input[type="checkbox"]:checked + .tag,
+    html.dark-mode .tag:hover {
+      background-color: #3a3a3a !important;
+      color: #eeeeee !important;
+    }
+
+    html.dark-mode .top-bar .search {
+      background-color: #2a2a2a !important;
+      color: #e6e6e6 !important;
+      border-color: #444 !important;
+    }
+
+    html.dark-mode .top-bar .search::placeholder {
+      color: #aaaaaa;
+    }
+
+    html.dark-mode .item {
+      background: #242424 !important;
+      border-color: #3a3a3a !important;
+      box-shadow: none;
+    }
+
+    html.dark-mode .item .product-text h2,
+    html.dark-mode .item .product-text p,
+    html.dark-mode .side-bar h3,
+    html.dark-mode .side-bar label,
+    html.dark-mode #price-num,
+    html.dark-mode #no-results {
+      color: #e0e0e0 !important;
+    }
+
+    html.dark-mode .side-bar {
+      background-color: rgba(28, 28, 28, 0.9);
+      border-color: #333;
     }
 
     html.dark-mode .site-footer {
@@ -283,7 +411,7 @@ if (!empty($_SESSION['user_ID'])) {
   <script src="../javascript/dark-mode.js"></script>
 </head>
 
-<body>
+<body data-category="bedroom">
 
 <header class="site-header">
   <div class="header-inner">
