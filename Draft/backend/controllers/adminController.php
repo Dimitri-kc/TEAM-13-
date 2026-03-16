@@ -61,6 +61,61 @@ class AdminController {
             "customers" => $customers]);
     }
 
+    public function createCustomer($data) { //for creating and adding new customer to database
+        $name = trim($data['name'] ?? '');
+        $surname = trim($data['surname'] ?? '');
+        $email = trim($data['email'] ?? '');
+        $phone = trim($data['phone'] ?? '');
+        $address = trim($data['address'] ?? '');
+        $password = trim($data['password'] ?? '');
+
+        //validate required fields
+        if ($name === '' || $surname === '' || $email === '' || $password === '') {
+            $this->fail("Name, surname, email and password are required.");
+            return;
+        }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { //validate email format
+            $this->fail("Invalid email address.");
+            return;
+        }
+        if (strlen($password) < 8 || !preg_match('/[^A-Za-z0-9]/', $password)) { //password validation
+            $this->fail("Password must be at least 8 characters and include a special character.");
+            return;
+        }
+        //check for duplicate email
+        $check = $this->conn->prepare("SELECT user_ID FROM users WHERE email = ? LIMIT 1");
+        $check->bind_param("s", $email);
+        $check->execute();
+        $check->store_result();
+        if ($check->num_rows > 0) {
+            $check->close();
+            $this->fail("Email is already in use.");
+            return;
+        }
+        $check->close();
+
+        //hash password before storing
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $role = 'customer'; //default new user role to customer
+        $status = 'active'; // default status
+        $mustChangePassword = 1;
+        //insert new customer into database with role 'customer' and status 'active'
+        $stmt = $this->conn->prepare("INSERT INTO users (name, surname, email, phone, address, password, role, status, must_change_password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssss", $name, $surname, $email, $phone, $address, $hashedPassword, $role, $status, $mustChangePassword);
+        $success = $stmt->execute();
+        if (!$success) {
+            $stmt->close();
+            $this->fail("Failed to create customer.");
+            return;
+        }
+        $newCustomerID = (int)$stmt->insert_id; //get ID of newly created customer
+        $stmt->close();
+
+        echo json_encode([
+            "success" => true, 
+            "message" => "Customer created successfully.", 
+            "customer_ID" => $newCustomerID]);
+    }
     public function getCustomerDetails($data) {
         //get details of a specific customer
         $customerID = (int)($data['customer_ID'] ?? $data['customerId'] ?? 0); //accept either customer_ID or customerId for flexibility

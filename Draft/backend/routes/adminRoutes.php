@@ -34,6 +34,10 @@ switch ($data['action'] ?? '') {
         $adminController->getCustomersList($data);
         break;
 
+    case 'create_customer' : //creates and adds new customer to db
+        $adminController->createCustomer($data);
+        break;
+
     case 'customer_details': //gets details of a specific customer
         $adminController->getCustomerDetails($data);
         break;

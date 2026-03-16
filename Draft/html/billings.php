@@ -391,10 +391,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpo
     });
 
     //note: 
-    // insert/response for addcard
-    // remove card js needed
-    // complete visual preview block
-    //default card handling in both add and remove flows
+    //complete visual preview block
     //billing history panel + api call to fetch past bills >orderconfirmation? or recentorders?
 </script>
 
