@@ -186,21 +186,24 @@ input[name="postcode"]{
     position: relative;
     box-shadow: -8px 0 24px rgba(0,0,0,0.12);
     animation: slideInRight 0.25s ease;
+    overflow: visible;
 }
-@keyframes slideInRight{
-    from{ transform: translateX(100%); }
-    to{ transform: translateX(0); }
-}
+
 .basket-close{
     position: absolute;
-    top: 18px;
-    right: 18px;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
     border: none;
     background: transparent;
-    font-size: 36px;
-    line-height: 1;
+    color: #111;
+    font-size: 32px;
+    line-height: 40px;
+    text-align: center;
     cursor: pointer;
-    color: #222;
+    z-index: 9999;
+    display: block;
 }
 .basket-drawer-content{
     padding: 56px 28px 24px;
