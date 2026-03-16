@@ -26,7 +26,7 @@ if (!empty($_SESSION['user_ID'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bathroom | LOFT & LIVING</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
   <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
   <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
@@ -41,6 +41,73 @@ if (!empty($_SESSION['user_ID'])) {
     /* Fixed Header Pill Style */
     body {
       padding-top: 120px;
+      font-family: "Futura", sans-serif;
+      font-weight: 100;
+      line-height: 1.6;
+    }
+
+    .page-hero-title {
+      text-align: center;
+      margin-top: 20px;
+      font-family: "ivybodoni", sans-serif;
+      font-weight: 500;
+      font-style: italic;
+      letter-spacing: 0.05em;
+    }
+
+    .page-hero-intro {
+      max-width: 980px;
+      margin: 10px auto 24px;
+      padding: 0 24px;
+      text-align: center;
+      font-family: "mr-eaves-modern", sans-serif;
+      font-style: normal;
+      font-weight: 100;
+      line-height: 1.6;
+      font-size: 18px;
+      color: #4a4a4a;
+    }
+
+    .item .product-text p {
+      font-family: "mr-eaves-modern", sans-serif;
+      font-style: normal;
+      font-weight: 100;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .item .product-text h2 {
+      font-family: "Mr Eaves San OT Reg", "mr-eaves-sans", sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.4;
+      font-size: 15px;
+    }
+
+    .side-bar h3,
+    .side-bar label,
+    .side-bar label input[type="checkbox"] + *,
+    .tag,
+    .top-bar .search,
+    .button-sort,
+    #price-num,
+    #no-results {
+      font-family: "mr-eaves-modern", sans-serif !important;
+      font-style: normal;
+      font-weight: 100;
+      font-size: 17px !important;
+      line-height: 1.5 !important;
+    }
+
+    .item .product-text {
+      padding-bottom: 28px;
+    }
+
+    .nav-links a,
+    .profile-link,
+    .profile-welcome {
+      font-family: "neue-haas-grotesk-text", sans-serif !important;
+      font-weight: 500;
     }
 
     .site-header {
@@ -141,7 +208,7 @@ if (!empty($_SESSION['user_ID'])) {
       padding: 18px;
       display: none;
       z-index: 3000;
-      font-family: "Ibarra Real Nova", serif;
+      font-family: "neue-haas-grotesk-text", sans-serif;
     }
 
     .profile-dropdown.open { display: block; }
@@ -151,7 +218,7 @@ if (!empty($_SESSION['user_ID'])) {
       font-weight: 700;
       color: #2B2B2B;
       margin-bottom: 14px;
-      font-family: "Ibarra Real Nova", serif !important;
+      font-family: "neue-haas-grotesk-text", sans-serif !important;
     }
 
     .profile-link {
@@ -160,7 +227,7 @@ if (!empty($_SESSION['user_ID'])) {
       color: #2B2B2B;
       padding: 10px 0;
       text-decoration: none;
-      font-family: "Ibarra Real Nova", serif !important;
+      font-family: "neue-haas-grotesk-text", sans-serif !important;
     }
 
     .profile-link + .profile-link {
@@ -292,7 +359,10 @@ if (!empty($_SESSION['user_ID'])) {
   </nav>
 </header>
 
-<h1 style="text-align:center; margin:20px 0;">BATHROOM</h1>
+<a href="../html/homepage.php" style="text-decoration: none; color: inherit;">
+  <h1 class="page-hero-title">BATHROOM</h1>
+</a>
+<p class="page-hero-intro">Transform your bathroom into a calm and refreshing space with our Bathroom collection. From elegant mirrors and practical storage cabinets to soft bath mats and modern shower curtains, every item is designed to bring comfort and organisation to your daily routine. With clean designs and neutral tones, our bathroom range helps create a relaxing environment inspired by modern spa-like interiors.</p>
 
 <div class="content-wrap">
 
