@@ -104,22 +104,22 @@ Backend Developers.
 Team 13 - CS2TP 2025
 
 ### Backend
-@Dimitri-kc: 
-Categories, Products, Returns, and related Models, Controllers, and Routes.<br>
-@Ama746: 
-Users, Basket, Payments, and related Models, Controllers, Routes, and Services.<br>
-@0marFareh: 
-Orders, Order Items, Reviews, and related Models, Controllers, and Routes.
+Dimitri Khair-Cabalan  
+(240124715)	Categories, Products, Returns, and related Models, Controllers, and Routes.<br>
+Amatullah Stevenson  
+(160158221)	Users, Basket, Payments, and related Models, Controllers, Routes, and Services.<br>
+Omar Fareh  
+(230087675)	Orders, Order Items, Reviews, and related Models, Controllers, and Routes.
 
 ### Frontend
-@bibiala: 
-Homepage, Basket, Order Confirmation pages and related CSS stylesheets.<br>
-@m240124: 
-About, Contact, Categories, Checkout pages and related CSS stylesheets.<br>
-@nvmalhi: 
-Navigation (Header & Footer), Products page and related CSS stylesheets.<br>
-@Ayoub-01abdi: 
-Sign-in & Sign-up pages and related CSS stylesheets.
+Bibi Alaradi  
+(240006097) Homepage, Basket, Order Confirmation pages and related CSS stylesheets.<br>
+Manaal Aouttah  
+(240124977) About, Contact, Categories, Checkout pages and related CSS stylesheets.<br>
+Navdeep Malhi  
+(230042537) Navigation (Header & Footer), Products page and related CSS stylesheets.<br>
+Ayoub Abdisalam  
+(240240392) Sign-in & Sign-up pages and related CSS stylesheets.
 
 
 
