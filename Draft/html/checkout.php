@@ -37,10 +37,22 @@ $userPostcode = $addressParts[2] ?? '';
 }
 $stmt->close();
 
+// fetch default card if one exists
+$defaultCard = null;
+$cardStmt = $conn->prepare(
+    "SELECT last_four, expiry_month, expiry_year, cardholder_name
+     FROM user_payment_cards
+     WHERE user_ID = ? AND is_default = 1
+     LIMIT 1"
+);
+$cardStmt->bind_param("i", $user_ID);
+$cardStmt->execute();
+$defaultCard = $cardStmt->get_result()->fetch_assoc();
+$cardStmt->close();
+
 function money($n){
     return "£" . number_format((float)$n, 2);
 }
-
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 if (!isset($_SESSION['user_ID'])) {
@@ -365,7 +377,12 @@ include 'header.php';
 <div class="card-fields">
 
 <h1 class="form-title">CARD DETAILS</h1>
-
+<?php if ($defaultCard): ?>
+    <div style="font-size:13px; color:#555; margin-bottom:12px; padding:10px 14px; background:#f5f5f5; border-radius:8px;">
+        Default card on file: •••• •••• •••• <?= htmlspecialchars($defaultCard['last_four']) ?> 
+        &nbsp;·&nbsp; Expires <?= str_pad($defaultCard['expiry_month'],2,'0',STR_PAD_LEFT) ?>/<?= substr($defaultCard['expiry_year'],-2) ?>
+    </div>
+<?php endif; ?>
 <input type="text" id="card_number" name="card_number" placeholder="Card Number (1234 4567 8901 2345)" maxlength="19" inputmode="numeric" required />
 <input type="text" id="expiry" name="expiry" placeholder="Expiry Date (MM/YY)" maxlength="5" pattern="(0[1-9]|1[0-2])/[0-9]{2}" required />
 <input type="text" id="cvv" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />

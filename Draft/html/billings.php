@@ -151,6 +151,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpo
             : ["success" => false, "message" => "Could not remove card. Please try again."]);
         exit();
     }
+
+    //billing history
+    if ($action === 'get_history') {
+        require_once '../backend/models/orderModel.php';
+        $orderModel = new OrderModel();
+        $orders = $orderModel->getOrdersByUser($user_ID);
+        echo json_encode(["success" => true, "orders" => $orders]);
+        exit();
+    }
+
     echo json_encode(["success" => false, "message" => "Unknown action."]);
     exit();
 }
@@ -264,6 +274,22 @@ if (!$user) {
         }
         .field-checkbox input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
         .field-checkbox label { cursor: pointer; font-size: 13px; color: var(--mid); text-transform: none; letter-spacing: 0; }
+
+        /*for billing status badge*/
+        .status-badge {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 20px;
+            padding: 3px 10px;
+            white-space: nowrap;
+            border: 1px solid;
+        }
+        .status-badge--paid { color: var(--accent); background: var(--accent-light); border-color: var(--accent); }
+        .status-badge--pending { color: #d97a00; background: #fff8ec; border-color: #d97a00; }
+        .status-badge--cancelled { color: var(--danger); background: var(--danger-light); border-color: var(--danger); }
+        .status-badge--unknown { color: var(--mid); background: #f5f5f5; border-color: var(--mid); }
     </style>
 </head>
 <body>
@@ -340,13 +366,13 @@ if (!$user) {
                     <div class="form-row full">
                         <div class="field">
                             <label>Card Number</label>
-                            <input type="text" id="cardNumber" class="card-input" placeholder="1234 5678 9012 3456" maxlength="19" inputmode="numeric" autocomplete="cc-number" ><!-- oninput="formatCardNumber(this)" -->
+                            <input type="text" id="cardNumber" class="card-input" placeholder="1234 5678 9012 3456" maxlength="19" inputmode="numeric" autocomplete="cc-number" oninput="formatCardNumber(this)">
                         </div>
                     </div>
                     <div class="form-row thirds">
                         <div class="field">
                             <label>Expiry Date</label>
-                            <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" inputmode="numeric" autocomplete="cc-exp" ><!-- oninput="formatExpiry(this)" -->
+                            <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" inputmode="numeric" autocomplete="cc-exp" oninput="formatExpiry(this)">
                         </div>
                         <div class="field">
                             <label>CVV</label>
@@ -483,6 +509,18 @@ if (!$user) {
             </div>`;
         }).join('');
     }
+    //format input
+    function formatCardNumber(input) {
+        let val = input.value.replace(/\D/g, '').slice(0, 16); // digits only, max 16
+        input.value = val.match(/.{1,4}/g)?.join(' ') ?? val; // group into 4s
+    }
+    function formatExpiry(input) {
+        let val = input.value.replace(/\D/g, '').slice(0, 4); // digits only, max 4
+        if (val.length >= 3) {
+            val = val.slice(0, 2) + '/' + val.slice(2); // insert slash MM/YY
+        }
+        input.value = val;
+    }
 
     //save card details to database and validate using paymentModel
     async function saveCard() {
@@ -570,6 +608,44 @@ if (!$user) {
             return;
         }
         //fetch and render billing history
+        if (!data.orders.length) {
+            container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--mid);">No billing history yet.</div>';
+            return;
+        }
+        //formatted all past orders as a table
+        container.innerHTML = `
+            <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                <thead>
+                    <tr style="border-bottom:2px solid var(--light);text-align:left;">
+                        <th style="padding:14px 36px;font-weight:600;color:var(--mid);font-size:11px;letter-spacing:1px;text-transform:uppercase;">Order</th>
+                        <th style="padding:14px 16px;font-weight:600;color:var(--mid);font-size:11px;letter-spacing:1px;text-transform:uppercase;">Date</th>
+                        <th style="padding:14px 16px;font-weight:600;color:var(--mid);font-size:11px;letter-spacing:1px;text-transform:uppercase;">Status</th>
+                        <th style="padding:14px 36px 14px 16px;font-weight:600;color:var(--mid);font-size:11px;letter-spacing:1px;text-transform:uppercase;text-align:right;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${data.orders.map(order => {
+                        const date = new Date(order.order_date).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+                        const statusClass = {
+                            'paid': 'status-badge--paid', //green
+                            'pending':   'status-badge--pending', //amber
+                            'cancelled': 'status-badge--cancelled' //red
+                        }[order.order_status?.toLowerCase()] ?? 'status-badge--unknown';
+
+                        return `
+                        <tr style="border-bottom:1px solid var(--light);">
+                            <td style="padding:16px 36px;font-weight:600;">#${escHtml(String(order.order_ID))}</td>
+                            <td style="padding:16px;color:var(--mid);">${date}</td>
+                            <td style="padding:16px;">
+                                <span class="status-badge ${statusClass}">${escHtml(order.order_status ?? 'Unknown')}</span>
+                            </td>
+                            <td style="padding:16px 36px 16px 16px;font-weight:600;text-align:right;">
+                                £${parseFloat(order.total_price).toFixed(2)}
+                            </td>
+                        </tr>`;
+                    }).join('')}
+                </tbody>
+            </table>`;
     }
     
     //safely render card data
