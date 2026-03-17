@@ -70,7 +70,7 @@ Interaction flows include:
 -	User Authentication: Login and signup forms send POST requests to /routes/userRoutes.php to validate input and manage user sessions.
 -	Product Display: Product pages and Admin-accessible pages request data from /routes/productRoute.php to dynamically retrieve details, categories and images.
 -	Basket Management: The basket page requests /routes/basketRoutes.php to add, remove or update items in the basket, reflecting database changes.
--	Orders & Payments: Order and payment submission are handled via their respected endpoints to ensure efficient transactional processing.
+-	Orders & Payments: Order and payment submission are handled via their respective endpoints to ensure efficient transactional processing.
 -	Returns & Reviews: Returns and reviews are also managed through returnsRoute.php and reviewsRoutes.php
 
 ***Note:*** Full interaction between the frontend and backend API endpoints have now been integrated, with correct calls implemented through fetch() and JSON. 
@@ -98,31 +98,26 @@ The database must be initialized in the following order to satisfy foreign key c
 
 This service is deployed and managed using Webmin.
 •	Staging Environment: The entire codebase is placed in the dedicated Draft folder on Webmin
-Backend Developers.
 
 ## Contributors
 Team 13 - CS2TP 2025
-As the project progressed, page and feature ownership merged into team-wide maintenance.
+As the project progressed, page and feature ownership merged into team-wide maintenance. 
 
 ### Backend
-Dimitri Khair-Cabalan  
-(240124715)	Categories, Products, Returns, and related Models, Controllers, and Routes.<br>
-Amatullah Stevenson  
-(160158221)	Users, Basket, Payments, and related Models, Controllers, Routes, and Services.<br>
-Omar Fareh  
-(230087675)	Orders, Order Items, Reviews, and related Models, Controllers, and Routes.
+@Dimitri-kc: 
+Categories, Products, Returns, and related Models, Controllers, and Routes.<br>
+@Ama746: 
+Users, Basket, Payments, and related Models, Controllers, Routes, and Services.<br>
+@0marFareh: 
+Orders, Order Items, Reviews, and related Models, Controllers, and Routes.
 
 ### Frontend
-Bibi Alaradi  
-(240006097) Homepage, Basket, Order Confirmation pages and related CSS stylesheets.<br>
-Manaal Aouttah  
-(240124977) About, Contact, Categories, Checkout pages and related CSS stylesheets.<br>
-Navdeep Malhi  
-(230042537) Navigation (Header & Footer), Products page and related CSS stylesheets.<br>
-Ayoub Abdisalam  
-(240240392) Sign-in & Sign-up pages and related CSS stylesheets.
-
-
-
-
+@bibiala: 
+Homepage, Basket, Order Confirmation pages and related CSS stylesheets.<br>
+@m240124: 
+About, Contact, Categories, Checkout pages and related CSS stylesheets.<br>
+@nvmalhi: 
+Navigation (Header & Footer), Products page and related CSS stylesheets.<br>
+@Ayoub-01abdi: 
+Sign-in & Sign-up pages and related CSS stylesheets.
 

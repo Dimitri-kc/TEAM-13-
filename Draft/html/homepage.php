@@ -20,8 +20,9 @@ if ($showWelcomeToast) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
 
-    <!-- Typekit: ivybodoni, Futura -->
-    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <!-- Typekit: ivybodoni, Mr Eaves Modern -->
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css"> <!-- Ivybodoni -->
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css"> <!-- Mr Eaves Modern -->
     <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
@@ -37,20 +38,29 @@ if ($showWelcomeToast) {
 <body class="ll-homepage">
 
 <style>
-/* ivybodoni for category boxes, section titles, homepage quote */
-.category .title-box,
-.grey-section h2,
-.reviews-header h2,
-.split-page .left h1,
-.split-page .right h1,
-.homepage-quote-text,
-.homepage-quote-caption {
+
+/* Force IvyBodoni Medium (weight 450) for specific homepage headings */
+.grey-section h2, /* OUR FAVOURITES */
+.reviews-header h2, /* LATEST REVIEWS */
+.split-page .left h1, /* ABOUT US */
+.split-page .right h1 /* CONTACT US */
+{
     font-family: 'ivybodoni', serif !important;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-weight: 450 !important;
+    letter-spacing: 0.04em !important;
 }
 
-/* Futura for all other text */
+/* Other headings/titles remain Ivybodoni Bold */
+.category .title-box,
+.homepage-quote-text,
+.homepage-quote-caption,
+.review-card h3 {
+    font-family: 'ivybodoni', serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+}
+
+/* Force Mr Eaves Modern for all other text */
 body,
 .category-row a,
 .collection-cards .card h3,
@@ -69,14 +79,8 @@ body,
 .footer-section ul,
 .footer-section li,
 .footer-section a {
-    font-family: 'futura-pt', Futura, 'neue-haas-grotesk-text', Arial, sans-serif !important;
-    font-weight: 400;
-}
-
-/* Ensure review card title uses ivybodoni */
-.review-card h3 {
-    font-family: 'ivybodoni', serif !important;
-    font-weight: 700;
+    font-family: 'mr-eaves-modern', 'Mr Eaves Modern', Arial, sans-serif !important;
+    font-weight: 400 !important;
 }
 </style>
 
@@ -241,9 +245,9 @@ body,
     </a>
 </div>
 
-<section class="homepage-quote" aria-label="Brand quote">
-    <p class="homepage-quote-text">"Modern Living Made Simple"</p>
-    <p class="homepage-quote-caption">From timeless designs to everyday essentials, we make modern living effortless.</p>
+
+<section class="homepage-quote-image" aria-label="Brand quote image" style="width:100%;max-width:100vw;padding:0 0 32px 0;">
+    <img src="../images/homepage-images/quote3.png" alt="Brand Quote" style="width:100%;display:block;border-radius:32px;object-fit:cover;">
 </section>
 
 <section class="grey-section">
@@ -327,7 +331,7 @@ body,
 <!-- ABOUT & CONTACT -->
 <div class="split-page">
     <div class="left">
-        <h1>ABOUT US</h1>
+        <h1 style="font-family: 'ivybodoni', serif !important; font-weight: 450 !important; letter-spacing: 0.04em !important;">ABOUT US</h1>
         <p>
             Welcome to Loft & Living, your new breakthrough in
             modern and contemporary living. We are building a brand
@@ -348,7 +352,7 @@ body,
     </div>
     
     <div class="right">
-        <h1>CONTACT US</h1>
+        <h1 style="font-family: 'ivybodoni', serif !important; font-weight: 450 !important; letter-spacing: 0.04em !important;">CONTACT US</h1>
         <div class="form-container">
             <form id="contact-form" action="https://formspree.io/f/xzzlerol" method="POST">
                 <input type="text" name="_gotcha" style="display: none;" />

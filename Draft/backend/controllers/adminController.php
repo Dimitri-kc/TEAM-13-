@@ -40,8 +40,8 @@ class AdminController {
         if ($limit > 100) $limit = 100; //max limit set to 100 to prevent excessive data retrieval
 
         //for retrieving list of all customers in database and their details (name, email, phone, address etc)
-        $sql = "SELECT user_ID as id, name, surname, email, phone, address, status
-                FROM users WHERE role = 'customer'
+        $sql = "SELECT user_ID as id, name, surname, email, phone, address, role, status
+                FROM users
                 ORDER BY created_at DESC LIMIT ?"; 
                 //customer details, sort by newest first, limit results to specified amnt (default 10, max 100) to prevent excessive data retrieval
         

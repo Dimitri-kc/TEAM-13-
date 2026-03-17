@@ -1,3 +1,23 @@
+/* Force About Us and Contact Us headings to match homepage h2s */
+.split-page .left h1,
+.split-page .right h1 {
+    font-family: 'ivybodoni', serif !important;
+    font-weight: 450 !important;
+    letter-spacing: 0.04em !important;
+}
+/* Homepage Quote Image Section */
+.homepage-quote-image {
+    width: 100%;
+    max-width: 100vw;
+    padding-bottom: 32px;
+}
+.homepage-quote-image img {
+    width: 100%;
+    display: block;
+    border-radius: 32px;
+    object-fit: cover;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+}
 /* PAGE */
 body {
     margin: 0;

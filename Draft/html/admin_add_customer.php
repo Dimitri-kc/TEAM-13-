@@ -162,6 +162,29 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
             flex: 1;
         }
 
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: #2f2f2f;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 10px 18px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
         .form-card {
             background: #fbfbfb;
             border: 1px solid #e3e3e3;
@@ -458,7 +481,7 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
             </div>
         </div>
     </footer>
-
+    <div id="toast" class="toast">New user added</div>
     <script>
         const API_URL = "/TEAM-13-/Draft/backend/routes/adminRoutes.php";
         const form = document.getElementById("addCustomerForm");
@@ -476,6 +499,12 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
         function hideMessage() {
             messagePopup.style.display = "none";
             messagePopup.classList.remove("success");
+        }
+        
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 1500);
         }
 
         async function readJsonSafely(response) {
@@ -552,12 +581,12 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
                 const data = await readJsonSafely(response);
 
                 if (data.success) {
-                    showMessage(data.message || "Customer created successfully.", true);
+                    showToast();
                     form.reset();
 
                     setTimeout(function () {
                         window.location.href = "admin_customer_management.php";
-                    }, 1000);
+                    }, 2000);
                 } else {
                     showMessage(data.message || "Unable to create customer.");
                 }
