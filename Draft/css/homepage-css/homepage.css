@@ -1,3 +1,14 @@
+/* Ensure all product images in .collection-cards are square and uniform */
+.collection-cards .card img {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 16px;
+    display: block;
+    margin: 0 auto 12px auto;
+    background: #f4f1ec;
+    box-sizing: border-box;
+}
 /* Force About Us and Contact Us headings to match homepage h2s */
 .split-page .left h1,
 .split-page .right h1 {
@@ -7,16 +18,30 @@
 }
 /* Homepage Quote Image Section */
 .homepage-quote-image {
-    width: 100%;
-    max-width: 100vw;
-    padding-bottom: 32px;
+    width: calc(100% - 48px);
+    max-width: none;
+    margin: 0 auto 32px auto;
+    padding-bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
 }
+
 .homepage-quote-image img {
     width: 100%;
+    max-width: 100%;
     display: block;
     border-radius: 32px;
     object-fit: cover;
     box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+}
+.grey-section {
+    width: calc(100% - 48px) !important;
+    max-width: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box;
 }
 /* PAGE */
 body {
@@ -211,14 +236,28 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    color: #fff;
+    padding: 12px;
+
+    font-family: 'ivybodoni', serif !important;
+    font-weight: 450 !important;
+    font-size: 16px !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
     text-shadow: 0 2px 10px rgba(0,0,0,0.65);
     pointer-events: none;
+    transition: transform 0.25s ease, letter-spacing 0.25s ease;
+.category:hover .image-box img {
+    transform: scale(1.06);
+    transition: transform 0.35s ease;
 }
 
+.category:hover .title-box {
+    transform: scale(1.02);
+    letter-spacing: 0.16em !important;
+}
+}
 .image-box {
     width: 100%;
     aspect-ratio: 4 / 5;

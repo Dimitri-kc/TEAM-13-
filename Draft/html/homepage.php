@@ -38,6 +38,15 @@ if ($showWelcomeToast) {
 <body class="ll-homepage">
 
 <style>
+/* Fade animation for product rotation */
+.collection-cards.fade-out {
+    opacity: 0;
+    transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1);
+}
+.collection-cards.fade-in {
+    opacity: 1;
+    transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1);
+}
 
 /* Force IvyBodoni Medium (weight 450) for specific homepage headings */
 .grey-section h2, /* OUR FAVOURITES */
@@ -56,8 +65,8 @@ if ($showWelcomeToast) {
 .homepage-quote-caption,
 .review-card h3 {
     font-family: 'ivybodoni', serif !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.04em !important;
+    font-weight: 450 !important;
+    letter-spacing: 0.12em !important;
 }
 
 /* Force Mr Eaves Modern for all other text */
@@ -246,48 +255,22 @@ body,
 </div>
 
 
-<section class="homepage-quote-image" aria-label="Brand quote image" style="width:100%;max-width:100vw;padding:0 0 32px 0;">
-    <img src="../images/homepage-images/quote3.png" alt="Brand Quote" style="width:100%;display:block;border-radius:32px;object-fit:cover;">
-</section>
+<div style="width:calc(100% - 48px);max-width:none;margin:0 auto 32px auto;box-sizing:border-box;display:flex;justify-content:center;align-items:center;">
+    <img src="../images/homepage-images/quote3.png" alt="Brand Quote" style="width:100%;max-width:100%;display:block;border-radius:32px;object-fit:cover;box-shadow:0 4px 32px rgba(0,0,0,0.07);">
+</div>
 
 <section class="grey-section">
     <div class="grey-inner">
         <h2>OUR FAVOURITES</h2>
-
-        <div class="collection-cards">
-            <div class="card">
-                <a href="product.php?id=1">
-                    <img src="../images/livingroom-images/sofa.jpg" alt="Sofa">
-                    <h3>VENICE CREAM SOFA</h3>
-                </a>
-            </div>
-            <div class="card">
-                <a href="product.php?id=5">
-                    <img src="../images/livingroom-images/consoletable.png" alt="Console Table">
-                    <h3>NY CONSOLE TABLE</h3>
-                </a>
-            </div>
-            <div class="card">
-                <a href="product.php?id=2">
-                    <img src="../images/livingroom-images/throwpillow3.jpg" alt="Throw Pillow">
-                    <h3>OXFORD THROW PILLOW</h3>
-                </a>
-            </div>
-            <div class="card">
-                  <a href="product.php?id=4">
-                    <img src="../images/livingroom-images/rug.png" alt="Faux Fur Rug">
-                    <h3>FAUX FUR RUG</h3>
-                </a>
-            </div>
-        </div>
+        <div class="collection-cards" id="favourites-cards"></div>
     </div>
 </section>
 
 <section class="reviews-section" style="position:relative;">
-<div class="reviews-header">
-    <h2>LATEST REVIEWS</h2>
-    <button class="add-review-btn" type="button" aria-label="Add Review"></button>
-</div>
+    <div class="reviews-header">
+        <h2>LATEST REVIEWS</h2>
+        <button class="add-review-btn" type="button">+ Add a Review</button>
+    </div>
 
     <div class="reviews-slider-wrapper">
         <button class="nav-btn prev-btn" type="button" onclick="scrollReviews(-1)">‹</button>
@@ -424,6 +407,65 @@ body,
 <script src="../javascript/header_footer_script.js"></script>
 <script src="../javascript/global/basketIcon.js"></script>
 <script src="../javascript/global/search-modal.js"></script>
+
+<script>
+// --- Dynamic OUR FAVOURITES Section ---
+const favouritesContainer = document.getElementById('favourites-cards');
+let allProducts = [];
+const FAVOURITES_TO_SHOW = 4;
+const ROTATE_INTERVAL = 7000;
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function renderFavourites(products) {
+    favouritesContainer.innerHTML = '';
+    products.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <a href="product.php?id=${product.product_ID}">
+                <img src="../images/${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+            </a>
+        `;
+        favouritesContainer.appendChild(card);
+    });
+}
+
+function rotateFavourites() {
+    if (allProducts.length === 0) return;
+    const shuffled = shuffleArray([...allProducts]);
+    const cards = document.querySelector('.collection-cards');
+    if (!cards) return renderFavourites(shuffled.slice(0, FAVOURITES_TO_SHOW));
+    cards.classList.remove('fade-in');
+    cards.classList.add('fade-out');
+    setTimeout(() => {
+        renderFavourites(shuffled.slice(0, FAVOURITES_TO_SHOW));
+        cards.classList.remove('fade-out');
+        cards.classList.add('fade-in');
+    }, 700);
+}
+
+// Fetch all products from backend
+fetch('../backend/routes/productRoute.php?action=index')
+    .then(res => res.json())
+    .then(products => {
+        allProducts = Array.isArray(products) ? products : [];
+        renderFavourites(allProducts.slice(0, FAVOURITES_TO_SHOW));
+        const cards = document.querySelector('.collection-cards');
+        if (cards) cards.classList.add('fade-in');
+        setInterval(rotateFavourites, ROTATE_INTERVAL);
+    })
+    .catch(() => {
+        favouritesContainer.innerHTML = '<div style="padding:2em;text-align:center;">Could not load products.</div>';
+    });
+</script>
 
 <script>
     // Review modal logic
