@@ -1,12 +1,7 @@
 
 /* REVIEWS SECTION */
 
-        /* Reviews / modal CSS (your working version) */
 .reviews-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 100%;
     position: relative;
 }
 
