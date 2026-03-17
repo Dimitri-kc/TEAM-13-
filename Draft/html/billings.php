@@ -154,6 +154,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpo
     echo json_encode(["success" => false, "message" => "Unknown action."]);
     exit();
 }
+
+// Load user for initial page render > sidebar
+$stmt = $conn->prepare("SELECT name, surname, email, address FROM users WHERE user_ID = ?");
+$stmt->bind_param("i", $user_ID);
+$stmt->execute();
+$user = $stmt->get_result()->fetch_assoc();
+$stmt->close();
+
+if (!$user) {
+    header("Location: signin.php");
+    exit();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -164,15 +177,114 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpo
     <title>Billing &amp; Payments | LOFT &amp; LIVING</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/account_settings.css">
+
+    <style>
+        /* ── Card list ── */
+        .cards-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+
+        .payment-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 20px;
+            border: 1.5px solid var(--light);
+            border-radius: 10px;
+            background: var(--cream);
+            transition: border-color 0.2s;
+        }
+        .payment-card.is-default { border-color: var(--accent); background: var(--accent-light); }
+
+        .card-info { flex: 1; }
+        .card-number-display { font-size: 15px; font-weight: 600; letter-spacing: 1px; margin-bottom: 5px; }
+        .card-meta { display: flex; gap: 16px; font-size: 12px; color: var(--mid); }
+
+        .card-default-badge {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: var(--white);
+            border: 1px solid var(--accent);
+            border-radius: 20px;
+            padding: 3px 9px;
+            white-space: nowrap;
+        }
+
+        .btn-set-default {
+            font-family: 'Jost', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--mid);
+            background: var(--white);
+            border: 1.5px solid var(--light);
+            border-radius: 6px;
+            padding: 5px 12px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .btn-set-default:hover { border-color: var(--accent); color: var(--accent); }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--mid);
+            padding: 6px;
+            border-radius: 6px;
+            line-height: 0;
+            transition: color 0.2s, background 0.2s;
+        }
+        .btn-icon:hover { color: var(--danger); background: var(--danger-light); }
+        .btn-icon svg { width: 18px; height: 18px; }
+
+        /* if empty of cards*/
+        .no-cards {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--mid);
+            font-size: 14px;
+        }
+        .no-cards svg { width: 40px; height: 40px; margin-bottom: 12px; opacity: 0.4; }
+
+        /* add card form*/
+        .form-row.thirds { grid-template-columns: 1fr 1fr; }
+
+        .field-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--mid);
+        }
+        .field-checkbox input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
+        .field-checkbox label { cursor: pointer; font-size: 13px; color: var(--mid); text-transform: none; letter-spacing: 0; }
+    </style>
 </head>
 <body>
 
 <?php include 'header.php'; ?>
 
+<div class="page-header">
+    <a href="user_dash.php" class="back-dashboard">← Back to Dashboard</a>
+    <h1>Billing &amp; Payments</h1>
+    <p>Manage your saved payment methods and view your billing history.</p>
+</div>
+
 <div class="settings-layout">
 
     <!--Sidebar similar to account-settings -->
     <aside class="sidebar">
+        <div class="profile-card">
+            <div class="avatar" id="profileAvatar"></div>
+            <h3 id="profileName"><?php echo htmlspecialchars($user['name'] . ' ' . $user['surname']); ?></h3>
+            <p id="profileEmail"><?php echo htmlspecialchars($user['email']); ?></p>
+        </div>
         <nav class="sidebar-nav">
             <button class="nav-item active" onclick="switchPanel('cards', this)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
@@ -222,19 +334,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpo
                     <div class="form-row full">
                         <div class="field">
                             <label>Cardholder Name</label>
-                            <input type="text" id="cardholderName" placeholder="Name as it appears on card" autocomplete="cc-name" oninput="updatePreviewName(this.value)">
+                            <input type="text" id="cardholderName" placeholder="Name as it appears on card" autocomplete="cc-name"> <!-- oninput="updatePreviewName(this.value)" -->
                         </div>
                     </div>
                     <div class="form-row full">
                         <div class="field">
                             <label>Card Number</label>
-                            <input type="text" id="cardNumber" class="card-input" placeholder="1234 5678 9012 3456" maxlength="19" inputmode="numeric" autocomplete="cc-number" oninput="formatCardNumber(this)">
+                            <input type="text" id="cardNumber" class="card-input" placeholder="1234 5678 9012 3456" maxlength="19" inputmode="numeric" autocomplete="cc-number" ><!-- oninput="formatCardNumber(this)" -->
                         </div>
                     </div>
                     <div class="form-row thirds">
                         <div class="field">
                             <label>Expiry Date</label>
-                            <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" inputmode="numeric" autocomplete="cc-exp" oninput="formatExpiry(this)">
+                            <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" inputmode="numeric" autocomplete="cc-exp" ><!-- oninput="formatExpiry(this)" -->
                         </div>
                         <div class="field">
                             <label>CVV</label>
@@ -278,13 +390,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpo
 <div class="modal-overlay" id="removeModal">
     <div class="modal-box">
         <div class="modal-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
         </div>
         <h3>Remove this card?</h3>
         <p>This card will be removed from your saved payment methods. You can always add it again later.</p>
         <div class="modal-actions">
             <button class="btn-danger" id="confirmRemoveBtn" onclick="confirmRemove()">Remove Card</button>
-            <button class="btn-ghost" onclick="closeRemoveModal()">Cancel</button>
+            <button class="btn-ghost" onclick="closeRemoveModal()">CANCEL</button>
         </div>
     </div>
 </div>
@@ -308,6 +420,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpo
         if (name === 'history') loadHistory();
         if (name === 'cards')   loadCards();
     }
+    //initials for profile
+    function getInitials(name) {
+        const parts = name.trim().split(' ').filter(Boolean);
+        return (parts[0][0] + (parts.length > 1 ? parts[parts.length - 1][0] : '')).toUpperCase();
+    }
+    const initialName = document.getElementById('profileName').textContent;
+    document.getElementById('profileAvatar').textContent = getInitials(initialName);
+    loadCards(); //load cards on initial page load
+
     function showToast(msg, type = 'success') { 
         const t = document.getElementById('toast'); 
         document.getElementById('toastMsg').textContent = msg; 
@@ -323,13 +444,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpo
         });
         return res.json();
     }
+    //load any saved cards
+    async function loadCards() {
+        const list = document.getElementById('cardsList');
+        const data = await apiCall('get_cards');
+        if (!data.success) {
+            list.innerHTML = '<div style="color:var(--mid);font-size:14px;">Could not load cards.</div>';
+            return;
+        }
+        const cards = data.cards;
+        if (!cards.length) {
+            list.innerHTML = `
+                <div class="no-cards">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    <p>No saved payment methods yet.<br>Add a card to speed up checkout.</p>
+                </div>`;
+            return;
+        }
+        list.innerHTML = cards.map(card => {
+            const expStr = String(card.expiry_month).padStart(2,'0') + '/' + String(card.expiry_year).slice(-2);
+            const isDefault = parseInt(card.is_default) === 1;
+            return `
+            <div class="payment-card${isDefault ? ' is-default' : ''}" id="pcard-${card.card_ID}">
+                <div class="card-info">
+                    <div class="card-number-display">•••• •••• •••• ${escHtml(card.last_four)}</div>
+                    <div class="card-meta">
+                        <span>Expires ${expStr}</span>
+                        <span>${escHtml(card.cardholder_name)}</span>
+                    </div>
+                </div>
+                ${isDefault
+                    ? '<span class="card-default-badge">Default</span>'
+                    : `<button class="btn-set-default" onclick="setDefaultCard(${card.card_ID})">Set Default</button>`
+                }
+                <button class="btn-icon" onclick="openRemoveModal(${card.card_ID})" title="Remove card" aria-label="Remove card">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                </button>
+            </div>`;
+        }).join('');
+    }
+
     //save card details to database and validate using paymentModel
     async function saveCard() {
         const cardholderName = document.getElementById('cardholderName').value.trim();
-        const cardNumber     = document.getElementById('cardNumber').value.replace(/\s/g,'');
-        const expiry         = document.getElementById('cardExpiry').value.trim();
-        const cvv            = document.getElementById('cardCvv').value.trim();
-        const isDefault      = document.getElementById('cardDefault').checked;
+        const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g,'');
+        const expiry = document.getElementById('cardExpiry').value.trim();
+        const cvv = document.getElementById('cardCvv').value.trim();
+        const isDefault = document.getElementById('cardDefault').checked;
 
         if (!cardholderName) return showToast('Please enter the cardholder name.', 'error');
         if (cardNumber.length !== 16) return showToast('Card number must be 16 digits.', 'error');
@@ -350,12 +511,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpo
         }
     }
 
-    function clearCardForm() { //reset form fields and preview after save
+    function clearCardForm() { //reset form fields and preview after save > preview of card to be added
         ['cardholderName','cardNumber','cardExpiry','cardCvv'].forEach(id => document.getElementById(id).value = '');
         document.getElementById('cardDefault').checked = false;
-        document.getElementById('previewNumber').textContent = '•••• •••• •••• ••••'; //reset preview to default
+        /* document.getElementById('previewNumber').textContent = '•••• •••• •••• ••••'; //reset preview to default
         document.getElementById('previewName').textContent   = 'FULL NAME'; //reset 
-        document.getElementById('previewExpiry').textContent = 'MM / YY';
+        document.getElementById('previewExpiry').textContent = 'MM / YY'; */
     }
 
     async function setDefaultCard(id) { //if selected then set chosen card as default and unset previous
@@ -367,7 +528,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpo
             showToast(data.message || 'Could not update default.', 'error');
         }
     }
-
+//remove modal for card deletion
+    function openRemoveModal(id) {
+        removingCardID = id;
+        document.getElementById('removeModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeRemoveModal() {
+        document.getElementById('removeModal').classList.remove('active');
+        document.body.style.overflow = '';
+        removingCardID = null;
+    }
     async function confirmRemove() {
         if (!removingCardID) return;
         const btn = document.getElementById('confirmRemoveBtn');
@@ -390,8 +561,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //handle all API calls in one endpo
         if (e.target === this) closeRemoveModal();
     });
 
+    async function loadHistory() {
+        const container = document.getElementById('historyContainer');
+        const data = await apiCall('get_history');
+
+        if (!data.success) {
+            container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--mid);">Could not load billing history.</div>';
+            return;
+        }
+        //fetch and render billing history
+    }
+    
+    //safely render card data
+    function escHtml(str) {
+        const d = document.createElement('div');
+        d.textContent = str;
+        return d.innerHTML;
+        }
+
     //note: 
-    //complete visual preview block
+    //complete visual card preview block
     //billing history panel + api call to fetch past bills >orderconfirmation? or recentorders?
 </script>
 
