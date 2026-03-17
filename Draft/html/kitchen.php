@@ -511,9 +511,8 @@ if (!empty($_SESSION['user_ID'])) {
             <label><input type="checkbox" class="category-filter" value="bins" > Bins </label>
             <label><input type="checkbox" class="category-filter" value="dining tables" > Dining Tables </label>
             <label><input type="checkbox" class="category-filter" value="dining chairs" > Dining Chairs</label>
-            <label><input type="checkbox" class="category-filter" value="pans" > Pots and Pans</label>
-            <label><input type="checkbox" class="category-filter" value="cutlery"> Cutlery </label>
-
+            <label><input type="checkbox" class="category-filter" value="dinner sets" > Dinner Sets </label>
+            <label><input type="checkbox" class="category-filter" value="lights"> Lights </label>
             <h3> Price </h3>
             <div class="price-wrap">
                 <label for="price" id="price-num">£0-150</label>
