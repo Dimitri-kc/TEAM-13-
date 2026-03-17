@@ -101,7 +101,7 @@ This service is deployed and managed using Webmin.
 
 ## Contributors
 Team 13 - CS2TP 2025
-As the project progressed, page and feature ownership merged into team-wide maintenance.
+As the project progressed, page and feature ownership merged into team-wide maintenance. 
 
 ### Backend
 @Dimitri-kc: 
