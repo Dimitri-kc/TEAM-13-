@@ -1,3 +1,9 @@
+/* Force Contact Us heading to IvyBodoni Medium, weight 450 */
+.split-page .right h1 {
+    font-family: 'ivybodoni', serif !important;
+    font-weight: 450 !important;
+    letter-spacing: 0.04em !important;
+}
  @import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@400;600;700&display=swap');
 
 body { background-color: #ffffff;
