@@ -45,8 +45,8 @@ if (!empty($_SESSION['user_ID'])) {
             font-family: "Futura", sans-serif;
             font-weight: 100;
             line-height: 1.6;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)), url("../images/office-images/office-back.jpeg");
-            background-size: cover;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)), url("../images/office-images/office-back.jpeg?v=2");
+            background-size: 110%;
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
@@ -317,7 +317,8 @@ if (!empty($_SESSION['user_ID'])) {
         }
 
         html.dark-mode body[data-category="office"] {
-            background-image: linear-gradient(rgba(10, 10, 10, 0.74), rgba(10, 10, 10, 0.74)), url("../images/office-images/office-back.jpeg");
+            background-image: linear-gradient(rgba(10, 10, 10, 0.74), rgba(10, 10, 10, 0.74)), url("../images/office-images/office-back.jpeg?v=2");
+            background-size: 110%;
         }
 
         html.dark-mode .top-bar .button-sort {
@@ -395,8 +396,11 @@ if (!empty($_SESSION['user_ID'])) {
             filter: invert(1);
         }
 
-        html.dark-mode .main-logo {
-            filter: invert(0);
+        html.dark-mode body[data-category="office"] .site-header .logo-wrapper .main-logo,
+        html.dark-mode body[data-category="office"] .logo-wrapper .main-logo,
+        html.dark-mode body[data-category="office"] .main-logo {
+            filter: invert(0) brightness(1.08) contrast(1.02) !important;
+            opacity: 1 !important;
         }
 
         html.dark-mode .social-icon {
