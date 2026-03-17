@@ -241,9 +241,9 @@ body,
     </a>
 </div>
 
-<section class="homepage-quote" aria-label="Brand quote">
-    <p class="homepage-quote-text">"Modern Living Made Simple"</p>
-    <p class="homepage-quote-caption">From timeless designs to everyday essentials, we make modern living effortless.</p>
+
+<section class="homepage-quote-image" aria-label="Brand quote image" style="width:100%;max-width:100vw;padding:0 0 32px 0;">
+    <img src="../images/homepage-images/quote3.png" alt="Brand Quote" style="width:100%;display:block;border-radius:32px;object-fit:cover;">
 </section>
 
 <section class="grey-section">
