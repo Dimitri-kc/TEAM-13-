@@ -34,8 +34,9 @@ if (isset($_SESSION['user_ID'])) {
     <link rel="stylesheet" href="../css/sofa_style.css">
     <link rel="stylesheet" href="../css/favourites-toggle.css">
      <link rel="stylesheet" href="../css/reviews.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> -->
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
 
 </head>
 <body>
