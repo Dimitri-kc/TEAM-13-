@@ -328,6 +328,20 @@ h1 {
         gap: 40px;
     }
 
+    .back-home {
+    display: inline-block;
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-decoration: none;
+    color: #2C6E49;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.back-home:hover {
+    text-decoration: underline;
+}
+
 </style>
 </head>
 
@@ -407,7 +421,10 @@ h1 {
 </header>
 
 <div class="user-container">
-    <h1>My Recent Orders</h1>
+
+    <a href="#" onclick="goBack(event)" class="back-home">← Go Back</a>
+
+    <h1 style="margin-top:10px;">My Recent Orders</h1>
     <p class="subheader">View your recent orders and add to your bag if you want to purchase it again</p>
 
     <div class="orders-grid">
@@ -559,6 +576,15 @@ document.getElementById("returnForm").addEventListener("submit", async function(
         alert("An error occurred: " + error.message);
     }
 });
+
+function goBack(e) {
+    e.preventDefault();
+    if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+    } else {
+        window.location.href = "homepage.php";
+    }
+}
 </script>
 </body>
 </html>
