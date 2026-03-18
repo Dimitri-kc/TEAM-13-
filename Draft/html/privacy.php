@@ -7,10 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy | LOFT & LIVING</title>
     <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'mr-eaves-modern';
             margin: 0;
             padding: 0;
             line-height: 1.6;
@@ -36,7 +35,7 @@
         p {
             margin-bottom: 15px;
         }
-        ul {
+        main.container ul {
             margin: 10px 0 20px 20px;
         }
         .faq-item {
