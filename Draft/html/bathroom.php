@@ -513,7 +513,7 @@ if (!empty($_SESSION['user_ID'])) {
     <label><input type="checkbox" class="category-filter" value="mirrors"> Mirrors</label>
     <label><input type="checkbox" class="category-filter" value="cabinets"> Cabinets</label>
     <label><input type="checkbox" class="category-filter" value="shower curtains"> Shower Curtains</label>
-    <label><input type="checkbox" class="category-filter" value="towels"> Towels</label>
+    <label><input type="checkbox" class="category-filter" value="shelves"> Shelves</label>
     <label><input type="checkbox" class="category-filter" value="bathmats"> Bathmats</label>
 
     <h3>Price</h3>

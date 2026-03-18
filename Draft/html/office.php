@@ -500,8 +500,8 @@ if (!empty($_SESSION['user_ID'])) {
 
             <h3>Keywords</h3>
             <div class="tags">
-                <input type="checkbox" id="grey-tag" value="grey" hidden>
-                <label for="grey-tag" class="tag"> Grey<span class="X">✕</span></label>
+                <input type="checkbox" id="gold-tag" value="gold" hidden>
+                <label for="gold-tag" class="tag"> Gold<span class="X">✕</span></label>
 
                 <input type="checkbox" id="smart-tag" value="smart" hidden>
                 <label for="smart-tag" class="tag">Smart <span class="X">✕</span></label>
@@ -530,9 +530,11 @@ if (!empty($_SESSION['user_ID'])) {
 
             <h3> Colour </h3>
             <label><input type="checkbox" class="colour-filter" value="black"> Black </label>
-            <label><input type="checkbox" class="colour-filter" value="grey" > Grey </label>
             <label><input type="checkbox" class="colour-filter" value="green" > Green </label>
             <label><input type="checkbox" class="colour-filter" value="brown" > Brown </label>
+            <label><input type="checkbox" class="colour-filter" value="beige" > Beige </label>
+            <label><input type="checkbox" class="colour-filter" value="white" > White </label>
+            <label><input type="checkbox" class="colour-filter" value="gold" > Gold </label>
 
             <h3> Size </h3>
             <label><input type="checkbox" class="size-filter" value="one-size" > ONE SIZE </label>

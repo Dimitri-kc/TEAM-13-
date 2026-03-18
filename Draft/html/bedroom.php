@@ -509,15 +509,17 @@ if (!empty($_SESSION['user_ID'])) {
 
       <input type="checkbox" id="comfort-tag" value="comfort" hidden>
       <label for="comfort-tag" class="tag">Comfort <span class="X">✕</span></label>
+
+            <input type="checkbox" id="wall-decor-tag" value="wall decor" hidden>
+      <label for="wall-decor-tag" class="tag">Wall Decor <span class="X">✕</span></label>
     </div>
 
     <h3>Categories</h3>
     <label><input type="checkbox" class="category-filter" value="bed frames"> Bed Frames</label>
-    <label><input type="checkbox" class="category-filter" value="mattresses"> Mattresses</label>
-    <label><input type="checkbox" class="category-filter" value="duvets"> Duvets</label>
-    <label><input type="checkbox" class="category-filter" value="pillows"> Pillows</label>
+    <label><input type="checkbox" class="category-filter" value="lamps"> Lamps</label>
     <label><input type="checkbox" class="category-filter" value="side tables"> Side Tables</label>
-
+     <label><input type="checkbox" class="category-filter" value="footstools"> Footstools</label>
+<label><input type="checkbox" class="category-filter" value="wall art"> Wall Art</label>
     <h3>Price</h3>
     <label id="price-num">£0 - 500</label>
     <div class="price-slider">
@@ -531,7 +533,12 @@ if (!empty($_SESSION['user_ID'])) {
     <label><input type="checkbox" class="colour-filter" value="beige"> Beige</label>
     <label><input type="checkbox" class="colour-filter" value="white"> White</label>
     <label><input type="checkbox" class="colour-filter" value="grey"> Grey</label>
-    <label><input type="checkbox" class="colour-filter" value="wood"> Wood</label>
+    <label><input type="checkbox" class="colour-filter" value="blue"> Blue</label>
+    <label><input type="checkbox" class="colour-filter" value="black"> Black</label>
+    <label><input type="checkbox" class="colour-filter" value="brown"> Brown</label>
+    <label><input type="checkbox" class="colour-filter" value="green"> Green</label>
+    <label><input type="checkbox" class="colour-filter" value="gold"> Gold</label>
+   
 
     <h3>Size</h3>
     <label><input type="checkbox" class="size-filter" value="one-size"> ONE SIZE</label>

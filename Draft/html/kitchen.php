@@ -512,7 +512,7 @@ if (!empty($_SESSION['user_ID'])) {
             <label><input type="checkbox" class="category-filter" value="dining tables" > Dining Tables </label>
             <label><input type="checkbox" class="category-filter" value="dining chairs" > Dining Chairs</label>
             <label><input type="checkbox" class="category-filter" value="dinner sets" > Dinner Sets </label>
-            <label><input type="checkbox" class="category-filter" value="lights"> Lights </label>
+            <label><input type="checkbox" class="category-filter" value="lights"> Ceiling Lights </label>
             <h3> Price </h3>
             <div class="price-wrap">
                 <label for="price" id="price-num">£0-150</label>
@@ -527,8 +527,11 @@ if (!empty($_SESSION['user_ID'])) {
             <h3> Colour </h3>
             <label><input type="checkbox" class="colour-filter" value="beige"> Beige </label>
             <label><input type="checkbox" class="colour-filter" value="grey" > Grey </label>
-            <label><input type="checkbox" class="colour-filter" value="green" > Green </label>
-            <label><input type="checkbox" class="colour-filter" value="gold" > Gold </label>
+
+<label><input type="checkbox" class="colour-filter" value="blue" > Blue </label>
+<label><input type="checkbox" class="colour-filter" value="black" > Black </label>
+<label><input type="checkbox" class="colour-filter" value="brown" > Brown </label>
+<label><input type="checkbox" class="colour-filter" value="white" > White </label>
 
             <h3> Size </h3>
             <label><input type="checkbox" class="size-filter" value="one-size" > ONE SIZE </label>

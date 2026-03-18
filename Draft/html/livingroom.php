@@ -530,7 +530,7 @@ if (!empty($_SESSION['user_ID'])) {
             <label><input type="checkbox" class="category-filter" value="throw pillows"> Throw pillows</label>
             <label><input type="checkbox" class="category-filter" value="throw blankets"> Throw blankets</label>
             <label><input type="checkbox" class="category-filter" value="rugs"> Rugs</label>
-            <label><input type="checkbox" class="category-filter" value="console tables"> Console tables</label>
+            <label><input type="checkbox" class="category-filter" value="coffee tables"> Coffee tables</label>
 
             <h3> Price </h3>
             <div class="price-wrap">
@@ -548,7 +548,10 @@ if (!empty($_SESSION['user_ID'])) {
             <label><input type="checkbox" class="colour-filter" value="beige"> Beige </label>
             <label><input type="checkbox" class="colour-filter" value="grey"> Grey </label>
             <label><input type="checkbox" class="colour-filter" value="green"> Green </label>
-
+            <label><input type="checkbox" class="colour-filter" value="pink"> Pink </label>
+            <label><input type="checkbox" class="colour-filter" value="blue"> Blue </label>
+            <label><input type="checkbox" class="colour-filter" value="brown"> Brown </label>
+            
             <h3> Size </h3>
             <label><input type="checkbox" class="size-filter" value="one-size"> ONE SIZE </label>
         </aside>
