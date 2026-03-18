@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
     color: #000;
     min-width: 1024px;
     overflow-x: auto;
@@ -94,7 +94,7 @@ ul {
     padding: 18px;
     display: none;
     z-index: 999;
-    font-family: "Ibarra Real Nova", serif;
+    font-family: "mr-eaves-modern", Arial, sans-serif;
 }
 
 .dropdown-panel.open {
@@ -113,12 +113,12 @@ ul {
 
 .nav-links a {
     display: block;
-    font-size: 14px;
+    font-size: 16px;
     color: #2B2B2B;
     padding: 10px 0;
     text-decoration: none;
     font-weight: 400;
-    font-family: "Ibarra Real Nova", serif !important;
+    font-family: "mr-eaves-modern", Arial, sans-serif !important;
 }
 
 .nav-links li + li a {
@@ -149,10 +149,11 @@ ul {
 }
 
 .footer-section h4 {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
     margin-bottom: 25px;
     color: #000;
+    font-family: 'ivybodoni', serif;
 }
 
 .footer-section ul li {
@@ -160,8 +161,9 @@ ul {
 }
 
 .footer-section ul li a {
-    font-size: 14px;
+    font-size: 16px;
     color: #444;
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
 }
 
 /* Social Icon specific size */
@@ -208,6 +210,7 @@ ul {
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     display: none;
     z-index: 3000; /* above left menu and header */
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
 }
 
 .profile-dropdown.open {
@@ -215,17 +218,19 @@ ul {
 }
 
 .profile-welcome {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
     color: #000;
     margin-bottom: 14px;
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
 }
 
 .profile-link {
     display: block;
-    font-size: 14px;
+    font-size: 16px;
     color: #444;
     padding: 10px 0;
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
 }
 
 .profile-link + .profile-link {
@@ -270,6 +275,7 @@ ul {
     font-size: 15px;
     font-weight: 600;
     text-align: center;
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
 }
 
 /* Stronger ID-based override to prevent page-level CSS from breaking positioning */

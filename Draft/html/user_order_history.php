@@ -44,7 +44,7 @@ $stmt->close();
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LOFT & LIVING - My Recent Orders</title>
 
-<link rel="stylesheet" href="../css/header_footer_style.css">
+<link rel="stylesheet" href="../css/header_footer_style.css?v=14">
 
 <style>
 body {
@@ -343,6 +343,11 @@ h1 {
 }
 
 </style>
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 
 
@@ -393,32 +398,7 @@ h1 {
 
 <body>
 
-<header class="site-header">
-  <div class="header-inner">
-    <button class="menu-btn">
-        <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon">
-    </button>
-
-    <div class="logo-wrapper">
-      <a href="homepage.php">
-        <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
-      </a>
-    </div>
-
-    <div class="header-actions">
-      <a href="favourites.php">
-        <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
-      </a>
-      <a href="signin.php">
-        <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
-      </a>
-      <a href="basket.php" class="basket-icon">
-          <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
-          <span id="basket-count">0</span>
-      </a>
-    </div>
-  </div>
-</header>
+<?php $headerPartialOnly = true; include 'header.php'; ?>
 
 <div class="user-container">
 
@@ -461,45 +441,7 @@ h1 {
     </div>
 </div>
 
-<footer class="custom-footer">
-  <div class="footer-wrapper">
-
-    <div class="footer-social">
-      <a href="#"><img src="../images/header_footer_images/icon-twitter.png" alt="X"></a>
-      <a href="#"><img src="../images/header_footer_images/icon-instagram.png" alt="Instagram"></a>
-    </div>
-
-    <div class="footer-column">
-      <h4>Navigation</h4>
-      <ul>
-        <li><a href="homepage.php">Homepage</a></li>
-        <li><a href="signin.php">My Account</a></li>
-        <li><a href="favourites.php">Favourites</a></li>
-        <li><a href="basket.php">Basket</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-column">
-      <h4>Categories</h4>
-      <ul>
-        <li><a href="livingroom.php">Living Room</a></li>
-        <li><a href="office.php">Offices</a></li>
-        <li><a href="kitchen.php">Kitchen</a></li>
-        <li><a href="bathroom.php">Bathrooms</a></li>
-        <li><a href="bedroom.php">Bedrooms</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-column">
-      <h4>More...</h4>
-      <ul>
-        <li><a href="contact.php">Contact Us</a></li>
-        <li><a href="about.php">About Us</a></li>
-      </ul>
-    </div>
-
-  </div>
-</footer>
+<?php $footerPartialOnly = true; include 'footer.php'; ?>
 
 
 <script>

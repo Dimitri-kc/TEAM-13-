@@ -14,7 +14,7 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="../css/header_footer_style.css">
+  <link rel="stylesheet" href="../css/header_footer_style.css?v=14">
 
   <style>
     * {
@@ -27,41 +27,6 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
       background: #d9d6cf;
       color: #111;
       min-height: 100vh;
-    }
-
-    .site-header {
-      position: relative !important;
-      width: 100%;
-      background-color: #ffffff !important;
-      z-index: 1000;
-      padding: 15px 0;
-    }
-
-    .header-inner {
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .header-actions {
-      display: flex !important;
-      flex-direction: row !important;
-      align-items: center !important;
-      justify-content: flex-end !important;
-      gap: 20px;
-    }
-
-    .header-actions a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .header-actions img {
-      display: block;
     }
 
     .page-wrap {
@@ -263,63 +228,7 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
       font-size: 14px;
     }
 
-    .site-footer {
-      width: 100%;
-      background-color: #fff;
-      margin-top: auto;
-      padding: 24px 0 32px;
-    }
-
-    .footer-inner {
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 120px 1fr 1fr 1fr;
-      gap: 26px;
-      align-items: start;
-    }
-
-    .footer-section h4 {
-      font-size: 13px;
-      margin: 0 0 12px;
-      font-weight: 600;
-    }
-
-    .footer-section ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .footer-section ul li {
-      margin-bottom: 9px;
-      font-size: 12px;
-    }
-
-    .footer-section ul li a {
-      text-decoration: none;
-      color: #333;
-    }
-
-    .social-links {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding-top: 2px;
-    }
-
-    .social-icon {
-      width: 18px;
-      height: 18px;
-      object-fit: contain;
-    }
-
     @media (max-width: 900px) {
-      .footer-inner {
-        grid-template-columns: 1fr 1fr;
-      }
-
       .recent-list {
         grid-template-columns: 1fr;
       }
@@ -328,10 +237,6 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
     @media (max-width: 640px) {
       .page-shell {
         padding: 24px 16px 20px;
-      }
-
-      .footer-inner {
-        grid-template-columns: 1fr;
       }
 
       .search-row {
@@ -353,38 +258,15 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
       }
     }
   </style>
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <button class="menu-btn" id="menu-toggle-btn">
-        <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
-      </button>
-
-      <div class="logo-wrapper">
-        <a href="homepage.php">
-          <img src="../images/header_footer_images/logo.png" alt="Loft & Living" class="main-logo">
-        </a>
-      </div>
-
-      <div class="header-actions">
-        <a href="basket.php"><img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon"></a>
-        <a href="adminlogin.php"><img src="../images/header_footer_images/icon-user.png" alt="Admin Login" class="ui-icon"></a>
-      </div>
-    </div>
-
-    <nav class="dropdown-panel" id="dropdown-nav">
-      <ul class="nav-links">
-        <li><a href="livingroom.php">Living Room</a></li>
-        <li><a href="bathroom.php">Bathroom</a></li>
-        <li><a href="bedroom.php">Bedroom</a></li>
-        <li><a href="office.php">Office</a></li>
-        <li><a href="kitchen.php">Kitchen</a></li>
-        <li class="nav-divider"><a href="adminlogin.php">Admin Login</a></li>
-      </ul>
-    </nav>
-  </header>
+  <?php $headerPartialOnly = true; include 'header.php'; ?>
 
   <main class="page-wrap">
     <section class="page-shell">
@@ -417,43 +299,7 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-section social-links">
-        <a href="#"><img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon"></a>
-        <a href="#"><img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon"></a>
-      </div>
-
-      <div class="footer-section">
-        <h4>Navigation</h4>
-        <ul>
-          <li><a href="homepage.php">Homepage</a></li>
-          <li><a href="adminlogin.php">Admin Login</a></li>
-          <li><a href="favourites.php">Favourites</a></li>
-          <li><a href="basket.php">Basket</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-section">
-        <h4>Categories</h4>
-        <ul>
-          <li><a href="livingroom.php">Living Room</a></li>
-          <li><a href="office.php">Offices</a></li>
-          <li><a href="kitchen.php">Kitchen</a></li>
-          <li><a href="bathroom.php">Bathrooms</a></li>
-          <li><a href="bedroom.php">Bedrooms</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-section">
-        <h4>More...</h4>
-        <ul>
-          <li><a href="contact.php">Contact Us</a></li>
-          <li><a href="about.php">About Us</a></li>
-        </ul>
-      </div>
-    </div>
-  </footer>
+  <?php $footerPartialOnly = true; include 'footer.php'; ?>
 
   <script>
     const API_URL = "/TEAM-13-/Draft/backend/routes/adminRoutes.php";
@@ -593,7 +439,5 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
     roleFilter.addEventListener("change", applySearch);
     loadCustomers();
   </script>
-
-  <script src="../javascript/header_footer_script.js"></script>
 </body>
 </html>

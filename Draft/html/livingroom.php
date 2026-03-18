@@ -30,7 +30,7 @@ if (!empty($_SESSION['user_ID'])) {
 
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=14">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
     <link rel="stylesheet" href="../css/category-css/livingroom-base.css?v=2">
@@ -294,7 +294,7 @@ if (!empty($_SESSION['user_ID'])) {
         .profile-dropdown.open { display: block; }
 
         .profile-welcome {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 700;
             color: #2B2B2B;
             margin-bottom: 14px;
@@ -303,11 +303,17 @@ if (!empty($_SESSION['user_ID'])) {
 
         .profile-link {
             display: block;
-            font-size: 14px;
+            font-size: 16px;
             color: #2B2B2B;
             padding: 10px 0;
             text-decoration: none;
             font-family: 'mr-eaves-modern', Arial, sans-serif !important;
+        }
+
+        .nav-links a,
+        .footer-section h4,
+        .footer-section a {
+            font-size: 16px;
         }
 
         .profile-link + .profile-link {
@@ -673,6 +679,6 @@ if (!empty($_SESSION['user_ID'])) {
   <script src="../javascript/global/basketIcon.js"></script>
   <script type="module" src="../javascript/livingroom-js/main.js"></script>
         <script src="../javascript/favourites-toggle.js"></script>
-        <script src="../javascript/global/search-modal.js"></script>
+        <script src="../javascript/global/search-modal.js?v=3"></script>
 </body>
 </html>

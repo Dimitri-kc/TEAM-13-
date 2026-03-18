@@ -30,7 +30,7 @@ if (isset($_SESSION['user_ID'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($product['name']); ?> | LOFT & LIVING</title>
-    <link rel="stylesheet" href="../css/header_footer_style.css">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=14">
     <link rel="stylesheet" href="../css/sofa_style.css">
     <link rel="stylesheet" href="../css/favourites-toggle.css">
      <link rel="stylesheet" href="../css/reviews.css">
@@ -38,10 +38,14 @@ if (isset($_SESSION['user_ID'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> -->
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
 
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 <body>
 
-<?php include 'header.php'; ?>
+<?php $headerPartialOnly = true; include 'header.php'; ?>
 
 <main class="container">
     <section class="product-wrapper">
@@ -190,7 +194,7 @@ if (isset($_SESSION['user_ID'])) {
     </div>
 </div>
 
-<?php include 'footer.php'; ?>
+<?php $footerPartialOnly = true; include 'footer.php'; ?>
 
 <!-- IMAGE ZOOM MODAL -->
 <div id="imageModal" class="image-modal">
@@ -202,8 +206,6 @@ if (isset($_SESSION['user_ID'])) {
 </div>
 
 <script src="../javascript/sofa_script.js"></script>
-<script src="../javascript/header_footer_script.js"></script>
-<script src="../javascript/global/basketIcon.js"></script>
 <script src="../javascript/image_zoom.js"></script>
 <script src="../javascript/favourites-toggle.js"></script>
 

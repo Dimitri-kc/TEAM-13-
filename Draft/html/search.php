@@ -398,6 +398,8 @@ main.search-page {
     overflow: hidden;
     background: #fff;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
 }
 
 .search-card a {
@@ -414,6 +416,9 @@ main.search-page {
 
 .search-card-body {
     padding: 12px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
 }
 
 .search-card-body h2 {
@@ -436,6 +441,8 @@ main.search-page {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: auto;
+    padding-top: 14px;
 }
 
 .search-page .card-actions .favourite-toggle-form {
@@ -451,13 +458,39 @@ main.search-page {
     height: 34px;
 }
 
-.basket-add-btn {
-    border: none;
-    border-radius: 8px;
-    padding: 8px 12px;
-    background: #f2f2f2;
+.search-page .basket-add-btn {
+    border: 1.5px solid #6f675c !important;
+    border-radius: 32px !important;
+    padding: 10px 22px !important;
+    background: #6f675c !important;
+    color: #fff !important;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 500 !important;
+    font-size: 15px !important;
+    line-height: 1.2 !important;
+    font-family: 'mr-eaves-modern', 'Mr Eaves Modern', Arial, sans-serif !important;
+    letter-spacing: 0.03em !important;
+    box-shadow: 0 2px 12px rgba(43, 43, 43, 0.08) !important;
+    transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+    white-space: nowrap;
+}
+
+.search-page .basket-add-btn:hover {
+    background: #595247 !important;
+    border-color: #595247 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 18px rgba(43, 43, 43, 0.13) !important;
+}
+
+html.dark-mode .search-page .basket-add-btn {
+    background: #8c8376 !important;
+    border-color: #8c8376 !important;
+    color: #fff !important;
+}
+
+html.dark-mode .search-page .basket-add-btn:hover {
+    background: #a1978a !important;
+    border-color: #a1978a !important;
 }
 
 .no-results {
@@ -602,7 +635,7 @@ include 'header.php';
                                     type="button"
                                     class="basket-add-btn"
                                     onclick="addToBasket(<?php echo (int)$row['product_ID']; ?>, 1, this)"
-                                >Add to Basket</button>
+                                >+ Add to Basket</button>
                             </div>
                         </div>
                     </article>
@@ -682,7 +715,7 @@ include 'header.php';
                             <input type="hidden" name="redirect" value="${escapeHtml(window.location.pathname + window.location.search)}">
                             <button type="submit" class="favourite-toggle-btn js-favourite-button${activeClass}" data-favourite-state="${item.isFavourite ? 'true' : 'false'}" aria-pressed="${pressed}" title="${title}">${heart}</button>
                         </form>
-                        <button type="button" class="basket-add-btn" onclick="addToBasket(${item.product_ID}, 1, this)">Add to Basket</button>
+                        <button type="button" class="basket-add-btn" onclick="addToBasket(${item.product_ID}, 1, this)">+ Add to Basket</button>
                     </div>
                 </div>
             </article>

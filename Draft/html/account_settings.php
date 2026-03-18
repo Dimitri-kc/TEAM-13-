@@ -209,10 +209,17 @@ $addrPost = $addressParts[3] ?? '';
     <title>Account Settings | LOFT & LIVING</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/account_settings.css">
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=14">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <script src="../javascript/dark-mode.js"></script>
+    
 </head>
 <body>
 
-<?php include 'header.php'; ?>
+<?php $headerPartialOnly = true; include 'header.php'; ?>
 
 <div class="page-header">
     <a href="user_dash.php" class="back-dashboard">← Back to Dashboard</a>
@@ -561,6 +568,6 @@ $addrPost = $addressParts[3] ?? '';
     }
 </script>
 
-<?php include 'footer.php'; ?>
+<?php $footerPartialOnly = true; include 'footer.php'; ?>
 </body>
 </html>

@@ -2,8 +2,7 @@
 
 require_once '../backend/services/userFunctions.php';
 require_admin_page('/TEAM-13-/Draft/html/signin.php');
-
-include "header.php";?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,8 +10,16 @@ include "header.php";?>
     <meta charset="UTF-8">
     <title>Admin Product Inventory</title>
     <link rel="stylesheet" href="../css/admin_product_inventory.css">
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=14">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <script src="../javascript/dark-mode.js"></script>
+    
 </head>
 <body>
+    <?php $headerPartialOnly = true; include "header.php"; ?>
 
     <div class="admin-wrapper"style="margin-top: 125px;">
     <h1 class="title">Product Inventory </h1>
@@ -173,7 +180,6 @@ document.getElementById('add-product-btn').addEventListener('click', () => {
 });
 </script>
 
-
+    <?php $footerPartialOnly = true; include 'footer.php'; ?>
 </body>
 </html>
-<?php include 'footer.php'; ?>

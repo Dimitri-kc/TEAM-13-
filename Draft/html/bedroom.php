@@ -30,7 +30,7 @@ if (!empty($_SESSION['user_ID'])) {
 
   <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
   <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
-  <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
+  <link rel="stylesheet" href="../css/header_footer_style.css?v=14">
   <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
   <!-- Living Room CSS (shared layout system) -->
@@ -677,7 +677,7 @@ if (!empty($_SESSION['user_ID'])) {
 <script src="../javascript/global/basketIcon.js"></script>
 <script type="module" src="../javascript/livingroom-js/main.js"></script>
 <script src="../javascript/favourites-toggle.js"></script>
-<script src="../javascript/global/search-modal.js"></script>
+<script src="../javascript/global/search-modal.js?v=3"></script>
 
 </body>
 </html>

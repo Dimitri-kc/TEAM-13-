@@ -22,7 +22,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- global styles + header/footer -->
-    <link rel="stylesheet" href="../css/header_footer_style.css">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=14">
 
     <style>
 
@@ -220,6 +220,11 @@ $headerName = $_SESSION['name'] ?? 'Guest';
             color: #b00020;
         }
     </style>
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 
 <body>
@@ -228,61 +233,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
          Header
          =============================== -->
 
-    <header class="site-header">
-        <div class="header-inner">
-            <button class="menu-btn" id="menu-toggle-btn" type="button">
-                <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
-            </button>
-
-            <div class="logo-wrapper">
-                <a href="homepage.php">
-                    <img src="../images/header_footer_images/logo.png" alt="LOFT &amp; LIVING" class="main-logo">
-                </a>
-            </div>
-
-            <div class="header-actions">
-                <a href="favourites.php">
-                    <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon">
-                </a>
-
-                <div class="profile-wrapper" id="profile-wrapper">
-                    <button class="profile-btn" id="profile-toggle-btn" type="button" aria-haspopup="true" aria-expanded="false">
-                        <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon">
-                    </button>
-
-                    <div class="profile-dropdown" id="profile-dropdown">
-                        <?php if ($isLoggedIn): ?>
-                            <div class="profile-welcome">Welcome, <?php echo htmlspecialchars($headerName); ?></div>
-                        <?php endif; ?>
-
-                        <a class="profile-link" href="signin.php">Sign in</a>
-                        <a class="profile-link" href="signup.php">Sign Up</a>
-                        <a class="profile-link" href="user_dash.php">My account</a>
-
-                        <?php if ($isLoggedIn): ?>
-                            <a class="profile-link profile-link-danger" href="logout.php">Sign out</a>
-                        <?php endif; ?>
-                    </div>
-                </div>
-
-                <a href="basket.php" class="basket-icon">
-                    <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
-                    <span id="basket-count">0</span>
-                </a>
-            </div>
-        </div>
-
-        <nav class="dropdown-panel" id="dropdown-nav">
-            <ul class="nav-links">
-                <li><a href="livingroom.php">Living Room</a></li>
-                <li><a href="bathroom.php">Bathroom</a></li>
-                <li><a href="bedroom.php">Bedroom</a></li>
-                <li><a href="office.php">Office</a></li>
-                <li><a href="kitchen.php">Kitchen</a></li>
-                <li class="nav-divider"><a href="signin.php">My Account</a></li>
-            </ul>
-        </nav>
-    </header>
+    <?php $headerPartialOnly = true; include 'header.php'; ?>
 
     <!-- ===============================
          Main
@@ -334,51 +285,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
          Footer
          =============================== -->
 
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-section social-links">
-                <a href="#">
-                    <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon">
-                </a>
-                <a href="#">
-                    <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon">
-                </a>
-            </div>
-
-            <div class="footer-section">
-                <h4>Navigation</h4>
-                <ul>
-                    <li><a href="homepage.php">Homepage</a></li>
-                    <li><a href="signin.php">My Account</a></li>
-                    <li><a href="favourites.php">Favourites</a></li>
-                    <li><a href="basket.php">Basket</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Categories</h4>
-                <ul>
-                    <li><a href="livingroom.php">Living Room</a></li>
-                    <li><a href="office.php">Offices</a></li>
-                    <li><a href="kitchen.php">Kitchen</a></li>
-                    <li><a href="bathroom.php">Bathrooms</a></li>
-                    <li><a href="bedroom.php">Bedrooms</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>More...</h4>
-                <ul>
-                    <li><a href="contact.php">Contact Us</a></li>
-                    <li><a href="about.php">About Us</a></li>
-                    <li><a href="admin_dash.php">Admin Dashboard</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-
-    <script src="../javascript/header_footer_script.js"></script>
-    <script src="../javascript/global/basketIcon.js"></script>
+    <?php $footerPartialOnly = true; include 'footer.php'; ?>
 
     <script>
         

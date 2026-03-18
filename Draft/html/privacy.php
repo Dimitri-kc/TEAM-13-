@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy | LOFT & LIVING</title>
-    <link rel="stylesheet" href="../css/header_footer_style.css">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=14">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -85,10 +85,15 @@
     text-decoration: underline;
 }
     </style>
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 <body>
 
-<?php include 'header.php'; ?>
+<?php $headerPartialOnly = true; include 'header.php'; ?>
     <main class="container">
     <a href="user_dash.php" class="back-dashboard">← Back to Dashboard</a>
     <h1>Privacy Policy</h1>
@@ -144,6 +149,6 @@
     });
 </script>
 
-<?php include 'footer.php'; ?>
+<?php $footerPartialOnly = true; include 'footer.php'; ?>
 </body>
 </html>

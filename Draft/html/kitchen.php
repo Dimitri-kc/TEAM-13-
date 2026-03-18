@@ -30,7 +30,7 @@ if (!empty($_SESSION['user_ID'])) {
 
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=14">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
     <link rel="stylesheet" href="../css/category-css/livingroom-base.css?v=2">
@@ -671,7 +671,7 @@ if (!empty($_SESSION['user_ID'])) {
     <script src="../javascript/header_footer_script.js"></script>
     <script src="../javascript/global/basketIcon.js"></script>
     <script src="../javascript/favourites-toggle.js"></script>
-    <script src="../javascript/global/search-modal.js"></script>
+    <script src="../javascript/global/search-modal.js?v=3"></script>
 
 </body>
 </html>

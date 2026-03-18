@@ -8,17 +8,22 @@
     <title>Contact | LOFT & LIVING</title>
 
     <!-- Header CSS -->
-    <link rel="stylesheet" href="../css/header_footer_style.css">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=14">
 
     <!-- Page-specific CSS -->
     <link rel="stylesheet" href="../css/contact-css/contact-base.css">
     <link rel="stylesheet" href="../css/contact-css/contact-structure.css">
     <link rel="stylesheet" href="../css/contact-css/contact-reusable.css">
     <link rel="stylesheet" href="../css/contact-css/contact-page.css">
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 <body>
 
-<?php include 'header.php'; ?>  <!-- Include site header here -->
+<?php $headerPartialOnly = true; include 'header.php'; ?>  <!-- Include site header here -->
 
 <main>
     <header id="main-header">
@@ -51,11 +56,9 @@
     </section>
 </main>
 
-<?php include 'footer.php'; ?>  <!-- Include site footer here -->
+<?php $footerPartialOnly = true; include 'footer.php'; ?>  <!-- Include site footer here -->
 
 <!-- JS Scripts -->
-<script src="../javascript/header_footer_script.js"></script>
-<script src="../javascript/global/basketIcon.js"></script>
 
 </body>
 </html>

@@ -50,7 +50,7 @@ body {
     padding: 0;
     background-color: #F4F1EC;
     color: #2B2B2B;
-    font-family: "Ibarra Real Nova", serif;
+    font-family: "mr-eaves-modern", Arial, sans-serif;
 }
 
 /* HERO */
@@ -60,6 +60,40 @@ body {
     position: relative;
     overflow: hidden;
     background: #111;
+}
+
+.homepage-hero::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:210px;
+    pointer-events:none;
+    z-index:1;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.14) 0%,
+        rgba(255, 255, 255, 0.08) 35%,
+        rgba(255, 255, 255, 0.03) 65%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.8) 40%,
+        rgba(0, 0, 0, 0.35) 75%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.8) 40%,
+        rgba(0, 0, 0, 0.35) 75%,
+        rgba(0, 0, 0, 0) 100%
+    );
 }
 
 .homepage-hero .hero-media{
@@ -75,53 +109,65 @@ body {
     content:"";
     position:absolute;
     inset:0;
+    z-index:2;
     background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15));
     pointer-events:none;
 }
 
-/* HOMEPAGE: header overlays hero, no white block */
+/* HOMEPAGE: living-room-style glass header over hero */
 .ll-homepage .site-header{
-    background: transparent !important;
-    border-bottom: none !important;
-    box-shadow: none !important;
-    position: absolute !important;
-    top: 0;
-    left: 0;
-    width: 100%;
+    position: fixed !important;
+    top: 20px;
+    left: clamp(16px, 3vw, 40px);
+    right: clamp(16px, 3vw, 40px);
+    width: auto;
+    height: 80px;
     z-index: 3500;
     overflow: visible;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transition: box-shadow 0.35s ease;
 }
 
 .ll-homepage .site-header::before{
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 125px;
+    inset: 0;
+    border-radius: 50px;
     pointer-events: none;
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(20, 20, 20, 0.24) 0%,
-            rgba(20, 20, 20, 0.14) 34%,
-            rgba(20, 20, 20, 0.07) 58%,
-            rgba(20, 20, 20, 0.03) 76%,
-            rgba(20, 20, 20, 0.00) 100%
-        ),
-        rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(4px) saturate(120%);
-    -webkit-backdrop-filter: blur(4px) saturate(120%);
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 52%, rgba(0,0,0,0.55) 78%, rgba(0,0,0,0) 100%);
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 52%, rgba(0,0,0,0.55) 78%, rgba(0,0,0,0) 100%);
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    box-shadow:
+        0 12px 28px rgba(17, 17, 17, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    transition: opacity 0.35s ease;
     z-index: 0;
 }
 
-.ll-homepage .site-header .header-inner,
-.ll-homepage .site-header .dropdown-panel{
+.ll-homepage .site-header.header-visible::before{
+    opacity: 1;
+}
+
+.ll-homepage .site-header .header-inner{
     position: relative;
-    z-index: 1;
-    
+    z-index: 2;
+}
+
+.ll-homepage .header-inner{
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
 }
 
 .ll-homepage .site-header .ui-icon {
@@ -129,14 +175,74 @@ body {
     opacity: 1 !important;
 }
 
+.ll-homepage .site-header.header-visible .ui-icon{
+    filter: brightness(0) saturate(100%) !important;
+}
+
+html.dark-mode .ll-homepage .site-header::before{
+    background: rgba(24, 24, 24, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px) saturate(125%);
+    -webkit-backdrop-filter: blur(14px) saturate(125%);
+}
+
+html.dark-mode .ll-homepage .site-header{
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+html.dark-mode .ll-homepage .homepage-quote-image img,
+html.dark-mode .ll-homepage .homepage-quote-banner{
+    filter: invert(1) hue-rotate(180deg);
+}
+
 /* Keep dropdown above hero */
-.ll-homepage .dropdown-panel{ z-index: 4000; }
+.ll-homepage .dropdown-panel{
+    position: absolute !important;
+    top: 88px !important;
+    left: 10px !important;
+    z-index: 4000;
+    width: 260px !important;
+    padding: 18px !important;
+    border-radius: 8px !important;
+}
+
+.ll-homepage .profile-dropdown{
+    width: 260px !important;
+    padding: 18px !important;
+    border-radius: 8px !important;
+}
+
+.ll-homepage .nav-links a,
+.ll-homepage .profile-link,
+.ll-homepage .profile-welcome{
+    font-family: 'mr-eaves-modern', Arial, sans-serif !important;
+    font-size: 16px !important;
+    line-height: 1.2 !important;
+}
+
+.ll-homepage .nav-links a,
+.ll-homepage .profile-link{
+    padding: 10px 0 !important;
+    font-weight: 500 !important;
+}
+
+.ll-homepage .profile-welcome{
+    margin-bottom: 14px !important;
+    font-weight: 500 !important;
+}
 
 /* Left tools wrapper */
 .ll-homepage .header-left-tools{
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 25px;
 }
 
 /* ICONS (menu, user, basket etc) -> muted light grey */
@@ -151,6 +257,10 @@ body {
     opacity: 1;
 }
 
+.ll-homepage .site-header.header-visible .ui-icon:hover{
+    filter: brightness(0) saturate(100%) !important;
+}
+
 /* LOGO */
 .ll-homepage .main-logo{
     height: 50px !important;
@@ -159,11 +269,24 @@ body {
     object-fit: contain;
     display: block;
     opacity: 0.95;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease, filter 0.2s ease;
 }
 
 .ll-homepage .main-logo:hover{
     opacity: 1;
+}
+
+.ll-homepage .site-header.header-visible .main-logo{
+    filter: brightness(0) saturate(100%) !important;
+}
+
+html.dark-mode .ll-homepage .site-header.header-visible .ui-icon,
+html.dark-mode .ll-homepage .site-header.header-visible .ui-icon:hover{
+    filter: invert(1) !important;
+}
+
+html.dark-mode .ll-homepage .site-header.header-visible .main-logo{
+    filter: invert(0) !important;
 }
 
 /* MINI SEARCH BUTTON (transparent blurred circle) */
@@ -171,22 +294,12 @@ body {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-
-    width: 40px !important;
-    height: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
-
     padding: 0 !important;
-
     background: none !important;
     backdrop-filter: none !important;
-
     border: none !important;
     outline: none !important;
     box-shadow: none !important;
-
-    border-radius: 999px !important;
     text-decoration: none !important;
 }
 
@@ -288,7 +401,7 @@ body {
 
 .homepage-quote-text {
     margin: 0;
-    font-family: 'Ibarra Real Nova', serif;
+    font-family: 'ivybodoni', serif;
     width: 100%;
     font-size: clamp(28px, 4.1vw, 54px);
     font-style: italic !important;
@@ -302,7 +415,7 @@ body {
 
 .homepage-quote-caption {
     margin: 0;
-    font-family: 'Ibarra Real Nova', serif;
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
     font-size: clamp(14px, 1.6vw, 22px);
     font-style: normal;
     font-weight: 400;
@@ -324,7 +437,7 @@ body {
 }
 
 .grey-section h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'ivybodoni', serif;
     font-size: 2rem; /* match reviews header */
     font-weight: 600;
     margin-bottom: 22px;
@@ -349,7 +462,7 @@ body {
     text-align: center;
     max-width: 25%;
     transition: transform 0.2s ease;
-    font-family: "Ibarra Real Nova", serif !important;
+    font-family: "mr-eaves-modern", Arial, sans-serif !important;
     display: block;
 }
 
@@ -474,7 +587,7 @@ body {
 
 .ll-homepage .split-page .right label {
     color: #2B2B2B;
-    font-family: "Ibarra Real Nova", serif;
+    font-family: "mr-eaves-modern", Arial, sans-serif;
 }
 
 .ll-homepage .split-page .right input,
@@ -482,7 +595,7 @@ body {
     background-color: #F4F1EC !important;
     color: #2B2B2B !important;
     border: 1px solid #D8CFC2 !important;
-    font-family: "Ibarra Real Nova", serif;
+    font-family: "mr-eaves-modern", Arial, sans-serif;
 }
 
 .ll-homepage .split-page .right input::placeholder,
@@ -535,29 +648,30 @@ body {
             background: #fff;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             border: 1px solid #e0e0e0;
+            border-radius: 8px;
             padding: 18px;
             display: none;
             z-index: 3000;
-            font-family: "Ibarra Real Nova", serif;
+            font-family: "mr-eaves-modern", Arial, sans-serif;
         }
 
         .profile-dropdown.open { display: block; }
 
         .profile-welcome {
-            font-size: 14px;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 500;
             color: #2B2B2B;
             margin-bottom: 14px;
-            font-family: "Ibarra Real Nova", serif !important;
+            font-family: "mr-eaves-modern", Arial, sans-serif !important;
         }
 
         .profile-link {
             display: block;
-            font-size: 14px;
+            font-size: 16px;
             color: #2B2B2B;
             padding: 10px 0;
             text-decoration: none;
-            font-family: "Ibarra Real Nova", serif !important;
+            font-family: "mr-eaves-modern", Arial, sans-serif !important;
         }
 
         .profile-link + .profile-link {
@@ -567,18 +681,3 @@ body {
         .profile-link-danger {
             color: #b00020;
         }
-
-
-        /* fixed dropdown which was low */
-     .ll-homepage .dropdown-panel {
-    top: -30px;
-}
-
-    /* ------------------------------------------------------------------
-       Homepage: force base text size to 20px for non-heading elements
-       Leaves headings (h1-h6) and title elements (like `.title-box`) untouched
-       Uses !important to override inline/font-specific rules on the homepage only
-       ------------------------------------------------------------------ */
-    .ll-homepage *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.title-box) {
-        font-size: 17px !important;
-    }

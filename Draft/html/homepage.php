@@ -23,10 +23,10 @@ if ($showWelcomeToast) {
     <!-- Typekit: ivybodoni, Mr Eaves Modern -->
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css"> <!-- Ivybodoni -->
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css"> <!-- Mr Eaves Modern -->
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=14">
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
-    <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=22">
+    <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=38">
      <link rel="stylesheet" href="../css/reviews.css?v=2">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
@@ -82,7 +82,6 @@ body,
 .review-card,
 .review-modal,
 .profile-welcome,
-.nav-links a,
 .footer-section,
 .footer-section h4,
 .footer-section ul,
@@ -94,9 +93,6 @@ body,
 
 /* Standardize non-heading homepage text to 16px */
 .category .title-box,
-.profile-welcome,
-.profile-link,
-.nav-links a,
 .split-page p,
 .split-page label,
 .split-page input,
@@ -114,8 +110,42 @@ body,
 #charCounter,
 .footer-section ul,
 .footer-section li,
+.footer-section h4,
 .footer-section a {
     font-size: 16px !important;
+}
+
+/* Match the shared profile dropdown styling used on other pages */
+.profile-dropdown {
+    border-radius: 8px !important;
+    font-family: 'mr-eaves-modern', Arial, sans-serif !important;
+}
+
+.profile-welcome {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #2B2B2B !important;
+    margin-bottom: 14px !important;
+    font-family: 'mr-eaves-modern', Arial, sans-serif !important;
+}
+
+.profile-link {
+    display: block !important;
+    font-size: 16px !important;
+    color: #2B2B2B !important;
+    padding: 10px 0 !important;
+    text-decoration: none !important;
+    font-family: 'mr-eaves-modern', Arial, sans-serif !important;
+}
+
+.profile-link + .profile-link {
+    border-top: 1px solid #E5E1DB !important;
+}
+
+.nav-links a {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    font-family: 'mr-eaves-modern', Arial, sans-serif !important;
 }
 
 /* Keep the basket counter badge compact on the homepage header */
@@ -184,16 +214,13 @@ body,
                         <a class="profile-link" href="signup.php">Sign Up</a>
                     <?php endif; ?>
 
-                    <?php if ($isAdmin): ?>
-                        <a class="profile-link" href="admin_dash.php">Admin Dashboard</a>
-                    <?php endif; ?>
-
-                    <a class="profile-link" href="user_dash.php">My Account</a>
-
                     <?php if ($isLoggedIn): ?>
+                        <a class="profile-link" href="user_dash.php">My Account</a>
                         <a class="profile-link" href="user_order_history.php">My Orders</a>
+                        <?php if ($isAdmin): ?>
+                            <a class="profile-link" href="admin_dash.php">Admin Dashboard</a>
+                        <?php endif; ?>
                         <a class="profile-link" href="signout.php">Sign Out</a>
-                        
                     <?php endif; ?>
                 </div>
             </div>
@@ -296,8 +323,8 @@ body,
 </div>
 
 
-<div style="width:calc(100% - 48px);max-width:none;margin:0 auto 32px auto;box-sizing:border-box;display:flex;justify-content:center;align-items:center;">
-    <img src="../images/homepage-images/quote3.png" alt="Brand Quote" style="width:100%;max-width:100%;display:block;border-radius:32px;object-fit:cover;box-shadow:0 4px 32px rgba(0,0,0,0.07);">
+<div class="homepage-quote-banner-wrap" style="width:calc(100% - 48px);max-width:none;margin:0 auto 32px auto;box-sizing:border-box;display:flex;justify-content:center;align-items:center;">
+    <img class="homepage-quote-banner" src="../images/homepage-images/quote3.png" alt="Brand Quote" style="width:100%;max-width:100%;display:block;border-radius:32px;object-fit:cover;box-shadow:0 4px 32px rgba(0,0,0,0.07);">
 </div>
 
 <section class="grey-section">
@@ -447,7 +474,7 @@ body,
 
 <script src="../javascript/header_footer_script.js"></script>
 <script src="../javascript/global/basketIcon.js"></script>
-<script src="../javascript/global/search-modal.js"></script>
+<script src="../javascript/global/search-modal.js?v=3"></script>
 
 <script>
 // --- Dynamic OUR FAVOURITES Section ---
@@ -509,6 +536,21 @@ fetch('../backend/routes/productRoute.php?action=index')
 </script>
 
 <script>
+    (function initHomepageHeaderScrollState() {
+        const homepageHeader = document.querySelector('.ll-homepage .site-header');
+
+        if (!homepageHeader) {
+            return;
+        }
+
+        const updateHeaderState = () => {
+            homepageHeader.classList.toggle('header-visible', window.scrollY > 36);
+        };
+
+        updateHeaderState();
+        window.addEventListener('scroll', updateHeaderState, { passive: true });
+    })();
+
     // Review modal logic
     const modal = document.getElementById("reviewModal");
     const addBtn = document.querySelector(".add-review-btn");

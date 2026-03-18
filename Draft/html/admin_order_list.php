@@ -12,7 +12,7 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
 
 <title>Admin - Orders & Shipments</title>
 
-<link rel="stylesheet" href="../css/header_footer_style.css">
+<link rel="stylesheet" href="../css/header_footer_style.css?v=14">
 <link rel="stylesheet" href="../css/category-css/livingroom-base.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">
@@ -209,42 +209,16 @@ grid-template-columns:1fr;
 }
 
 </style>
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 
 <body>
 
-<header class="site-header">
-<div class="header-inner">
-
-<button class="menu-btn">
-<img src="../images/header_footer_images/icon-menu.png" class="ui-icon">
-</button>
-
-<div class="logo-wrapper">
-<a href="homepage.php">
-<img src="../images/header_footer_images/logo.png" class="main-logo">
-</a>
-</div>
-
-<div class="header-actions">
-
-<a href="favourites.php">
-<img src="../images/header_footer_images/icon-heart.png" class="ui-icon">
-</a>
-
-<a href="signin.php">
-<img src="../images/header_footer_images/icon-user.png" class="ui-icon">
-</a>
-
-<a href="basket.php" class="basket-icon">
-<img src="../images/header_footer_images/icon-basket.png" class="ui-icon">
-<span id="basket-count">0</span>
-</a>
-
-</div>
-
-</div>
-</header>
+<?php $headerPartialOnly = true; include 'header.php'; ?>
 
 <div class="admin-container">
 
@@ -419,49 +393,7 @@ card.querySelector(".order-status").innerText="Order Status: "+status;
 
 <!-- Footer -->
 
-<footer class="site-footer">
-<div class="footer-inner">
-
-<div class="footer-section social-links">
-<a href="#"><img src="../images/header_footer_images/icon-twitter.png" class="social-icon"></a>
-<a href="#"><img src="../images/header_footer_images/icon-instagram.png" class="social-icon"></a>
-</div>
-
-<div class="footer-section">
-<h4>Navigation</h4>
-<ul>
-<li><a href="homepage.php">Homepage</a></li>
-<li><a href="signin.php">My Account</a></li>
-<li><a href="favourites.php">Favourites</a></li>
-<li><a href="basket.php">Basket</a></li>
-</ul>
-</div>
-
-<div class="footer-section">
-<h4>Categories</h4>
-<ul>
-<li><a href="livingroom.php">Living Room</a></li>
-<li><a href="office.php">Offices</a></li>
-<li><a href="kitchen.php">Kitchen</a></li>
-<li><a href="bathroom.php">Bathrooms</a></li>
-<li><a href="bedroom.php">Bedrooms</a></li>
-</ul>
-</div>
-
-<div class="footer-section">
-<h4>More...</h4>
-<ul>
-<li><a href="contact.php">Contact Us</a></li>
-<li><a href="about.php">About Us</a></li>
-</ul>
-</div>
-
-</div>
-</footer>
-
-<script src="../javascript/header_footer_script.js"></script>
-<script src="../javascript/global/basketIcon.js"></script>
-<script src="../javascript/global/search-modal.js"></script>
+<?php $footerPartialOnly = true; include 'footer.php'; ?>
 
 </body>
 </html>
