@@ -27,28 +27,25 @@ if (!empty($_SESSION['user_ID'])) {
   <title>Bathroom | LOFT & LIVING</title>
 
   <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+  <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
   <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
   <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
   <!-- Living Room CSS (REQUIRED – correct files) -->
-  <link rel="stylesheet" href="../css/category-css/livingroom-base.css">
-  <link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
-  <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">
-  <link rel="stylesheet" href="../css/category-css/livingroom-page.css">
+  <link rel="stylesheet" href="../css/category-css/livingroom-base.css?v=2">
+  <link rel="stylesheet" href="../css/category-css/livingroom-structure.css?v=4">
+  <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css?v=5">
+  <link rel="stylesheet" href="../css/category-css/livingroom-page.css?v=2">
   <link rel="stylesheet" href="../css/favourites-toggle.css">
+  <link rel="stylesheet" href="../css/category-css/category-backgrounds.css?v=1">
 
   <style>
     /* Fixed Header Pill Style */
     body {
       padding-top: 120px;
-      font-family: "Futura", sans-serif;
+      font-family: "mr-eaves-modern", Arial, sans-serif;
       font-weight: 100;
       line-height: 1.6;
-      background-image: linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)), url("../images/bathroom-images/bathroom-back.jpeg");
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
     }
 
     .page-hero-title {
@@ -82,7 +79,7 @@ if (!empty($_SESSION['user_ID'])) {
     }
 
     .item .product-text h2 {
-      font-family: "Mr Eaves San OT Reg", "mr-eaves-sans", sans-serif;
+      font-family: "ivybodoni", serif;
       font-style: normal;
       font-weight: 400;
       line-height: 1.4;
@@ -170,8 +167,13 @@ if (!empty($_SESSION['user_ID'])) {
 
     .nav-links a,
     .profile-link,
-    .profile-welcome {
-      font-family: "neue-haas-grotesk-text", sans-serif !important;
+    .profile-welcome,
+    .footer-section,
+    .footer-section h4,
+    .footer-section ul,
+    .footer-section li,
+    .footer-section a {
+      font-family: "mr-eaves-modern", Arial, sans-serif !important;
       font-weight: 500;
     }
 
@@ -278,7 +280,7 @@ if (!empty($_SESSION['user_ID'])) {
       padding: 18px;
       display: none;
       z-index: 3000;
-      font-family: "neue-haas-grotesk-text", sans-serif;
+      font-family: "mr-eaves-modern", Arial, sans-serif;
     }
 
     .profile-dropdown.open { display: block; }
@@ -288,7 +290,7 @@ if (!empty($_SESSION['user_ID'])) {
       font-weight: 700;
       color: #2B2B2B;
       margin-bottom: 14px;
-      font-family: "neue-haas-grotesk-text", sans-serif !important;
+      font-family: "mr-eaves-modern", Arial, sans-serif !important;
     }
 
     .profile-link {
@@ -297,7 +299,7 @@ if (!empty($_SESSION['user_ID'])) {
       color: #2B2B2B;
       padding: 10px 0;
       text-decoration: none;
-      font-family: "neue-haas-grotesk-text", sans-serif !important;
+      font-family: "mr-eaves-modern", Arial, sans-serif !important;
     }
 
     .profile-link + .profile-link {
@@ -315,9 +317,7 @@ if (!empty($_SESSION['user_ID'])) {
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
-    html.dark-mode body[data-category="bathroom"] {
-      background-image: linear-gradient(rgba(10, 10, 10, 0.74), rgba(10, 10, 10, 0.74)), url("../images/bathroom-images/bathroom-back.jpeg");
-    }
+    /* background image for dark mode handled in centralized CSS */
 
     html.dark-mode .top-bar .button-sort {
       background: #3a3a3a !important;
@@ -445,6 +445,7 @@ if (!empty($_SESSION['user_ID'])) {
           <?php
             if (session_status() === PHP_SESSION_NONE) session_start();
             $isLoggedIn = !empty($_SESSION['user_ID']);
+            $isAdmin = (($_SESSION['role'] ?? '') === 'admin');
             $headerName = $_SESSION['name'] ?? 'Guest';
           ?>
 
@@ -459,11 +460,13 @@ if (!empty($_SESSION['user_ID'])) {
             <a class="profile-link" href="signup.php">Sign Up</a>
           <?php endif; ?>
 
-          <a class="profile-link" href="user_dash.php">My account</a>
-
           <?php if ($isLoggedIn): ?>
+            <a class="profile-link" href="user_dash.php">My Account</a>
             <a class="profile-link" href="user_order_history.php">My Orders</a>
-            <a class="profile-link" href="signout.php">Sign out</a>
+            <?php if ($isAdmin): ?>
+              <a class="profile-link" href="admin_dash.php">Admin Dashboard</a>
+            <?php endif; ?>
+            <a class="profile-link" href="signout.php">Sign Out</a>
           <?php endif; ?>
         </div>
       </div>
@@ -482,7 +485,6 @@ if (!empty($_SESSION['user_ID'])) {
       <li><a href="bedroom.php">Bedroom</a></li>
       <li><a href="office.php">Office</a></li>
       <li><a href="kitchen.php">Kitchen</a></li>
-      <li class="nav-divider"><a href="signin.php">My Account</a></li>
     </ul>
   </nav>
 </header>
@@ -588,7 +590,7 @@ if (!empty($_SESSION['user_ID'])) {
 </form>
 
 <!--onclick to pass product_ID in function - API fetch details from DB-->
-<button type="submit" onclick="addToBasket(<?= $row['product_ID'] ?>, 1)" title="Add to basket" style="background: rgba(0,0,0,0.08); border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px;">+</button>
+<button type="button" class="add-basket-btn" onclick="addToBasket(<?= $row['product_ID'] ?>, 1)" title="Add to basket">+ Add to Basket</button>
 
 </div>
                  

@@ -26,8 +26,8 @@ if ($showWelcomeToast) {
     <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
-    <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=21">
-     <link rel="stylesheet" href="../css/reviews.css">
+    <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=22">
+     <link rel="stylesheet" href="../css/reviews.css?v=2">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
     <script src="../javascript/dark-mode.js"></script>
@@ -90,6 +90,47 @@ body,
 .footer-section a {
     font-family: 'mr-eaves-modern', 'Mr Eaves Modern', Arial, sans-serif !important;
     font-weight: 400 !important;
+}
+
+/* Standardize non-heading homepage text to 16px */
+.category .title-box,
+.profile-welcome,
+.profile-link,
+.nav-links a,
+.split-page p,
+.split-page label,
+.split-page input,
+.split-page textarea,
+.split-page button,
+.reviews-section .add-review-btn,
+.collection-cards .card,
+.review-card p,
+.review-card .name,
+.review-card .date,
+.review-modal label,
+.review-modal input,
+.review-modal textarea,
+.review-modal button,
+#charCounter,
+.footer-section ul,
+.footer-section li,
+.footer-section a {
+    font-size: 16px !important;
+}
+
+/* Keep the basket counter badge compact on the homepage header */
+.basket-icon #basket-count {
+    top: -5px !important;
+    right: -5px !important;
+    min-width: 16px !important;
+    height: 16px !important;
+    padding: 0 4px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 10px !important;
+    line-height: 1 !important;
+    border-radius: 999px !important;
 }
 </style>
 

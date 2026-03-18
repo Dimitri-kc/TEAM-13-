@@ -129,7 +129,7 @@ if (isset($_SESSION['user_ID'])) {
     <section class="reviews-section">
         <div class="reviews-header">
             <h2>LATEST REVIEWS</h2>
-            <button class="add-review-btn"></button>
+            <button class="add-review-btn" type="button">+ Add a Review</button>
         </div>
         <div class="reviews-slider-wrapper">
             <button class="nav-btn prev-btn" onclick="scrollReviews(-1)">‹</button>

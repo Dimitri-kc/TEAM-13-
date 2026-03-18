@@ -104,7 +104,7 @@
 }
 
 .review-card p {
-    font-size: 13px;
+    font-size: 16px;
     color: #2B2B2B;
     margin-bottom: 15px;
     word-wrap: break-word;
@@ -128,11 +128,11 @@
 .name {
     display: block;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 16px;
 }
 
 .date {
-    font-size: 11px;
+    font-size: 16px;
     color: #B8AFA4;
 }
 
@@ -243,7 +243,7 @@
 }
 
 #reviewForm label {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     color: #2B2B2B;
     margin-bottom: 2px;
@@ -257,7 +257,7 @@
     padding: 7px 9px;
     border-radius: 8px;
     border: 1px solid #E5E1DB;
-    font-size: 12px;
+    font-size: 16px;
     background: #FFFFFF;
     color: #2B2B2B;
     box-sizing: border-box;
@@ -276,7 +276,7 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 600;
     margin-top: 2px;
     transition: background 0.2s;

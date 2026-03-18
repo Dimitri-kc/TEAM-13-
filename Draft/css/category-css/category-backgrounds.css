@@ -1,0 +1,80 @@
+/* Category background images with a light faded overlay for readability */
+/* Image files should be placed under Draft/images/<category>/ with names shown below. */
+
+body[data-category] {
+  /* keep content above backgrounds */
+  background-color: #ffffff;
+}
+
+/* Kitchen */
+body[data-category="kitchen"] {
+  background-image: linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)), url("../../images/kitchen/kitchen-back.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* Living room */
+body[data-category="livingroom"] {
+  background-image: linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)), url("../../images/livingroom/home-back.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* Bathroom */
+body[data-category="bathroom"] {
+  background-image: linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)), url("../../images/bathroom/bathroom-back.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* Bedroom */
+body[data-category="bedroom"] {
+  background-image: linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)), url("../../images/bedroom/bedroom-back.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* Office */
+body[data-category="office"] {
+  background-image: linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)), url("../../images/office/office-back.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* Dark mode variants: darker overlay while keeping the same images */
+html.dark-mode body[data-category="kitchen"] {
+  background-image: linear-gradient(rgba(10,10,10,0.7), rgba(10,10,10,0.7)), url("../../images/kitchen/kitchen-back.jpeg");
+}
+
+html.dark-mode body[data-category="livingroom"] {
+  background-image: linear-gradient(rgba(10,10,10,0.74), rgba(10,10,10,0.74)), url("../../images/livingroom/home-back.jpeg");
+}
+
+html.dark-mode body[data-category="bathroom"] {
+  background-image: linear-gradient(rgba(10,10,10,0.7), rgba(10,10,10,0.7)), url("../../images/bathroom/bathroom-back.jpeg");
+}
+
+html.dark-mode body[data-category="bedroom"] {
+  background-image: linear-gradient(rgba(10,10,10,0.7), rgba(10,10,10,0.7)), url("../../images/bedroom/bedroom-back.jpeg");
+}
+
+html.dark-mode body[data-category="office"] {
+  background-image: linear-gradient(rgba(10,10,10,0.7), rgba(10,10,10,0.7)), url("../../images/office/office-back.jpeg");
+}
+
+/* Make sure main content areas remain readable on small screens */
+@media (max-width: 900px) {
+  body[data-category] {
+    background-attachment: scroll;
+  }
+}

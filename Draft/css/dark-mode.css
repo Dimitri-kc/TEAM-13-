@@ -409,17 +409,7 @@ html.dark-mode .add-review-btn {
 }
 
 html.dark-mode .add-review-btn::before {
-    content: "+" !important;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff !important;
-    font-size: 20px;
-    font-weight: 300;
-    line-height: 1;
-    opacity: 1 !important;
-    border: none !important;
+    content: none !important;
 }
 
 html.dark-mode .add-review-btn:hover {

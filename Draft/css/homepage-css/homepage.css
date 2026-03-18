@@ -237,7 +237,7 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
     letter-spacing: 0.8px;
     color: #fff;
@@ -340,7 +340,7 @@ body {
 }
 
 .collection-cards .card {
-    font-size: 13px;
+    font-size: 16px;
     background: transparent;
     border: none;
     border-radius: 10px;
@@ -376,6 +376,7 @@ body {
 
 .collection-cards .card h3 {
     color: #2B2B2B;
+    font-size: 18px;
     font-weight: normal;
     margin: 0;
 }
@@ -453,7 +454,7 @@ body {
 }
 
 .ll-homepage .split-page .logo-caption {
-    font-size: 12px;
+    font-size: 16px;
     color: #666;
     margin-top: 10px;
     font-style: italic;
@@ -579,5 +580,5 @@ body {
        Uses !important to override inline/font-specific rules on the homepage only
        ------------------------------------------------------------------ */
     .ll-homepage *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.title-box) {
-        font-size: 18px !important;
+        font-size: 17px !important;
     }
