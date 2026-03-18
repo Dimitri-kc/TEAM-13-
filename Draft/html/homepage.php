@@ -256,7 +256,7 @@ body,
 
 
 <div style="width:calc(100% - 48px);max-width:none;margin:0 auto 32px auto;box-sizing:border-box;display:flex;justify-content:center;align-items:center;">
-    <img src="../images/homepage-images/quote3.png" alt="Brand Quote" style="width:100%;max-width:100%;display:block;border-radius:32px;object-fit:cover;box-shadow:0 4px 32px rgba(0,0,0,0.07);transform: scale(1.2);">
+    <img src="../images/homepage-images/quote3.png" alt="Brand Quote" style="width:100%;max-width:100%;display:block;border-radius:32px;object-fit:cover;box-shadow:0 4px 32px rgba(0,0,0,0.07);">
 </div>
 
 <section class="grey-section">
@@ -327,7 +327,7 @@ body,
             & Living is here to help you create your dream space.
             Established in 2025, our commitment since day one has been
             to focus on exceptional design and quality while maintaining
-            an affordable cost.
+            an affordability.
         </p>
         <div class="about-logo-container">
             <img src="../images/homepage-images/aboutus.png" alt="Loft & Living Logo" class="about-logo">

@@ -28,8 +28,8 @@ if (!empty($_SESSION['user_ID'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Living Room | LOFT & LIVING</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
@@ -43,7 +43,7 @@ if (!empty($_SESSION['user_ID'])) {
         /* Fixed Header Pill Style */
         body {
             padding-top: 120px;
-            font-family: "Futura", sans-serif;
+            font-family: 'mr-eaves-modern', Arial, sans-serif;
             font-weight: 100;
             line-height: 1.6;
             background-image: linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)), url("../images/livingroom-images/home-back.jpeg");
@@ -84,7 +84,7 @@ if (!empty($_SESSION['user_ID'])) {
         }
 
         .item .product-text h2 {
-            font-family: "Mr Eaves San OT Reg", "mr-eaves-sans", sans-serif;
+            font-family: 'ivybodoni', serif;
             font-style: normal;
             font-weight: 400;
             line-height: 1.4;
@@ -195,7 +195,7 @@ if (!empty($_SESSION['user_ID'])) {
         .nav-links a,
         .profile-link,
         .profile-welcome {
-            font-family: "neue-haas-grotesk-text", sans-serif !important;
+            font-family: 'mr-eaves-modern', Arial, sans-serif !important;
             font-weight: 500;
         }
 
