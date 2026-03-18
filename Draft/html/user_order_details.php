@@ -168,6 +168,19 @@ grid-template-columns:1fr;
 
 }
 
+.back-home {
+    display: inline-block;
+    margin: 20px 0 0px 140px; /* top 20px, right 0, bottom 20px, left 70px */
+    font-size: 14px;
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.back-home:hover {
+    text-decoration: underline;
+}
 </style>
 
 </head>
@@ -209,7 +222,9 @@ grid-template-columns:1fr;
 
 </header>
 
-<div class="container">
+<a href="#" onclick="goBack(event)" class="back-home">← Go Back</a>
+
+    <div class="container">
 
 <div class="left-section">
 
@@ -328,5 +343,17 @@ United Kingdom
 <script src="../javascript/header_footer_script.js"></script>
 <script src="../javascript/global/basketIcon.js"></script>
 
+//Go back button
+<script>
+function goBack(e) {
+    e.preventDefault();
+
+    if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+    } else {
+        window.location.href = "orders.php"; 
+    }
+}
+</script>
 </body>
 </html>
