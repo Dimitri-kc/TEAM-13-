@@ -434,6 +434,36 @@ select {
             box-shadow: 0 0 0 3px rgba(198,40,40,0.2);
         }
 
+        html.dark-mode .stock-in {
+            background-color: rgba(46, 125, 50, 0.18);
+            color: #b8f5bf;
+            border: 1px solid rgba(46, 125, 50, 0.35);
+        }
+        html.dark-mode .stock-in .stock-dot {
+            background-color: #7ee083;
+            box-shadow: 0 0 0 3px rgba(126, 224, 131, 0.18);
+        }
+
+        html.dark-mode .stock-low {
+            background-color: rgba(230, 81, 0, 0.18);
+            color: #ffcc8a;
+            border: 1px solid rgba(230, 81, 0, 0.35);
+        }
+        html.dark-mode .stock-low .stock-dot {
+            background-color: #ffb25c;
+            box-shadow: 0 0 0 3px rgba(255, 178, 92, 0.18);
+        }
+
+        html.dark-mode .stock-out {
+            background-color: rgba(198, 40, 40, 0.18);
+            color: #ff9d9d;
+            border: 1px solid rgba(198, 40, 40, 0.35);
+        }
+        html.dark-mode .stock-out .stock-dot {
+            background-color: #ff7f7f;
+            box-shadow: 0 0 0 3px rgba(255, 127, 127, 0.18);
+        }
+
         /* Disabled basket button */
         .add-to-basket:disabled {
             background-color: #ccc;

@@ -31,7 +31,7 @@ if (isset($_SESSION['user_ID'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($product['name']); ?> | LOFT & LIVING</title>
     <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
-    <link rel="stylesheet" href="../css/sofa_style.css">
+    <link rel="stylesheet" href="../css/sofa_style.css?v=2">
     <link rel="stylesheet" href="../css/favourites-toggle.css">
      <link rel="stylesheet" href="../css/reviews.css">
     <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
