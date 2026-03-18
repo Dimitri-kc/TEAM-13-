@@ -23,21 +23,10 @@
       background-color: #EAE8E4;
     }
 
-    .site-header {
-      position: relative !important;
-      width: 100%;
-      background-color: #ffffff !important;
-      z-index: 1000;
-      padding: 15px 0;
-    }
-
-    .header-inner {
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
+    body.page-background {
+      justify-content: flex-start !important;
+      align-items: stretch !important;
+      width: 100% !important;
     }
 
     main.form-container {

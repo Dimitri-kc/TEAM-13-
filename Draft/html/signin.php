@@ -281,11 +281,16 @@ $headerName = $_SESSION['name'] ?? 'Guest';
         </div>
     </main>
 
-    <!-- ===============================
-         Footer
-         =============================== -->
+        <!-- ===============================
+            Footer
+            =============================== -->
 
-    <?php $footerPartialOnly = true; include 'footer.php'; ?>
+        <?php
+           $footerPartialOnly = true;
+           // show Admin link only on the sign-in page
+           $showAdminLink = true;
+           include 'footer.php';
+        ?>
 
     <script>
         

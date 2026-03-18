@@ -37,6 +37,9 @@
             <ul>
                 <li><a href="contact.php">Contact Us</a></li>
                 <li><a href="about.php">About Us</a></li>
+                <?php if (!empty($showAdminLink)): ?>
+                    <li><a href="admin_signin.php">Admin</a></li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
