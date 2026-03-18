@@ -130,6 +130,21 @@ $extraHeadContent = <<<'HTML'
 
         @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 580px) { .grid { grid-template-columns: 1fr; } }
+
+.back-home {
+    display: inline-block;
+    margin-bottom: 15px;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    text-decoration: none;
+    color: var(--accent);
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.back-home:hover {
+    text-decoration: underline;
+}
     </style>
 HTML;
 
@@ -137,9 +152,13 @@ include 'header.php';
 ?>
 
 <main class="favourites-main">
-    <div class="wrap">
-        <h1>My Favourites</h1>
-        <div class="sub">See an item you like? Come back to it later at any time</div>
+    <div class="wrap"><div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+   <a href="#" onclick="goBack(event)" class="back-home">← Go Back</a>
+</div>
+
+<h1>My Favourites</h1>
+<div class="sub">See an item you like? Come back to it later at any time</div>
+
 
       <form method="post" style="margin-bottom:15px;">
     <button type="submit" name="clear_favs" class="btn" onclick="return confirm('Clear all favourites?')">
@@ -148,7 +167,7 @@ include 'header.php';
 </form>
         <?php if (empty($favs)): ?>
             <div class="empty">No favourites yet. Go to categories and like a product.</div>
-            <div class="actions"><a href="homepage.php">Back to Homepage</a></div>
+   
         <?php else: ?>
 
             <div class="grid">
@@ -196,9 +215,6 @@ include 'header.php';
                 <?php endforeach; ?>
             </div>
 
-            <div class="actions" style="margin-top:18px;">
-                <a href="homepage.php">Back to homepage</a>
-            </div>
         <?php endif; ?>
     </div>
 </main>
@@ -206,6 +222,15 @@ include 'header.php';
 <?php include 'footer.php'; ?>
 
 <script> 
+//Go back button
+function goBack(e) {
+    e.preventDefault();
+    if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+    } else {
+        window.location.href = "homepage.php"; // fallback
+    }
+}
 //add to bag functionality 
 document.addEventListener('click', async (e) => {
     const btn = e.target.closest('.js-add-to-bag');
@@ -219,4 +244,7 @@ document.addEventListener('click', async (e) => {
     if (ok) btn.textContent = 'Added';
     btn.disabled = false;
 });
+
+
+
 </script>
