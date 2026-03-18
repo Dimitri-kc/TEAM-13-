@@ -370,7 +370,7 @@
 
     //UK postcode format check 
     const postcode = rawPostcode.replace(/\s+/g, ' ').toUpperCase();
-    if (!/^[A-Z]{1,2}[0-9][0-9A-Z]?[0-9][A-Z]{2}$/.test(postcode)) {
+    if (!/^[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}$/.test(postcode)) {
       showPopup('Please enter a valid UK postcode (e.g. NN4 8GR).');
       return;
     }
