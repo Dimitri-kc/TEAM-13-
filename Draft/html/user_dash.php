@@ -192,11 +192,11 @@ include 'header.php';
                     <div class="dash-card-inner">
                         <div class="card-top">
                             <div class="card-media">
-                                <img src="../images/dashboard/dash3.png" alt="My Addresses">
+                                <img src="../images/dashboard/dash3.png" alt="My Payments">
                             </div>
                             <div>
-                                <h3>My Addresses</h3>
-                                <p>View any saved addresses and make any changes</p>
+                                <h3>My Payments</h3>
+                                <p>Manage your saved payment methods and view your billing history.</p>
                             </div>
                         </div>
                     </div>
