@@ -1,5 +1,6 @@
 .top-bar .search {
-width: 327px;
+width: min(327px, 100%);
+flex: 1 1 220px;
 height: 40px;
 padding: 1px 15px;
 border-radius: 40px;
@@ -174,19 +175,26 @@ html.dark-mode .product-grid .item .add-basket-btn:hover {
     display: inline-block;
 }
 /* basket product counter  */
-/* OVERRIDE: Force basket-count badge to grey, defeating all previous styles */
+/* Match the compact homepage basket badge on category pages */
 #basket-count, .basket-icon #basket-count, header .basket-icon #basket-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
+    position: absolute !important;
+    top: -5px !important;
+    right: -5px !important;
     background: #a2a2a2 !important;
     color: white !important;
-    font-size: 12px;
+    min-width: 16px !important;
+    height: 16px !important;
+    padding: 0 4px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 10px !important;
     font-weight: bold;
-    border-radius: 50%;
-    padding: 2px 6px;
+    line-height: 1 !important;
+    border-radius: 999px !important;
     box-shadow: none !important;
     border: none !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 /* image */

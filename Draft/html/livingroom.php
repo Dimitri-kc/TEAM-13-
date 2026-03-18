@@ -34,8 +34,8 @@ if (!empty($_SESSION['user_ID'])) {
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
     <link rel="stylesheet" href="../css/category-css/livingroom-base.css?v=2">
-    <link rel="stylesheet" href="../css/category-css/livingroom-structure.css?v=4">
-    <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css?v=5">
+    <link rel="stylesheet" href="../css/category-css/livingroom-structure.css?v=5">
+    <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css?v=7">
     <link rel="stylesheet" href="../css/category-css/livingroom-page.css?v=2">
     <link rel="stylesheet" href="../css/favourites-toggle.css">
     <link rel="stylesheet" href="../css/category-css/category-backgrounds.css?v=1">
@@ -44,6 +44,8 @@ if (!empty($_SESSION['user_ID'])) {
         /* Fixed Header Pill Style */
         body {
             padding-top: 120px;
+            min-width: 0;
+            overflow-x: hidden;
             font-family: 'mr-eaves-modern', Arial, sans-serif;
             font-weight: 100;
             line-height: 1.6;
@@ -186,8 +188,8 @@ if (!empty($_SESSION['user_ID'])) {
         .site-header {
             position: fixed;
             top: 20px;
-            left: 40px;
-            right: 40px;
+            left: clamp(16px, 3vw, 40px);
+            right: clamp(16px, 3vw, 40px);
             z-index: 1000;
             background: rgba(255, 255, 255, 0.55);
             backdrop-filter: blur(14px) saturate(140%);

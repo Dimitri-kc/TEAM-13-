@@ -30,6 +30,37 @@ $extraHeadContent = $extraHeadContent ?? '';
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
     <link rel="stylesheet" href="../css/reusable_header.css">
     <?php echo $extraHeadContent; ?>
+    <style>
+        /* Strong inline rule to ensure the header basket badge stays compact across pages */
+        #basket-count, .basket-icon #basket-count, header .basket-icon #basket-count {
+            position: absolute !important;
+            top: -5px !important;
+            right: -5px !important;
+            /* enforce exact badge dimensions */
+            width: 16px !important;
+            height: 16px !important;
+            min-width: 16px !important;
+            max-width: 28px !important;
+            padding: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 10px !important;
+            line-height: 1 !important;
+            font-weight: 700 !important;
+            color: #ffffff !important;
+            background: #a2a2a2 !important;
+            border-radius: 999px !important;
+            box-shadow: none !important;
+            border: none !important;
+            transform: none !important;
+            -webkit-transform: none !important;
+            zoom: 1 !important;
+            text-align: center !important;
+            overflow: hidden !important;
+            white-space: nowrap !important;
+        }
+    </style>
     <script src="../javascript/dark-mode.js"></script>
 </head>
 
