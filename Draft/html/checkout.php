@@ -9,7 +9,6 @@ $userPhone = '';
 $userAddress1 = '';
 $userAddress2 = '';
 $userCity = '';
-$userCountyRegion = '';
 $userPostcode = '';
 
 if (!isset($_SESSION['user_ID'])) {
@@ -32,7 +31,6 @@ $addressParts = array_map('trim', explode(',', $user['address'] ?? '',3));
 $userAddress1 = $addressParts[0] ?? ''; 
 $userAddress2 = '';
 $userCity = $addressParts[1] ?? '';
-$userCountyRegion = ''; 
 $userPostcode = $addressParts[2] ?? '';
 }
 $stmt->close();
@@ -366,9 +364,6 @@ include 'header.php';
 <label><strong>City *</strong></label>
 <input type="text" name="city" value="<?php echo htmlspecialchars($userCity); ?>" required>
 
-<label><strong>County/Region *</strong></label>
-<input type="text" name="county_region" value="<?php echo htmlspecialchars($userCountyRegion); ?>" required>
-
 <label><strong>Postcode *</strong></label>
 <input type="text" name="postcode" value="<?php echo htmlspecialchars($userPostcode); ?>" required>
 </div>
@@ -377,15 +372,34 @@ include 'header.php';
 <div class="card-fields">
 
 <h1 class="form-title">CARD DETAILS</h1>
-<?php if ($defaultCard): ?>
+<?php if ($defaultCard): 
+     $prefillExpiry = str_pad($defaultCard['expiry_month'],2,'0',STR_PAD_LEFT) . '/' . substr($defaultCard['expiry_year'],-2);
+?>
     <div style="font-size:13px; color:#555; margin-bottom:12px; padding:10px 14px; background:#f5f5f5; border-radius:8px;">
         Default card on file: •••• •••• •••• <?= htmlspecialchars($defaultCard['last_four']) ?> 
         &nbsp;·&nbsp; Expires <?= str_pad($defaultCard['expiry_month'],2,'0',STR_PAD_LEFT) ?>/<?= substr($defaultCard['expiry_year'],-2) ?>
     </div>
-<?php endif; ?>
-<input type="text" id="card_number" name="card_number" placeholder="Card Number (1234 4567 8901 2345)" maxlength="19" inputmode="numeric" required />
-<input type="text" id="expiry" name="expiry" placeholder="Expiry Date (MM/YY)" maxlength="5" pattern="(0[1-9]|1[0-2])/[0-9]{2}" required />
+
+    <!-- hidden pre-filled fields submitted with form -->
+    <input type="hidden" name="card_number" value="************<?= htmlspecialchars($defaultCard['last_four']) ?>">
+    <input type="hidden" name="expiry" value="<?= $prefillExpiry ?>">
+    <!-- only CVV required -->
+    <input type="text" id="cvv" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />
+
+    <!-- manual override toggle -->
+    <button type="button" onclick="toggleManualEntry()" style="background:none;border:none;color:#555;font-size:12px;text-decoration:underline;cursor:pointer;padding:4px 0;margin-bottom:10px;">
+        Enter card details manually
+    </button>
+    <div id="manualFields" style="display:none;">
+        <input type="text" id="card_number_manual" placeholder="Card Number" maxlength="19" inputmode="numeric" oninput="formatCardNumber(this)">
+        <input type="text" id="expiry_manual" placeholder="Expiry Date (MM/YY)" maxlength="5" oninput="formatExpiry(this)">
+    </div>
+
+<?php else: ?>
+<input type="text" id="card_number" name="card_number" placeholder="Card Number (1234 4567 8901 2345)" maxlength="19" inputmode="numeric" oninput="formatCardNumber(this)" required />
+<input type="text" id="expiry" name="expiry" placeholder="Expiry Date (MM/YY)" maxlength="5" pattern="(0[1-9]|1[0-2])/[0-9]{2}" oninput="formatExpiry(this)" required />
 <input type="text" id="cvv" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />
+<?php endif; ?>
 
 <div class="payment-summary">
     <div class="row">
@@ -506,6 +520,33 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+function toggleManualEntry() {
+    const manual = document.getElementById('manualFields');
+    const isHidden = manual.style.display === 'none';
+    manual.style.display = isHidden ? 'block' : 'none';
+
+    // if opening manual, override the hidden fields on input
+    if (isHidden) {
+        document.getElementById('card_number_manual').addEventListener('input', function() {
+            document.querySelector('input[name="card_number"]').value = this.value.replace(/\s/g,'');
+        });
+        document.getElementById('expiry_manual').addEventListener('input', function() {
+            document.querySelector('input[name="expiry"]').value = this.value;
+        });
+    }
+}
+
+function formatCardNumber(input) {
+    let val = input.value.replace(/\D/g, '').slice(0, 16);
+    input.value = val.match(/.{1,4}/g)?.join(' ') ?? val;
+}
+
+function formatExpiry(input) { 
+    let val = input.value.replace(/\D/g, '').slice(0, 4);
+    if (val.length >= 3) val = val.slice(0, 2) + '/' + val.slice(2);
+    input.value = val;
+}
 </script>
 
 <?php include 'footer.php'; ?>
