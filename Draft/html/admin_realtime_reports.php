@@ -121,7 +121,7 @@ while ($row = $result2->fetch_assoc()) {
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=14">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
     <link rel="stylesheet" href="../css/reusable_header.css?v=4">
     <script src="../javascript/dark-mode.js"></script>
     

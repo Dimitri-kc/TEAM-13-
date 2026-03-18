@@ -72,7 +72,7 @@ $postcode = $addressParts[4] ?? '';
 
 <title>Order Details</title>
 
-<link rel="stylesheet" href="../css/header_footer_style.css?v=14">
+<link rel="stylesheet" href="../css/header_footer_style.css?v=15">
 
 <style>
 

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Website Page</title>
 
-<link rel="stylesheet" href="../css/header_footer_style.css?v=14">
+<link rel="stylesheet" href="../css/header_footer_style.css?v=15">
 <link rel="stylesheet" href="../css/category-css/livingroom-base.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">

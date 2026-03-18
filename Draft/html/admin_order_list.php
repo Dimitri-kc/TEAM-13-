@@ -12,7 +12,7 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
 
 <title>Admin - Orders & Shipments</title>
 
-<link rel="stylesheet" href="../css/header_footer_style.css?v=14">
+<link rel="stylesheet" href="../css/header_footer_style.css?v=15">
 <link rel="stylesheet" href="../css/category-css/livingroom-base.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">

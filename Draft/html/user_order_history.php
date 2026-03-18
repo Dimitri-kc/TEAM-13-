@@ -44,7 +44,7 @@ $stmt->close();
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LOFT & LIVING - My Recent Orders</title>
 
-<link rel="stylesheet" href="../css/header_footer_style.css?v=14">
+<link rel="stylesheet" href="../css/header_footer_style.css?v=15">
 
 <style>
 body {

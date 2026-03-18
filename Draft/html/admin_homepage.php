@@ -18,7 +18,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
     <title>Home</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=14">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
 
     <link rel="stylesheet" href="../css/homepage-css/homepage.css">
     <link rel="stylesheet" href="../css/about.css">

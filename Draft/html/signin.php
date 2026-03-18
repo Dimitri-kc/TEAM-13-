@@ -22,7 +22,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- global styles + header/footer -->
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=14">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
 
     <style>
 

@@ -30,7 +30,7 @@ if (!empty($_SESSION['user_ID'])) {
 
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=14">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
     <link rel="stylesheet" href="../css/category-css/livingroom-base.css?v=2">
@@ -177,7 +177,6 @@ if (!empty($_SESSION['user_ID'])) {
         .profile-link,
         .profile-welcome,
         .footer-section,
-        .footer-section h4,
         .footer-section ul,
         .footer-section li,
         .footer-section a {
@@ -632,53 +631,9 @@ if (!empty($_SESSION['user_ID'])) {
     </div>
 </div>
 
-        <footer class="site-footer"> 
-        <div class="footer-inner">
-            <div class="footer-section social-links">
-                <a href="#">
-                    <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon">
-                </a>
-                <a href="#">
-                    <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon">
-                </a>
-            </div>
+    <?php $footerPartialOnly = true; include 'footer.php'; ?>
 
-            <div class="footer-section">
-                <h4>Navigation</h4>
-                <ul>
-                    <li><a href="homepage.php">Homepage</a></li>
-                    <li><a href="signin.php">My Account</a></li>
-                    <li><a href="favourites.php">Favourites</a></li>
-                    <li><a href="basket.php">Basket</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Categories</h4>
-                <ul>
-                    <li><a href="livingroom.php">Living Room</a></li>
-                    <li><a href="office.php">Offices</a></li>
-                    <li><a href="kitchen.php">Kitchen</a></li>
-                    <li><a href="bathroom.php">Bathrooms</a></li>
-                    <li><a href="bedroom.php">Bedrooms</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>More...</h4>
-                <ul>
-                    <li><a href="contact.php">Contact Us</a></li>
-                    <li><a href="about.php">About Us</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-
-
-  <script src="../javascript/header_footer_script.js"></script>
-  <script src="../javascript/global/basketIcon.js"></script>
   <script type="module" src="../javascript/livingroom-js/main.js"></script>
         <script src="../javascript/favourites-toggle.js"></script>
-        <script src="../javascript/global/search-modal.js?v=3"></script>
 </body>
 </html>
