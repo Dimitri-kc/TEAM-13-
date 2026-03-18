@@ -144,7 +144,7 @@
 
 <main class="form-container">
   <section class="form-box">
-    <h1 class="form-title">CHANGE PASSWORD</h1>
+    <h1 class="form-title" style="white-space: nowrap;">CHANGE PASSWORD</h1>
     <p class="helper-text">You must change your password before continuing.</p>
 
     <form class="form-fields" id="changePasswordForm">
@@ -293,6 +293,3 @@
 
 </body>
 </html>
-
-
-
