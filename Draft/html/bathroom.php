@@ -528,9 +528,9 @@ if (!empty($_SESSION['user_ID'])) {
     <h3>Colour</h3>
     <label><input type="checkbox" class="colour-filter" value="beige"> Beige</label>
     <label><input type="checkbox" class="colour-filter" value="grey"> Grey</label>
-    <label><input type="checkbox" class="colour-filter" value="green"> Green</label>
-    <label><input type="checkbox" class="colour-filter" value="gold"> Gold</label>
     <label><input type="checkbox" class="colour-filter" value="black"> Black</label>
+     <label><input type="checkbox" class="colour-filter" value="brown"> Brown</label>
+       <label><input type="checkbox" class="colour-filter" value="white"> White</label>
 
     <h3>Size</h3>
     <label><input type="checkbox" class="size-filter" value="one-size"> ONE SIZE</label>
