@@ -528,7 +528,9 @@ html.dark-mode .search-page .basket-add-btn:hover {
     display: none;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(22, 18, 15, 0.42);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     z-index: 9999;
 }
 
@@ -537,26 +539,66 @@ html.dark-mode .search-page .basket-add-btn:hover {
 }
 
 .basket-modal-content {
-    background: #fff;
-    border-radius: 12px;
-    width: min(92vw, 360px);
-    padding: 20px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(111, 103, 92, 0.14);
+    border-radius: 24px;
+    width: min(92vw, 380px);
+    padding: 28px 28px 24px;
     text-align: center;
+    box-shadow: 0 18px 42px rgba(44, 31, 22, 0.16);
+}
+
+.basket-modal-content p {
+    margin: 0 0 18px;
+    font-family: 'ivybodoni', serif;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.12;
+    color: #1f1a17;
 }
 
 .basket-modal-buttons {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     justify-content: center;
-    margin-top: 12px;
+    flex-wrap: wrap;
 }
 
 .basket-modal-buttons button {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 8px 12px;
-    background: #fff;
+    padding: 12px 18px;
+    border: 1.5px solid #8c8376;
+    border-radius: 999px;
+    background: #8c8376;
+    color: #fff;
+    font-family: 'mr-eaves-modern', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, color 0.18s ease;
+}
+
+#go-to-basket {
+    background: #8c8376;
+    color: #fff;
+}
+
+#go-to-basket:hover {
+    background: #6f675c;
+    border-color: #6f675c;
+    transform: translateY(-1px);
+}
+
+#continue-shopping {
+    background: transparent;
+    color: #6f675c;
+    border-color: rgba(111, 103, 92, 0.26);
+}
+
+#continue-shopping:hover {
+    background: rgba(111, 103, 92, 0.08);
+    color: #4d463d;
+    border-color: rgba(111, 103, 92, 0.4);
+    transform: translateY(-1px);
 }
 </style>
 HTML;

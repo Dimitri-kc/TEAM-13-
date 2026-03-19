@@ -35,7 +35,7 @@ if (!empty($_SESSION['user_ID'])) {
   <link rel="stylesheet" href="../css/category-css/livingroom-base.css?v=2">
   <link rel="stylesheet" href="../css/category-css/livingroom-structure.css?v=6">
   <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css?v=7">
-  <link rel="stylesheet" href="../css/category-css/livingroom-page.css?v=2">
+  <link rel="stylesheet" href="../css/category-css/livingroom-page.css?v=3">
   <link rel="stylesheet" href="../css/favourites-toggle.css">
   <link rel="stylesheet" href="../css/category-css/category-backgrounds.css?v=1">
 
