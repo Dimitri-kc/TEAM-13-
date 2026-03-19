@@ -13,10 +13,17 @@ body {
 
 .basket-page-head {
     display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.basket-head-copy {
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-    margin-bottom: 30px;
 }
 
 .basket-title {
@@ -34,6 +41,30 @@ body {
     font-size: 18px;
     color: #6b6157;
     line-height: 1.5;
+}
+
+.basket-return-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 24px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(111, 103, 92, 0.26);
+    background: transparent;
+    color: #6F675C;
+    font-size: 17px;
+    font-family: 'mr-eaves-modern';
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, color 0.18s ease;
+}
+
+.basket-return-btn:hover {
+    background: rgba(111, 103, 92, 0.08);
+    color: #4d463d;
+    border-color: rgba(111, 103, 92, 0.4);
+    transform: translateY(-1px);
 }
 
 .basket-layout {
@@ -279,6 +310,11 @@ body {
 }
 
 @media (max-width: 900px) {
+    .basket-page-head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .basket-layout {
         grid-template-columns: 1fr;
     }

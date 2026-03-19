@@ -182,7 +182,7 @@ if (count($ids) > 0) {
 <?php
 $pageTitle = 'Your Basket | LOFT &amp; LIVING';
 $extraHeadContent = <<<'HTML'
-  <link rel="stylesheet" href="../css/basket.css?v=8">
+  <link rel="stylesheet" href="../css/basket.css?v=9">
   <style>
     .basket-title {
       margin-top: 0 !important;
@@ -195,8 +195,17 @@ include 'header.php';
 
 <main class="basket-container">
     <div class="basket-page-head">
-        <h1 class="basket-title">Your Basket</h1>
-        <p class="basket-caption">Ready to experience a new way of living?</p>
+        <div class="basket-head-copy">
+            <h1 class="basket-title">Your Basket</h1>
+            <p class="basket-caption">Ready to experience a new way of living?</p>
+        </div>
+        <button
+            type="button"
+            class="basket-return-btn"
+            onclick="if (document.referrer) { window.history.back(); } else { window.location.href='homepage.php'; }"
+        >
+            Return to Previous Page
+        </button>
     </div>
 
     <section class="basket-layout">

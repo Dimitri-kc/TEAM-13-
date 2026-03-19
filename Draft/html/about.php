@@ -7,7 +7,7 @@
     <title>About Us | LOFT & LIVING</title>
 
     <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
-    <link rel="stylesheet" href="../css/about.css" />
+    <link rel="stylesheet" href="../css/about.css?v=5" />
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
@@ -19,6 +19,7 @@
     <?php $headerPartialOnly = true; include 'header.php'; ?>
     <div class="split-page about-container">
         <div class="left">
+            <p class="about-eyebrow">Our Story</p>
             <h1>ABOUT US</h1>
             <p>
             Welcome to Loft & Living, your new breakthrough in
@@ -38,7 +39,7 @@
 
 <div class="right">
     <div class="image-place">
-<img src="../images/homepage-images/aboutus.png" alt="Loft & Living Logo" class="main-logo">
+<img src="../images/homepage-images/aboutus.png" alt="Loft & Living Logo" class="about-hero-image">
     </div>
 </div>
     </div>
@@ -70,11 +71,14 @@
     </div>
 
     <h2 class="section-title">Our Vision</h2>
-<p>
-    At Loft & Living, we envision becoming the ultimate online destination for young adults seeking stylish, affordable, and practical homeware. Our focus is on creating a seamless shopping experience for students, first-time renters, and new homeowners who want to make their spaces feel modern, personal, and inviting.
-    <br><br>
-    We aim to combine contemporary design with smart functionality, offering everything from compact dorm essentials to trendy living room décor and kitchen accessories. By curating products that suit both small apartments and larger homes, we empower young adults to transform their living spaces without compromising style or budget. Our long-term goal is to build a community of inspired home decorators, where customers can discover, share, and create spaces they truly love. With Loft & Living, modern, stylish, and affordable living isn’t just a dream — it’s accessible to everyone.
-</p>
+<div class="vision-text">
+    <p>
+        At Loft & Living, we envision becoming the ultimate online destination for young adults seeking stylish, affordable, and practical homeware. Our focus is on creating a seamless shopping experience for students, first-time renters, and new homeowners who want to make their spaces feel modern, personal, and inviting.
+    </p>
+    <p>
+        We aim to combine contemporary design with smart functionality, offering everything from compact dorm essentials to trendy living room decor and kitchen accessories. By curating products that suit both small apartments and larger homes, we empower young adults to transform their living spaces without compromising style or budget. Our long-term goal is to build a community of inspired home decorators, where customers can discover, share, and create spaces they truly love. With Loft & Living, modern, stylish, and affordable living is accessible to everyone.
+    </p>
+</div>
 </div>
     <div class="container">
     <div class="location-section">

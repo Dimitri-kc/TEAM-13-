@@ -1,12 +1,3 @@
-/* Force About Us and Contact Us headings to IvyBodoni Medium, weight 450 */
-.split-page .left h1,
-.split-page .right h1 {
-    font-family: 'ivybodoni', serif !important;
-    font-weight: 450 !important;
-    letter-spacing: 0.04em !important;
-}
-@import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@400;600;700&family=Josefin+Slab:wght@400;600;700&display=swap');
-
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -16,130 +7,139 @@ html, body {
 }
 
 body {
-    font-family: 'Josefin Slab', serif;
-    background-color: #ffffff;
-    color: #111;
     margin: 0;
     padding: 0;
-    line-height: 1.7;
+    font-family: 'mr-eaves-modern';
+    background: #f5f1eb;
+    color: #1f1a17;
+    line-height: 1.65;
 }
 
-.container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 20px;
+.about-container,
+.container,
+.faq-section {
+    width: min(1180px, calc(100% - 40px));
+    margin-left: auto;
+    margin-right: auto;
 }
 
-/* ABOUT US SECTION */
-.split-page {
-    display: flex;
-    min-height: 38vh;
-    margin: 0 auto;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #e7e6df;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease;
-}
-
-.split-page:hover {
-    transform: translateY(-3px);
-}
-
-.left {
-    flex: 1;
-    padding: 32px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* vertical centering */
-    align-items: center;     /* horizontal centering */
-    text-align: center;      /* ensures text inside is centered */
-}
-
-.left h1,
-.left p {
-    margin: 8px 0;           /* optional spacing between title and paragraph */
-}
-.right {
-    flex: 1;
-    padding: 32px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.about-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(420px, 1.05fr);
+    gap: 40px;
     align-items: center;
-    background: #e7e6df;
-}
-
-.left h1 {
-    font-family: 'Ibarra Real Nova', serif;
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-    color: #111;
-        text-align: center; 
-}
-
-.left p {
-    font-size: 16px;
-    max-width: 480px;
-    color: #333;
-        text-align: center; 
-}
-
-
-
-.right img {
-    width: 80%;
-    max-width: 420px;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-    filter: drop-shadow(0 8px 18px rgba(0,0,0,0.13));
-    transition: transform 0.4s ease;
-}
-
-.right img:hover {
-    transform: scale(1.02);
-}
-
-/* Fade-in */
-.about-left, .about-right {
+    margin-top: 110px;
+    margin-bottom: 56px;
+    padding: 34px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(111, 103, 92, 0.14);
+    box-shadow: 0 16px 38px rgba(44, 31, 22, 0.06);
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(18px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
 }
 
-.about-left.visible,
-.about-right.visible {
+.about-container.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
-.about-right.visible {
-    transition-delay: 0.25s;
+.left,
+.right {
+    min-width: 0;
 }
 
-/* SECTION TITLES */
+.about-container .left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+}
+
+.about-container .left,
+.mission-wrapper .right,
+.vision-text,
+.map-container,
+.info-side,
+.faq-section {
+    text-align: left;
+}
+
+.about-eyebrow {
+    margin: 0 0 12px;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8C8376;
+}
+
+.about-container .left h1 {
+    margin: 0 0 16px;
+    font-family: 'ivybodoni';
+    font-size: clamp(36px, 4.8vw, 62px);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1.02;
+    color: #1f1a17;
+}
+
+.about-container .left p,
+.mission-wrapper .right p,
+.vision-text p,
+.faq-answer,
+.opening-times li {
+    font-size: 18px;
+    color: #5f564d;
+}
+
+.about-container .left p {
+    margin: 0;
+    max-width: 640px;
+}
+
+.about-container .right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-place {
+    width: 100%;
+    min-height: 100%;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-hero-image {
+    width: min(100%, 700px);
+    max-width: 700px;
+    min-width: 420px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.12));
+}
+
+.container {
+    margin-bottom: 84px;
+}
+
 .section-title {
-    font-family: 'Ibarra Real Nova', serif;
-    font-size: 1.8rem;
-    font-weight: 600;
-    text-align: center;
-    color: #111;
-    background: linear-gradient(to right, #e7e6df 0%, #f4f3ef 100%);
-    margin: 32px 0 16px;
-    padding: 18px 0;
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    letter-spacing: 1px;
-    border-top: 1px solid #d6d4cd;
-    border-bottom: 1px solid #d6d4cd;
+    margin: 0 0 28px;
+    font-family: 'ivybodoni';
+    font-size: clamp(28px, 3.2vw, 42px);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1.08;
+    color: #1f1a17;
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(14px);
     transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
@@ -148,97 +148,150 @@ body {
     transform: translateY(0);
 }
 
-/* MISSION SECTION */
-.mission-section {
-    max-width: 760px;
-    margin: 0 auto 60px;
-    padding: 0 20px;
-    text-align: center;
+.mission-wrapper {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 28px;
+    align-items: center;
+    padding: 28px;
+    margin-bottom: 36px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(111, 103, 92, 0.14);
+    box-shadow: 0 16px 38px rgba(44, 31, 22, 0.06);
 }
 
-.mission-section p {
-    font-size: 15px;
-    line-height: 1.75;
-    color: #444;
-    margin-bottom: 30px;
-    max-width: 680px;
-    margin-left: auto;
-    margin-right: auto;
+.mission-wrapper .left,
+.mission-wrapper .right {
+    padding: 0;
+    background: transparent;
 }
 
-/* LOCATION SECTION */
-.location-section {
+.mission-wrapper .right {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    text-align: left;
     align-items: flex-start;
-    gap: 40px;
-    flex-wrap: wrap;
-    margin: 48px auto;
+}
+
+.mission-wrapper .right p,
+.vision-text p {
+    margin: 0;
+}
+
+.mission-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 22px;
+    overflow: hidden;
+}
+
+.mission-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.vision-text {
+    padding: 28px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(111, 103, 92, 0.14);
+    box-shadow: 0 16px 38px rgba(44, 31, 22, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.location-section {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.8fr);
+    gap: 32px;
+    align-items: start;
+}
+
+.map-container,
+.info-side {
+    padding: 28px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(111, 103, 92, 0.14);
+    box-shadow: 0 16px 38px rgba(44, 31, 22, 0.06);
+}
+
+.map-container h2,
+.info-side h2,
+.faq-section h2 {
+    margin: 0 0 18px;
+    font-family: 'ivybodoni';
+    font-size: clamp(28px, 3vw, 38px);
+    font-weight: 500;
+    line-height: 1.08;
+    color: #1f1a17;
 }
 
 .map-wrapper {
     width: 100%;
-    max-width: 480px;
-    height: 260px;
-    border-radius: 10px;
+    border-radius: 22px;
     overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    box-shadow: 0 10px 24px rgba(44, 31, 22, 0.12);
 }
 
-.info-side h2 {
-    font-family: 'Ibarra Real Nova', serif;
-    font-size: 1.5rem;
-    margin-bottom: 14px;
+.map-wrapper iframe {
+    display: block;
+    width: 100%;
 }
 
 .opening-times {
     list-style: none;
     padding: 0;
-    font-size: 14px;
-    color: #333;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-/* FAQ SECTION */
 .faq-background {
-    background: #f2f2ef;
-    padding: 56px 20px;
-}
-
-.faq-section {
-    max-width: 720px;
-    margin: 0 auto;
+    margin-top: 54px;
+    padding: 58px 0 72px;
+    background: linear-gradient(180deg, rgba(234, 228, 220, 0.48) 0%, rgba(245, 241, 235, 0.92) 100%);
 }
 
 .faq-section h2 {
-    font-family: 'Ibarra Real Nova', serif;
-    font-size: 1.8rem;
-    text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 26px;
+    text-align: left;
 }
 
 .faq-item {
-    border-bottom: 1px solid #dcdcdc;
-    padding: 16px 0;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(111, 103, 92, 0.14);
+    border-radius: 20px;
+    box-shadow: 0 12px 28px rgba(44, 31, 22, 0.04);
+    padding: 20px 22px;
+    margin-bottom: 14px;
 }
 
 .faq-question {
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: color 0.2s ease;
-}
-
-.faq-question:hover {
-    color: #555;
+    gap: 14px;
+    font-size: 20px;
+    font-family: 'ivybodoni';
+    font-weight: 500;
+    color: #1f1a17;
+    cursor: pointer;
 }
 
 .faq-question::after {
     content: "+";
-    font-size: 20px;
-    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    font-size: 26px;
+    color: #8C8376;
+    transition: transform 0.25s ease;
 }
 
 .faq-item.active .faq-question::after {
@@ -248,101 +301,57 @@ body {
 .faq-answer {
     max-height: 0;
     overflow: hidden;
-    font-size: 14px;
-    color: #444;
-    transition: max-height 0.35s ease;
-    padding-right: 32px;
+    padding-right: 30px;
+    transition: max-height 0.35s ease, margin-top 0.35s ease;
 }
 
 .faq-item.active .faq-answer {
-    max-height: 200px;
-    margin-top: 8px;
+    max-height: 220px;
+    margin-top: 12px;
 }
 
-/* MISSION WRAPPER */
-.mission-wrapper {
-    display: flex;
-    gap: 32px;
-    margin: 28px 0 40px;
-    min-height: unset;
-    background: #f5f5f3;
-    border-radius: 10px;
-    padding: 28px 20px;
-    align-items: center;
-}
-
-.mission-wrapper .left {
-    flex: 0 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.mission-wrapper .right {
-    flex: 1;
-}
-
-.mission-image {
-    width: 300px;
-    height: 300px;
-    border-radius: 10px;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-
-.mission-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    border-radius: 10px;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.13);
-}
-
-.vision-text {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto 28px;
-    line-height: 1.6;
-    font-size: 14px;
-    color: #555;
-}
-
-/* RESPONSIVE */
-@media (max-width: 1024px) {
-    .split-page {
-        flex-direction: column;
-        margin: 28px auto;
+@media (max-width: 980px) {
+    .about-container,
+    .mission-wrapper,
+    .location-section {
+        grid-template-columns: 1fr;
     }
 
-    .left, .right {
+    .about-hero-image {
+        min-width: 0;
+        width: min(100%, 620px);
+    }
+
+    .about-container {
         padding: 24px;
     }
-
-    .right img {
-        max-width: 320px;
-    }
-
-    .mission-image {
-        width: 220px;
-        height: 220px;
-    }
 }
 
-@media (max-width: 768px) {
-    .left h1 {
-        font-size: 1.6rem;
+@media (max-width: 640px) {
+    .about-container,
+    .container,
+    .faq-section {
+        width: min(100%, calc(100% - 24px));
     }
 
-    .left p {
-        font-size: 13px;
+    .about-container,
+    .mission-wrapper,
+    .map-container,
+    .info-side,
+    .vision-text,
+    .faq-item {
+        padding: 20px;
     }
 
     .faq-question {
-        font-size: 14px;
+        font-size: 18px;
     }
 
-    .mission-wrapper {
-        flex-direction: column;
+    .left p,
+    .right p,
+    .vision-text p,
+    .faq-answer,
+    .opening-times li {
+        font-size: 17px;
     }
 }
