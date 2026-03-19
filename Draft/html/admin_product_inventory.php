@@ -9,21 +9,25 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
 <head>
     <meta charset="UTF-8">
     <title>Admin Product Inventory</title>
-    <link rel="stylesheet" href="../css/admin_product_inventory.css">
+    <link rel="stylesheet" href="../css/admin_product_inventory.css?v=2">
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
     <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
-    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
     <script src="../javascript/dark-mode.js"></script>
     
 </head>
-<body>
+<body class="admin-product-inventory-page">
     <?php $headerPartialOnly = true; include "header.php"; ?>
 
-    <div class="admin-wrapper"style="margin-top: 125px;">
-    <h1 class="title">Product Inventory </h1>
-    <p class="subtitle">View current product inventory, edit product information and add more products </p>
+    <div class="admin-wrapper">
+    <div class="page-header">
+      <div class="page-header-copy">
+        <h1 class="title">Product Inventory</h1>
+        <p class="subtitle">View current stock levels, search products quickly, update item details, and add new products without changing the existing admin flows.</p>
+      </div>
+    </div>
 
 <div class="filter-wrapper" >
         <input 
@@ -92,8 +96,8 @@ productCard.innerHTML = `
     <img src="../images/${product.image}" alt="${product.name}">
     <div class="product-info">
         <p class="product-name">${product.name}</p>
-        <p>Product #: ${product.product_ID}</p>
-        <p>Price: £${product.price}</p>
+        <p class="product-meta">Product #: ${product.product_ID}</p>
+        <p class="product-meta">Price: £${product.price}</p>
 
         <p class="stock ${stockClass}">
             Stock Available: ${product.stock} (${stockText})
@@ -160,21 +164,6 @@ function removeProduct(productID) {
         }
     });
 }
-document.getElementById("search-bar").addEventListener("input", function () {
-    const query = this.value.toLowerCase(); // Get the search query, converting it to lowercase
-    const products = document.querySelectorAll(".product-card"); // Get all product cards
-
-    products.forEach(card => {
-        const productName = card.querySelector(".product-info p strong").nextElementSibling.textContent.toLowerCase(); // Get the product name from the product card
-
-        // Check if the product name includes the query text
-        if (productName.includes(query)) {
-            card.style.display = "flex"; // Show the product card
-        } else {
-            card.style.display = "none"; // Hide the product card
-        }
-    });
-});
 document.getElementById('add-product-btn').addEventListener('click', () => {
     window.location.href = 'admin_add_product.php';
 });

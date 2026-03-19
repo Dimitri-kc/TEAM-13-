@@ -49,9 +49,13 @@ if (isset($_FILES['image']) && !empty($_FILES['image']['name'])) {
         exit;
     }
 } else {
-    // If no new image is uploaded, keep the existing one
-    $existing = mysqli_fetch_assoc(mysqli_query($conn, "SELECT image FROM products WHERE product_ID=$id"));
-    $image = $existing['image'];
+    // If no new image is uploaded, keep the existing one.
+    $image = mysqli_real_escape_string($conn, $_POST['current_image'] ?? '');
+
+    if ($image === '') {
+        $existing = mysqli_fetch_assoc(mysqli_query($conn, "SELECT image FROM products WHERE product_ID=$id"));
+        $image = $existing['image'] ?? '';
+    }
 }
 
 // Update query

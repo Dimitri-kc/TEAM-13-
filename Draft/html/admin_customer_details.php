@@ -8,203 +8,103 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Customer Details | Loft & Living</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
-  <link rel="stylesheet" href="../css/signup.style.css">
-
-  <style>
-    body {
-      display: flex !important;
-      flex-direction: column !important;
-      min-height: 100vh;
-      margin: 0;
-      background-color: #EAE8E4;
-    }
-
-    main.form-container {
-      margin-top: 110px !important;
-      margin-bottom: 50px !important;
-      flex: 1;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-    }
-
-    .form-title {
-      white-space: nowrap;
-      font-size: 36px;
-      line-height: 1.1;
-      text-align: center;
-      margin: 0;
-    }
-
-    .input-group {
-      margin-bottom: 25px !important;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .input-label {
-      margin-bottom: 8px;
-      font-weight: 500;
-    }
-
-    .helper-text {
-      text-align: center;
-      font-size: 0.95rem;
-      margin-top: 10px;
-      margin-bottom: 18px;
-      opacity: 0.85;
-    }
-
-    .error-popup {
-      display: none;
-      margin-top: 10px;
-      padding: 10px 12px;
-      border-radius: 4px;
-      background-color: #ffffff;
-      border: 1px solid #f0b400;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.12);
-      font-size: 0.9rem;
-      line-height: 1.4;
-      align-items: flex-start;
-      gap: 8px;
-    }
-
-    .error-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 3px;
-      background-color: #ffa000;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .error-text {
-      flex: 1;
-    }
-
-    .action-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 12px;
-      margin-top: 12px;
-    }
-
-    .secondary-button,
-    .warning-button,
-    .danger-button {
-      width: 100%;
-      height: 46px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 15px;
-      margin: 0;
-      border: 1px solid #b8b8b8;
-      background: #f3f3f3;
-      color: #111;
-      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-    }
-
-    .secondary-button:hover {
-      background: #dcdcdc;
-      border-color: #a8a8a8;
-      color: #111;
-    }
-
-    .warning-button:hover {
-      background: #f0b400;
-      border-color: #f0b400;
-      color: #111;
-    }
-
-    .danger-button:hover {
-      background: #c62828;
-      border-color: #c62828;
-      color: #fff;
-    }
-
-    @media (max-width: 760px) {
-      .action-row {
-        grid-template-columns: 1fr;
-      }
-
-      .form-title {
-        white-space: normal;
-      }
-    }
-  </style>
-    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
-    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
-    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
-    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
-    <script src="../javascript/dark-mode.js"></script>
+  <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+  <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+  <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+  <link rel="stylesheet" href="../css/reusable_header.css?v=5">
+  <link rel="stylesheet" href="../css/admin_customer_details.css?v=1">
+  <script src="../javascript/dark-mode.js"></script>
 </head>
 
-<body>
+<body class="admin-customer-details-page">
 <?php $headerPartialOnly = true; include 'header.php'; ?>
 
 <main class="form-container">
-  <section class="form-box">
-    <h1 class="form-title">Customer Details</h1>
-    <p class="helper-text">View and manage customer information</p>
+  <section class="customer-details-shell">
+    <div class="page-topbar">
+      <div class="page-topbar-copy">
+        <h1 class="form-title">Customer Details</h1>
+        <p class="helper-text">Review account information, update customer records, and manage account access from one place.</p>
+      </div>
 
-    <div id="errorPopup" class="error-popup">
-      <div class="error-icon">!</div>
-      <div class="error-text" id="errorText"></div>
+      <button
+        type="button"
+        class="return-btn"
+        onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href='admin_customer_management.php'; }"
+      >
+        Return to Previous Page
+      </button>
     </div>
 
-    <form id="editForm">
-      <div class="input-group">
-        <span class="input-label">Role</span>
-        <select id="role">
-          <option value="customer">Customer</option>
-          <option value="admin">Admin</option>
-        </select>
-      </div>
+    <div class="details-grid">
+      <section class="form-box">
+        <div id="errorPopup" class="error-popup">
+          <div class="error-icon">!</div>
+          <div class="error-text" id="errorText"></div>
+        </div>
 
-      <div class="input-group">
-        <span class="input-label">Name</span>
-        <input type="text" id="name" required>
-      </div>
+        <form id="editForm">
+          <div class="form-grid">
+            <div class="input-group">
+              <span class="input-label">Role</span>
+              <select id="role">
+                <option value="customer">Customer</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
 
-      <div class="input-group">
-        <span class="input-label">Surname</span>
-        <input type="text" id="surname" required>
-      </div>
+            <div class="input-group">
+              <span class="input-label">Email</span>
+              <input type="email" id="email" required>
+            </div>
 
-      <div class="input-group">
-        <span class="input-label">Email</span>
-        <input type="email" id="email" required>
-      </div>
+            <div class="input-group">
+              <span class="input-label">Name</span>
+              <input type="text" id="name" required>
+            </div>
 
-      <div class="input-group">
-        <span class="input-label">Phone Number</span>
-        <input type="tel" id="phone">
-      </div>
+            <div class="input-group">
+              <span class="input-label">Surname</span>
+              <input type="text" id="surname" required>
+            </div>
 
-      <div class="input-group">
-        <span class="input-label">Address</span>
-        <input type="text" id="address">
-      </div>
+            <div class="input-group">
+              <span class="input-label">Phone Number</span>
+              <input type="tel" id="phone">
+            </div>
 
-      <button type="submit" class="main-button">Edit</button>
-    </form>
+            <div class="input-group input-group--full">
+              <span class="input-label">Address</span>
+              <input type="text" id="address">
+            </div>
+          </div>
 
-    <div class="action-row">
-      <button type="button" class="secondary-button" id="ordersBtn">Order History</button>
-      <button type="button" class="warning-button" id="deactivateBtn">Deactivate</button>
-      <button type="button" class="danger-button" id="removeBtn">Remove</button>
+          <button type="submit" class="main-button">Save Changes</button>
+        </form>
+      </section>
+
+      <aside class="summary-card">
+        <h2 class="summary-title">Account Controls</h2>
+        <p class="summary-copy">Use these actions to review the customer’s orders, adjust account access, or remove the record entirely.</p>
+
+        <div class="summary-list">
+          <div class="summary-item">
+            <span class="summary-label">Record</span>
+            <span class="summary-value">Customer Profile</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Actions</span>
+            <span class="summary-value">Orders, status changes, removal</span>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button type="button" class="secondary-button" id="ordersBtn">Order History</button>
+          <button type="button" class="warning-button" id="deactivateBtn">Deactivate</button>
+          <button type="button" class="danger-button" id="removeBtn">Remove</button>
+        </div>
+      </aside>
     </div>
   </section>
 </main>
