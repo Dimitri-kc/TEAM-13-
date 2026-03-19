@@ -116,7 +116,7 @@ Orders, Order Items, Reviews, and related Models, Controllers, and Routes.
 Homepage, Basket, Order Confirmation pages and related CSS stylesheets.<br>
 @m240124: 
 About, Contact, Categories, Checkout pages and related CSS stylesheets.<br>
-@nvmalhi: 
+@navdeep-malhi: 
 Navigation (Header & Footer), Products page and related CSS stylesheets.<br>
 @Ayoub-01abdi: 
 Sign-in & Sign-up pages and related CSS stylesheets.
