@@ -8,7 +8,7 @@ body {
 
 .order-confirmation-wrap {
     width: min(1180px, calc(100% - 40px));
-    margin: 20px auto 64px;
+    margin: 120px auto 64px;
 }
 
 .order-confirmation-hero {
