@@ -77,20 +77,76 @@ body.order-details-page {
     margin: 0 0 6px;
 }
 
-.order-details-page .order-image {
+.order-details-page .order-items-summary {
     width: 100%;
-    max-width: 380px;
-    aspect-ratio: 1 / 1;
-    margin-top: 22px;
-    border-radius: 22px;
+    margin-top: 24px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(111, 103, 92, 0.1);
+}
+
+.order-details-page .order-items-title {
+    margin: 0 0 14px;
+    font-family: 'ivybodoni', serif;
+    font-size: 26px;
+    font-weight: 500;
+    color: #1f1a17;
+}
+
+.order-details-page .order-item-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(111, 103, 92, 0.08);
+}
+
+.order-details-page .order-item-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.order-details-page .order-item-thumb {
+    width: 82px;
+    height: 82px;
+    flex-shrink: 0;
+    border-radius: 18px;
     overflow: hidden;
     background: #ece4da;
 }
 
-.order-details-page .order-image img {
+.order-details-page .order-item-thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.order-details-page .order-item-copy {
+    min-width: 0;
+    flex: 1;
+}
+
+.order-details-page .order-item-name {
+    font-family: 'ivybodoni', serif;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.15;
+    color: #1f1a17;
+}
+
+.order-details-page .order-item-meta,
+.order-details-page .order-item-price {
+    font-family: 'mr-eaves-modern', sans-serif;
+    font-size: 17px;
+    color: #5f564d;
+}
+
+.order-details-page .order-item-meta {
+    margin-top: 4px;
+}
+
+.order-details-page .order-item-price {
+    white-space: nowrap;
+    font-weight: 500;
 }
 
 .order-details-page .shipping-address-title {
@@ -140,5 +196,9 @@ body.order-details-page {
     .order-details-page .form-row {
         grid-template-columns: 1fr;
         gap: 6px;
+    }
+
+    .order-details-page .order-item-row {
+        align-items: flex-start;
     }
 }

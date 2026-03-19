@@ -41,18 +41,23 @@ $user = $user_stmt->get_result()->fetch_assoc();
 $user_name = $user['name'] ?? 'Customer';
 
 $item_stmt = $conn->prepare("
-SELECT p.image
+SELECT p.name, p.image, oi.quantity, oi.unit_price, (oi.quantity * oi.unit_price) AS line_total
 FROM order_items oi
 JOIN products p ON oi.product_ID = p.product_ID
 WHERE oi.order_ID = ?
-LIMIT 1
+ORDER BY oi.order_item_ID
 ");
 
 $item_stmt->bind_param("i", $order_ID);
 $item_stmt->execute();
-$item = $item_stmt->get_result()->fetch_assoc();
+$items = $item_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$item_stmt->close();
 
-$image = $item['image'] ?? '';
+$orderStatus = $order['order_status'] ?? 'Unknown';
+
+function money($value) {
+    return '£' . number_format((float)$value, 2);
+}
 
 $addressParts = array_map('trim', explode(",", $order['address']));
 
@@ -73,7 +78,7 @@ $postcode = $addressParts[4] ?? '';
 <title>Order Details</title>
 
 <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
-<link rel="stylesheet" href="../css/user_order_details.css?v=1">
+<link rel="stylesheet" href="../css/user_order_details.css?v=3">
 
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
@@ -98,17 +103,29 @@ $postcode = $addressParts[4] ?? '';
 
 <p>Customer: <?= htmlspecialchars($user_name) ?></p>
 
-<p>Status: Delivered</p>
+<p>Status: <?= htmlspecialchars($orderStatus) ?></p>
 
 <p>Date: <?= date("Y-m-d", strtotime($order['order_date'])) ?></p>
 
-<div class="order-image">
-
-<?php if($image): ?>
-<img src="<?= htmlspecialchars($image) ?>">
-<?php endif; ?>
-
+<?php if (!empty($items)): ?>
+<div class="order-items-summary">
+    <h3 class="order-items-title">Items in This Order</h3>
+    <?php foreach ($items as $item): ?>
+        <div class="order-item-row">
+            <div class="order-item-thumb">
+                <?php if (!empty($item['image'])): ?>
+                    <img src="<?= htmlspecialchars('../images/' . ltrim($item['image'], '/')) ?>" alt="<?= htmlspecialchars($item['name']) ?>">
+                <?php endif; ?>
+            </div>
+            <div class="order-item-copy">
+                <div class="order-item-name"><?= htmlspecialchars($item['name']) ?></div>
+                <div class="order-item-meta">Qty: <?= (int)$item['quantity'] ?> · Unit: <?= money($item['unit_price']) ?></div>
+            </div>
+            <div class="order-item-price"><?= money($item['line_total']) ?></div>
+        </div>
+    <?php endforeach; ?>
 </div>
+<?php endif; ?>
 
 </div>
 
