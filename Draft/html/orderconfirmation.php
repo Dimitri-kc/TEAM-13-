@@ -154,96 +154,12 @@ if (
 <?php
 $pageTitle = 'Order Confirmation | LOFT &amp; LIVING';
 $extraHeadContent = <<<'HTML'
-<style>
-:root {
-    --bg:#ffffff; --text:#0b0b0b; --muted:#555; --line:#e9e9e9;
-    --card:#ffffff; --shadow:0 12px 28px rgba(0,0,0,.06); --radius:16px;
-    --btn:#000; --btnText:#fff;
-}
-body { margin:0; background:var(--bg); color:var(--text); font-family:system-ui,sans-serif; line-height:1.45; }
-.wrap { width:min(980px,92vw); margin:28px auto 50px; }
-.hero { padding:18px 0 28px; border-bottom:1px solid var(--line); margin-bottom:22px; }
-.hero h1 { margin:0; font-size:clamp(24px,3vw,36px); letter-spacing:-.02em; }
-.grid { display:grid; grid-template-columns:1.1fr .9fr; gap:16px; }
-@media (max-width:860px) { .grid { grid-template-columns:1fr; } }
-.card { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; }
-.cardHead { padding:14px 16px; border-bottom:1px solid var(--line); font-weight:800; }
-.cardBody { padding:14px 16px 16px; }
-.row { display:grid; grid-template-columns:80px 1fr 110px 140px; gap:10px; padding:12px 14px; border-top:1px solid var(--line); align-items:center; }
-.row:first-child { border-top:0; }
-.head { background:#fafafa; font-weight:800; }
-.right { text-align:right; }
-.totals { margin-top:12px; border-top:1px solid var(--line); padding-top:12px; }
-.grand { display:flex; justify-content:space-between; font-weight:900; font-size:18px; }
-.kvRow { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed var(--line); }
-.kvRow:last-child { border-bottom:0; }
-.addr { color:var(--muted); line-height:1.6; white-space:pre-line; }
-.actions { margin-top:14px; }
-.btn { display:inline-flex; padding:11px 14px; border-radius:12px; background:var(--btn); color:var(--btnText); text-decoration:none; font-weight:800; border:1px solid #000; }
-.btnGhost { background:transparent; color:#000; }
-.note { border:1px solid var(--line); border-radius:var(--radius); padding:14px; color:var(--muted); text-align:center; }
-.track {
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-    gap:0;
-    margin-top:18px;
-}
-
-.trackStep {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    min-width:120px;
-    position:relative;
-}
-
-.trackIcon {
-    width:34px;
-    height:34px;
-    border-radius:50%;
-    border:2px solid #d9d9d9;
-    background:#fff;
-    color:#999;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:16px;
-    font-weight:700;
-    z-index:2;
-}
-
-.trackStep.active .trackIcon {
-    background:#8bc34a;
-    border-color:#8bc34a;
-    color:#fff;
-}
-
-.trackLine {
-    width:70px;
-    height:2px;
-    background:#d9d9d9;
-    margin-top:16px;
-}
-
-.trackLabel {
-    margin-top:8px;
-    text-align:center;
-    font-size:14px;
-    color:#999;
-    font-weight:600;
-    line-height:1.25;
-}
-
-.trackStep.active .trackLabel {
-    color:#222;
-}
-</style>
+<link rel="stylesheet" href="../css/orderconfirmation.css?v=1">
 HTML;
 
 include 'header.php';
 ?>
-<div class="wrap">
+<div class="order-confirmation-wrap">
 
 <?php if (!$hasOrder): ?>
 
@@ -253,10 +169,11 @@ include 'header.php';
 
 <?php else: ?>
 
-   <div class="hero">
+   <div class="order-confirmation-hero">
     <h1>Thank you for your order!</h1>
+    <p class="order-confirmation-subtitle">Your order has been placed successfully and we will keep you updated as it moves through each stage.</p>
 
-    <div class="track">
+    <div class="order-track">
         <div class="trackStep <?= in_array($statusKey, ['pending', 'processing', 'shipped', 'delivered'], true) ? 'active' : '' ?>">
             <div class="trackIcon">✓</div>
             <div class="trackLabel">Order<br>Confirmed</div>
@@ -278,17 +195,17 @@ include 'header.php';
     </div>
 </div>
 
-    <div class="grid">
+    <div class="order-confirmation-grid">
 
-        <section class="card">
-            <div class="cardHead">Items</div>
-            <div class="cardBody">
+        <section class="confirmation-card">
+            <div class="confirmation-card-head">Items</div>
+            <div class="confirmation-card-body">
 
                 <?php if (empty($cleanItems)): ?>
                     <div class="note">No items found in this order.</div>
                 <?php else: ?>
 
-                    <div class="row head">
+                    <div class="confirmation-row confirmation-row-head">
                         <div></div>
                         <div>Item</div>
                         <div class="right">Qty</div>
@@ -296,39 +213,39 @@ include 'header.php';
                     </div>
 
                     <?php foreach ($cleanItems as $it): ?>
-                    <div class="row">
-                        <div>
+                    <div class="confirmation-row">
+                        <div class="confirmation-thumb">
                             <?php if ($it['image']): ?>
-                                <img src="<?= e($it['image']) ?>" style="width:60px;height:60px;object-fit:cover;border-radius:8px;">
+                                <img src="<?= e('../images/' . ltrim((string)$it['image'], '/')) ?>" alt="<?= e($it['name']) ?>" class="confirmation-thumb-image">
                             <?php endif; ?>
                         </div>
-                        <div><strong><?= e($it['name']) ?></strong></div>
+                        <div class="confirmation-item-name"><?= e($it['name']) ?></div>
                         <div class="right"><?= $it['qty'] ?></div>
                         <div class="right"><?= e(money($it['line'], $currency)) ?></div>
                     </div>
                     <?php endforeach; ?>
 
-                   <div class="totals">
+                   <div class="confirmation-totals">
 
-    <div class="kvRow">
+    <div class="confirmation-kv-row">
         <span>Subtotal</span>
         <span><?= e(money($subtotal, $currency)) ?></span>
     </div>
 
-    <div class="kvRow">
+    <div class="confirmation-kv-row">
         <span>Tax (10%)</span>
         <span><?= e(money($tax, $currency)) ?></span>
     </div>
 
-    <div class="grand">
+    <div class="confirmation-grand">
         <span>Total</span>
         <span><?= e(money($total, $currency)) ?></span>
     </div>
 
 </div>
 
-                    <div class="actions">
-                        <a href="homepage.php" class="btn btnGhost">Continue shopping</a>
+                    <div class="confirmation-actions">
+                        <a href="homepage.php" class="confirmation-btn confirmation-btn-ghost">Continue shopping</a>
                     </div>
 
                 <?php endif; ?>
@@ -336,29 +253,29 @@ include 'header.php';
             </div>
         </section>
 
-        <aside class="card">
-            <div class="cardHead">Order details</div>
-            <div class="cardBody">
+        <aside class="confirmation-card">
+            <div class="confirmation-card-head">Order details</div>
+            <div class="confirmation-card-body">
 
-                <div class="kvRow">
+                <div class="confirmation-kv-row">
                     <strong>Order #</strong>
                     <span><?= e($orderNumber) ?></span>
                 </div>
 
-                <div class="kvRow">
+                <div class="confirmation-kv-row">
                     <strong>Date</strong>
                     <span><?= e($orderDate) ?></span>
                 </div>
 
-                <div class="kvRow">
+                <div class="confirmation-kv-row">
                     <strong>Status</strong>
                     <span><?= e($orderStatus) ?></span>
                 </div>
 
-                <div style="margin-top:14px;">
-                    <div class="cardHead" style="box-shadow:none;">Delivery address</div>
-                    <div class="cardBody">
-                        <div class="addr"><?= nl2br(e($address)) ?></div>
+                <div class="confirmation-address-block">
+                    <div class="confirmation-card-head confirmation-card-head-inner">Delivery address</div>
+                    <div class="confirmation-card-body confirmation-card-body-inner">
+                        <div class="confirmation-addr"><?= nl2br(e($address)) ?></div>
                     </div>
                 </div>
 
