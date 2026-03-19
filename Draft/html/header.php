@@ -17,7 +17,7 @@ if ($lastSearchQuery !== '') {
 $headerPartialOnly = $headerPartialOnly ?? false;
 $pageTitle = $pageTitle ?? 'LOFT &amp; LIVING BIRMINGHAM';
 $extraHeadContent = $extraHeadContent ?? '';
-$bodyClass = $bodyClass ?? '';
+$bodyClass = trim(($bodyClass ?? '') . ($isAdmin ? ' admin-session-active' : ''));
 
 if (!$headerPartialOnly):
 ?>
@@ -29,13 +29,23 @@ if (!$headerPartialOnly):
     <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=16">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=21">
     <link rel="stylesheet" href="../css/dark-mode.css?v=12">
-    <link rel="stylesheet" href="../css/reusable_header.css?v=6">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=11">
     <?php echo $extraHeadContent; ?>
     <script src="../javascript/dark-mode.js"></script>
 </head>
 <body<?php echo $bodyClass !== '' ? ' class="' . htmlspecialchars($bodyClass) . '"' : ''; ?>>
+<?php endif; ?>
+
+<?php if ($isAdmin && $headerPartialOnly): ?>
+<script>
+    document.body.classList.add('admin-session-active');
+</script>
+<?php endif; ?>
+
+<?php if ($isAdmin): ?>
+<div class="admin-session-bar">Logged in as admin</div>
 <?php endif; ?>
 
 <header class="site-header">

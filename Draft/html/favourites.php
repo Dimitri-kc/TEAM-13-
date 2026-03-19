@@ -240,18 +240,30 @@ $extraHeadContent = <<<'HTML'
         }
 
 .back-home {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     margin-bottom: 18px;
+    padding: 10px 18px;
+    border: 1.5px solid rgba(111, 103, 92, 0.26);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 10px 24px rgba(50, 41, 35, 0.08);
     font-family: 'mr-eaves-modern', Arial, sans-serif;
     font-size: 16px;
     text-decoration: none;
     color: #6f675c;
     font-weight: 500;
-    transition: 0.2s ease;
+    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
 }
 
 .back-home:hover {
-    text-decoration: underline;
+    background: #6f675c;
+    border-color: #6f675c;
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-1px);
 }
     </style>
 HTML;

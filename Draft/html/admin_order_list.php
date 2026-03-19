@@ -12,12 +12,12 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
 
 <title>Admin - Orders & Shipments</title>
 
-<link rel="stylesheet" href="../css/header_footer_style.css?v=16">
-<link rel="stylesheet" href="../css/admin_order_list.css?v=1">
+<link rel="stylesheet" href="../css/header_footer_style.css?v=21">
+<link rel="stylesheet" href="../css/admin_order_list.css?v=2">
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=13">
-    <link rel="stylesheet" href="../css/reusable_header.css?v=6">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=11">
     <script src="../javascript/dark-mode.js"></script>
 </head>
 
@@ -27,8 +27,23 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
 
 <div class="admin-container">
 
+<div class="page-topbar">
+<div class="page-topbar-copy">
+
 <h1 class="page-title">Orders and Shipments</h1>
 <p class="subheader">View recent customer orders and make edits or cancel</p>
+
+</div>
+
+<button
+type="button"
+class="return-btn"
+onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href='admin_dash.php'; }"
+>
+Return to Previous Page
+</button>
+
+</div>
 
 <div class="orders-grid" id="ordersContainer"></div>
 

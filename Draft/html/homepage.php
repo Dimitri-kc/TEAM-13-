@@ -6,6 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 $isLoggedIn = !empty($_SESSION['user_ID']);
 $userName   = $_SESSION['name'] ?? '';
 $headerName = ($userName !== '') ? $userName : 'Guest';
+$isAdmin    = (($_SESSION['role'] ?? '') === 'admin');
 
 $showWelcomeToast = $isLoggedIn && empty($_SESSION['welcome_toast_shown']);
 if ($showWelcomeToast) {
@@ -23,7 +24,7 @@ if ($showWelcomeToast) {
     <!-- Typekit: ivybodoni, Mr Eaves Modern -->
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css"> <!-- Ivybodoni -->
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css"> <!-- Mr Eaves Modern -->
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=16">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=21">
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=38">
@@ -35,7 +36,7 @@ if ($showWelcomeToast) {
 
 <script src="//code.tidio.co/39jephe3cplamvoahaopa21ssco3ywxf.js" async></script>
 
-<body class="ll-homepage">
+<body class="ll-homepage<?php echo $isAdmin ? ' admin-session-active' : ''; ?>">
 
 <style>
 /* Fade animation for product rotation */
@@ -154,6 +155,10 @@ body,
     border-radius: 999px !important;
 }
 </style>
+
+<?php if ($isAdmin): ?>
+<div class="admin-session-bar">Logged in as admin</div>
+<?php endif; ?>
 
 <header class="site-header">
     <div class="header-inner">
