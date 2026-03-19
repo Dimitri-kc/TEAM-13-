@@ -492,3 +492,15 @@ select {
         .add-to-basket:disabled:hover {
             background-color: #ccc;
         }
+
+.back-button {
+    display: inline-block;
+    margin-bottom: 15px;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    text-decoration: none;
+    color: #2C6E49;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+.back-button:hover { text-decoration: underline; }

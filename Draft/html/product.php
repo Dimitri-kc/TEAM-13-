@@ -48,8 +48,9 @@ if (isset($_SESSION['user_ID'])) {
 <?php $headerPartialOnly = true; include 'header.php'; ?>
 
 <main class="container">
-    <section class="product-wrapper">
+    <button onclick="goBack()" class="back-button">← Go Back</button>
 
+    <section class="product-wrapper">
         <div class="product-image zoom-container">
             <img
                 id="zoom-image"
@@ -210,6 +211,15 @@ if (isset($_SESSION['user_ID'])) {
 <script src="../javascript/favourites-toggle.js"></script>
 
 <script>
+//Go back button
+function goBack() {
+    if (document.referrer) {
+        window.history.back();
+    } else {
+        window.location.href = "livingroom.php"; // fallback page
+    }
+}
+
 // ---------- Add to Basket ----------
 document.querySelectorAll(".add-to-basket").forEach(button => {
     button.addEventListener("click", async () => {
