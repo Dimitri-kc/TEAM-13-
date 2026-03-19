@@ -447,12 +447,16 @@ function ensureSearchModalStyles() {
             flex-shrink: 0;
             width: 48px;
             height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             border: 1px solid rgba(118, 106, 94, 0.16);
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.7);
             color: #3a342f;
             font-size: 34px;
-            line-height: 0.9;
+            line-height: 1;
+            padding: 0 0 2px;
             cursor: pointer;
             transition: background 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
         }
