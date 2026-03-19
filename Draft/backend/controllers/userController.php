@@ -37,6 +37,43 @@ class UserController {
             return;
         }
 
+        //strong server-side password validation (same as changePassword/registerAdmin)
+        if (strlen($password) < 8) {
+            echo json_encode([
+                "success" => false, 
+                "message" => "Password must be at least 8 characters."
+                ]);
+            return;
+        }
+        if (!preg_match('/[A-Z]/', $password)) {
+            echo json_encode([
+                "success" => false, 
+                "message" => "Password must include an uppercase character."
+                ]);
+            return;
+        }
+        if (!preg_match('/[a-z]/', $password)) {
+            echo json_encode([
+                "success" => false, 
+                "message" => "Password must include a lowercase character."
+                ]);
+            return;
+        }
+        if (!preg_match('/[0-9]/', $password)) {
+            echo json_encode([
+                "success" => false, 
+                "message" => "Password must include a number."
+                ]);
+            return;
+        }
+        if (!preg_match('/[^A-Za-z0-9]/', $password)) {
+            echo json_encode([
+                "success" => false, 
+                "message" => "Password must include a special character."
+                ]);
+            return;
+        }
+
         //hashed password for security
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         //create User model instance

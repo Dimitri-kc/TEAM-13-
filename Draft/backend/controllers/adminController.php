@@ -78,10 +78,44 @@ class AdminController {
             $this->fail("Invalid email address.");
             return;
         }
-        if (strlen($password) < 8 || !preg_match('/[^A-Za-z0-9]/', $password)) { //password validation
-            $this->fail("Password must be at least 8 characters and include a special character.");
+
+        //strong server-side password validation (same as changePassword/registerAdmin)
+        if (strlen($password) < 8) {
+            echo json_encode([
+                "success" => false, 
+                "message" => "Password must be at least 8 characters."
+                ]);
             return;
         }
+        if (!preg_match('/[A-Z]/', $password)) {
+            echo json_encode([
+                "success" => false, 
+                "message" => "Password must include an uppercase character."
+                ]);
+            return;
+        }
+        if (!preg_match('/[a-z]/', $password)) {
+            echo json_encode([
+                "success" => false, 
+                "message" => "Password must include a lowercase character."
+                ]);
+            return;
+        }
+        if (!preg_match('/[0-9]/', $password)) {
+            echo json_encode([
+                "success" => false, 
+                "message" => "Password must include a number."
+                ]);
+            return;
+        }
+        if (!preg_match('/[^A-Za-z0-9]/', $password)) {
+            echo json_encode([
+                "success" => false, 
+                "message" => "Password must include a special character."
+                ]);
+            return;
+        }
+
         //check for duplicate email
         $check = $this->conn->prepare("SELECT user_ID FROM users WHERE email = ? LIMIT 1");
         $check->bind_param("s", $email);
