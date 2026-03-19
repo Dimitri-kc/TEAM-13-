@@ -133,20 +133,6 @@ $extraHeadContent = <<<'HTML'
             max-width: 320px;
         }
 
-        .admin-view-chip {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 14px;
-            padding: 10px 18px;
-            border-radius: 999px;
-            border: 1.5px solid rgba(111, 103, 92, 0.24);
-            background: rgba(255, 255, 255, 0.9);
-            color: #6b6157;
-            font-size: 15px;
-            font-weight: 500;
-        }
-
         @media (max-width: 980px) {
             .dash-grid { grid-template-columns: repeat(2, 1fr); }
         }
@@ -169,7 +155,6 @@ include 'header.php';
         <div class="dashboard-container">
 
             <div class="dashboard-heading">
-                <div class="admin-view-chip">Admin View</div>
                 <div class="dashboard-heading-top">
                     <h2>Welcome to the Admin Dashboard, <?php echo htmlspecialchars($userName); ?></h2>
                     <a class="return-home-btn" href="homepage.php">Return to Homepage</a>
