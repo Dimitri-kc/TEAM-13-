@@ -14,7 +14,7 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
   <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
   <link rel="stylesheet" href="../css/dark-mode.css?v=12">
   <link rel="stylesheet" href="../css/reusable_header.css?v=6">
-  <link rel="stylesheet" href="../css/admin_customer_management.css?v=2">
+  <link rel="stylesheet" href="../css/admin_customer_management.css?v=3">
   <script src="../javascript/dark-mode.js"></script>
 </head>
 
