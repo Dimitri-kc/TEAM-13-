@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="search-modal-card-price">£${escapeHtml(item.price)}</p>
                     <div class="search-modal-card-actions">
                         ${favouriteButtonMarkup(item)}
-                        <button type="button" class="search-modal-basket-btn" data-product-id="${item.product_ID}">+ Add to Basket</button>
+                        <button type="button" class="search-modal-basket-btn" data-product-id="${item.product_ID}">Add to Basket</button>
                     </div>
                 </div>
             </article>

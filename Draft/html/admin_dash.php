@@ -63,17 +63,18 @@ $extraHeadContent = <<<'HTML'
             justify-content: center;
             padding: 10px 18px;
             border-radius: 999px;
-            background: #2B2B2B;
+            background: #afa595;
             color: #fff;
             text-decoration: none;
             font-size: 16px;
             font-weight: 500;
             white-space: nowrap;
-            transition: background-color 120ms ease, transform 120ms ease;
+            transition: background-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
         }
 
         .return-home-btn:hover {
-            background: #1f8438;
+            background: #978b79;
+            box-shadow: 0 14px 24px rgba(98, 84, 67, 0.16);
             transform: translateY(-1px);
         }
 

@@ -47,7 +47,7 @@
 
 <script src="../javascript/header_footer_script.js"></script>
 <script src="../javascript/global/basketIcon.js"></script>
-<script src="../javascript/global/search-modal.js?v=3"></script>
+<script src="../javascript/global/search-modal.js?v=4"></script>
 
 <?php if (!$footerPartialOnly): ?>
 </body>

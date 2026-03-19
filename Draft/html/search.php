@@ -677,7 +677,7 @@ include 'header.php';
                                     type="button"
                                     class="basket-add-btn"
                                     onclick="addToBasket(<?php echo (int)$row['product_ID']; ?>, 1, this)"
-                                >+ Add to Basket</button>
+                                >Add to Basket</button>
                             </div>
                         </div>
                     </article>
@@ -757,7 +757,7 @@ include 'header.php';
                             <input type="hidden" name="redirect" value="${escapeHtml(window.location.pathname + window.location.search)}">
                             <button type="submit" class="favourite-toggle-btn js-favourite-button${activeClass}" data-favourite-state="${item.isFavourite ? 'true' : 'false'}" aria-pressed="${pressed}" title="${title}">${heart}</button>
                         </form>
-                        <button type="button" class="basket-add-btn" onclick="addToBasket(${item.product_ID}, 1, this)">+ Add to Basket</button>
+                        <button type="button" class="basket-add-btn" onclick="addToBasket(${item.product_ID}, 1, this)">Add to Basket</button>
                     </div>
                 </div>
             </article>

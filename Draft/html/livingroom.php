@@ -35,7 +35,7 @@ if (!empty($_SESSION['user_ID'])) {
 
     <link rel="stylesheet" href="../css/category-css/livingroom-base.css?v=2">
     <link rel="stylesheet" href="../css/category-css/livingroom-structure.css?v=6">
-    <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css?v=7">
+    <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css?v=8">
     <link rel="stylesheet" href="../css/category-css/livingroom-page.css?v=3">
     <link rel="stylesheet" href="../css/favourites-toggle.css">
     <link rel="stylesheet" href="../css/category-css/category-backgrounds.css?v=1">
@@ -170,7 +170,7 @@ if (!empty($_SESSION['user_ID'])) {
         }
 
         .item .product-text {
-            padding-bottom: 28px;
+            padding-bottom: 0;
         }
 
         .nav-links a,
@@ -602,7 +602,7 @@ if (!empty($_SESSION['user_ID'])) {
     ><?= $isFavourite ? '♥' : '♡' ?></button>
 </form>
     <!--onclick to pass product_ID in function - API fetch details from DB-->
-    <button type="button" class="add-basket-btn" onclick="addToBasket(<?= $row['product_ID'] ?>, 1)" title="Add to basket">+ Add to Basket</button>
+    <button type="button" class="add-basket-btn" onclick="addToBasket(<?= $row['product_ID'] ?>, 1)" title="Add to basket">Add to Basket</button>
 </div>
 
 
