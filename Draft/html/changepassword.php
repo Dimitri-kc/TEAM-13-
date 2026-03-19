@@ -5,139 +5,72 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Change Password | LOFT & LIVING</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
- 
   <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
-  <link rel="stylesheet" href="../css/signup.style.css">
-
-  <style>
-
-    html, body {
-      width: 100%;
-      margin: 0;
-      padding: 0;
-    }
-
-    body.page-background {
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: flex-start !important; 
-      align-items: stretch !important;         
-      min-height: 100vh !important;
-      width: 100% !important;
-      margin: 0 !important;
-    }
-
-
-    .site-header,
-    .site-footer {
-      width: 100% !important;
-      max-width: none !important;
-      flex-shrink: 0;
-      align-self: stretch !important;
-    }
-
-    
-    main.form-container {
-      flex: 1;
-      width: 100% !important;
-      max-width: none !important;
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      padding: 60px 16px;
-      margin: 0 !important;
-      box-sizing: border-box;
-      align-self: stretch !important;
-    }
-
-    .helper-text {
-      text-align: center;
-      font-size: 0.95rem;
-      margin-top: -6px;
-      margin-bottom: 16px;
-      opacity: 0.8;
-    }
-
-    .error-popup {
-      display: none;
-      margin-top: 12px;
-      padding: 10px 12px;
-      border-radius: 4px;
-      background: #fff;
-      border: 1px solid #f0b400;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.12);
-      font-size: 0.9rem;
-      line-height: 1.4;
-      align-items: flex-start;
-      gap: 8px;
-    }
-
-    .error-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 3px;
-      background: #ffa000;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .error-text {
-      flex: 1;
-    }
-
-    /* styling for error popup success */
-    .error-popup.success {
-      border-color: #2e7d32;
-      background: #f1fff3;
-    }
-    .error-popup.success .error-icon {
-      background: #2e7d32;
-    }
-  </style>
+  <link rel="stylesheet" href="../css/signup.style.css?v=2">
+  <link rel="stylesheet" href="../css/changepassword.css?v=1">
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
-    <link rel="stylesheet" href="../css/dark-mode.css?v=12">
-    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=13">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
     <script src="../javascript/dark-mode.js"></script>
 </head>
 
-<body class="page-background">
+<body class="auth-page change-password-page">
 
 <?php $headerPartialOnly = true; include 'header.php'; ?>
 
-<main class="form-container">
-  <section class="form-box">
-    <h1 class="form-title" style="white-space: nowrap;">CHANGE PASSWORD</h1>
-    <p class="helper-text">You must change your password before continuing.</p>
+<main class="auth-wrap">
+  <section class="auth-shell auth-shell--compact change-password-shell">
+    <aside class="auth-hero change-password-hero">
+      <div>
+        <div class="auth-kicker">Account Security</div>
+        <h1 class="auth-hero-title">Set a fresh password.</h1>
+        <p class="auth-hero-copy">Update your password before continuing so your account stays secure and ready to use across the site.</p>
+      </div>
 
-    <form class="form-fields" id="changePasswordForm">
-      <label class="input-group">
-        <span class="input-label">New Password</span>
-        <input type="password" name="newPassword" required>
-      </label>
+      <div class="auth-feature-list">
+        <div class="auth-feature">
+          <span class="auth-feature-label">Requirement</span>
+          <span class="auth-feature-value">At least 8 characters with upper, lower, number and symbol</span>
+        </div>
+        <div class="auth-feature">
+          <span class="auth-feature-label">After update</span>
+          <span class="auth-feature-value">You will be sent back to the right page automatically</span>
+        </div>
+      </div>
+    </aside>
 
-      <label class="input-group">
-        <span class="input-label">Confirm New Password</span>
-        <input type="password" name="confirmPassword" required>
-      </label>
+    <div class="auth-panel change-password-panel">
+      <div class="auth-heading">
+        <h2>Change password</h2>
+        <p>You must update your password before continuing.</p>
+      </div>
 
       <div id="errorPopup" class="error-popup">
         <div class="error-icon">!</div>
         <div class="error-text" id="errorText"></div>
       </div>
 
-      <button type="submit" class="main-button">Update Password</button>
-    </form>
+      <div class="auth-card">
+        <form id="changePasswordForm" class="change-password-form">
+          <label class="input-group">
+            <span class="input-label">New Password</span>
+            <input type="password" name="newPassword" placeholder="Enter a new password" required>
+          </label>
+
+          <label class="input-group">
+            <span class="input-label">Confirm New Password</span>
+            <input type="password" name="confirmPassword" placeholder="Confirm your new password" required>
+          </label>
+
+          <div class="password-guidance">
+            Use a strong password with upper and lowercase letters, a number, and a special character.
+          </div>
+
+          <button type="submit" class="main-button">Update Password</button>
+        </form>
+      </div>
+    </div>
   </section>
 </main>
 
