@@ -83,7 +83,6 @@ $addressParts = array_map('trim', explode(",", $order['address']));
 $line1 = $addressParts[0] ?? '';
 $line2 = $addressParts[1] ?? '';
 $city = $addressParts[2] ?? '';
-$county = $addressParts[3] ?? '';
 $postcode = $addressParts[4] ?? '';
 $itemCount = array_sum(array_map(static fn($item) => (int)($item['quantity'] ?? 0), $items));
 $orderTotal = array_sum(array_map(static fn($item) => (float)($item['line_total'] ?? 0), $items));
@@ -202,13 +201,6 @@ $orderTotal = array_sum(array_map(static fn($item) => (float)($item['line_total'
 <label>Postcode</label>
 <div class="display-line">
 <?= htmlspecialchars($postcode) ?>
-</div>
-</div>
-
-<div class="form-row">
-<label>County</label>
-<div class="display-line">
-<?= htmlspecialchars($county) ?>
 </div>
 </div>
 
