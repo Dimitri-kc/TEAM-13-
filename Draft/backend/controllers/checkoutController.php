@@ -116,7 +116,7 @@ class CheckoutController {
                 if ($pid <= 0 || $quantity <= 0) { //if valid, insert order item
                     throw new Exception ("Invalid product ID or quantity for order item.");
                 }
-                $result =$this->orderItemModel->addOrderItem($order_ID, $pid, $quantity, $unit_price); //create order item with order id, product id, qty, price
+                $result =$this->orderItemModel->addOrderItem($order_ID, $pid, $unit_price, $quantity,); //create order item with order id, product id, qty, price
                 if (!$result) {    
                     throw new Exception("Failed to add order item for product ID: $pid");
                 }
