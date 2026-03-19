@@ -9,7 +9,7 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
 <head>
     <meta charset="UTF-8">
     <title>Admin Product Inventory</title>
-    <link rel="stylesheet" href="../css/admin_product_inventory.css?v=2">
+    <link rel="stylesheet" href="../css/admin_product_inventory.css?v=3">
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
@@ -27,6 +27,13 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
         <h1 class="title">Product Inventory</h1>
         <p class="subtitle">View current stock levels, search products quickly, update item details, and add new products without changing the existing admin flows.</p>
       </div>
+      <button
+        type="button"
+        class="inventory-return-btn"
+        onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href='admin_dash.php'; }"
+      >
+        Return to Previous Page
+      </button>
     </div>
 
 <div class="filter-wrapper" >
@@ -58,6 +65,12 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
     <div id="product-container" class="product-grid">
         <!-- Products will load here automatically -->
     </div>
+
+    <div class="inventory-pagination" id="inventory-pagination" hidden>
+        <button type="button" class="pagination-btn" id="prev-page-btn">Previous</button>
+        <div class="pagination-status" id="pagination-status">Page 1 of 1</div>
+        <button type="button" class="pagination-btn" id="next-page-btn">Next</button>
+    </div>
 </div>
 
 <script>
@@ -66,12 +79,25 @@ fetch('admin_get_products.php')
 .then(data => {
     const container = document.getElementById('product-container');
     const categoryFilter = document.getElementById('category-filter');
+    const searchBar = document.getElementById('search-bar');
+    const pagination = document.getElementById('inventory-pagination');
+    const paginationStatus = document.getElementById('pagination-status');
+    const prevPageBtn = document.getElementById('prev-page-btn');
+    const nextPageBtn = document.getElementById('next-page-btn');
+    const PRODUCTS_PER_PAGE = 6;
+    let currentPage = 1;
+    let activeProducts = [...data];
 
     // Function to render products
     function renderProducts(filteredData) {
         container.innerHTML = ''; // clear previous cards
+        const totalPages = Math.max(1, Math.ceil(filteredData.length / PRODUCTS_PER_PAGE));
+        currentPage = Math.min(currentPage, totalPages);
+        const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+        const visibleProducts = filteredData.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
+
         // Add product cards
-        filteredData.forEach(product => {
+        visibleProducts.forEach(product => {
 
         // Determine stock level
     let stockClass = "";
@@ -115,30 +141,52 @@ productCard.innerHTML = `
 `;
             container.appendChild(productCard);
         });
+
+        pagination.hidden = filteredData.length <= PRODUCTS_PER_PAGE;
+        paginationStatus.textContent = `Page ${currentPage} of ${totalPages}`;
+        prevPageBtn.disabled = currentPage === 1;
+        nextPageBtn.disabled = currentPage === totalPages;
+    }
+
+    function getFilteredProducts() {
+        const selected = categoryFilter.value;
+        const query = searchBar.value.trim().toLowerCase();
+
+        return data.filter(product => {
+            const matchesCategory = selected === '' || Number(product.category_id) === Number(selected);
+            const matchesSearch = product.name.toLowerCase().includes(query);
+            return matchesCategory && matchesSearch;
+        });
+    }
+
+    function applyFilters(resetPage = true) {
+        if (resetPage) currentPage = 1;
+        activeProducts = getFilteredProducts();
+        renderProducts(activeProducts);
     }
 
     // Initial render with all products
-    renderProducts(data);
+    renderProducts(activeProducts);
 
     // Filter on dropdown change
 categoryFilter.addEventListener('change', () => {
-    const selected = categoryFilter.value;
-
-    if (selected === '') {
-        renderProducts(data); // Show all products
-    } else {
-        const filteredData = data.filter(product => Number(product.category_id) === Number(selected));
-        renderProducts(filteredData); // Show only selected category
-    }
+    applyFilters(true);
 });
-document.getElementById("search-bar").addEventListener("input", function () {
-    const query = this.value.toLowerCase();
+searchBar.addEventListener("input", function () {
+    applyFilters(true);
+});
 
-    const filtered = data.filter(product =>
-        product.name.toLowerCase().includes(query)
-    );
+prevPageBtn.addEventListener('click', () => {
+    if (currentPage === 1) return;
+    currentPage -= 1;
+    renderProducts(activeProducts);
+});
 
-    renderProducts(filtered);
+nextPageBtn.addEventListener('click', () => {
+    const totalPages = Math.max(1, Math.ceil(activeProducts.length / PRODUCTS_PER_PAGE));
+    if (currentPage >= totalPages) return;
+    currentPage += 1;
+    renderProducts(activeProducts);
 });
 })
 .catch(error => console.error('Error loading products:', error));
