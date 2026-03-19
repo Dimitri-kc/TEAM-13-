@@ -341,11 +341,15 @@ function ensureSearchModalMarkup() {
         <div id="global-search-modal" class="search-modal-overlay" aria-hidden="true">
             <div class="search-modal-dialog" role="dialog" aria-modal="true" aria-label="Search products">
                 <div class="search-modal-header">
-                    <h2>Search</h2>
+                    <div class="search-modal-header-copy">
+                        <span class="search-modal-kicker">Loft & Living Search</span>
+                        <h2>Find something worth bringing home.</h2>
+                    </div>
                     <button type="button" class="search-modal-close" aria-label="Close search">×</button>
                 </div>
                 <div class="search-modal-toolbar">
                     <div class="search-modal-input-wrap">
+                        <span class="search-modal-input-icon" aria-hidden="true">⌕</span>
                         <input type="text" id="global-search-input" placeholder="Search by product, category, or keyword..." autocomplete="off">
                     </div>
                     <div id="global-search-meta" class="search-modal-meta"></div>
@@ -382,78 +386,142 @@ function ensureSearchModalStyles() {
         .search-modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(17, 17, 17, 0.45);
+            background:
+                radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 35%),
+                rgba(15, 13, 12, 0.56);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             display: none;
             align-items: flex-start;
             justify-content: center;
             z-index: 11000;
-            padding: 90px 18px 24px;
+            padding: 78px 20px 28px;
         }
         .search-modal-overlay.is-open { display: flex; }
         .search-modal-dialog {
-            width: min(1100px, 100%);
-            max-height: calc(100vh - 120px);
+            position: relative;
+            width: min(1220px, 100%);
+            max-height: calc(100vh - 106px);
             overflow: hidden;
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 244, 239, 0.98) 100%);
+            border-radius: 32px;
+            border: 1px solid rgba(118, 106, 94, 0.14);
+            box-shadow: 0 36px 90px rgba(16, 12, 9, 0.26);
             display: flex;
             flex-direction: column;
         }
         .search-modal-header {
             position: relative;
             display: flex;
-            align-items: center;
-            padding: 18px 22px 12px;
-            border-bottom: 1px solid #ececec;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 22px;
+            padding: 28px 30px 16px;
+            border-bottom: 1px solid rgba(118, 106, 94, 0.12);
+            background:
+                radial-gradient(circle at top left, rgba(196, 186, 173, 0.24), transparent 36%);
+        }
+        .search-modal-header-copy {
+            max-width: 640px;
+        }
+        .search-modal-kicker {
+            display: inline-block;
+            margin-bottom: 8px;
+            color: #7a7067;
+            font-family: 'mr-eaves-modern', 'Mr Eaves Modern', Arial, sans-serif;
+            font-size: 13px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
         }
         .search-modal-header h2 {
             margin: 0;
-            font-size: 24px;
+            color: #171411;
+            font-family: 'ivybodoni', serif;
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 400;
+            line-height: 0.98;
+            letter-spacing: -0.03em;
         }
         .search-modal-close {
-            position: absolute;
-            top: 10px;
-            right: 14px;
-            border: none;
-            background: transparent;
-            font-size: 32px;
-            line-height: 1;
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(118, 106, 94, 0.16);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            color: #3a342f;
+            font-size: 34px;
+            line-height: 0.9;
             cursor: pointer;
-            color: #333;
+            transition: background 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+        }
+        .search-modal-close:hover {
+            background: rgba(196, 186, 173, 0.2);
+            border-color: rgba(118, 106, 94, 0.28);
+            transform: translateY(-1px);
         }
         .search-modal-toolbar {
-            padding: 16px 22px;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 18px 30px 22px;
+            border-bottom: 1px solid rgba(118, 106, 94, 0.1);
         }
         .search-modal-input-wrap {
+            position: relative;
             display: block;
             width: 100%;
+        }
+        .search-modal-input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7a7067;
+            font-size: 20px;
+            line-height: 1;
+            pointer-events: none;
         }
         #global-search-input {
             width: 100%;
             min-width: 0;
-            border: 1px solid #d7d7d7;
-            border-radius: 12px;
-            padding: 13px 15px;
-            font-size: 16px;
+            min-height: 58px;
+            border: 1px solid rgba(118, 106, 94, 0.18);
+            border-radius: 999px;
+            padding: 0 22px 0 52px;
+            font-family: 'mr-eaves-modern', 'Mr Eaves Modern', Arial, sans-serif;
+            font-size: 18px;
+            color: #171411;
+            background: rgba(255, 253, 250, 0.96);
+            outline: none;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+        }
+        #global-search-input:focus {
+            border-color: rgba(112, 96, 81, 0.48);
+            box-shadow: 0 0 0 4px rgba(186, 174, 161, 0.18);
+            background: #fff;
+        }
+        #global-search-input::placeholder {
+            color: #9d9388;
         }
         .search-modal-meta {
-            margin-top: 10px;
-            color: #555;
-            font-size: 14px;
+            margin-top: 12px;
+            color: #6e655d;
+            font-family: 'mr-eaves-modern', 'Mr Eaves Modern', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.45;
         }
         .search-modal-feedback {
             position: absolute;
-            top: 18px;
+            top: 22px;
             left: 50%;
             transform: translate(-50%, -12px);
-            background: rgba(17, 17, 17, 0.92);
+            background: rgba(23, 20, 17, 0.96);
             color: #fff;
-            padding: 8px 14px;
+            padding: 10px 16px;
             border-radius: 999px;
-            font-size: 13px;
-            font-weight: 600;
+            font-family: 'mr-eaves-modern', 'Mr Eaves Modern', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.03em;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.18s ease, transform 0.18s ease;
@@ -465,21 +533,27 @@ function ensureSearchModalStyles() {
         }
         .search-modal-results {
             overflow: auto;
-            padding: 22px;
+            padding: 26px 30px 30px;
         }
         .search-modal-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+            gap: 22px;
         }
         .search-modal-card {
-            border: 1px solid #ececec;
-            border-radius: 14px;
+            border: 1px solid rgba(118, 106, 94, 0.12);
+            border-radius: 24px;
             overflow: hidden;
-            background: #fff;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.88);
+            box-shadow: 0 18px 42px rgba(44, 31, 22, 0.08);
             display: flex;
             flex-direction: column;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+        }
+        .search-modal-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 22px 48px rgba(44, 31, 22, 0.1);
+            border-color: rgba(118, 106, 94, 0.18);
         }
         .search-modal-card-link {
             text-decoration: none;
@@ -487,28 +561,37 @@ function ensureSearchModalStyles() {
         }
         .search-modal-card-image {
             width: 100%;
-            height: 210px;
+            height: 232px;
             object-fit: cover;
             display: block;
         }
         .search-modal-card-body {
-            padding: 12px;
+            padding: 16px 16px 18px;
             display: flex;
             flex: 1;
             flex-direction: column;
         }
         .search-modal-card-body h3 {
             margin: 0 0 8px;
-            font-size: 17px;
+            color: #171411;
+            font-family: 'ivybodoni', serif;
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 1.15;
         }
         .search-modal-card-category {
-            margin: 0 0 6px;
-            font-size: 13px;
-            color: #666;
+            margin: 0 0 8px;
+            color: #8a8075;
+            font-family: 'mr-eaves-modern', 'Mr Eaves Modern', Arial, sans-serif;
+            font-size: 15px;
+            line-height: 1.4;
         }
         .search-modal-card-price {
-            margin: 0 0 12px;
-            font-weight: 700;
+            margin: 0 0 6px;
+            color: #1f1a17;
+            font-family: 'mr-eaves-modern', 'Mr Eaves Modern', Arial, sans-serif;
+            font-size: 17px;
+            font-weight: 500;
         }
         .search-modal-card-actions {
             display: flex;
@@ -522,31 +605,37 @@ function ensureSearchModalStyles() {
             margin: 0;
         }
         .search-modal-favourite-btn {
-            width: 34px;
-            height: 34px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: none;
+            border: 1px solid rgba(118, 106, 94, 0.12);
             border-radius: 50%;
-            background: rgba(0, 0, 0, 0.08);
-            color: #444;
+            background: #f4efe8;
+            color: #4d463d;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 22px;
+            transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+        }
+        .search-modal-favourite-btn:hover {
+            transform: translateY(-1px);
+            background: #ebe4da;
         }
         .search-modal-favourite-btn.is-active {
-            background: #111;
+            background: #171411;
             color: #fff;
+            border-color: #171411;
         }
         .search-modal-basket-btn {
-            border: 1.5px solid #6f675c;
+            border: 1.5px solid #9c9488;
             border-radius: 32px;
-            padding: 10px 20px;
-            background: #6f675c;
+            padding: 10px 18px;
+            background: #9c9488;
             color: #fff;
             cursor: pointer;
             font-weight: 500;
-            font-size: 15px;
+            font-size: 16px;
             line-height: 1.2;
             font-family: 'mr-eaves-modern', 'Mr Eaves Modern', Arial, sans-serif;
             letter-spacing: 0.03em;
@@ -555,13 +644,69 @@ function ensureSearchModalStyles() {
             white-space: nowrap;
         }
         .search-modal-basket-btn:hover {
-            background: #595247;
-            border-color: #595247;
+            background: #7f786d;
+            border-color: #7f786d;
             transform: translateY(-2px);
             box-shadow: 0 4px 18px rgba(43, 43, 43, 0.13);
         }
         .search-modal-basket-btn:disabled {
             opacity: 1;
+        }
+        .search-modal-basket-btn[disabled] {
+            cursor: wait;
+        }
+        html.dark-mode .search-modal-overlay {
+            background:
+                radial-gradient(circle at top, rgba(255, 255, 255, 0.04), transparent 35%),
+                rgba(7, 7, 7, 0.68);
+        }
+        html.dark-mode .search-modal-dialog {
+            background: linear-gradient(180deg, rgba(25, 25, 25, 0.98) 0%, rgba(31, 31, 31, 0.98) 100%);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 36px 90px rgba(0, 0, 0, 0.42);
+        }
+        html.dark-mode .search-modal-header {
+            border-bottom-color: rgba(255, 255, 255, 0.08);
+            background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.06), transparent 36%);
+        }
+        html.dark-mode .search-modal-kicker,
+        html.dark-mode .search-modal-meta,
+        html.dark-mode .search-modal-card-category {
+            color: #c6bcae;
+        }
+        html.dark-mode .search-modal-header h2,
+        html.dark-mode .search-modal-card-body h3,
+        html.dark-mode .search-modal-card-price {
+            color: #f5eee7;
+        }
+        html.dark-mode .search-modal-close {
+            background: rgba(255, 255, 255, 0.06);
+            color: #f0e7de;
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+        html.dark-mode #global-search-input {
+            background: #252525;
+            color: #f0e7de;
+            border-color: #4a4a4a;
+        }
+        html.dark-mode #global-search-input:focus {
+            border-color: #8c8376;
+            box-shadow: 0 0 0 4px rgba(140, 131, 118, 0.18);
+            background: #2a2a2a;
+        }
+        html.dark-mode #global-search-input::placeholder,
+        html.dark-mode .search-modal-input-icon {
+            color: #a99f93;
+        }
+        html.dark-mode .search-modal-card {
+            background: rgba(29, 29, 29, 0.94);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 22px 48px rgba(0, 0, 0, 0.28);
+        }
+        html.dark-mode .search-modal-favourite-btn {
+            background: #242424;
+            border-color: rgba(255, 255, 255, 0.08);
+            color: #f0e7de;
         }
         html.dark-mode .search-modal-basket-btn {
             background: #8c8376;
@@ -574,31 +719,62 @@ function ensureSearchModalStyles() {
         }
         .search-modal-placeholder,
         .search-modal-empty {
-            border: 1px dashed #d8d8d8;
-            border-radius: 14px;
-            padding: 26px 16px;
-            color: #444;
+            border: 1px dashed rgba(118, 106, 94, 0.24);
+            border-radius: 22px;
+            padding: 34px 24px;
+            color: #5f564d;
+            font-family: 'mr-eaves-modern', 'Mr Eaves Modern', Arial, sans-serif;
+            font-size: 18px;
+            line-height: 1.55;
+            background: rgba(255, 255, 255, 0.54);
         }
         .search-modal-did-you-mean {
-            margin-top: 10px;
+            margin-top: 12px;
         }
         .search-modal-suggestion-btn {
             border: none;
             background: transparent;
-            color: #0d4fd6;
+            color: #6f675c;
             cursor: pointer;
             font-weight: 600;
             padding: 0;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+        html.dark-mode .search-modal-placeholder,
+        html.dark-mode .search-modal-empty {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.12);
+            color: #cfc6bc;
+        }
+        html.dark-mode .search-modal-suggestion-btn {
+            color: #d4c8b7;
         }
         @media (max-width: 640px) {
             .search-modal-overlay {
-                padding-top: 70px;
+                padding: 64px 12px 18px;
             }
             .search-modal-dialog {
-                max-height: calc(100vh - 90px);
+                max-height: calc(100vh - 82px);
+                border-radius: 24px;
+            }
+            .search-modal-header,
+            .search-modal-toolbar,
+            .search-modal-results {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+            .search-modal-header {
+                padding-top: 22px;
             }
             .search-modal-grid {
                 grid-template-columns: 1fr;
+            }
+            .search-modal-card-image {
+                height: 220px;
+            }
+            .search-modal-card-body h3 {
+                font-size: 19px;
             }
         }
     `;

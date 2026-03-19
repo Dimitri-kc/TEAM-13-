@@ -33,8 +33,8 @@ if (!empty($_SESSION['user_ID'])) {
 
   <!-- Living Room CSS (REQUIRED – correct files) -->
   <link rel="stylesheet" href="../css/category-css/livingroom-base.css?v=2">
-  <link rel="stylesheet" href="../css/category-css/livingroom-structure.css?v=6">
-  <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css?v=8">
+  <link rel="stylesheet" href="../css/category-css/livingroom-structure.css?v=7">
+  <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css?v=9">
   <link rel="stylesheet" href="../css/category-css/livingroom-page.css?v=3">
   <link rel="stylesheet" href="../css/favourites-toggle.css">
   <link rel="stylesheet" href="../css/category-css/category-backgrounds.css?v=1">
@@ -666,7 +666,7 @@ if (!empty($_SESSION['user_ID'])) {
     <script src="../javascript/header_footer_script.js"></script>
     <script src="../javascript/global/basketIcon.js"></script>
     <script src="../javascript/favourites-toggle.js"></script>
-    <script src="../javascript/global/search-modal.js?v=4"></script>
+    <script src="../javascript/global/search-modal.js?v=5"></script>
 
 </body>
 </html>

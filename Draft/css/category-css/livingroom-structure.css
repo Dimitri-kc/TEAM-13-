@@ -62,6 +62,7 @@
     gap:30px;
     margin: 0 auto;
     justify-content: center;
+    align-items: stretch;
 }
 
 .product-grid a {
