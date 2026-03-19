@@ -71,23 +71,34 @@
             transform: rotate(-180deg);
         }
         .back-dashboard {
-    display: inline-block;
-    margin-bottom: 20px;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    color: #2C6E49;
-    transition: 0.2s ease;
-}
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            margin-bottom: 20px;
+            padding: 12px 20px;
+            border-radius: 999px;
+            border: 1.5px solid rgba(111, 103, 92, 0.26);
+            background: transparent;
+            color: #6f675c;
+            font-family: 'mr-eaves-modern';
+            font-size: 17px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, color 0.18s ease;
+        }
 
-.back-dashboard:hover {
-    text-decoration: underline;
-}
+        .back-dashboard:hover {
+            background: rgba(111, 103, 92, 0.08);
+            border-color: rgba(111, 103, 92, 0.4);
+            color: #4d463d;
+            transform: translateY(-1px);
+        }
     </style>
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
-    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
     <script src="../javascript/dark-mode.js"></script>
 </head>
 <body>

@@ -45,308 +45,11 @@ $stmt->close();
 <title>LOFT & LIVING - My Recent Orders</title>
 
 <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
-
-<style>
-body {
-    font-family: 'Inter', Arial, sans-serif;
-    background: #fff;
-    margin: 0;
-    color: #1a1a1a;
-}
-
-
-.user-container {
-    max-width: 1100px;
-    margin: 50px auto 100px auto; 
-    padding: 0 40px;
-}
-
-h1 {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
-
-.subheader {
-    color: #888;
-    font-size: 14px;
-    margin-bottom: 35px;
-}
-
-.orders-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-}
-
-.order-card {
-    border: 1px solid #f0f0f0;
-    border-radius: 8px;
-    padding: 24px;
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    transition: 0.2s ease;
-}
-
-.order-card:hover {
-    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
-}
-
-.order-image-box {
-    width: 120px;
-    height: 120px;
-    background-color: #f5f5f5;
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-.order-image-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.order-content {
-    flex-grow: 1;
-}
-
-.order-date-label {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 16px;
-    display: block;
-}
-
-.order-actions {
-    display: flex;
-    gap: 12px;
-}
-
-.btn-action {
-    padding: 10px 18px;
-    font-size: 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: 600;
-    border: none;
-    transition: 0.2s ease;
-}
-
-.btn-add-bag {
-    background-color: #e8e8e8;
-    color: #1a1a1a;
-}
-
-.btn-add-bag:hover {
-    background-color: #ddd;
-}
-
-.btn-view-order {
-    background-color: #2b2b2b;
-    color: #fff;
-}
-
-.btn-view-order:hover {
-    background-color: #000;
-}
-
-
-.custom-footer {
-    border-top: 1px solid #f0f0f0;
-    padding: 60px 0;
-}
-
-.footer-wrapper {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 40px;
-    display: grid;
-    grid-template-columns: 120px 1fr 1fr 1fr;
-    gap: 80px;
-    align-items: start;
-}
-
-.footer-social {
-    display: flex;
-    gap: 16px;
-    align-items: flex-start;
-}
-
-.footer-social img {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-}
-
-.footer-column h4 {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 20px;
-}
-
-.footer-column ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-column li {
-    margin-bottom: 12px;
-}
-
-.footer-column a {
-    text-decoration: none;
-    color: #666;
-    font-size: 13px;
-}
-
-.footer-column a:hover {
-    color: #000;
-}
-/* RETURNS MODAL — matches review modal styling */
-.return-modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.45);
-}
-
-.return-modal-content {
-    background: #fff;
-    width: 88%;
-    max-width: 300px;
-    margin: 3% auto;
-    padding: 10px 14px;
-    border-radius: 14px;
-    border: 1px solid #E5E1DB;
-    box-shadow: 0 8px 28px rgba(0,0,0,0.15);
-}
-
-.close-return {
-    float: right;
-    font-size: 20px;
-    cursor: pointer;
-    opacity: 0.6;
-    transition: opacity 0.2s;
-}
-.close-return:hover { opacity: 1; }
-
-#returnForm label {
-    font-size: 12px;
-    font-weight: 600;
-    color: #2B2B2B;
-    margin-bottom: 2px;
-    display: block;
-}
-
-#returnForm select,
-#returnForm textarea,
-#returnForm input {
-    width: 100%;
-    margin-bottom: 6px;
-    padding: 6px 8px;
-    border-radius: 8px;
-    border: 1px solid #E5E1DB;
-    font-size: 13px;
-    background: #FFFFFF;
-    color: #2B2B2B;
-}
-
-#returnForm textarea {
-    height: 55px;
-    resize: vertical;
-}
-
-.submit-return-btn {
-    width: 100%;
-    padding: 8px;
-    background: #B8AFA4;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    margin-top: 4px;
-    transition: background 0.2s;
-}
-/* SUCCESS MODAL */
-.success-modal {
-    display: none;
-    position: fixed;
-    z-index: 10000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.45);
-}
-
-.success-modal-content {
-    background: #fff;
-    width: 88%;
-    max-width: 250px;
-    margin: 15% auto;
-    padding: 20px;
-    border-radius: 14px;
-    border: 1px solid #E5E1DB;
-    box-shadow: 0 8px 28px rgba(0,0,0,0.15);
-    text-align: center;
-}
-
-.success-modal-content p {
-    font-size: 16px;
-    font-weight: 600;
-    color: #2B2B2B;
-    margin: 0;
-}
-
-.success-modal-content button {
-    margin-top: 15px;
-    padding: 8px 16px;
-    background: #B8AFA4;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-}
-.success-modal-content button:hover { background: #C8B79C; }
-    .orders-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .footer-wrapper {
-        grid-template-columns: 1fr 1fr;
-        gap: 40px;
-    }
-
-    .back-home {
-    display: inline-block;
-    margin-bottom: 15px;
-    font-size: 14px;
-    text-decoration: none;
-    color: #2C6E49;
-    font-weight: 500;
-    transition: 0.2s ease;
-}
-
-.back-home:hover {
-    text-decoration: underline;
-}
-
-</style>
+<link rel="stylesheet" href="../css/user_order_history.css?v=1">
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
-    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
     <script src="../javascript/dark-mode.js"></script>
 </head>
 
@@ -396,7 +99,7 @@ h1 {
   </div>
 </div>
 
-<body>
+<body class="order-history-page">
 
 <?php $headerPartialOnly = true; include 'header.php'; ?>
 
@@ -404,12 +107,12 @@ h1 {
 
     <a href="#" onclick="goBack(event)" class="back-home">← Go Back</a>
 
-    <h1 style="margin-top:10px;">My Recent Orders</h1>
-    <p class="subheader">View your recent orders and add to your bag if you want to purchase it again</p>
+    <h1 class="order-history-title">My Recent Orders</h1>
+    <p class="subheader">View your recent orders and revisit anything you have bought before.</p>
 
     <div class="orders-grid">
         <?php if (empty($orders)): ?>
-            <p>You haven't placed any orders yet.</p>
+            <p class="orders-empty">You haven't placed any orders yet.</p>
         <?php else: ?>
             <?php foreach ($orders as $order): 
                 $date = date("jS F Y", strtotime($order['order_date']));
@@ -426,7 +129,7 @@ h1 {
                     <span class="order-date-label"><?= $date ?></span>
 
                     <div class="order-actions">
-<button data-return data-order-id="<?= $order['order_ID'] ?>">
+<button class="btn-action btn-return-order" data-return data-order-id="<?= $order['order_ID'] ?>">
     Return Item
 </button>
 

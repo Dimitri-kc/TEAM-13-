@@ -73,128 +73,22 @@ $postcode = $addressParts[4] ?? '';
 <title>Order Details</title>
 
 <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
-
-<style>
-
-body{
-font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-margin:0px;
-color:#1a1a1a;
-}
-
-
-.container{
-display:flex;
-gap:40px;
-max-width:1000px;
-margin:40px auto;
-}
-
-
-.left-section{
-flex:1;
-padding:28px;
-border-radius:14px;
-border:1px solid #e6e6e6;
-font-family:"Times New Roman", Georgia, serif;
-}
-
-.left-section h2{
-font-weight:400;
-font-size:26px;
-margin-bottom:10px;
-}
-
-.left-section p{
-font-size:18px;
-margin:6px 0;
-}
-
-.right-section{
-flex:1;
-background:#f5f5f5;
-padding:32px;
-border-radius:14px;
-border:1px solid #e0e0e0;
-}
-
-
-.order-image{
-width:300px;
-height:300px;
-background:#d3d3d3;
-border-radius:10px;
-margin-top:20px;
-overflow:hidden;
-}
-
-.order-image img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-
-.shipping-address-title{
-font-size:22px;
-font-weight:800;
-margin-bottom:20px;
-}
-
-.form-row{
-display:grid;
-grid-template-columns:180px 1fr;
-margin-bottom:18px;
-align-items:center;
-}
-
-.form-row label{
-font-weight:700;
-}
-
-.display-line{
-font-weight:500;
-}
-
-
-
-@media(max-width:900px){
-
-
-
-.form-row{
-grid-template-columns:1fr;
-}
-
-}
-
-.back-home {
-    display: inline-block;
-    margin: 20px 0 0px 140px; /* top 20px, right 0, bottom 20px, left 70px */
-    font-size: 14px;
-    text-decoration: none;
-    color: #111;
-    font-weight: 500;
-    transition: 0.2s ease;
-}
-
-.back-home:hover {
-    text-decoration: underline;
-}
-</style>
+<link rel="stylesheet" href="../css/user_order_details.css?v=1">
 
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
-    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
     <script src="../javascript/dark-mode.js"></script>
 </head>
 
-<body>
+<body class="order-details-page">
 
 <?php $headerPartialOnly = true; include 'header.php'; ?>
 
-<a href="#" onclick="goBack(event)" class="back-home">← Go Back</a>
+<div class="back-home-wrap">
+    <a href="#" onclick="goBack(event)" class="back-home">← Go Back</a>
+</div>
 
     <div class="container">
 
@@ -271,8 +165,6 @@ United Kingdom
 
 
 <?php $footerPartialOnly = true; include 'footer.php'; ?>
-
-//Go back button
 <script>
 function goBack(e) {
     e.preventDefault();

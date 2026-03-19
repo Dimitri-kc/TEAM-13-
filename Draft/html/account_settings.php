@@ -207,17 +207,17 @@ $addrPost = $addressParts[3] ?? '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Settings | LOFT & LIVING</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/account_settings.css">
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
     <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
-    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
+    <link rel="stylesheet" href="../css/account_settings_page.css?v=1">
     <script src="../javascript/dark-mode.js"></script>
     
 </head>
-<body>
+<body class="account-page">
 
 <?php $headerPartialOnly = true; include 'header.php'; ?>
 
