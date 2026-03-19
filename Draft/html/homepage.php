@@ -29,7 +29,7 @@ if ($showWelcomeToast) {
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=38">
      <link rel="stylesheet" href="../css/reviews.css?v=2">
-    <link rel="stylesheet" href="../css/dark-mode.css?v=12">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=13">
 
     <script src="../javascript/dark-mode.js"></script>
 </head>
