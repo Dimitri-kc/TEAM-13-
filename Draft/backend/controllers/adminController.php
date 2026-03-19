@@ -123,9 +123,9 @@ class AdminController {
             $this->fail("Invalid customer ID", 400);
             return;
         }
-        //select customer details from database, ensure role is customer to prevent admin data retrieval if wrong ID provided, limit to 1 record for efficiency
+        //select user details from database for the chosen record, limit to 1 record for efficiency
         $sql = "SELECT user_ID as id, name, surname, email, phone, address, role, status
-                FROM users WHERE user_ID = ? AND role = 'customer' LIMIT 1";
+                FROM users WHERE user_ID = ? LIMIT 1";
         
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $customerID);
@@ -135,7 +135,7 @@ class AdminController {
         $stmt->close();
 
         if (!$customer) {
-            $this->fail("Customer not found", 404);
+            $this->fail("User not found", 404);
             return;
         }
         echo json_encode([
