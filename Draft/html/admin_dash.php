@@ -44,15 +44,16 @@ $extraHeadContent = <<<'HTML'
         }
 
         .dashboard-heading h2 {
-            font-size: 20px;
-            font-weight: 700;
+            font-size: 30px;
+            font-weight: 500;
+            font-family: 'ivybodoni', serif;
             margin: 0;
         }
 
         .dashboard-heading p {
             margin: 0;
             color: #777;
-            font-size: 14px;
+            font-size: 18px;
         }
 
         .return-home-btn {
@@ -64,8 +65,8 @@ $extraHeadContent = <<<'HTML'
             background: #2B2B2B;
             color: #fff;
             text-decoration: none;
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 500;
             white-space: nowrap;
             transition: background-color 120ms ease, transform 120ms ease;
         }
@@ -97,19 +98,19 @@ $extraHeadContent = <<<'HTML'
         }
 
         .dash-card-inner {
-            padding: 18px;
+            padding: 22px;
         }
 
         .card-top {
             display: grid;
-            grid-template-columns: 92px 1fr;
-            gap: 16px;
+            grid-template-columns: 104px 1fr;
+            gap: 18px;
             align-items: center;
         }
 
         .card-media img {
-            width: 92px;
-            height: 92px;
+            width: 104px;
+            height: 104px;
             object-fit: cover;
             border-radius: 8px;
             display: block;
@@ -117,15 +118,16 @@ $extraHeadContent = <<<'HTML'
 
         .dash-card h3 {
             margin: 6px 0;
-            font-size: 16px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: 500;
+            font-family: 'ivybodoni', serif;
         }
 
         .dash-card p {
             margin: 0;
-            font-size: 13px;
+            font-size: 17px;
             color: #777;
-            line-height: 1.35;
+            line-height: 1.5;
             max-width: 320px;
         }
 
