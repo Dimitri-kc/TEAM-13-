@@ -494,13 +494,28 @@ select {
         }
 
 .back-button {
-    display: inline-block;
-    margin-bottom: 15px;
-    font-family: 'Jost', sans-serif;
-    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    margin-bottom: 22px;
+    padding: 0 22px;
+    border: 1.5px solid rgba(111, 103, 92, 0.26);
+    border-radius: 999px;
+    background: transparent;
+    font-family: 'mr-eaves-modern', sans-serif;
+    font-size: 17px;
     text-decoration: none;
-    color: #2C6E49;
+    color: #6f675c;
     font-weight: 500;
-    transition: 0.2s ease;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, color 0.18s ease;
 }
-.back-button:hover { text-decoration: underline; }
+.back-button:hover {
+    background: rgba(111, 103, 92, 0.08);
+    border-color: rgba(111, 103, 92, 0.4);
+    color: #4d463d;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
