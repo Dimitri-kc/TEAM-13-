@@ -72,7 +72,7 @@ while ($row = $result2->fetch_assoc()) {
     <link rel="stylesheet" href="../css/dark-mode.css?v=13">
     <link rel="stylesheet" href="../css/header_footer_style.css?v=16">
     <link rel="stylesheet" href="../css/reusable_header.css?v=6">
-    <link rel="stylesheet" href="../css/admin_realtime_reports.css?v=1">
+    <link rel="stylesheet" href="../css/admin_realtime_reports.css?v=2">
     <script src="../javascript/dark-mode.js"></script>
     
 </head>
@@ -84,8 +84,17 @@ while ($row = $result2->fetch_assoc()) {
 <div class="reports-wrapper">
 
     <div class="reports-header">
-        <h1>Real-Time Reports</h1>
-        <p>Track stock performance and customer sign-up activity across the store in one place.</p>
+        <div class="reports-header-copy">
+            <h1>Real-Time Reports</h1>
+            <p>Track stock performance and customer sign-up activity across the store in one place.</p>
+        </div>
+        <button
+            type="button"
+            class="reports-return-btn"
+            onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href='admin_dash.php'; }"
+        >
+            Return to Previous Page
+        </button>
     </div>
 
     <section class="report-card report-card-wide">
