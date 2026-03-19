@@ -22,7 +22,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="../css/header_footer_style.css?v=21">
-    <link rel="stylesheet" href="../css/signup.style.css?v=2">
+    <link rel="stylesheet" href="../css/signup.style.css?v=3">
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=12">

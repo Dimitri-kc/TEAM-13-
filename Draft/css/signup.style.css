@@ -1,5 +1,6 @@
 .auth-page {
   margin: 0;
+  padding-top: 0 !important;
   min-height: 100vh;
   background:
     radial-gradient(circle at top left, rgba(213, 205, 194, 0.38), transparent 34%),
@@ -52,6 +53,11 @@
 .signin-page .auth-container {
   display: grid;
   grid-template-columns: minmax(320px, 0.88fr) minmax(0, 1fr);
+}
+
+.admin-signin-page .auth-shell--compact {
+  width: min(940px, 100%);
+  grid-template-columns: minmax(300px, 0.82fr) minmax(0, 1fr);
 }
 
 .auth-hero {
@@ -488,6 +494,17 @@
   .input-group--full,
   .field-group--full {
     grid-column: auto;
+  }
+}
+
+@media (max-width: 1060px) {
+  .admin-signin-page .auth-shell--compact {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-signin-page .auth-hero {
+    border-right: 0;
+    border-bottom: 1px solid rgba(151, 140, 128, 0.16);
   }
 }
 
