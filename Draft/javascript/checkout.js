@@ -105,6 +105,8 @@ document.addEventListener('DOMContentLoaded', function() {
         expiry: formData.get('expiry'),
         cvv: formData.get('cvv')
       };
+      console.log('Checkout payload:', data);
+
       //send to BE controller
       try {
         const response = await fetch('../backend/routes/checkoutRoutes.php', { //

@@ -1,4 +1,4 @@
-<?php //checoutController.php > checkout flow > handles checkout process
+<?php //checkoutController.php > checkout flow > handles checkout process
 
 require_once __DIR__. '/../config/db_connect.php'; //DB conncetion
 require_once __DIR__ . '/../models/basketModel.php'; //for basket data
@@ -40,12 +40,25 @@ class CheckoutController {
             echo json_encode(['success' => false, 'message' => "All fields are required.", 'data' => null]);
             return;
         }
+
+        $cardNumber = preg_replace('/\s+/', '', (string)($data['card_number'] ?? ''));
+        $usingDefaultCard = str_starts_with($cardNumber, '************'); // detect default card token
         //validate card details format
         $paymentModel = new Payment();
-        if (!$paymentModel->validatePayment($cardNumber, $expiry, $cvv)) {
+        // only validate full card number if not using saved default card
+        if (!$usingDefaultCard) {
+            if (!$paymentModel->validatePayment($cardNumber, $expiry, $cvv)) {
             echo json_encode(['success' => false, 'message' => "Invalid payment details. Please check your card information.", 'data' => null]);
             return;
+            }
+        } else {
+            // still validate CVV and expiry only
+            if (!preg_match('/^[0-9]{3}$/', $cvv) || !preg_match('/^(0[1-9]|1[0-2])\/[0-9]{2}$/', $expiry)) {
+            echo json_encode(['success' => false, 'message' => "Invalid CVV or expiry date.", 'data' => null]);
+            return;
+            }
         }
+
         //fetch user basket + items
         $userBasket = $this->basketModel->fetchUserBasket((int)$user_ID);
         $basket_ID = (int)($userBasket['basket_ID'] ?? 0);
@@ -126,12 +139,6 @@ class CheckoutController {
             $payment_ID = (int)$conn->insert_id; //get payment id for record
             $stmt->close(); */
 
-            $paymentModel = new Payment();
-            if (!$paymentModel->validatePayment($cardNumber, $expiry, $cvv)) {
-                $conn->rollback();
-                echo json_encode(['success' => false, 'message' => "Invalid payment details. Please check submitted card details.", 'data' => null]);
-                return;
-            }
 
             //create payment record in DB
             $paymentSuccess = $paymentModel->createPayment($order_ID, (int)$user_ID, $address, (float)$total_sum);

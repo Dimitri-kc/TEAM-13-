@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function toggleManualEntry() {
     const manual = document.getElementById('manualFields');
     const isHidden = manual.style.display === 'none';
-    manual.style.display = isHidden ? 'block' : 'none';
+    manual.style.display = isHidden ? 'grid' : 'none';
 
     // if opening manual, override the hidden fields on input
     if (isHidden) {

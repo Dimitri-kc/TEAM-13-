@@ -224,9 +224,12 @@ textarea:focus {
 }
 
 .manual-entry-toggle {
+    display: inline-flex;
+    margin-top: 8px;
     background: none;
     border: none;
     color: #6b6157;
+    font-family: "mr-eaves-modern", sans-serif;
     font-size: 15px;
     text-decoration: underline;
     cursor: pointer;
