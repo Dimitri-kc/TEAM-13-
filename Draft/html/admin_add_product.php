@@ -3,6 +3,8 @@
 require_once '../backend/services/userFunctions.php';
 require_admin_page('/TEAM-13-/Draft/html/signin.php');
 
+$pageTitle = 'Add Product | LOFT &amp; LIVING';
+$bodyClass = 'admin-add-product-page';
 include "header.php";?>
 <div class="admin-wrapper">
     <h1 class="title">Add New Product</h1>

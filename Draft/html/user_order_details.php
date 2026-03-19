@@ -59,6 +59,25 @@ function money($value) {
     return '£' . number_format((float)$value, 2);
 }
 
+function resolveProductImage(?string $imagePath): string {
+    if (!$imagePath) {
+        return '../images/basket-images/sofa.jpg';
+    }
+
+    if (preg_match('#^(https?:)?//#', $imagePath)) {
+        return $imagePath;
+    }
+
+    $cleaned = preg_replace('#^(\.\./)+#', '', trim($imagePath));
+    $cleaned = ltrim((string)$cleaned, '/');
+
+    if (!str_starts_with($cleaned, 'images/')) {
+        $cleaned = 'images/' . $cleaned;
+    }
+
+    return '../' . $cleaned;
+}
+
 $addressParts = array_map('trim', explode(",", $order['address']));
 
 $line1 = $addressParts[0] ?? '';
@@ -66,6 +85,8 @@ $line2 = $addressParts[1] ?? '';
 $city = $addressParts[2] ?? '';
 $county = $addressParts[3] ?? '';
 $postcode = $addressParts[4] ?? '';
+$itemCount = array_sum(array_map(static fn($item) => (int)($item['quantity'] ?? 0), $items));
+$orderTotal = array_sum(array_map(static fn($item) => (float)($item['line_total'] ?? 0), $items));
 ?>
 
 <!DOCTYPE html>
@@ -78,11 +99,11 @@ $postcode = $addressParts[4] ?? '';
 <title>Order Details</title>
 
 <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
-<link rel="stylesheet" href="../css/user_order_details.css?v=3">
+<link rel="stylesheet" href="../css/user_order_details.css?v=4">
 
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
-    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=13">
     <link rel="stylesheet" href="../css/reusable_header.css?v=5">
     <script src="../javascript/dark-mode.js"></script>
 </head>
@@ -101,11 +122,24 @@ $postcode = $addressParts[4] ?? '';
 
 <h2>Order #UK<?= str_pad($order['order_ID'], 5, "0", STR_PAD_LEFT) ?></h2>
 
-<p>Customer: <?= htmlspecialchars($user_name) ?></p>
-
-<p>Status: <?= htmlspecialchars($orderStatus) ?></p>
-
-<p>Date: <?= date("Y-m-d", strtotime($order['order_date'])) ?></p>
+<div class="order-meta-grid">
+    <div class="order-meta-card">
+        <span class="order-meta-label">Customer</span>
+        <span class="order-meta-value"><?= htmlspecialchars($user_name) ?></span>
+    </div>
+    <div class="order-meta-card">
+        <span class="order-meta-label">Status</span>
+        <span class="order-meta-value"><?= htmlspecialchars($orderStatus) ?></span>
+    </div>
+    <div class="order-meta-card">
+        <span class="order-meta-label">Date</span>
+        <span class="order-meta-value"><?= date("j F Y", strtotime($order['order_date'])) ?></span>
+    </div>
+    <div class="order-meta-card">
+        <span class="order-meta-label">Items</span>
+        <span class="order-meta-value"><?= (int)$itemCount ?></span>
+    </div>
+</div>
 
 <?php if (!empty($items)): ?>
 <div class="order-items-summary">
@@ -113,9 +147,7 @@ $postcode = $addressParts[4] ?? '';
     <?php foreach ($items as $item): ?>
         <div class="order-item-row">
             <div class="order-item-thumb">
-                <?php if (!empty($item['image'])): ?>
-                    <img src="<?= htmlspecialchars('../images/' . ltrim($item['image'], '/')) ?>" alt="<?= htmlspecialchars($item['name']) ?>">
-                <?php endif; ?>
+                <img src="<?= htmlspecialchars(resolveProductImage($item['image'] ?? null)) ?>" alt="<?= htmlspecialchars($item['name']) ?>" onerror="this.onerror=null;this.src='../images/basket-images/sofa.jpg';">
             </div>
             <div class="order-item-copy">
                 <div class="order-item-name"><?= htmlspecialchars($item['name']) ?></div>
@@ -124,6 +156,10 @@ $postcode = $addressParts[4] ?? '';
             <div class="order-item-price"><?= money($item['line_total']) ?></div>
         </div>
     <?php endforeach; ?>
+    <div class="order-summary-total">
+        <span>Order Total</span>
+        <strong><?= money($orderTotal ?: ($order['total_price'] ?? 0)) ?></strong>
+    </div>
 </div>
 <?php endif; ?>
 
@@ -152,6 +188,13 @@ $postcode = $addressParts[4] ?? '';
 <label>Address Line 2</label>
 <div class="display-line">
 <?= htmlspecialchars($line2) ?>
+</div>
+</div>
+
+<div class="form-row">
+<label>Town / City</label>
+<div class="display-line">
+<?= htmlspecialchars($city) ?>
 </div>
 </div>
 
@@ -189,7 +232,7 @@ function goBack(e) {
     if (document.referrer && document.referrer !== window.location.href) {
         history.back();
     } else {
-        window.location.href = "orders.php"; 
+        window.location.href = "user_order_history.php"; 
     }
 }
 </script>

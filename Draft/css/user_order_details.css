@@ -3,11 +3,16 @@ body.order-details-page {
     color: #1f1a17;
 }
 
+.order-details-page .back-home-wrap {
+    width: min(1180px, calc(100% - 40px));
+    margin: 20px auto 0;
+}
+
 .order-details-page .back-home {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin: 20px 0 18px;
+    margin: 0 0 18px;
     padding: 12px 20px;
     border-radius: 999px;
     border: 1.5px solid rgba(111, 103, 92, 0.26);
@@ -18,11 +23,6 @@ body.order-details-page {
     font-weight: 500;
     text-decoration: none;
     transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, color 0.18s ease;
-}
-
-.order-details-page .back-home-wrap {
-    width: min(1180px, calc(100% - 40px));
-    margin: 0 auto;
 }
 
 .order-details-page .back-home:hover {
@@ -36,7 +36,7 @@ body.order-details-page {
     width: min(1180px, calc(100% - 40px));
     margin: 0 auto 72px;
     display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
     gap: 30px;
 }
 
@@ -53,6 +53,40 @@ body.order-details-page {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+}
+
+.order-details-page .order-meta-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 10px;
+}
+
+.order-details-page .order-meta-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: #f8f4ef;
+    border: 1px solid rgba(111, 103, 92, 0.1);
+}
+
+.order-details-page .order-meta-label {
+    font-family: 'mr-eaves-modern', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #8c8376;
+}
+
+.order-details-page .order-meta-value {
+    font-family: 'mr-eaves-modern', sans-serif;
+    font-size: 18px;
+    line-height: 1.4;
+    color: #1f1a17;
 }
 
 .order-details-page .left-section h2,
@@ -149,6 +183,24 @@ body.order-details-page {
     font-weight: 500;
 }
 
+.order-details-page .order-summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    margin-top: 16px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(111, 103, 92, 0.1);
+    font-family: 'mr-eaves-modern', sans-serif;
+    font-size: 18px;
+    color: #1f1a17;
+}
+
+.order-details-page .order-summary-total strong {
+    font-size: 22px;
+    font-weight: 500;
+}
+
 .order-details-page .shipping-address-title {
     margin-bottom: 24px;
 }
@@ -180,6 +232,10 @@ body.order-details-page {
     .order-details-page .container {
         grid-template-columns: 1fr;
     }
+
+    .order-details-page .order-meta-grid {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 @media (max-width: 640px) {
@@ -193,6 +249,10 @@ body.order-details-page {
         padding: 22px;
     }
 
+    .order-details-page .order-meta-grid {
+        grid-template-columns: 1fr;
+    }
+
     .order-details-page .form-row {
         grid-template-columns: 1fr;
         gap: 6px;
@@ -200,5 +260,11 @@ body.order-details-page {
 
     .order-details-page .order-item-row {
         align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .order-details-page .order-item-price {
+        width: 100%;
+        margin-left: 98px;
     }
 }

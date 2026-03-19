@@ -69,7 +69,7 @@ while ($row = $result2->fetch_assoc()) {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
-    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=13">
     <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
     <link rel="stylesheet" href="../css/reusable_header.css?v=5">
     <link rel="stylesheet" href="../css/admin_realtime_reports.css?v=1">
@@ -155,6 +155,43 @@ const productStock = <?php echo json_encode($productStock); ?>;
 const productColors = <?php echo json_encode($productColors); ?>;
 const productCategories = <?php echo json_encode($productCategories); ?>;
 
+function getChartTheme() {
+    const isDark = document.documentElement.classList.contains('dark-mode');
+    return {
+        tickColor: isDark ? '#d9d1c7' : '#3e3833',
+        gridColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(31,26,23,0.1)',
+        borderColor: isDark ? 'rgba(255,255,255,0.18)' : 'rgba(31,26,23,0.14)',
+        lineColor: isDark ? '#8ab4f8' : '#4e79a7',
+        lineFill: isDark ? 'rgba(138, 180, 248, 0.18)' : 'rgba(78, 121, 167, 0.2)',
+        pointColor: isDark ? '#8ab4f8' : '#4e79a7',
+        barBorder: isDark ? 'rgba(255,255,255,0.12)' : '#333'
+    };
+}
+
+function applyChartTheme(chart, overrides = {}) {
+    const theme = { ...getChartTheme(), ...overrides };
+    chart.options.scales.x = {
+        ticks: {
+            color: theme.tickColor
+        },
+        grid: {
+            color: theme.gridColor,
+            borderColor: theme.borderColor
+        }
+    };
+    chart.options.scales.y = {
+        beginAtZero: true,
+        ticks: {
+            color: theme.tickColor
+        },
+        grid: {
+            color: theme.gridColor,
+            borderColor: theme.borderColor
+        }
+    };
+    chart.update();
+}
+
 const stockChart = new Chart(document.getElementById('stockChart'), {
     type: 'bar',
     data: {
@@ -163,18 +200,17 @@ const stockChart = new Chart(document.getElementById('stockChart'), {
             label: 'Stock Level',
             data: productStock,
             backgroundColor: productColors,
-            borderColor: '#333',
+            borderColor: getChartTheme().barBorder,
             borderWidth: 1
         }]
     },
     options: {
         responsive: true,
-        scales: {
-            y: { beginAtZero: true }
-        },
+        scales: {},
         plugins: { legend: { display: false } }
     }
 });
+applyChartTheme(stockChart);
 
 // category filters
 document.getElementById("categoryFilter").addEventListener("change", function () {
@@ -203,25 +239,41 @@ document.getElementById("categoryFilter").addEventListener("change", function ()
 const dayLabels = <?php echo json_encode($dayLabels); ?>;
 const signupCounts = <?php echo json_encode($signupCounts); ?>;
 
-new Chart(document.getElementById('signupChart'), {
+const signupChart = new Chart(document.getElementById('signupChart'), {
     type: 'line',
     data: {
         labels: dayLabels,
         datasets: [{
             label: 'Daily Sign-Ups',
             data: signupCounts,
-            borderColor: '#4e79a7',
-            backgroundColor: 'rgba(78, 121, 167, 0.2)',
+            borderColor: getChartTheme().lineColor,
+            backgroundColor: getChartTheme().lineFill,
             borderWidth: 2,
             tension: 0.3,
             pointRadius: 4,
-            pointBackgroundColor: '#4e79a7'
+            pointBackgroundColor: getChartTheme().pointColor
         }]
     },
     options: {
         responsive: true,
-        scales: { y: { beginAtZero: true } }
+        scales: {}
     }
+});
+applyChartTheme(signupChart);
+
+const darkModeObserver = new MutationObserver(() => {
+    const theme = getChartTheme();
+    stockChart.data.datasets[0].borderColor = theme.barBorder;
+    signupChart.data.datasets[0].borderColor = theme.lineColor;
+    signupChart.data.datasets[0].backgroundColor = theme.lineFill;
+    signupChart.data.datasets[0].pointBackgroundColor = theme.pointColor;
+    applyChartTheme(stockChart);
+    applyChartTheme(signupChart);
+});
+
+darkModeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
 });
 </script>
 

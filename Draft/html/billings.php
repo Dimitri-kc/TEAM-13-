@@ -292,7 +292,7 @@ if (!$user) {
     </style>
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
-    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=12">
     <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
     <link rel="stylesheet" href="../css/reusable_header.css?v=5">
     <link rel="stylesheet" href="../css/billings.css?v=1">

@@ -19,6 +19,7 @@ if (empty($_SESSION['user_ID'])) {
 // Pull user details from session (already set in UserController login method)
 $userName = $_SESSION['name'] ?? 'User';
 $pageTitle = 'Admin Dashboard | LOFT &amp; LIVING BIRMINGHAM';
+$bodyClass = 'admin-dashboard-page';
 $extraHeadContent = <<<'HTML'
     <style>
         .dashboard-wrap {
@@ -123,12 +124,26 @@ $extraHeadContent = <<<'HTML'
             font-family: 'ivybodoni', serif;
         }
 
-        .dash-card p {
+.dash-card p {
             margin: 0;
             font-size: 17px;
             color: #777;
             line-height: 1.5;
             max-width: 320px;
+        }
+
+        .admin-view-chip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: 1.5px solid rgba(111, 103, 92, 0.24);
+            background: rgba(255, 255, 255, 0.9);
+            color: #6b6157;
+            font-size: 15px;
+            font-weight: 500;
         }
 
         @media (max-width: 980px) {
@@ -153,6 +168,7 @@ include 'header.php';
         <div class="dashboard-container">
 
             <div class="dashboard-heading">
+                <div class="admin-view-chip">Admin View</div>
                 <div class="dashboard-heading-top">
                     <h2>Welcome to the Admin Dashboard, <?php echo htmlspecialchars($userName); ?></h2>
                     <a class="return-home-btn" href="homepage.php">Return to Homepage</a>

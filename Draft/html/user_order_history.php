@@ -48,7 +48,7 @@ $stmt->close();
 <link rel="stylesheet" href="../css/user_order_history.css?v=1">
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
-    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=12">
     <link rel="stylesheet" href="../css/reusable_header.css?v=5">
     <script src="../javascript/dark-mode.js"></script>
 </head>

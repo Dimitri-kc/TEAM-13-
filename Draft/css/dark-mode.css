@@ -415,3 +415,727 @@ html.dark-mode .add-review-btn::before {
 html.dark-mode .add-review-btn:hover {
     background-color: #444 !important;
 }
+
+/* Modern Page Overrides */
+html.dark-mode body.auth-page,
+html.dark-mode body.account-page,
+html.dark-mode body.billing-page,
+html.dark-mode body.order-history-page,
+html.dark-mode body.order-details-page,
+html.dark-mode body.admin-dashboard-page,
+html.dark-mode body.admin-homepage-page,
+html.dark-mode body.admin-order-details-page,
+html.dark-mode body.admin-add-product-page,
+html.dark-mode body.admin-add-customer-page,
+html.dark-mode body.admin-customer-management-page,
+html.dark-mode body.admin-customer-details-page,
+html.dark-mode body.admin-order-history-page,
+html.dark-mode body.admin-order-list-page,
+html.dark-mode body.admin-product-inventory-page,
+html.dark-mode body.admin-edit-product-page,
+html.dark-mode body.admin-reports-page {
+    background:
+        radial-gradient(circle at top left, rgba(82, 73, 63, 0.26), transparent 34%),
+        linear-gradient(180deg, #161616 0%, #1b1b1b 46%, #171717 100%) !important;
+    color: #ece6df !important;
+}
+
+html.dark-mode body.auth-page main,
+html.dark-mode body.account-page main,
+html.dark-mode body.billing-page main,
+html.dark-mode body.order-history-page main,
+html.dark-mode body.order-details-page main,
+html.dark-mode body.admin-dashboard-page main,
+html.dark-mode body.admin-homepage-page main,
+html.dark-mode body.admin-order-details-page main,
+html.dark-mode body.admin-add-product-page main,
+html.dark-mode body.admin-add-customer-page main,
+html.dark-mode body.admin-customer-management-page main,
+html.dark-mode body.admin-customer-details-page main,
+html.dark-mode body.admin-order-history-page main,
+html.dark-mode body.admin-order-list-page main,
+html.dark-mode body.admin-product-inventory-page main,
+html.dark-mode body.admin-edit-product-page main,
+html.dark-mode body.admin-reports-page main,
+html.dark-mode body.auth-page section,
+html.dark-mode body.account-page section,
+html.dark-mode body.billing-page section,
+html.dark-mode body.order-history-page section,
+html.dark-mode body.order-details-page section,
+html.dark-mode body.admin-dashboard-page section,
+html.dark-mode body.admin-homepage-page section,
+html.dark-mode body.admin-order-details-page section,
+html.dark-mode body.admin-add-product-page section,
+html.dark-mode body.admin-add-customer-page section,
+html.dark-mode body.admin-customer-management-page section,
+html.dark-mode body.admin-customer-details-page section,
+html.dark-mode body.admin-order-history-page section,
+html.dark-mode body.admin-order-list-page section,
+html.dark-mode body.admin-product-inventory-page section,
+html.dark-mode body.admin-edit-product-page section,
+html.dark-mode body.admin-reports-page section {
+    background-color: transparent;
+}
+
+html.dark-mode .auth-shell,
+html.dark-mode .form-box,
+html.dark-mode .auth-card,
+html.dark-mode .admin-view-chip,
+html.dark-mode .auth-panel,
+html.dark-mode .auth-hero,
+html.dark-mode .form-card,
+html.dark-mode .info-card,
+html.dark-mode .summary-card,
+html.dark-mode .content-card,
+html.dark-mode .recent-card,
+html.dark-mode .review-box,
+html.dark-mode .card-fields,
+html.dark-mode .basket-totals,
+html.dark-mode .checkout-sidebar-actions,
+html.dark-mode .order-card,
+html.dark-mode .summary-item,
+html.dark-mode .customer-item,
+html.dark-mode .product-card,
+html.dark-mode .admin-form,
+html.dark-mode .image-panel,
+html.dark-mode .basket-card,
+html.dark-mode .basket-summary,
+html.dark-mode .settings-panel,
+html.dark-mode .billing-panel,
+html.dark-mode .report-card,
+html.dark-mode .chart-card,
+html.dark-mode .panel-card,
+html.dark-mode .recent-item,
+html.dark-mode .info-item,
+html.dark-mode .order-field,
+html.dark-mode .form-container .split-page,
+html.dark-mode .inventory-pagination,
+html.dark-mode .page-toolbar,
+html.dark-mode .filter-wrapper {
+    background: rgba(29, 29, 29, 0.92) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32) !important;
+}
+
+html.dark-mode .auth-hero,
+html.dark-mode .page-toolbar,
+html.dark-mode .filter-wrapper {
+    background:
+        linear-gradient(180deg, rgba(48, 48, 48, 0.94) 0%, rgba(31, 31, 31, 0.94) 100%) !important;
+}
+
+html.dark-mode .title,
+html.dark-mode .page-title,
+html.dark-mode .form-title,
+html.dark-mode .dashboard-heading h2,
+html.dark-mode .left-section h2,
+html.dark-mode .right-section h2,
+html.dark-mode .summary-title,
+html.dark-mode .recent-heading,
+html.dark-mode .auth-hero-title,
+html.dark-mode .product-name,
+html.dark-mode .customer-name,
+html.dark-mode .image-panel-title,
+html.dark-mode .info-title,
+html.dark-mode .order-card h3 {
+    color: #f5eee7 !important;
+}
+
+html.dark-mode .subtitle,
+html.dark-mode .page-sub,
+html.dark-mode .helper-text,
+html.dark-mode .dashboard-heading p,
+html.dark-mode .dash-card p,
+html.dark-mode .summary-copy,
+html.dark-mode .auth-hero-copy,
+html.dark-mode .auth-kicker,
+html.dark-mode .product-meta,
+html.dark-mode .customer-meta,
+html.dark-mode .order-value,
+html.dark-mode .summary-label,
+html.dark-mode .info-label,
+html.dark-mode .auth-feature-label,
+html.dark-mode .pagination-status,
+html.dark-mode .form-footer,
+html.dark-mode .auth-links,
+html.dark-mode .message-text,
+html.dark-mode .error-text,
+html.dark-mode .popup-text {
+    color: #c7beb4 !important;
+}
+
+html.dark-mode .auth-feature-value,
+html.dark-mode .summary-value,
+html.dark-mode .info-value {
+    color: #f1e8dd !important;
+}
+
+html.dark-mode .form-group label,
+html.dark-mode .input-label,
+html.dark-mode .field-label,
+html.dark-mode .input-group label,
+html.dark-mode .order-label,
+html.dark-mode .filter-wrapper label,
+html.dark-mode .profile-welcome {
+    color: #ddd4cb !important;
+}
+
+html.dark-mode .form-group input,
+html.dark-mode .input-group input,
+html.dark-mode .input-group textarea,
+html.dark-mode .input-group select,
+html.dark-mode .field-input,
+html.dark-mode .field-textarea,
+html.dark-mode .admin-form input,
+html.dark-mode .admin-form textarea,
+html.dark-mode .admin-form select,
+html.dark-mode .address-select-wrap select,
+html.dark-mode .review-details input,
+html.dark-mode .review-details textarea,
+html.dark-mode .card-fields input,
+html.dark-mode .card-fields select,
+html.dark-mode .search-row input,
+html.dark-mode .search-row select,
+html.dark-mode #search-bar,
+html.dark-mode #category-filter {
+    background: #252525 !important;
+    color: #f0e7de !important;
+    border-color: #4a4a4a !important;
+}
+
+html.dark-mode .form-group input::placeholder,
+html.dark-mode .input-group input::placeholder,
+html.dark-mode .input-group textarea::placeholder,
+html.dark-mode .field-input::placeholder,
+html.dark-mode .field-textarea::placeholder,
+html.dark-mode #search-bar::placeholder {
+    color: #9f9489 !important;
+}
+
+html.dark-mode .btn-primary,
+html.dark-mode .main-button,
+html.dark-mode .find-address-btn,
+html.dark-mode .return-home-btn,
+html.dark-mode .submit-btn,
+html.dark-mode .view-btn,
+html.dark-mode #add-product-btn,
+html.dark-mode .pagination-btn,
+html.dark-mode .add-customer-btn,
+html.dark-mode .secondary-button,
+html.dark-mode .back-button,
+html.dark-mode .back-btn,
+html.dark-mode .return-btn,
+html.dark-mode .inventory-return-btn,
+html.dark-mode .view-product-btn,
+html.dark-mode .change-image-btn {
+    background: #b8ab98 !important;
+    color: #121212 !important;
+    border-color: transparent !important;
+}
+
+html.dark-mode .btn-primary:hover,
+html.dark-mode .main-button:hover,
+html.dark-mode .find-address-btn:hover,
+html.dark-mode .return-home-btn:hover,
+html.dark-mode .submit-btn:hover,
+html.dark-mode .view-btn:hover,
+html.dark-mode #add-product-btn:hover,
+html.dark-mode .pagination-btn:hover,
+html.dark-mode .add-customer-btn:hover,
+html.dark-mode .secondary-button:hover,
+html.dark-mode .back-button:hover,
+html.dark-mode .back-btn:hover,
+html.dark-mode .return-btn:hover,
+html.dark-mode .inventory-return-btn:hover,
+html.dark-mode .view-product-btn:hover,
+html.dark-mode .change-image-btn:hover {
+    background: #d0c3b1 !important;
+    color: #111 !important;
+}
+
+html.dark-mode .secondary-btn,
+html.dark-mode .cancel-btn,
+html.dark-mode .manual-toggle,
+html.dark-mode .address-change-btn {
+    background: transparent !important;
+    color: #d8cec3 !important;
+    border-color: rgba(255,255,255,0.14) !important;
+}
+
+html.dark-mode .secondary-btn:hover,
+html.dark-mode .cancel-btn:hover,
+html.dark-mode .manual-toggle:hover,
+html.dark-mode .address-change-btn:hover {
+    color: #fff !important;
+}
+
+html.dark-mode .warning-button {
+    background: rgba(216, 162, 43, 0.18) !important;
+    color: #f3d691 !important;
+    border-color: rgba(216, 162, 43, 0.26) !important;
+}
+
+html.dark-mode .danger-button,
+html.dark-mode .remove-btn {
+    background: rgba(186, 57, 43, 0.18) !important;
+    color: #ffb5ab !important;
+    border-color: rgba(186, 57, 43, 0.22) !important;
+}
+
+html.dark-mode .popup,
+html.dark-mode .error-popup,
+html.dark-mode .message-popup,
+html.dark-mode .address-confirmed {
+    background: rgba(35, 35, 35, 0.96) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+}
+
+html.dark-mode .profile-dropdown,
+html.dark-mode .dropdown-panel {
+    background-color: rgba(28, 28, 28, 0.98) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+}
+
+/* Favourites */
+html.dark-mode body:has(.favourites-main),
+html.dark-mode body:has(.dashboard-wrap),
+html.dark-mode body:has(.about-container),
+html.dark-mode body:has(.contact-page),
+html.dark-mode body:has(.basket-container),
+html.dark-mode body:has(main.container .faq) {
+    background-color: #171717 !important;
+    color: #ece6df !important;
+}
+
+html.dark-mode .favourites-main,
+html.dark-mode .dashboard-wrap,
+html.dark-mode .contact-page,
+html.dark-mode .basket-container {
+    background: transparent !important;
+}
+
+html.dark-mode .page-head,
+html.dark-mode .basket-page-head,
+html.dark-mode .dashboard-heading,
+html.dark-mode .contact-hero {
+    background: transparent !important;
+}
+
+html.dark-mode .fav-card,
+html.dark-mode .basket-item,
+html.dark-mode .discount-box,
+html.dark-mode .summary-box,
+html.dark-mode .checkout-info,
+html.dark-mode .basket-empty,
+html.dark-mode .dash-card,
+html.dark-mode .about-container,
+html.dark-mode .mission-wrapper,
+html.dark-mode .vision-text,
+html.dark-mode .map-container,
+html.dark-mode .info-side,
+html.dark-mode .faq-section,
+html.dark-mode main.container,
+html.dark-mode .faq-question,
+html.dark-mode .faq-answer,
+html.dark-mode .contact-info-card,
+html.dark-mode .contact-page .form-container,
+html.dark-mode .order-history-page .order-card,
+html.dark-mode .order-history-page .orders-empty,
+html.dark-mode .order-history-page .return-modal-content,
+html.dark-mode .order-history-page .success-modal-content,
+html.dark-mode .billing-page .sidebar,
+html.dark-mode .billing-page .panel,
+html.dark-mode .billing-page .info-box,
+html.dark-mode .billing-page .payment-card,
+html.dark-mode .account-page .sidebar,
+html.dark-mode .account-page .panel,
+html.dark-mode .account-page .danger-box {
+    background: rgba(29, 29, 29, 0.92) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32) !important;
+}
+
+html.dark-mode .thumb,
+html.dark-mode .item-image,
+html.dark-mode .order-history-page .order-image-box,
+html.dark-mode .mission-image,
+html.dark-mode .contact-page .field-group input,
+html.dark-mode .contact-page .field-group textarea {
+    background: #242424 !important;
+}
+
+html.dark-mode .card-title,
+html.dark-mode .basket-title,
+html.dark-mode .discount-box label,
+html.dark-mode .summary-box h3,
+html.dark-mode .checkout-info h3,
+html.dark-mode .dash-card h3,
+html.dark-mode .about-container .left h1,
+html.dark-mode .section-title,
+html.dark-mode .map-container h2,
+html.dark-mode .info-side h2,
+html.dark-mode .faq-section h2,
+html.dark-mode main.container h1,
+html.dark-mode .contact-info-card h2,
+html.dark-mode .order-history-title,
+html.dark-mode .order-history-page .order-date-label,
+html.dark-mode .order-history-page .return-modal-content h2,
+html.dark-mode .billing-page .page-header h1,
+html.dark-mode .billing-page .panel-header h2,
+html.dark-mode .billing-page .profile-card h3,
+html.dark-mode .billing-page .card-number-display,
+html.dark-mode .account-page .page-header h1,
+html.dark-mode .account-page .panel-header h2,
+html.dark-mode .account-page .profile-card h3 {
+    color: #f5eee7 !important;
+}
+
+html.dark-mode .sub,
+html.dark-mode .card-price,
+html.dark-mode .price,
+html.dark-mode .basket-caption,
+html.dark-mode .summary-box p,
+html.dark-mode .checkout-info p,
+html.dark-mode .basket-empty,
+html.dark-mode .dashboard-heading p,
+html.dark-mode .dash-card p,
+html.dark-mode .about-container .left p,
+html.dark-mode .mission-wrapper .right p,
+html.dark-mode .vision-text p,
+html.dark-mode .faq-answer,
+html.dark-mode .opening-times li,
+html.dark-mode .contact-intro,
+html.dark-mode .contact-info-card p,
+html.dark-mode .contact-info-value,
+html.dark-mode .order-history-page .subheader,
+html.dark-mode .order-history-page .order-value,
+html.dark-mode .order-history-page .orders-empty,
+html.dark-mode .billing-page .page-header p,
+html.dark-mode .billing-page .panel-header p,
+html.dark-mode .billing-page .profile-card p,
+html.dark-mode .billing-page .card-meta,
+html.dark-mode .billing-page .info-box,
+html.dark-mode .billing-page .no-cards,
+html.dark-mode .account-page .page-header p,
+html.dark-mode .account-page .panel-header p,
+html.dark-mode .account-page .profile-card p,
+html.dark-mode .account-page .danger-box,
+html.dark-mode main.container p,
+html.dark-mode main.container li {
+    color: #c7beb4 !important;
+}
+
+html.dark-mode .removeBtn,
+html.dark-mode .basket-return-btn,
+html.dark-mode .order-history-page .back-home,
+html.dark-mode .order-history-page .btn-return-order,
+html.dark-mode .billing-page .back-dashboard,
+html.dark-mode .billing-page .btn-ghost,
+html.dark-mode .billing-page .btn-set-default,
+html.dark-mode .account-page .back-dashboard,
+html.dark-mode .account-page .btn-ghost,
+html.dark-mode .back-dashboard,
+html.dark-mode .back-home {
+    background: transparent !important;
+    color: #d8cec3 !important;
+    border-color: rgba(255,255,255,0.14) !important;
+}
+
+html.dark-mode .btn,
+html.dark-mode .discount-btn,
+html.dark-mode .checkout-btn,
+html.dark-mode .order-history-page .btn-action,
+html.dark-mode .order-history-page .submit-return-btn,
+html.dark-mode .order-history-page .success-modal-content button,
+html.dark-mode .billing-page .btn-primary,
+html.dark-mode .billing-page .btn-danger,
+html.dark-mode .account-page .btn-primary,
+html.dark-mode .account-page .btn-danger,
+html.dark-mode .contact-page button[type="submit"] {
+    background: #b8ab98 !important;
+    color: #121212 !important;
+    border-color: transparent !important;
+}
+
+html.dark-mode .btn:hover,
+html.dark-mode .discount-btn:hover,
+html.dark-mode .checkout-btn:hover,
+html.dark-mode .order-history-page .btn-action:hover,
+html.dark-mode .order-history-page .submit-return-btn:hover,
+html.dark-mode .order-history-page .success-modal-content button:hover,
+html.dark-mode .billing-page .btn-primary:hover,
+html.dark-mode .billing-page .btn-danger:hover,
+html.dark-mode .account-page .btn-primary:hover,
+html.dark-mode .account-page .btn-danger:hover,
+html.dark-mode .contact-page button[type="submit"]:hover {
+    background: #d0c3b1 !important;
+    color: #111 !important;
+}
+
+html.dark-mode .quant-number,
+html.dark-mode .discount-box input,
+html.dark-mode .order-history-page #returnForm select,
+html.dark-mode .order-history-page #returnForm textarea,
+html.dark-mode .order-history-page #returnForm input,
+html.dark-mode .billing-page input,
+html.dark-mode .billing-page select,
+html.dark-mode .billing-page textarea,
+html.dark-mode .account-page .field input,
+html.dark-mode .contact-page input,
+html.dark-mode .contact-page textarea {
+    background: #252525 !important;
+    color: #f0e7de !important;
+    border-color: #4a4a4a !important;
+}
+
+html.dark-mode .billing-page .nav-item.active,
+html.dark-mode .account-page .nav-item.active,
+html.dark-mode .faq-question {
+    background: #2a2a2a !important;
+    color: #f1e8dd !important;
+}
+
+html.dark-mode .billing-page .nav-item,
+html.dark-mode .account-page .nav-item,
+html.dark-mode .billing-page .field label,
+html.dark-mode .account-page .field label,
+html.dark-mode .contact-info-label,
+html.dark-mode .about-eyebrow,
+html.dark-mode .order-history-page #returnForm label {
+    color: #ddd4cb !important;
+}
+
+html.dark-mode .pay-btn.google {
+    background: #1f1f1f !important;
+    border-color: rgba(255,255,255,0.12) !important;
+}
+
+/* Legacy admin pages */
+html.dark-mode .dashboard-wrap,
+html.dark-mode .admin-homepage-page #view-bar,
+html.dark-mode .admin-order-details-page .left-section,
+html.dark-mode .admin-order-details-page .right-section,
+html.dark-mode .admin-order-details-page .order-image,
+html.dark-mode .admin-add-product-page .admin-wrapper {
+    background: rgba(29, 29, 29, 0.92) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+    color: #ece6df !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32) !important;
+}
+
+html.dark-mode .admin-homepage-page #view-bar {
+    color: #c7beb4 !important;
+    background: rgba(29, 29, 29, 0.92) !important;
+}
+
+html.dark-mode .admin-order-details-page .form-row label,
+html.dark-mode .admin-add-product-page .admin-form label {
+    color: #ddd4cb !important;
+}
+
+html.dark-mode .admin-order-details-page .form-row input,
+html.dark-mode .admin-add-product-page .admin-form input,
+html.dark-mode .admin-add-product-page .admin-form select,
+html.dark-mode .admin-add-product-page .admin-form textarea {
+    background: #252525 !important;
+    color: #f0e7de !important;
+    border-color: #4a4a4a !important;
+}
+
+html.dark-mode .admin-order-details-page button,
+html.dark-mode .admin-add-product-page .submit-btn,
+html.dark-mode .admin-add-product-page .cancel-btn,
+html.dark-mode .admin-dashboard-page .return-home-btn {
+    background: #b8ab98 !important;
+    color: #121212 !important;
+    border-color: transparent !important;
+}
+
+html.dark-mode .admin-order-details-page button:hover,
+html.dark-mode .admin-add-product-page .submit-btn:hover,
+html.dark-mode .admin-add-product-page .cancel-btn:hover,
+html.dark-mode .admin-dashboard-page .return-home-btn:hover {
+    background: #d0c3b1 !important;
+    color: #111 !important;
+}
+
+/* Admin order list */
+html.dark-mode body.admin-order-list-page {
+    background: linear-gradient(180deg, #171717 0%, #1c1c1c 100%) !important;
+    color: #ece6df !important;
+}
+
+html.dark-mode .admin-order-list-page .page-title,
+html.dark-mode .admin-order-list-page .order-number,
+html.dark-mode .admin-order-list-page .edit-panel h2 {
+    color: #f5eee7 !important;
+}
+
+html.dark-mode .admin-order-list-page .subheader,
+html.dark-mode .admin-order-list-page .customer-name,
+html.dark-mode .admin-order-list-page .order-status,
+html.dark-mode .admin-order-list-page .edit-field label {
+    color: #cfc6bc !important;
+}
+
+html.dark-mode .admin-order-list-page .order-card,
+html.dark-mode .admin-order-list-page .edit-panel {
+    background: rgba(29, 29, 29, 0.94) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32) !important;
+}
+
+html.dark-mode .admin-order-list-page .btn-view-edit,
+html.dark-mode .admin-order-list-page .btn-close {
+    background: transparent !important;
+    color: #f0e7de !important;
+    border-color: rgba(240, 231, 222, 0.26) !important;
+}
+
+html.dark-mode .admin-order-list-page .btn-view-edit:hover,
+html.dark-mode .admin-order-list-page .btn-close:hover {
+    background: rgba(240, 231, 222, 0.08) !important;
+    color: #fff7f0 !important;
+    border-color: rgba(240, 231, 222, 0.42) !important;
+}
+
+html.dark-mode .admin-order-list-page .btn-cancel,
+html.dark-mode .admin-order-list-page .btn-save {
+    background: #c2b4a2 !important;
+    color: #141414 !important;
+    border-color: transparent !important;
+}
+
+html.dark-mode .admin-order-list-page .btn-cancel:hover,
+html.dark-mode .admin-order-list-page .btn-save:hover {
+    background: #d6c8b7 !important;
+    color: #101010 !important;
+}
+
+html.dark-mode .admin-order-list-page .order-card img {
+    background: #242424 !important;
+}
+
+html.dark-mode .admin-order-list-page .edit-field input,
+html.dark-mode .admin-order-list-page .edit-field select {
+    background: #252525 !important;
+    color: #f0e7de !important;
+    border-color: #4a4a4a !important;
+}
+
+/* Admin realtime reports */
+html.dark-mode body.admin-reports-page {
+    background: linear-gradient(180deg, #171717 0%, #1c1c1c 100%) !important;
+    color: #ece6df !important;
+}
+
+html.dark-mode .admin-reports-page .reports-header h1,
+html.dark-mode .admin-reports-page .report-card-head h2,
+html.dark-mode .admin-reports-page .report-summary-value {
+    color: #f5eee7 !important;
+}
+
+html.dark-mode .admin-reports-page .reports-header p,
+html.dark-mode .admin-reports-page .report-card-head p,
+html.dark-mode .admin-reports-page .report-summary-label,
+html.dark-mode .admin-reports-page .report-filter label {
+    color: #cfc6bc !important;
+}
+
+html.dark-mode .admin-reports-page .report-card,
+html.dark-mode .admin-reports-page .chart-container {
+    background: rgba(29, 29, 29, 0.94) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32) !important;
+}
+
+html.dark-mode .admin-reports-page canvas {
+    filter: none !important;
+}
+
+html.dark-mode .admin-reports-page #categoryFilter {
+    background: #252525 !important;
+    color: #f0e7de !important;
+    border-color: #4a4a4a !important;
+}
+
+/* Admin product inventory stock indicators */
+html.dark-mode .admin-product-inventory-page .stock-good {
+    color: #b7f0c3 !important;
+    background-color: rgba(33, 92, 50, 0.42) !important;
+    border: 1px solid rgba(101, 198, 129, 0.35) !important;
+}
+
+html.dark-mode .admin-product-inventory-page .stock-low {
+    color: #ffd693 !important;
+    background-color: rgba(121, 77, 13, 0.42) !important;
+    border: 1px solid rgba(255, 198, 104, 0.35) !important;
+}
+
+html.dark-mode .admin-product-inventory-page .stock-critical {
+    color: #ffb4a9 !important;
+    background-color: rgba(122, 35, 26, 0.48) !important;
+    border: 1px solid rgba(255, 140, 126, 0.35) !important;
+}
+
+/* User order details */
+html.dark-mode body.order-details-page {
+    background: linear-gradient(180deg, #171717 0%, #1d1d1d 100%) !important;
+    color: #ece6df !important;
+}
+
+html.dark-mode .order-details-page .back-home {
+    background: transparent !important;
+    color: #f0e7de !important;
+    border-color: rgba(240, 231, 222, 0.26) !important;
+}
+
+html.dark-mode .order-details-page .back-home:hover {
+    background: rgba(240, 231, 222, 0.08) !important;
+    color: #fff7f0 !important;
+    border-color: rgba(240, 231, 222, 0.42) !important;
+}
+
+html.dark-mode .order-details-page .left-section,
+html.dark-mode .order-details-page .right-section {
+    background: rgba(29, 29, 29, 0.94) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32) !important;
+}
+
+html.dark-mode .order-details-page .left-section h2,
+html.dark-mode .order-details-page .shipping-address-title,
+html.dark-mode .order-details-page .order-items-title,
+html.dark-mode .order-details-page .order-item-name,
+html.dark-mode .order-details-page .order-summary-total,
+html.dark-mode .order-details-page .order-summary-total strong,
+html.dark-mode .order-details-page .form-row label,
+html.dark-mode .order-details-page .order-meta-value {
+    color: #f5eee7 !important;
+}
+
+html.dark-mode .order-details-page .display-line,
+html.dark-mode .order-details-page .order-item-meta,
+html.dark-mode .order-details-page .order-item-price {
+    color: #cfc6bc !important;
+}
+
+html.dark-mode .order-details-page .order-meta-card {
+    background: #252525 !important;
+    border-color: rgba(255,255,255,0.08) !important;
+}
+
+html.dark-mode .order-details-page .order-meta-label {
+    color: #a99f93 !important;
+}
+
+html.dark-mode .order-details-page .order-item-row,
+html.dark-mode .order-details-page .order-items-summary,
+html.dark-mode .order-details-page .order-summary-total,
+html.dark-mode .order-details-page .form-row {
+    border-color: rgba(255,255,255,0.1) !important;
+}
+
+html.dark-mode .order-details-page .order-item-thumb {
+    background: #242424 !important;
+}

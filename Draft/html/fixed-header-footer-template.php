@@ -19,7 +19,7 @@ $headerName = ($userName !== '') ? $userName : 'Guest';
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
-    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=12">
 
     <style>
         /* Fixed Header and Footer Styles */
