@@ -98,13 +98,13 @@ $orderTotal = array_sum(array_map(static fn($item) => (float)($item['line_total'
 
 <title>Order Details</title>
 
-<link rel="stylesheet" href="../css/header_footer_style.css?v=15">
+<link rel="stylesheet" href="../css/header_footer_style.css?v=16">
 <link rel="stylesheet" href="../css/user_order_details.css?v=4">
 
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=13">
-    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=6">
     <script src="../javascript/dark-mode.js"></script>
 </head>
 

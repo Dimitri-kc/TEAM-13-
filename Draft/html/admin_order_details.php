@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Order Details | Admin</title>
 
-<link rel="stylesheet" href="../css/header_footer_style.css?v=15">
+<link rel="stylesheet" href="../css/header_footer_style.css?v=16">
 <link rel="stylesheet" href="../css/category-css/livingroom-base.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">
@@ -146,7 +146,7 @@ button:hover {
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=12">
-<link rel="stylesheet" href="../css/reusable_header.css?v=5">
+<link rel="stylesheet" href="../css/reusable_header.css?v=6">
     <script src="../javascript/dark-mode.js"></script>
 </head>
 <body class="admin-order-details-page">

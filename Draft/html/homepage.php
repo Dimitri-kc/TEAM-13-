@@ -23,7 +23,7 @@ if ($showWelcomeToast) {
     <!-- Typekit: ivybodoni, Mr Eaves Modern -->
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css"> <!-- Ivybodoni -->
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css"> <!-- Mr Eaves Modern -->
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=16">
     <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage-contact.css">
     <link rel="stylesheet" href="../css/homepage-css/homepage.css?v=38">

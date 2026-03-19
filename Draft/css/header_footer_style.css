@@ -4,11 +4,16 @@
     box-sizing: border-box;
 }
 
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
 body {
     font-family: 'mr-eaves-modern', Arial, sans-serif;
     color: #000;
-    min-width: 1024px;
-    overflow-x: auto;
+    min-width: 0;
+    overflow-x: hidden;
 }
 
 a {
@@ -42,7 +47,7 @@ ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 40px;
+    padding: 0 clamp(16px, 3vw, 40px);
 }
 
 /* 1. Menu Button */
@@ -142,7 +147,7 @@ ul {
 .footer-inner {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 clamp(20px, 4vw, 40px);
     display: grid;
     grid-template-columns: 0.5fr 1fr 1fr 1fr;
     gap: 40px;
@@ -203,7 +208,7 @@ ul {
     position: absolute;
     top: 40px;
     right: 0;
-    width: 260px;
+    width: min(260px, calc(100vw - 32px));
     background: #fff;
     border: 1px solid #e0e0e0;
     padding: 18px;
@@ -256,6 +261,50 @@ ul {
     width: auto;
     max-width: calc(100vw - 48px);
     padding: 0 12px;
+}
+
+@media (max-width: 1100px) {
+    .site-header {
+        height: 132px;
+    }
+
+    .footer-inner {
+        grid-template-columns: 0.8fr 1fr 1fr;
+    }
+}
+
+@media (max-width: 860px) {
+    .site-header {
+        height: 118px;
+    }
+
+    .header-inner {
+        padding: 0 16px;
+    }
+
+    .footer-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+    }
+}
+
+@media (max-width: 640px) {
+    .site-header {
+        height: 108px;
+    }
+
+    .main-logo {
+        height: 42px;
+    }
+
+    .header-actions {
+        gap: 18px;
+    }
+
+    .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
 }
 
 .ll-welcome-toast.is-visible {

@@ -44,12 +44,12 @@ $stmt->close();
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LOFT & LIVING - My Recent Orders</title>
 
-<link rel="stylesheet" href="../css/header_footer_style.css?v=15">
+<link rel="stylesheet" href="../css/header_footer_style.css?v=16">
 <link rel="stylesheet" href="../css/user_order_history.css?v=1">
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=12">
-    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=6">
     <script src="../javascript/dark-mode.js"></script>
 </head>
 

@@ -1,13 +1,20 @@
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
 body {
     padding-top: 120px;
     font-family: 'mr-eaves-modern', Arial, sans-serif;
+    min-width: 0;
+    overflow-x: hidden;
 }
 
 .site-header {
     position: fixed;
     top: 20px;
-    left: 40px;
-    right: 40px;
+    left: clamp(16px, 3vw, 40px);
+    right: clamp(16px, 3vw, 40px);
     z-index: 1000;
     background: rgba(255, 255, 255, 0.55);
     backdrop-filter: blur(14px) saturate(140%);
@@ -40,7 +47,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 40px;
+    padding: 0 clamp(16px, 3vw, 40px);
 }
 
 .logo-wrapper {
@@ -98,7 +105,7 @@ body {
     position: absolute;
     top: 40px;
     right: 0;
-    width: 260px;
+    width: min(260px, calc(100vw - 32px));
     background: #fff;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     border: 1px solid #e0e0e0;
@@ -196,4 +203,50 @@ html.dark-mode .social-icon {
 
 .social-icon {
     filter: invert(1) brightness(0.8) !important;
+}
+
+@media (max-width: 860px) {
+    body {
+        padding-top: 112px;
+    }
+
+    .site-header {
+        top: 16px;
+        height: 74px;
+    }
+
+    .main-logo {
+        height: 44px !important;
+    }
+
+    .header-left-tools,
+    .header-actions {
+        gap: 18px;
+    }
+}
+
+@media (max-width: 640px) {
+    body {
+        padding-top: 106px;
+    }
+
+    .site-header {
+        left: 12px;
+        right: 12px;
+        height: 70px;
+    }
+
+    .header-inner {
+        padding: 0 14px;
+    }
+
+    .main-logo {
+        max-width: 220px;
+        height: 40px !important;
+    }
+
+    .ui-icon {
+        width: 18px;
+        height: 18px;
+    }
 }

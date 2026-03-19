@@ -18,7 +18,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
     <title>Home</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=16">
 
     <link rel="stylesheet" href="../css/homepage-css/homepage.css">
     <link rel="stylesheet" href="../css/about.css">
@@ -98,7 +98,7 @@ $headerName = $_SESSION['name'] ?? 'Guest';
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=12">
-    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=6">
     <script src="../javascript/dark-mode.js"></script>
 </head>
 <body class="admin-homepage-page">
