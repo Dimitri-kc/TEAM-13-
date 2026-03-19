@@ -25,48 +25,16 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
             background: #d9d6cf;
             color: #111;
             min-height: 100vh;
-        }
-
-        .site-header {
-            position: relative !important;
-            width: 100%;
-            background-color: #ffffff !important;
-            z-index: 1000;
-            padding: 15px 0;
-        }
-
-        .header-inner {
-            display: flex !important;
-            justify-content: space-between !important;
-            align-items: center !important;
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header-actions {
-            display: flex !important;
-            flex-direction: row !important;
-            align-items: center !important;
-            justify-content: flex-end !important;
-            gap: 20px;
-        }
-
-        .header-actions a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .header-actions img {
-            display: block;
+            display: flex;
+            flex-direction: column;
         }
 
         .page-wrap {
             width: 100%;
             display: flex;
             justify-content: center;
-            padding: 24px 20px 40px;
+            padding: 110px 20px 40px;
+            flex: 1;
         }
 
         .page-shell {
@@ -273,64 +241,6 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
             cursor: not-allowed;
         }
 
-        .site-footer {
-            width: 100%;
-            background-color: #fff;
-            margin-top: auto;
-            padding: 24px 0 32px;
-        }
-
-        .footer-inner {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 120px 1fr 1fr 1fr;
-            gap: 26px;
-            align-items: start;
-        }
-
-        .footer-section h4 {
-            font-size: 13px;
-            margin: 0 0 12px;
-            font-weight: 600;
-        }
-
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 9px;
-            font-size: 12px;
-        }
-
-        .footer-section ul li a {
-            text-decoration: none;
-            color: #333;
-        }
-
-        .social-links {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding-top: 2px;
-        }
-
-        .social-icon {
-            width: 18px;
-            height: 18px;
-            object-fit: contain;
-        }
-
-        @media (max-width: 900px) {
-            .footer-inner {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
         @media (max-width: 640px) {
             .page-shell {
                 padding: 20px 14px 22px;
@@ -338,10 +248,6 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
 
             .form-card {
                 padding: 16px;
-            }
-
-            .footer-inner {
-                grid-template-columns: 1fr;
             }
         }
     </style>

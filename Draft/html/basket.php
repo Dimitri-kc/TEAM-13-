@@ -182,12 +182,8 @@ if (count($ids) > 0) {
 <?php
 $pageTitle = 'Your Basket | LOFT &amp; LIVING';
 $extraHeadContent = <<<'HTML'
-  <link rel="stylesheet" href="../css/basket.css">
+  <link rel="stylesheet" href="../css/basket.css?v=8">
   <style>
-    main.basket-container {
-      padding-top: 140px !important;
-    }
-
     .basket-title {
       margin-top: 0 !important;
     }
@@ -198,26 +194,29 @@ include 'header.php';
 ?>
 
 <main class="basket-container">
-    <h1 class="basket-title">YOUR BASKET</h1>
+    <div class="basket-page-head">
+        <h1 class="basket-title">Your Basket</h1>
+        <p class="basket-caption">Ready to experience a new way of living?</p>
+    </div>
 
     <section class="basket-layout">
         <div class="basket-items">
 
             <?php if (count($cartProducts) === 0): ?>
 
-                <div style="border:1px dashed #d8d8d8; border-radius:16px; padding:26px 22px; color:#555; background:#fff;">
-                    <div style="font-size:20px; margin-bottom:6px;">
+                <div class="basket-empty">
+                    <div class="basket-empty-text">
                         No items in your basket yet. Go to categories and add a product.
                     </div>
                 </div>
 
-                <a href="homepage.php" style="display:inline-block; margin-top:14px; color:#000;">
+                <a href="homepage.php" class="basket-back-link">
                     Back to Homepage
                 </a>
 
             <?php else: ?>
 
-                <form method="post" action="basket.php?action=update">
+                <form method="post" action="basket.php?action=update" class="basket-update-form">
                     <?php foreach ($cartProducts as $p): ?>
                         <div class="basket-item">
                             <img src="<?= e($p["image"]) ?>" alt="<?= e($p["name"]) ?>" class="item-image">
@@ -229,7 +228,6 @@ include 'header.php';
                                 <div class="quant-controls">
                                     <input
                                         class="quant-number"
-                                        style="width:70px; padding:8px; border:1px solid #ddd; border-radius:10px;"
                                         type="number"
                                         min="0"
                                         name="qty[<?= (int)$p["id"] ?>]"
@@ -243,8 +241,7 @@ include 'header.php';
                                         type="submit"
                                         name="remove_id"
                                         value="<?= (int)$p["id"] ?>"
-                                        class="discount-btn"
-                                        style="background:#fff; color:#000; border:1px solid #000;"
+                                        class="discount-btn item-remove"
                                     >
                                         Remove
                                     </button>
@@ -254,16 +251,17 @@ include 'header.php';
                         </div>
                     <?php endforeach; ?>
 
-                    <button type="submit" class="discount-btn" style="margin-top:12px; background:#000; color:#fff; border:1px solid #000;">
-                        Update Basket
-                    </button>
-                </form>
-
-                <form method="post" action="basket.php?action=clear" style="margin-top:10px;">
-                    <button type="submit" class="discount-btn" style="background:#fff; color:#000; border:1px solid #000;">
-                        Clear Basket
-                    </button>
-                </form>
+                    <div class="basket-update-row">
+                        <button type="submit" class="discount-btn">
+                            Update Basket
+                        </button>
+                        </form>
+                        <form method="post" action="basket.php?action=clear">
+                            <button type="submit" class="discount-btn basket-clear">
+                                Clear Basket
+                            </button>
+                        </form>
+                    </div>
 
             <?php endif; ?>
 

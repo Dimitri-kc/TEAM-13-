@@ -106,207 +106,31 @@ $total = $subtotal + $tax + $delivery;
 <?php
 $pageTitle = 'Checkout | LOFT &amp; LIVING';
 $extraHeadContent = <<<'HTML'
-<link rel="stylesheet" href="../css/checkout.css">
+<link rel="stylesheet" href="../css/checkout.css?v=6">
 
 <style>
-#basket-count { display:none!important; }
-.checkout-layout{ display:flex!important; }
-.product-column{ order:1!important; }
-.details-column{ order:2!important; }
-.product-column img{ display:none!important; }
-.submit-btn,.checkout-btn{ background:#ccc!important; }
-
-.card-fields .form-title{
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 12px 14px;
-    margin: 0 0 10px 0;
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 1.2;
-    background: #fff;
-}
-
 input[name="postcode"]{
     margin-bottom: 28px !important;
 }
-.card-fields{
-    margin-top: 12px !important;
-    clear: both;
-}
-
-.payment-summary{
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 18px 16px;
-    margin: 14px 0;
-    background: #fff;
-}
-.payment-summary .row{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 8px 0;
-}
-.payment-summary .row.total{
-    font-weight: 700;
-    font-size: 16px;
-    margin-top: 10px;
-}
-
-.view-basket-btn{
-    padding: 10px 12px;
-    border: 1px solid #111;
-    border-radius: 6px;
-    background: #fff;
-    color: #111;
-    text-decoration: none;
-    font-size: 12px;
-    text-align: center;
-    box-sizing: border-box;
-}
-.payment-actions{
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin: 12px 0;
-}
-
-
-.basket-overlay{
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.45);
-    display: none;
-    justify-content: flex-end;
-    z-index: 99999;
-}
-.basket-overlay.active{
-    display: flex;
-}
-.basket-drawer{
-    width: 650px;
-    max-width: 100%;
-    height: 100%;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    box-shadow: -8px 0 24px rgba(0,0,0,0.12);
-    animation: slideInRight 0.25s ease;
-    overflow: visible;
-}
-
-.basket-close{
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    border: none;
-    background: transparent;
-    color: #111;
-    font-size: 32px;
-    line-height: 40px;
-    text-align: center;
-    cursor: pointer;
-    z-index: 9999;
-    display: block;
-}
-.basket-drawer-content{
-    padding: 56px 28px 24px;
-    flex: 1;
-    overflow-y: auto;
-}
-.basket-drawer-title{
-    font-size: 22px;
-    font-weight: 500;
-    margin: 0 0 28px 0;
-}
-.basket-drawer-item{
-    display: grid;
-    grid-template-columns: 110px 1fr auto;
-    gap: 16px;
-    align-items: start;
-    margin-bottom: 24px;
-}
-.basket-drawer-item-image{
-    width: 110px;
-    height: 140px;
-    object-fit: cover;
-    background: #f5f1ec;
-}
-.basket-drawer-item-name{
-    font-size: 16px;
-    line-height: 1.3;
-    margin: 0 0 10px 0;
-}
-.basket-drawer-item-meta{
-    font-size: 15px;
-    color: #5c6f82;
-    margin: 0;
-}
-.basket-drawer-item-price{
-    font-size: 18px;
-    font-weight: 600;
-    color: #3f2330;
-    white-space: nowrap;
-}
-.basket-drawer-footer{
-    border-top: 1px solid #ddd;
-    padding: 20px 28px 28px;
-}
-.basket-drawer-total{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 700;
-    margin-bottom: 18px;
-}
-.basket-drawer-btn{
-    width: 100%;
-    height: 56px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    margin-bottom: 14px;
-}
-.basket-drawer-btn.primary{
-    background: #442732;
-    color: #fff;
-}
-.basket-drawer-btn.secondary{
-    background: #fff;
-    color: #442732;
-    border: 1px solid #442732;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.product-column .view-basket-btn{
-    display:block;
-    width:100%;
-    margin-top:15px;
-    text-align:center;
-}
-
 </style>
 HTML;
 
 include 'header.php';
 ?>
 
-<header class="checkout-header">
-<h1>CHECKOUT</h1>
-</header>
+<main class="checkout-page">
+<div class="checkout-page-head">
+    <div class="checkout-head-copy">
+        <header class="checkout-header">
+            <h1>Checkout</h1>
+        </header>
+        <p class="checkout-caption">Complete your order details and payment to bring your home together.</p>
+        <a href="#" class="view-basket-btn checkout-top-basket-btn" id="openBasketBtn">View Basket</a>
+    </div>
+    <a href="basket.php" class="return-basket-btn">Return to Basket</a>
+</div>
 
-<main class="checkout-layout">
+<section class="checkout-layout">
 
 <aside class="product-column">
 
@@ -334,7 +158,14 @@ include 'header.php';
 
 </div>
 
-<a href="#" class="view-basket-btn" id="openBasketBtn2">View Basket</a>
+<div class="checkout-sidebar-actions">
+    <button type="submit" name="place_order" class="submit-btn" form="checkout-form">Confirm Payment</button>
+
+    <div class="pay-buttons">
+        <img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
+        <img src="../images/basket-images/googlepay.png" alt="Google Pay" class="pay-btn">
+    </div>
+</div>
 
 </aside>
 
@@ -375,7 +206,7 @@ include 'header.php';
 <?php if ($defaultCard): 
      $prefillExpiry = str_pad($defaultCard['expiry_month'],2,'0',STR_PAD_LEFT) . '/' . substr($defaultCard['expiry_year'],-2);
 ?>
-    <div style="font-size:13px; color:#555; margin-bottom:12px; padding:10px 14px; background:#f5f5f5; border-radius:8px;">
+    <div class="saved-card-note">
         Default card on file: •••• •••• •••• <?= htmlspecialchars($defaultCard['last_four']) ?> 
         &nbsp;·&nbsp; Expires <?= str_pad($defaultCard['expiry_month'],2,'0',STR_PAD_LEFT) ?>/<?= substr($defaultCard['expiry_year'],-2) ?>
     </div>
@@ -387,7 +218,7 @@ include 'header.php';
     <input type="text" id="cvv" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />
 
     <!-- manual override toggle -->
-    <button type="button" onclick="toggleManualEntry()" style="background:none;border:none;color:#555;font-size:12px;text-decoration:underline;cursor:pointer;padding:4px 0;margin-bottom:10px;">
+    <button type="button" onclick="toggleManualEntry()" class="manual-entry-toggle">
         Enter card details manually
     </button>
     <div id="manualFields" style="display:none;">
@@ -401,42 +232,11 @@ include 'header.php';
 <input type="text" id="cvv" name="cvv" placeholder="CVV (3 Digits)" maxlength="3" inputmode="numeric" required />
 <?php endif; ?>
 
-<div class="payment-summary">
-    <div class="row">
-        <span>Subtotal</span>
-        <span><?= money($subtotal) ?></span>
-    </div>
-    <div class="row">
-        <span>Tax (10%)</span>
-        <span><?= money($tax) ?></span>
-    </div>
-    <div class="row">
-        <span>Delivery</span>
-        <span><?= money($delivery) ?></span>
-    </div>
-    <div class="row total">
-        <span>Total</span>
-        <span><?= money($total) ?></span>
-    </div>
-</div>
-
-<div class="payment-actions">
-    <a href="#" class="view-basket-btn" id="openBasketBtn">View Basket</a>
-    <div style="font-weight:700;">
-        Total: <?= money($total) ?>
-    </div>
-</div>
-
-<button type="submit" name="place_order" class="submit-btn">Confirm Payment</button>
-
-<div class="pay-buttons">
-<img src="../images/basket-images/applepay.png" alt="Apple Pay" class="pay-btn">
-<img src="../images/basket-images/googlepay.png" alt="Google Pay" class="pay-btn">
-</div>
-
 </div>
 
 </form>
+
+</section>
 
 </section>
 
@@ -486,7 +286,7 @@ include 'header.php';
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-   const openBasketBtns = document.querySelectorAll('#openBasketBtn, #openBasketBtn2');
+   const openBasketBtns = document.querySelectorAll('#openBasketBtn');
     const closeBasketBtn = document.getElementById('closeBasketBtn');
     const backToShippingBtn = document.getElementById('backToShippingBtn');
     const basketOverlay = document.getElementById('basketOverlay');

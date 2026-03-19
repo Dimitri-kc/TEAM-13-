@@ -1,13 +1,12 @@
 <?php
-declare(strict_types=1);
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
 session_start();
 
-function e(string $s): string {
-    return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8');
+function e($s): string {
+    return htmlspecialchars((string)($s ?? ''), ENT_QUOTES, 'UTF-8');
 }
 
 function money(float $n, string $currency = "£"): string {
@@ -27,6 +26,7 @@ $total = 0.0;
 $taxRate = 0.10;
 $tax = 0.0;
 $statusKey = "pending";
+$sessionOrder = $_SESSION['order'] ?? null;
 
 try {
     include '../backend/config/db_connect.php';
@@ -114,6 +114,41 @@ try {
 
 } catch (Throwable $e) {
     $hasOrder = false;
+}
+
+if (
+    !$hasOrder &&
+    is_array($sessionOrder) &&
+    !empty($sessionOrder['number']) &&
+    ((int)$sessionOrder['number'] === (int)($_GET['order_id'] ?? $sessionOrder['number']))
+) {
+    $hasOrder = true;
+    $orderNumber = (string)($sessionOrder['number'] ?? '');
+    $orderDate = (string)($sessionOrder['date'] ?? $orderDate);
+    $address = (string)($sessionOrder['customer']['address1'] ?? 'No address saved');
+    $tax = (float)($sessionOrder['tax'] ?? 0.0);
+    $currency = (string)($sessionOrder['currency'] ?? '£');
+
+    $cleanItems = [];
+    $subtotal = 0.0;
+
+    foreach (($sessionOrder['items'] ?? []) as $item) {
+        $qty = (int)($item['qty'] ?? 1);
+        $price = (float)($item['price'] ?? 0.0);
+        $line = $qty * $price;
+        $subtotal += $line;
+
+        $cleanItems[] = [
+            'name' => $item['name'] ?? 'Product',
+            'qty' => $qty,
+            'line' => $line,
+            'image' => $item['image'] ?? ''
+        ];
+    }
+
+    $total = $subtotal + $tax;
+    $orderStatus = 'Paid';
+    $statusKey = 'pending';
 }
 ?>
 <?php

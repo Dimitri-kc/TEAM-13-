@@ -22,43 +22,8 @@
             background-color: #EAE8E4;
         }
 
-        .site-header {
-            position: relative !important;
-            width: 100%;
-            background-color: #ffffff !important;
-            z-index: 1000;
-            padding: 15px 0;
-        }
-
-        .header-inner {
-            display: flex !important;
-            justify-content: space-between !important;
-            align-items: center !important;
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header-actions {
-            display: flex !important;
-            flex-direction: row !important;
-            align-items: center !important;
-            justify-content: flex-end !important;
-            gap: 20px;
-        }
-
-        .header-actions a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .header-actions img {
-            display: block;
-        }
-
         main.form-container {
-            margin-top: 50px !important;
+            margin-top: 110px !important;
             margin-bottom: 50px !important;
             flex: 1;
             width: 100%;
@@ -535,5 +500,4 @@
     </script>
 </body>
 </html>
-
 

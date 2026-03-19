@@ -54,35 +54,59 @@ try {
 $pageTitle = 'My Favourites | LOFT &amp; LIVING';
 $extraHeadContent = <<<'HTML'
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; background:#fff; color:#111; }
-        .favourites-main { padding: 50px; min-height: 600px; }
-        .wrap { max-width: 980px; margin: 0 auto; padding: 26px 18px 40px; }
-        h1 { font-size: 18px; margin: 0 0 4px; font-weight: 700; }
-        .sub { font-size: 12px; color: #666; margin-bottom: 18px; }
+        body { margin: 0; background: #f5f1eb; color: #1f1a17; }
+        .favourites-main { padding: 56px 28px 72px; min-height: 600px; }
+        .wrap { max-width: 1180px; margin: 0 auto; }
+        .page-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+        .page-head-left { max-width: 620px; }
+        h1 {
+            font-family: 'ivybodoni', serif;
+            font-size: 40px;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            line-height: 1.05;
+            margin: 0 0 10px;
+            color: #1f1a17;
+        }
+        .sub {
+            font-family: 'mr-eaves-modern', Arial, sans-serif;
+            font-size: 18px;
+            color: #6b6157;
+            margin: 0;
+            line-height: 1.5;
+        }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 22px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
         }
 
         .fav-card {
             position: relative;
-            border: 1px solid #eaeaea;
-            border-radius: 6px;
-            padding: 16px;
+            border: 1px solid rgba(111, 103, 92, 0.16);
+            border-radius: 24px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            background: #ffffff;
-            text-align: center;
+            align-items: stretch;
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 16px 40px rgba(50, 41, 35, 0.08);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .thumb {
-            width: 200px;
-            height: 200px;
-            border-radius: 4px;
-            background: #e9e9e9;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 18px;
+            background: #ece6df;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -97,47 +121,131 @@ $extraHeadContent = <<<'HTML'
         }
 
         .btn {
-            padding: 7px 10px;
-            border: none;
-            border-radius: 6px;
-            background: #111;
+            padding: 12px 22px;
+            border: 1.5px solid #8C8376;
+            border-radius: 999px;
+            background: #8C8376;
             color: #fff;
-            font-size: 11px;
+            font-family: 'mr-eaves-modern', Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 0.03em;
             white-space: nowrap;
-            margin-left: 10px;
+            cursor: pointer;
+            transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+        }
+
+        .btn:hover {
+            background: #6F675C;
+            border-color: #6F675C;
+            transform: translateY(-1px);
         }
 
         .removeBtn {
             position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 26px;
-            height: 26px;
-            border-radius: 7px;
-            border: 1px solid #e1e1e1;
-            background: #fff;
+            top: 16px;
+            right: 16px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid rgba(111, 103, 92, 0.16);
+            background: rgba(255, 255, 255, 0.94);
             cursor: pointer;
-            font-size: 16px;
+            color: #4f443b;
+            font-size: 20px;
             line-height: 1;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: background 0.18s ease, color 0.18s ease;
         }
 
-        .empty { padding: 18px; border: 1px dashed #ddd; border-radius: 8px; color:#666; }
-        .actions { margin-top: 14px; font-size: 12px; }
-        .actions a { color:#111; text-decoration: none; border-bottom: 1px solid #ddd; }
+        .removeBtn:hover {
+            background: #6f675c;
+            color: #fff;
+        }
+
+        .card-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 18px 4px 0;
+            flex: 1;
+        }
+
+        .card-title {
+            font-family: 'ivybodoni', serif;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 1.2;
+            color: #1f1a17;
+            margin: 0;
+        }
+
+        .card-price {
+            font-family: 'mr-eaves-modern', Arial, sans-serif;
+            font-size: 18px;
+            color: #6b6157;
+            margin: 0;
+        }
+
+        .card-actions {
+            margin-top: 18px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .clear-form {
+            margin: 0;
+            flex-shrink: 0;
+        }
+
+        .clear-btn {
+            background: #8C8376;
+            color: #fff;
+            border-color: #8C8376;
+        }
+
+        .clear-btn:hover {
+            background: #6F675C;
+            color: #fff;
+            border-color: #6F675C;
+        }
+
+        .empty {
+            padding: 26px 24px;
+            border: 1px dashed rgba(111, 103, 92, 0.26);
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.82);
+            color: #6b6157;
+            font-family: 'mr-eaves-modern', Arial, sans-serif;
+            font-size: 18px;
+            line-height: 1.5;
+        }
 
         @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 580px) { .grid { grid-template-columns: 1fr; } }
+        @media (max-width: 720px) {
+            .page-head {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .clear-form {
+                align-self: flex-start;
+            }
+        }
+        @media (max-width: 580px) {
+            .favourites-main { padding: 42px 18px 56px; }
+            .grid { grid-template-columns: 1fr; }
+            h1 { font-size: 34px; }
+        }
 
 .back-home {
     display: inline-block;
-    margin-bottom: 15px;
-    font-family: 'Jost', sans-serif;
-    font-size: 14px;
+    margin-bottom: 18px;
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
+    font-size: 16px;
     text-decoration: none;
-    color: var(--accent);
+    color: #6f675c;
     font-weight: 500;
     transition: 0.2s ease;
 }
@@ -152,19 +260,21 @@ include 'header.php';
 ?>
 
 <main class="favourites-main">
-    <div class="wrap"><div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-   <a href="#" onclick="goBack(event)" class="back-home">← Go Back</a>
+    <div class="wrap">
+<a href="#" onclick="goBack(event)" class="back-home">← Go Back</a>
+
+<div class="page-head">
+    <div class="page-head-left">
+        <h1>My Favourites</h1>
+        <p class="sub">See an item you like? Come back to it later at any time.</p>
+    </div>
+
+    <form method="post" class="clear-form">
+        <button type="submit" name="clear_favs" class="btn clear-btn" onclick="return confirm('Clear all favourites?')">
+            Clear All Favourites
+        </button>
+    </form>
 </div>
-
-<h1>My Favourites</h1>
-<div class="sub">See an item you like? Come back to it later at any time</div>
-
-
-      <form method="post" style="margin-bottom:15px;">
-    <button type="submit" name="clear_favs" class="btn" onclick="return confirm('Clear all favourites?')">
-        Clear All Favourites
-    </button>
-</form>
         <?php if (empty($favs)): ?>
             <div class="empty">No favourites yet. Go to categories and like a product.</div>
    
@@ -193,22 +303,19 @@ include 'header.php';
         <?php endif; ?>
     </div>
 
-    <div style="font-size:13px; font-weight:600; margin-top:10px;">
-        <?= htmlspecialchars($p["name"]) ?>
+    <div class="card-meta">
+        <h2 class="card-title"><?= htmlspecialchars($p["name"]) ?></h2>
+        <p class="card-price">£<?= number_format($p["price"],2) ?></p>
     </div>
 
-
-    <div style="font-size:12px; color:#666;">
-        £<?= number_format($p["price"],2) ?>
+    <div class="card-actions">
+        <button
+            class="btn js-add-to-bag"
+            type="button"
+            data-product-id="<?= $pid ?>"
+            >Add to Bag
+        </button>
     </div>
-            
-    <button
-        class="btn js-add-to-bag"
-        type="button"
-        data-product-id="<?= $pid ?>"
-        style="margin-top:10px;"
-        >Add to bag
-    </button>
 
 </div>
 
