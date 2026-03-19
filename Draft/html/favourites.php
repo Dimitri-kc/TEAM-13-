@@ -243,25 +243,23 @@ $extraHeadContent = <<<'HTML'
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
     margin-bottom: 18px;
-    padding: 10px 18px;
+    padding: 12px 20px;
     border: 1.5px solid rgba(111, 103, 92, 0.26);
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.92);
-    box-shadow: 0 10px 24px rgba(50, 41, 35, 0.08);
+    background: transparent;
     font-family: 'mr-eaves-modern', Arial, sans-serif;
-    font-size: 16px;
+    font-size: 17px;
     text-decoration: none;
     color: #6f675c;
     font-weight: 500;
-    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, color 0.18s ease;
 }
 
 .back-home:hover {
-    background: #6f675c;
-    border-color: #6f675c;
-    color: #fff;
+    background: rgba(111, 103, 92, 0.08);
+    border-color: rgba(111, 103, 92, 0.4);
+    color: #4d463d;
     text-decoration: none;
     transform: translateY(-1px);
 }
