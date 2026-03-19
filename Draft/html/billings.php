@@ -185,7 +185,6 @@ if (!$user) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Billing &amp; Payments | LOFT &amp; LIVING</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/account_settings.css">
 
     <style>
@@ -291,10 +290,18 @@ if (!$user) {
         .status-badge--cancelled { color: var(--danger); background: var(--danger-light); border-color: var(--danger); }
         .status-badge--unknown { color: var(--mid); background: #f5f5f5; border-color: var(--mid); }
     </style>
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
+    <link rel="stylesheet" href="../css/billings.css?v=1">
+    <script src="../javascript/dark-mode.js"></script>
+    
 </head>
-<body>
+<body class="billing-page">
 
-<?php include 'header.php'; ?>
+<?php $headerPartialOnly = true; include 'header.php'; ?>
 
 <div class="page-header">
     <a href="user_dash.php" class="back-dashboard">← Back to Dashboard</a>
@@ -660,6 +667,6 @@ if (!$user) {
     //billing history panel + api call to fetch past bills >orderconfirmation? or recentorders?
 </script>
 
-<?php include 'footer.php'; ?>
+<?php $footerPartialOnly = true; include 'footer.php'; ?>
 </body>
 </html>

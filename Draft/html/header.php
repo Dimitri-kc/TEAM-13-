@@ -3,20 +3,22 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Optional: Include database connection if needed for your page
-// include '../backend/config/db_connect.php';
-
 $isLoggedIn = !empty($_SESSION['user_ID']);
 $isAdmin = (($_SESSION['role'] ?? '') === 'admin');
-$userName   = $_SESSION['name'] ?? '';
+$userName = $_SESSION['name'] ?? '';
 $headerName = ($userName !== '') ? $userName : 'Guest';
 $lastSearchQuery = trim((string)($_SESSION['last_search_query'] ?? ''));
 $searchHref = 'search.php';
+
 if ($lastSearchQuery !== '') {
     $searchHref .= '?q=' . urlencode($lastSearchQuery);
 }
+
+$headerPartialOnly = $headerPartialOnly ?? false;
 $pageTitle = $pageTitle ?? 'LOFT &amp; LIVING BIRMINGHAM';
 $extraHeadContent = $extraHeadContent ?? '';
+
+if (!$headerPartialOnly):
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,58 +26,24 @@ $extraHeadContent = $extraHeadContent ?? '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageTitle; ?></title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
-    <link rel="stylesheet" href="../css/reusable_header.css">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
     <?php echo $extraHeadContent; ?>
-    <style>
-        /* Strong inline rule to ensure the header basket badge stays compact across pages */
-        #basket-count, .basket-icon #basket-count, header .basket-icon #basket-count {
-            position: absolute !important;
-            top: -5px !important;
-            right: -5px !important;
-            /* enforce exact badge dimensions */
-            width: 16px !important;
-            height: 16px !important;
-            min-width: 16px !important;
-            max-width: 28px !important;
-            padding: 0 !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            font-size: 10px !important;
-            line-height: 1 !important;
-            font-weight: 700 !important;
-            color: #ffffff !important;
-            background: #a2a2a2 !important;
-            border-radius: 999px !important;
-            box-shadow: none !important;
-            border: none !important;
-            transform: none !important;
-            -webkit-transform: none !important;
-            zoom: 1 !important;
-            text-align: center !important;
-            overflow: hidden !important;
-            white-space: nowrap !important;
-        }
-    </style>
     <script src="../javascript/dark-mode.js"></script>
 </head>
-
 <body>
+<?php endif; ?>
 
 <header class="site-header">
     <div class="header-inner">
-
-        <!-- LEFT: menu + dark mode + search -->
         <div class="header-left-tools">
             <button class="menu-btn" id="menu-toggle-btn" type="button" aria-label="Open menu">
                 <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
             </button>
             <img src="../images/header_footer_images/icon-moon.png" alt="Dark Mode" class="ui-icon" id="moon-icon" data-light-src="../images/header_footer_images/icon-moon.png" data-dark-src="../images/header_footer_images/icon-moon2.png" style="margin-left: 8px; margin-right: 8px; vertical-align: middle; cursor: pointer;">
-            <!-- Replace search pill with search icon -->
             <a class="mini-search" href="<?php echo htmlspecialchars($searchHref); ?>" aria-label="Search" data-search-trigger="modal">
                 <img src="../images/header_footer_images/icon-search.png" alt="Search" class="ui-icon" id="search-icon" style="vertical-align: middle;">
             </a>
@@ -98,13 +66,6 @@ $extraHeadContent = $extraHeadContent ?? '';
                 </button>
 
                 <div class="profile-dropdown" id="profile-dropdown">
-                    <?php
-                        if (session_status() === PHP_SESSION_NONE) session_start();
-                        $isLoggedIn = !empty($_SESSION['user_ID']);
-                        $isAdmin = (($_SESSION['role'] ?? '') === 'admin');
-                        $headerName = $_SESSION['name'] ?? 'Guest';
-                    ?>
-
                     <?php if ($isLoggedIn): ?>
                         <div class="profile-welcome">Welcome, <?php echo htmlspecialchars($headerName); ?></div>
                     <?php else: ?>
@@ -116,16 +77,13 @@ $extraHeadContent = $extraHeadContent ?? '';
                         <a class="profile-link" href="signup.php">Sign Up</a>
                     <?php endif; ?>
 
-                    <?php if ($isAdmin): ?>
-                        <a class="profile-link" href="admin_dash.php">Admin Dashboard</a>
-                    <?php endif; ?>
-
-                    <a class="profile-link" href="user_dash.php">My Account</a>
-
                     <?php if ($isLoggedIn): ?>
+                        <a class="profile-link" href="user_dash.php">My Account</a>
                         <a class="profile-link" href="user_order_history.php">My Orders</a>
+                        <?php if ($isAdmin): ?>
+                            <a class="profile-link" href="admin_dash.php">Admin Dashboard</a>
+                        <?php endif; ?>
                         <a class="profile-link" href="signout.php">Sign Out</a>
-                        
                     <?php endif; ?>
                 </div>
             </div>

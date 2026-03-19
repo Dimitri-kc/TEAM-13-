@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="search-modal-card-price">£${escapeHtml(item.price)}</p>
                     <div class="search-modal-card-actions">
                         ${favouriteButtonMarkup(item)}
-                        <button type="button" class="search-modal-basket-btn" data-product-id="${item.product_ID}">Add to Basket</button>
+                        <button type="button" class="search-modal-basket-btn" data-product-id="${item.product_ID}">+ Add to Basket</button>
                     </div>
                 </div>
             </article>
@@ -478,6 +478,8 @@ function ensureSearchModalStyles() {
             overflow: hidden;
             background: #fff;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
         }
         .search-modal-card-link {
             text-decoration: none;
@@ -491,6 +493,9 @@ function ensureSearchModalStyles() {
         }
         .search-modal-card-body {
             padding: 12px;
+            display: flex;
+            flex: 1;
+            flex-direction: column;
         }
         .search-modal-card-body h3 {
             margin: 0 0 8px;
@@ -510,6 +515,8 @@ function ensureSearchModalStyles() {
             align-items: center;
             justify-content: space-between;
             gap: 10px;
+            margin-top: auto;
+            padding-top: 14px;
         }
         .search-modal-favourite-form {
             margin: 0;
@@ -532,12 +539,38 @@ function ensureSearchModalStyles() {
             color: #fff;
         }
         .search-modal-basket-btn {
-            border: none;
-            border-radius: 9px;
-            padding: 9px 12px;
-            background: #efefef;
+            border: 1.5px solid #6f675c;
+            border-radius: 32px;
+            padding: 10px 20px;
+            background: #6f675c;
+            color: #fff;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 500;
+            font-size: 15px;
+            line-height: 1.2;
+            font-family: 'mr-eaves-modern', 'Mr Eaves Modern', Arial, sans-serif;
+            letter-spacing: 0.03em;
+            box-shadow: 0 2px 12px rgba(43, 43, 43, 0.08);
+            transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+            white-space: nowrap;
+        }
+        .search-modal-basket-btn:hover {
+            background: #595247;
+            border-color: #595247;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 18px rgba(43, 43, 43, 0.13);
+        }
+        .search-modal-basket-btn:disabled {
+            opacity: 1;
+        }
+        html.dark-mode .search-modal-basket-btn {
+            background: #8c8376;
+            border-color: #8c8376;
+            color: #fff;
+        }
+        html.dark-mode .search-modal-basket-btn:hover {
+            background: #a1978a;
+            border-color: #a1978a;
         }
         .search-modal-placeholder,
         .search-modal-empty {

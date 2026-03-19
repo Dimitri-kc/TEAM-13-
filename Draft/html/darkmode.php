@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Website Page</title>
 
-<link rel="stylesheet" href="../css/header_footer_style.css">
+<link rel="stylesheet" href="../css/header_footer_style.css?v=15">
 <link rel="stylesheet" href="../css/category-css/livingroom-base.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
 <link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">
@@ -109,51 +109,16 @@ body.dark-mode .site-footer ul li a:hover{
   filter: invert(1);
 }
 </style>
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 
 <body>
 
-<header class="site-header">
-  <div class="header-inner">
-    <button class="menu-btn" id="menu-toggle-btn" type="button">
-      <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img" />
-    </button>
-
-    <div class="logo-wrapper">
-      <a href="homepage.php">
-        <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo" />
-      </a>
-    </div>
-
-    <div class="header-actions">
-      <button id="dark-mode-toggle" class="dark-toggle" type="button">
-        <img src="../images/header_footer_images/lightmoon.png" id="dark-icon" class="ui-icon" alt="Toggle dark mode">
-      </button>
-
-      <a href="favourites.php">
-        <img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon" />
-      </a>
-      <a href="signin.php">
-        <img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon" />
-      </a>
-      <a href="basket.php" class="basket-icon">
-        <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon" />
-        <span id="basket-count">0</span>
-      </a>
-    </div>
-  </div>
-
-  <nav class="dropdown-panel" id="dropdown-nav">
-    <ul class="nav-links">
-      <li><a href="livingroom.php">Living Room</a></li>
-      <li><a href="bathroom.php">Bathroom</a></li>
-      <li><a href="bedroom.php">Bedroom</a></li>
-      <li><a href="office.php">Office</a></li>
-      <li><a href="kitchen.php">Kitchen</a></li>
-      <li class="nav-divider"><a href="signin.php">My Account</a></li>
-    </ul>
-  </nav>
-</header>
+<?php $headerPartialOnly = true; include 'header.php'; ?>
 
 <main style="max-width:1000px;margin:40px auto;padding:0 20px;">
   <div class="left-section" style="padding:22px;border-radius:14px;margin-bottom:20px;">
@@ -168,48 +133,7 @@ body.dark-mode .site-footer ul li a:hover{
   </div>
 </main>
 
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-section social-links">
-      <a href="#">
-        <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon ui-icon" />
-      </a>
-      <a href="#">
-        <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon ui-icon" />
-      </a>
-    </div>
-
-    <div class="footer-section">
-      <h4>Navigation</h4>
-      <ul>
-        <li><a href="homepage.php">Homepage</a></li>
-        <li><a href="signin.php">My Account</a></li>
-        <li><a href="favourites.php">Favourites</a></li>
-        <li><a href="basket.php">Basket</a></li>
-        <li><a href="darkmode.php">Dark Mode</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-section">
-      <h4>Categories</h4>
-      <ul>
-        <li><a href="livingroom.php">Living Room</a></li>
-        <li><a href="office.php">Offices</a></li>
-        <li><a href="kitchen.php">Kitchen</a></li>
-        <li><a href="bathroom.php">Bathrooms</a></li>
-        <li><a href="bedroom.php">Bedrooms</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-section">
-      <h4>More...</h4>
-      <ul>
-        <li><a href="contact.php">Contact Us</a></li>
-        <li><a href="about.php">About Us</a></li>
-      </ul>
-    </div>
-  </div>
-</footer>
+<?php $footerPartialOnly = true; include 'footer.php'; ?>
 
 <script>
 const toggle=document.getElementById("dark-mode-toggle");

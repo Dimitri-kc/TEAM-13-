@@ -3,8 +3,6 @@ require_once '../backend/services/userFunctions.php';
 require_admin_page('/TEAM-13-/Draft/html/signin.php');
 
 require_once '../backend/config/db_connect.php'; 
-include "header.php";
-
 
 // product stock query
 $query1 = "
@@ -69,89 +67,88 @@ while ($row = $result2->fetch_assoc()) {
     <title>Real-Time Reports | Loft & Living</title>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        
-        body {
-            margin: 90px 0 0;
-            padding: 0;
-            background-color: #F4F1EC;
-            color: #2B2B2B;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            min-width: 1024px;
-        }
-
-        .content-wrapper {
-            width: calc(100% - 48px);
-            max-width: 1050px;
-            margin: 0 auto;
-            padding: 40px 0 60px;
-        }
-
-
-        
-        .chart-container {
-            background: #fff;
-            max-width: 1075px;
-            margin: 0 auto;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-            margin-bottom: 60px;
-        }
-
-        h1 {
-            font-family: "Ibarra Real Nova", serif;
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            margin-bottom: 25px;
-        }
-
-        
-        #categoryFilter {
-            padding: 10px 15px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-            margin-bottom: 25px;
-            font-family: "Ibarra Real Nova", serif;
-        }
-    </style>
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
+    <link rel="stylesheet" href="../css/admin_realtime_reports.css?v=1">
+    <script src="../javascript/dark-mode.js"></script>
+    
 </head>
 
-<body>
+<body class="admin-reports-page">
 
-<div class="content-wrapper">
+<?php $headerPartialOnly = true; include 'header.php'; ?>
 
-    <label for="categoryFilter">Filter by Category:</label>
-    <select id="categoryFilter">
-        <option value="all">All Products</option>
-        <option value="Living room">Living Room</option>
-        <option value="Kitchen">Kitchen</option>
-        <option value="Office">Office</option>
-        <option value="Bathroom">Bathroom</option>
-        <option value="Bedroom">Bedroom</option>
-    </select>
+<div class="reports-wrapper">
 
-    <h1>Real-Time Stock Levels (Per Product)</h1>
-    <div class="chart-container">
-        <canvas id="stockChart"></canvas>
+    <div class="reports-header">
+        <h1>Real-Time Reports</h1>
+        <p>Track stock performance and customer sign-up activity across the store in one place.</p>
     </div>
 
-    <h1>Daily Customer Sign-Ups</h1>
-    <div class="chart-container">
-        <canvas id="signupChart"></canvas>
-    </div>
+    <section class="report-card report-card-wide">
+        <div class="report-card-head">
+            <div>
+                <h2>Real-Time Stock Levels</h2>
+                <p>View current stock by product and filter by category.</p>
+            </div>
+            <div class="report-filter">
+                <label for="categoryFilter">Filter by Category</label>
+                <select id="categoryFilter">
+                    <option value="all">All Products</option>
+                    <option value="Living room">Living Room</option>
+                    <option value="Kitchen">Kitchen</option>
+                    <option value="Office">Office</option>
+                    <option value="Bathroom">Bathroom</option>
+                    <option value="Bedroom">Bedroom</option>
+                </select>
+            </div>
+        </div>
+        <div class="chart-container">
+            <canvas id="stockChart"></canvas>
+        </div>
+    </section>
+
+    <section class="report-card">
+        <div class="report-card-head">
+            <div>
+                <h2>Daily Customer Sign-Ups</h2>
+                <p>Monitor sign-up activity over time.</p>
+            </div>
+        </div>
+        <div class="chart-container">
+            <canvas id="signupChart"></canvas>
+        </div>
+    </section>
+
+    <section class="report-card report-summary-card">
+        <div class="report-card-head">
+            <div>
+                <h2>Quick Notes</h2>
+                <p>At-a-glance guidance for interpreting the report data.</p>
+            </div>
+        </div>
+        <div class="report-summary-list">
+            <div class="report-summary-item">
+                <span class="report-summary-label">Stock alert</span>
+                <span class="report-summary-value">Products under 5 units are highlighted in red.</span>
+            </div>
+            <div class="report-summary-item">
+                <span class="report-summary-label">Sign-up trend</span>
+                <span class="report-summary-value">Use the line chart to spot recent growth or slow periods.</span>
+            </div>
+            <div class="report-summary-item">
+                <span class="report-summary-label">Next step</span>
+                <span class="report-summary-value">Prioritize low-stock products before they affect active orders.</span>
+            </div>
+        </div>
+    </section>
 
 </div>
 
 <script>
-// profile dropdown
-document.getElementById("profile-toggle-btn").addEventListener("click", () => {
-    document.getElementById("profile-dropdown").classList.toggle("open");
-});
-
 // product stock chart data
 const productLabels = <?php echo json_encode($productLabels); ?>;
 const productStock = <?php echo json_encode($productStock); ?>;
@@ -228,6 +225,4 @@ new Chart(document.getElementById('signupChart'), {
 });
 </script>
 
-</body>
-</html>
 <?php include 'footer.php'; ?>

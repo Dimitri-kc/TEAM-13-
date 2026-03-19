@@ -12,243 +12,22 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
 
 <title>Admin - Orders & Shipments</title>
 
-<link rel="stylesheet" href="../css/header_footer_style.css">
-<link rel="stylesheet" href="../css/category-css/livingroom-base.css">
-<link rel="stylesheet" href="../css/category-css/livingroom-structure.css">
-<link rel="stylesheet" href="../css/category-css/livingroom-reusable.css">
-<link rel="stylesheet" href="../css/category-css/livingroom-page.css">
-
-<style>
-
-body{
-font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-background:#fff;
-margin:0;
-padding:0;
-color:#1a1a1a;
-}
-
-.admin-container{
-max-width:900px;
-margin:20px auto 0 auto;
-}
-
-h1{
-font-weight:700;
-text-align:left;
-font-size:30px;
-margin-bottom:4px;
-}
-
-.subheader{
-color:#6c6c6c;
-font-weight:400;
-font-size:14px;
-margin-top:0;
-margin-bottom:24px;
-}
-
-.orders-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:16px;
-margin-bottom:50px;
-}
-
-.order-card{
-border:1px solid #e2e2e2;
-border-radius:6px;
-padding:12px 16px;
-display:flex;
-align-items:center;
-gap:12px;
-}
-
-.order-card img{
-width:80px;
-height:80px;
-object-fit:cover;
-border-radius:4px;
-background:#eee;
-flex-shrink:0;
-}
-
-.order-details{
-flex-grow:1;
-font-size:14px;
-}
-
-.order-status{
-font-weight:600;
-font-size:12px;
-color:#333;
-margin-bottom:4px;
-}
-
-.order-number{
-font-weight:700;
-font-size:16px;
-margin:0 0 4px 0;
-}
-
-.customer-name{
-margin:0;
-font-weight:500;
-color:#555;
-}
-
-.order-actions{
-display:flex;
-gap:10px;
-}
-
-button{
-border-radius:6px;
-border:none;
-padding:6px 14px;
-font-size:13px;
-font-weight:600;
-cursor:pointer;
-white-space:nowrap;
-}
-
-.btn-view-edit{
-background:#ddd;
-color:#333;
-}
-
-.btn-view-edit:hover{
-background:#ccc;
-}
-
-.btn-cancel{
-background:#2C2C2C;
-color:white;
-}
-
-.btn-cancel:hover{
-background:#1a1a1a;
-}
-
-/* HEADER SPACING FIX */
-
-.site-header{
-padding:10px 0;
-}
-
-.main-logo{
-height:48px;
-}
-
-/* MODAL */
-
-.edit-panel-overlay{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.45);
-z-index:999;
-align-items:center;
-justify-content:center;
-}
-
-.edit-panel{
-background:#fff;
-width:100%;
-max-width:500px;
-border-radius:12px;
-padding:24px;
-box-shadow:0 10px 30px rgba(0,0,0,0.18);
-}
-
-.edit-panel h2{
-margin-top:0;
-margin-bottom:18px;
-font-size:24px;
-}
-
-.edit-field{
-margin-bottom:16px;
-}
-
-.edit-field label{
-display:block;
-font-weight:600;
-margin-bottom:6px;
-}
-
-.edit-field input,
-.edit-field select{
-width:100%;
-padding:10px 12px;
-border:1px solid #d8d8d8;
-border-radius:8px;
-}
-
-.edit-panel-actions{
-display:flex;
-gap:10px;
-margin-top:18px;
-}
-
-.btn-save{
-background:#2C2C2C;
-color:#fff;
-}
-
-.btn-close{
-background:#ddd;
-}
-
-@media (max-width:600px){
-
-.orders-grid{
-grid-template-columns:1fr;
-}
-
-}
-
-</style>
+<link rel="stylesheet" href="../css/header_footer_style.css?v=15">
+<link rel="stylesheet" href="../css/admin_order_list.css?v=1">
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 
-<body>
+<body class="admin-order-list-page">
 
-<header class="site-header">
-<div class="header-inner">
-
-<button class="menu-btn">
-<img src="../images/header_footer_images/icon-menu.png" class="ui-icon">
-</button>
-
-<div class="logo-wrapper">
-<a href="homepage.php">
-<img src="../images/header_footer_images/logo.png" class="main-logo">
-</a>
-</div>
-
-<div class="header-actions">
-
-<a href="favourites.php">
-<img src="../images/header_footer_images/icon-heart.png" class="ui-icon">
-</a>
-
-<a href="signin.php">
-<img src="../images/header_footer_images/icon-user.png" class="ui-icon">
-</a>
-
-<a href="basket.php" class="basket-icon">
-<img src="../images/header_footer_images/icon-basket.png" class="ui-icon">
-<span id="basket-count">0</span>
-</a>
-
-</div>
-
-</div>
-</header>
+<?php $headerPartialOnly = true; include 'header.php'; ?>
 
 <div class="admin-container">
 
-<h1>Orders and Shipments</h1>
+<h1 class="page-title">Orders and Shipments</h1>
 <p class="subheader">View recent customer orders and make edits or cancel</p>
 
 <div class="orders-grid" id="ordersContainer"></div>
@@ -303,6 +82,26 @@ document.addEventListener("DOMContentLoaded",loadOrders);
 
 let currentOrderCard=null;
 
+function resolveProductImage(imagePath) {
+    if (!imagePath) {
+        return "../images/basket-images/sofa.jpg";
+    }
+
+    if (/^(https?:)?\/\//.test(imagePath)) {
+        return imagePath;
+    }
+
+    let cleaned = imagePath
+        .replace(/^(\.\.\/)+/, '')
+        .replace(/^\/+/, '');
+
+    if (!cleaned.startsWith('images/')) {
+        cleaned = `images/${cleaned}`;
+    }
+
+    return `../${cleaned}`;
+}
+
 async function loadOrders(){
 
 const response=await fetch("/TEAM-13-/Draft/backend/routes/orderRoutes.php?action=fetchAll");
@@ -313,9 +112,7 @@ container.innerHTML="";
 
 result.data.forEach(order=>{
 
-const image = order.image
-? "/TEAM-13-/Draft/" + order.image.replace("../","")
-: "https://via.placeholder.com/80";
+const image = resolveProductImage(order.image);
 
 const customerName = order.customer_name ?? ("Customer ID: "+order.user_ID);
 
@@ -323,7 +120,7 @@ const card=`
 
 <div class="order-card" data-order-id="${order.order_ID}">
 
-<img src="${image}" alt="Product Image">
+<img src="${image}" alt="Product Image" onerror="this.onerror=null;this.src='../images/basket-images/sofa.jpg';">
 
 <div class="order-details">
 
@@ -419,51 +216,7 @@ card.querySelector(".order-status").innerText="Order Status: "+status;
 
 <!-- Footer -->
 
-<footer class="site-footer">
-<div class="footer-inner">
-
-<div class="footer-section social-links">
-<a href="#"><img src="../images/header_footer_images/icon-twitter.png" class="social-icon"></a>
-<a href="#"><img src="../images/header_footer_images/icon-instagram.png" class="social-icon"></a>
-</div>
-
-<div class="footer-section">
-<h4>Navigation</h4>
-<ul>
-<li><a href="homepage.php">Homepage</a></li>
-<li><a href="signin.php">My Account</a></li>
-<li><a href="favourites.php">Favourites</a></li>
-<li><a href="basket.php">Basket</a></li>
-</ul>
-</div>
-
-<div class="footer-section">
-<h4>Categories</h4>
-<ul>
-<li><a href="livingroom.php">Living Room</a></li>
-<li><a href="office.php">Offices</a></li>
-<li><a href="kitchen.php">Kitchen</a></li>
-<li><a href="bathroom.php">Bathrooms</a></li>
-<li><a href="bedroom.php">Bedrooms</a></li>
-</ul>
-</div>
-
-<div class="footer-section">
-<h4>More...</h4>
-<ul>
-<li><a href="contact.php">Contact Us</a></li>
-<li><a href="about.php">About Us</a></li>
-</ul>
-</div>
-
-</div>
-</footer>
-
-<script src="../javascript/header_footer_script.js"></script>
-<script src="../javascript/global/basketIcon.js"></script>
-<script src="../javascript/global/search-modal.js"></script>
+<?php $footerPartialOnly = true; include 'footer.php'; ?>
 
 </body>
 </html>
-
-

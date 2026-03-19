@@ -6,11 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy | LOFT & LIVING</title>
-    <link rel="stylesheet" href="../css/header_footer_style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'mr-eaves-modern';
             margin: 0;
             padding: 0;
             line-height: 1.6;
@@ -36,7 +35,7 @@
         p {
             margin-bottom: 15px;
         }
-        ul {
+        main.container ul {
             margin: 10px 0 20px 20px;
         }
         .faq-item {
@@ -72,23 +71,39 @@
             transform: rotate(-180deg);
         }
         .back-dashboard {
-    display: inline-block;
-    margin-bottom: 20px;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    color: #2C6E49;
-    transition: 0.2s ease;
-}
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            margin-bottom: 20px;
+            padding: 12px 20px;
+            border-radius: 999px;
+            border: 1.5px solid rgba(111, 103, 92, 0.26);
+            background: transparent;
+            color: #6f675c;
+            font-family: 'mr-eaves-modern';
+            font-size: 17px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, color 0.18s ease;
+        }
 
-.back-dashboard:hover {
-    text-decoration: underline;
-}
+        .back-dashboard:hover {
+            background: rgba(111, 103, 92, 0.08);
+            border-color: rgba(111, 103, 92, 0.4);
+            color: #4d463d;
+            transform: translateY(-1px);
+        }
     </style>
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 <body>
 
-<?php include 'header.php'; ?>
+<?php $headerPartialOnly = true; include 'header.php'; ?>
     <main class="container">
     <a href="user_dash.php" class="back-dashboard">← Back to Dashboard</a>
     <h1>Privacy Policy</h1>
@@ -144,6 +159,6 @@
     });
 </script>
 
-<?php include 'footer.php'; ?>
+<?php $footerPartialOnly = true; include 'footer.php'; ?>
 </body>
 </html>

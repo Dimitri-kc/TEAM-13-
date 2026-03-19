@@ -1,5 +1,5 @@
+<?php $footerPartialOnly = $footerPartialOnly ?? false; ?>
 
-<!-- Footer -->
 <footer class="site-footer">
     <div class="footer-inner">
         <div class="footer-section social-links">
@@ -13,7 +13,6 @@
 
         <div class="footer-section">
             <h4>Navigation</h4>
-        
             <ul>
                 <li><a href="homepage.php">Homepage</a></li>
                 <li><a href="signin.php">My Account</a></li>
@@ -38,6 +37,9 @@
             <ul>
                 <li><a href="contact.php">Contact Us</a></li>
                 <li><a href="about.php">About Us</a></li>
+                <?php if (!empty($showAdminLink)): ?>
+                    <li><a href="admin_signin.php">Admin</a></li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
@@ -45,7 +47,9 @@
 
 <script src="../javascript/header_footer_script.js"></script>
 <script src="../javascript/global/basketIcon.js"></script>
-<script src="../javascript/global/search-modal.js"></script>
+<script src="../javascript/global/search-modal.js?v=3"></script>
 
+<?php if (!$footerPartialOnly): ?>
 </body>
 </html>
+<?php endif; ?>

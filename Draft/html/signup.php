@@ -1,5 +1,10 @@
-<!-- top line creates coorect link to backend database connection -->
-<?php include '../backend/config/db_connect.php'; ?>
+<?php 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+include '../backend/config/db_connect.php'; //creates corect link to backend database connection
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,355 +12,133 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up | LOFT & LIVING</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="../css/header_footer_style.css">
-  <link rel="stylesheet" href="../css/signup.style.css">
-
-  <style>
-    body {
-      display: flex !important;
-      flex-direction: column !important;
-      min-height: 100vh;
-      margin: 0;
-      background-color: #EAE8E4;
-    }
-
-    .site-header {
-      position: relative !important;
-      width: 100%;
-      background-color: #ffffff !important;
-      z-index: 1000;
-      padding: 15px 0;
-    }
-
-    .header-inner {
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    main.form-container {
-      margin-top: 50px !important;
-      margin-bottom: 50px !important;
-      flex: 1;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-    }
-
-    .site-footer {
-      margin-top: auto;
-      width: 100%;
-      background-color: #fff;
-    }
-
-    .input-group {
-      margin-bottom: 25px !important;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .input-label {
-      margin-bottom: 8px;
-      font-weight: 500;
-    }
-
-    .error-popup {
-      display: none;
-      margin-top: 10px;
-      padding: 10px 12px;
-      border-radius: 4px;
-      background-color: #ffffff;
-      border: 1px solid #f0b400;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.12);
-      font-size: 0.9rem;
-      line-height: 1.4;
-      align-items: flex-start;
-      gap: 8px;
-    }
-
-    .error-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 3px;
-      background-color: #ffa000;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .error-text {
-      flex: 1;
-    }
-
-    /* Find Address below */
-    /*Postcode row — input & button side by side */
-    .postcode-row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-    .postcode-row input {
-      flex: 1;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .find-address-btn {
-      padding: 10px 14px;
-      background: #1C1C1E;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-family: 'Inter', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      white-space: nowrap;
-      cursor: pointer;
-      transition: background 0.2s;
-      flex-shrink: 0;
-    }
-    .find-address-btn:hover  { background: #000; }
-    .find-address-btn:disabled { background: #999; cursor: not-allowed; }
-
-    /* Dropdown of matching addresses */
-    .address-select-wrap {
-      display: none;
-      margin-top: 8px;
-    }
-    .address-select-wrap.visible { display: block; }
-
-    .address-select-wrap select {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-family: 'Inter', sans-serif;
-      font-size: 14px;
-      background: #fff;
-      cursor: pointer;
-    }
-
-    /* manual entry for address */
-    .manual-toggle {
-      display: inline-block;
-      margin-top: 6px;
-      font-size: 12px;
-      color: #666;
-      text-decoration: underline;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-      font-family: 'Inter', sans-serif;
-    }
-    .manual-toggle:hover { color: #000; }
-
-    /* manual address input > hidden, shows if lookup fails */
-    .manual-address-group {
-      display: none;
-      margin-top: 10px;
-    }
-    .manual-address-group.visible { display: block; }
-    .manual-address-group input {
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    /* confirmed address display*/
-    .address-confirmed {
-      display: none;
-      margin-top: 8px;
-      padding: 10px 12px;
-      background: #f0f7f3;
-      border: 1px solid #b2d4c0;
-      border-radius: 6px;
-      font-size: 13px;
-      color: #1C1C1E;
-      line-height: 1.5;
-    }
-    .address-confirmed.visible { display: flex; align-items: flex-start; gap: 8px; }
-    .address-confirmed-text { flex: 1; }
-    .address-change-btn {
-      font-size: 12px;
-      color: #666;
-      background: none;
-      border: none;
-      cursor: pointer;
-      text-decoration: underline;
-      padding: 0;
-      font-family: 'Inter', sans-serif;
-      flex-shrink: 0;
-    }
-    .address-change-btn:hover { color: #000; }
-  </style>
+  <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
+  <link rel="stylesheet" href="../css/signup.style.css?v=2">
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 
-<body class="page-background">
+<body class="auth-page signup-page">
 
-<header class="site-header">
-  <div class="header-inner">
-    <button class="menu-btn" id="menu-toggle-btn">
-      <img src="../images/header_footer_images/icon-menu.png" alt="Menu" class="ui-icon" id="menu-icon-img">
-    </button>
-    <div class="logo-wrapper">
-      <a href="homepage.php">
-        <img src="../images/header_footer_images/logo.png" alt="LOFT & LIVING" class="main-logo">
-      </a>
-    </div>
-    <div class="header-actions">
-      <a href="favourites.php"><img src="../images/header_footer_images/icon-heart.png" alt="Favourites" class="ui-icon"></a>
-      <a href="signin.php"><img src="../images/header_footer_images/icon-user.png" alt="My Account" class="ui-icon"></a>
-      <a href="basket.php" class="basket-icon">
-          <img src="../images/header_footer_images/icon-basket.png" alt="Basket" class="ui-icon">
-          <span id="basket-count">0</span>
-      </a>
-    </div>
-  </div>
-
-  <nav class="dropdown-panel" id="dropdown-nav">
-    <ul class="nav-links">
-      <li><a href="livingroom.php">Living Room</a></li>
-      <li><a href="bathroom.php">Bathroom</a></li>
-      <li><a href="bedroom.php">Bedroom</a></li>
-      <li><a href="office.php">Office</a></li>
-      <li><a href="kitchen.php">Kitchen</a></li>
-      <li class="nav-divider"><a href="signin.php">My Account</a></li>
-    </ul>
-  </nav>
-</header>
+<?php $headerPartialOnly = true; include 'header.php'; ?>
 
 <main class="form-container">
   <section class="form-box">
-    <h1 class="form-title">NEW HERE?</h1>
-
-    <form id="signupForm">
-      <div class="input-group">
-        <span class="input-label">Name</span>
-        <input type="text" id="name" name="name" required>
+    <aside class="auth-hero">
+      <div>
+        <div class="auth-kicker">Loft & Living</div>
+        <h1 class="auth-hero-title">Create your account.</h1>
+        <p class="auth-hero-copy">Set up your details once so you can save favourites, manage orders, and move through checkout faster.</p>
       </div>
 
-      <div class="input-group">
-        <span class="input-label">Surname</span>
-        <input type="text" id="surname" name="surname" required>
-      </div>
-
-      <div class="input-group">
-        <span class="input-label">Email</span>
-        <input type="email" id="email" name="email" required>
-      </div>
-
-      <div class="input-group">
-        <span class="input-label">Phone Number</span>
-        <input type="tel" id="phone" name="phone" required>
-      </div>
-
-      <!--address field replaced with find-address feature ── -->
-      <div class="input-group">
-        <span class="input-label">Address</span>
-        <div class="postcode-row"> <!--postcode + lookup button -->
-          <input
-            type="text"
-            id="postcodeInput"
-            placeholder="Enter postcode e.g. NN4 8GR"
-            maxlength="8"
-            autocomplete="postal-code"
-          >
-          <button type="button" class="find-address-btn" id="findAddressBtn" onclick="findAddress()">
-            Find Address
-          </button>
+      <div class="auth-feature-list">
+        <div class="auth-feature">
+          <span class="auth-feature-label">Benefits</span>
+          <span class="auth-feature-value">Track orders and keep saved items close</span>
         </div>
-        <!-- dropdown of matching addresses-->
-        <div class="address-select-wrap" id="addressSelectWrap">
-          <select id="addressSelect" onchange="selectAddress()">
-            <option value="">— Select your address —</option>
-          </select>
+        <div class="auth-feature">
+          <span class="auth-feature-label">Address Setup</span>
+          <span class="auth-feature-value">Use postcode lookup or enter details manually</span>
         </div>
-        <!-- Address confirmation-->
-        <div class="address-confirmed" id="addressConfirmed">
-          <span class="address-confirmed-text" id="addressConfirmedText"></span>
-          <button type="button" class="address-change-btn" onclick="resetAddressLookup()">Change</button>
+      </div>
+    </aside>
+
+    <div class="auth-panel">
+      <div class="auth-panel-header">
+        <h1 class="form-title">New Here?</h1>
+        <p class="form-subtitle">Create your account and start building your Loft & Living space.</p>
+      </div>
+
+      <form id="signupForm">
+        <div class="form-grid">
+          <div class="input-group">
+            <span class="input-label">Name</span>
+            <input type="text" id="name" name="name" required>
+          </div>
+
+          <div class="input-group">
+            <span class="input-label">Surname</span>
+            <input type="text" id="surname" name="surname" required>
+          </div>
+
+          <div class="input-group">
+            <span class="input-label">Email</span>
+            <input type="email" id="email" name="email" required>
+          </div>
+
+          <div class="input-group">
+            <span class="input-label">Phone Number</span>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+
+          <div class="input-group input-group--full">
+            <span class="input-label">Address</span>
+            <div class="postcode-row">
+              <input
+                type="text"
+                id="postcodeInput"
+                placeholder="Enter postcode e.g. NN4 8GR"
+                maxlength="8"
+                autocomplete="postal-code"
+              >
+              <button type="button" class="find-address-btn" id="findAddressBtn" onclick="findAddress()">
+                Find Address
+              </button>
+            </div>
+            <div class="address-select-wrap" id="addressSelectWrap">
+              <select id="addressSelect" onchange="selectAddress()">
+                <option value="">— Select your address —</option>
+              </select>
+            </div>
+            <div class="address-confirmed" id="addressConfirmed">
+              <span class="address-confirmed-text" id="addressConfirmedText"></span>
+              <button type="button" class="address-change-btn" onclick="resetAddressLookup()">Change</button>
+            </div>
+            <div class="manual-address-group" id="manualAddressGroup">
+              <input
+                type="text"
+                id="manualAddress"
+                placeholder="e.g. 26 Lion Ct, Northampton, NN4 8GR"
+                autocomplete="street-address"
+              >
+            </div>
+            <input type="hidden" id="address" name="address">
+            <button type="button" class="manual-toggle" id="manualToggleBtn" onclick="toggleManual()">
+              Enter address manually instead
+            </button>
+          </div>
+
+          <div class="input-group">
+            <span class="input-label">Password</span>
+            <input type="password" id="password" name="password" required>
+          </div>
+
+          <div class="input-group">
+            <span class="input-label">Confirm Password</span>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+          </div>
         </div>
-        <!-- manual entry > if lookup fails-->
-        <div class="manual-address-group" id="manualAddressGroup">
-          <input
-            type="text"
-            id="manualAddress"
-            placeholder="e.g. 26 Lion Ct, Northampton, NN4 8GR"
-            autocomplete="street-address"
-          >
+
+        <div id="errorPopup" class="error-popup">
+          <div class="error-icon" id="errorIcon">!</div>
+          <div class="error-text" id="errorText"></div>
         </div>
-        <input type="hidden" id="address" name="address">
-        <button type="button" class="manual-toggle" id="manualToggleBtn" onclick="toggleManual()">
-          Enter address manually instead
-        </button>
-      </div>
 
-      <div class="input-group">
-        <span class="input-label">Password</span>
-        <input type="password" id="password" name="password" required>
-      </div>
+        <button type="submit" class="main-button">Create Account</button>
 
-      <div class="input-group">
-        <span class="input-label">Confirm Password</span>
-        <input type="password" id="confirmPassword" name="confirmPassword" required>
-      </div>
-
-      <div id="errorPopup" class="error-popup">
-        <div class="error-icon" id="errorIcon">!</div>
-        <div class="error-text" id="errorText"></div>
-      </div>
-
-      <button type="submit" class="main-button">Submit</button>
-
-      <p class="form-footer">
-        Already have an account?
-        <a href="signin.php" class="link-primary">Sign in</a>
-      </p>
-    </form>
+        <p class="form-footer">
+          Already have an account?
+          <a href="signin.php" class="link-primary">Sign in</a>
+        </p>
+      </form>
+    </div>
   </section>
 </main>
 
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-section social-links">
-      <a href="#"><img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon"></a>
-      <a href="#"><img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon"></a>
-    </div>
-    <div class="footer-section">
-      <h4>Navigation</h4>
-      <ul>
-        <li><a href="homepage.php">Homepage</a></li>
-        <li><a href="signin.php">My Account</a></li>
-        <li><a href="favourites.php">Favourites</a></li>
-        <li><a href="basket.php">Basket</a></li>
-      </ul>
-    </div>
-    <div class="footer-section">
-      <h4>Categories</h4>
-      <ul>
-        <li><a href="livingroom.php">Living Room</a></li>
-        <li><a href="office.php">Offices</a></li>
-        <li><a href="kitchen.php">Kitchen</a></li>
-        <li><a href="bathroom.php">Bathrooms</a></li>
-        <li><a href="bedroom.php">Bedrooms</a></li>
-      </ul>
-    </div>
-    <div class="footer-section">
-      <h4>More...</h4>
-      <ul><li><a href="contact.php">Contact Us</a></li><li><a href="about.php">About Us</a></li></ul>
-    </div>
-  </div>
-</footer>
+<?php $footerPartialOnly = true; include 'footer.php'; ?>
 
 <script>
   const ADDRESS_LOOKUP_URL = "/TEAM-13-/Draft/backend/routes/addressLookup.php";
@@ -562,8 +345,5 @@
     }
   });
 </script>
-
-<script src="../javascript/header_footer_script.js"></script>
-<script src="../javascript/global/basketIcon.js"></script>
 </body>
 </html>

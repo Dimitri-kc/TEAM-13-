@@ -18,7 +18,7 @@ $headerName = ($userName !== '') ? $userName : 'Guest';
     <title>Page Title</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=12">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
 
     <style>
@@ -401,7 +401,7 @@ $headerName = ($userName !== '') ? $userName : 'Guest';
 
 <script src="../javascript/header_footer_script.js"></script>
 <script src="../javascript/global/basketIcon.js"></script>
-<script src="../javascript/global/search-modal.js"></script>
+<script src="../javascript/global/search-modal.js?v=3"></script>
 
 </body>
 </html>

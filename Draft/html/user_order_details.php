@@ -41,18 +41,23 @@ $user = $user_stmt->get_result()->fetch_assoc();
 $user_name = $user['name'] ?? 'Customer';
 
 $item_stmt = $conn->prepare("
-SELECT p.image
+SELECT p.name, p.image, oi.quantity, oi.unit_price, (oi.quantity * oi.unit_price) AS line_total
 FROM order_items oi
 JOIN products p ON oi.product_ID = p.product_ID
 WHERE oi.order_ID = ?
-LIMIT 1
+ORDER BY oi.order_item_ID
 ");
 
 $item_stmt->bind_param("i", $order_ID);
 $item_stmt->execute();
-$item = $item_stmt->get_result()->fetch_assoc();
+$items = $item_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$item_stmt->close();
 
-$image = $item['image'] ?? '';
+$orderStatus = $order['order_status'] ?? 'Unknown';
+
+function money($value) {
+    return '£' . number_format((float)$value, 2);
+}
 
 $addressParts = array_map('trim', explode(",", $order['address']));
 
@@ -72,157 +77,23 @@ $postcode = $addressParts[4] ?? '';
 
 <title>Order Details</title>
 
-<link rel="stylesheet" href="../css/header_footer_style.css">
+<link rel="stylesheet" href="../css/header_footer_style.css?v=15">
+<link rel="stylesheet" href="../css/user_order_details.css?v=3">
 
-<style>
-
-body{
-font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-margin:0px;
-color:#1a1a1a;
-}
-
-
-.container{
-display:flex;
-gap:40px;
-max-width:1000px;
-margin:40px auto;
-}
-
-
-.left-section{
-flex:1;
-padding:28px;
-border-radius:14px;
-border:1px solid #e6e6e6;
-font-family:"Times New Roman", Georgia, serif;
-}
-
-.left-section h2{
-font-weight:400;
-font-size:26px;
-margin-bottom:10px;
-}
-
-.left-section p{
-font-size:18px;
-margin:6px 0;
-}
-
-.right-section{
-flex:1;
-background:#f5f5f5;
-padding:32px;
-border-radius:14px;
-border:1px solid #e0e0e0;
-}
-
-
-.order-image{
-width:300px;
-height:300px;
-background:#d3d3d3;
-border-radius:10px;
-margin-top:20px;
-overflow:hidden;
-}
-
-.order-image img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-
-.shipping-address-title{
-font-size:22px;
-font-weight:800;
-margin-bottom:20px;
-}
-
-.form-row{
-display:grid;
-grid-template-columns:180px 1fr;
-margin-bottom:18px;
-align-items:center;
-}
-
-.form-row label{
-font-weight:700;
-}
-
-.display-line{
-font-weight:500;
-}
-
-
-
-@media(max-width:900px){
-
-
-
-.form-row{
-grid-template-columns:1fr;
-}
-
-}
-
-.back-home {
-    display: inline-block;
-    margin: 20px 0 0px 140px; /* top 20px, right 0, bottom 20px, left 70px */
-    font-size: 14px;
-    text-decoration: none;
-    color: #111;
-    font-weight: 500;
-    transition: 0.2s ease;
-}
-
-.back-home:hover {
-    text-decoration: underline;
-}
-</style>
-
+    <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
+    <link rel="stylesheet" href="../css/dark-mode.css?v=9">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
+    <script src="../javascript/dark-mode.js"></script>
 </head>
 
-<body>
+<body class="order-details-page">
 
-<header class="site-header">
+<?php $headerPartialOnly = true; include 'header.php'; ?>
 
-<div class="header-inner">
-
-<button class="menu-btn">
-<img src="../images/header_footer_images/icon-menu.png" class="ui-icon">
-</button>
-
-<div class="logo-wrapper">
-<a href="homepage.php">
-<img src="../images/header_footer_images/logo.png" class="main-logo">
-</a>
+<div class="back-home-wrap">
+    <a href="#" onclick="goBack(event)" class="back-home">← Go Back</a>
 </div>
-
-<div class="header-actions">
-
-<a href="favourites.php">
-<img src="../images/header_footer_images/icon-heart.png" class="ui-icon">
-</a>
-
-<a href="signin.php">
-<img src="../images/header_footer_images/icon-user.png" class="ui-icon">
-</a>
-
-<a href="basket.php" class="basket-icon">
-<img src="../images/header_footer_images/icon-basket.png" class="ui-icon">
-<span id="basket-count">0</span>
-</a>
-
-</div>
-
-</div>
-
-</header>
-
-<a href="#" onclick="goBack(event)" class="back-home">← Go Back</a>
 
     <div class="container">
 
@@ -232,17 +103,29 @@ grid-template-columns:1fr;
 
 <p>Customer: <?= htmlspecialchars($user_name) ?></p>
 
-<p>Status: Delivered</p>
+<p>Status: <?= htmlspecialchars($orderStatus) ?></p>
 
 <p>Date: <?= date("Y-m-d", strtotime($order['order_date'])) ?></p>
 
-<div class="order-image">
-
-<?php if($image): ?>
-<img src="<?= htmlspecialchars($image) ?>">
-<?php endif; ?>
-
+<?php if (!empty($items)): ?>
+<div class="order-items-summary">
+    <h3 class="order-items-title">Items in This Order</h3>
+    <?php foreach ($items as $item): ?>
+        <div class="order-item-row">
+            <div class="order-item-thumb">
+                <?php if (!empty($item['image'])): ?>
+                    <img src="<?= htmlspecialchars('../images/' . ltrim($item['image'], '/')) ?>" alt="<?= htmlspecialchars($item['name']) ?>">
+                <?php endif; ?>
+            </div>
+            <div class="order-item-copy">
+                <div class="order-item-name"><?= htmlspecialchars($item['name']) ?></div>
+                <div class="order-item-meta">Qty: <?= (int)$item['quantity'] ?> · Unit: <?= money($item['unit_price']) ?></div>
+            </div>
+            <div class="order-item-price"><?= money($item['line_total']) ?></div>
+        </div>
+    <?php endforeach; ?>
 </div>
+<?php endif; ?>
 
 </div>
 
@@ -298,52 +181,7 @@ United Kingdom
 </div>
 
 
-<footer class="site-footer">
-    <div class="footer-inner">
-        <div class="footer-section social-links">
-            <a href="#">
-                <img src="../images/header_footer_images/icon-twitter.png" alt="Twitter" class="social-icon">
-            </a>
-            <a href="#">
-                <img src="../images/header_footer_images/icon-instagram.png" alt="Instagram" class="social-icon">
-            </a>
-        </div>
-
-        <div class="footer-section">
-            <h4>Navigation</h4>
-            <ul>
-                <li><a href="homepage.php">Homepage</a></li>
-                <li><a href="signin.php">My Account</a></li>
-                <li><a href="favourites.php">Favourites</a></li>
-                <li><a href="basket.php">Basket</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-section">
-            <h4>Categories</h4>
-            <ul>
-                <li><a href="livingroom.php">Living Room</a></li>
-                <li><a href="office.php">Offices</a></li>
-                <li><a href="kitchen.php">Kitchen</a></li>
-                <li><a href="bathroom.php">Bathrooms</a></li>
-                <li><a href="bedroom.php">Bedrooms</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-section">
-            <h4>More...</h4>
-            <ul>
-                <li><a href="contact.php">Contact Us</a></li>
-                <li><a href="about.php">About Us</a></li>
-            </ul>
-        </div>
-    </div>
-</footer>
-
-<script src="../javascript/header_footer_script.js"></script>
-<script src="../javascript/global/basketIcon.js"></script>
-
-//Go back button
+<?php $footerPartialOnly = true; include 'footer.php'; ?>
 <script>
 function goBack(e) {
     e.preventDefault();
