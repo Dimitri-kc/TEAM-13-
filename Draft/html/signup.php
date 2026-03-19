@@ -311,6 +311,13 @@ include '../backend/config/db_connect.php'; //creates corect link to backend dat
     if (!confirmPassword) { showPopup("Please confirm your password."); confirmPasswordField.focus(); return; }
     if (password !== confirmPassword) { showPopup("Passwords do not match."); confirmPasswordField.focus(); return; }
 
+    //strong-server-side password validation to complement client-side checks (in case of bypass) and ensure security standards are met
+    if (password.length < 8) { showPopup("Password must be at least 8 characters."); passwordField.focus(); return; }
+    if (!/[A-Z]/.test(password)) { showPopup("Password must include an uppercase character."); passwordField.focus(); return; }
+    if (!/[a-z]/.test(password)) { showPopup("Password must include a lowercase character."); passwordField.focus(); return; }
+    if (!/[0-9]/.test(password)) { showPopup("Password must include a number."); passwordField.focus(); return; }
+    if (!/[^A-Za-z0-9]/.test(password)) { showPopup("Password must include a special character."); passwordField.focus(); return; }
+
     const hasMinLength = password.length >= 8;
     const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
     if (!hasMinLength || !hasSpecialChar) {
