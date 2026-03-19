@@ -18,272 +18,83 @@ $headerName = $_SESSION['name'] ?? 'Guest';
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sign In | LOFT &amp; LIVING BIRMINGHAM</title>
+    <title>Admin Sign In | LOFT &amp; LIVING BIRMINGHAM</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- global styles + header/footer -->
     <link rel="stylesheet" href="../css/header_footer_style.css?v=15">
-
-    <style>
-
-        .auth-wrap {
-            background: #ffffff;
-            padding: 60px 24px 80px;
-        }
-
-        .auth-container {
-            max-width: 520px;
-            margin: 0 auto;
-        }
-
-        .auth-heading h2 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .auth-heading p {
-            color: #777;
-            font-size: 14px;
-            margin-bottom: 18px;
-        }
-
-        .auth-card {
-            border: 1px solid #e9e9e9;
-            border-radius: 10px;
-            padding: 20px;
-            background: #fff;
-        }
-
-        .form-group {
-            margin-bottom: 14px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px 12px;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-            font-size: 14px;
-            outline: none;
-        }
-
-        .form-group input:focus {
-            border-color: #cfcfcf;
-        }
-
-        .auth-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            margin-top: 6px;
-        }
-
-        .btn-primary {
-            border: none;
-            background: #000;
-            color: #fff;
-            padding: 12px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 700;
-            width: 100%;
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .auth-links {
-            margin-top: 14px;
-            font-size: 13px;
-            color: #555;
-            display: flex;
-            justify-content: space-between;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-
-        .auth-links a {
-            color: #333;
-            text-decoration: underline;
-        }
-
-        /* Popup styling (for logout success + login errors) */
-
-        .popup {
-            display: none;
-            margin-bottom: 14px;
-            padding: 10px 12px;
-            border-radius: 8px;
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-            font-size: 13px;
-            line-height: 1.4;
-            gap: 10px;
-            align-items: flex-start;
-        }
-
-        .popup-icon {
-            width: 18px;
-            height: 18px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 700;
-            flex-shrink: 0;
-            color: #fff;
-        }
-
-        .popup-text {
-            color: #111;
-        }
-
-        .popup-success {
-            border-color: #22c55e;
-        }
-        .popup-success .popup-icon {
-            background: #22c55e;
-        }
-
-        .popup-error {
-            border-color: #ef4444;
-        }
-        .popup-error .popup-icon {
-            background: #ef4444;
-        }
-
-        .profile-wrapper {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            z-index: 2000;
-        }
-
-        .profile-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .profile-dropdown {
-            position: absolute;
-            top: 40px;
-            right: 0;
-            width: 260px;
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            padding: 18px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            display: none;
-            z-index: 3000;
-        }
-
-        .profile-dropdown.open {
-            display: block;
-        }
-
-        .profile-welcome {
-            font-size: 14px;
-            font-weight: 700;
-            color: #000;
-            margin-bottom: 14px;
-        }
-
-        .profile-link {
-            display: block;
-            font-size: 14px;
-            color: #444;
-            padding: 10px 0;
-        }
-
-        .profile-link + .profile-link {
-            border-top: 1px solid #eee;
-        }
-
-        .profile-link-danger {
-            color: #b00020;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/signup.style.css?v=2">
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=9">
-    <link rel="stylesheet" href="../css/reusable_header.css?v=4">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=5">
     <script src="../javascript/dark-mode.js"></script>
 </head>
 
-<body>
-
-    <!-- ===============================
-         Header
-         =============================== -->
-
+<body class="auth-page admin-signin-page">
     <?php $headerPartialOnly = true; include 'header.php'; ?>
 
-    <!-- ===============================
-         Main
-         =============================== -->
-
     <main class="auth-wrap">
-        <div class="auth-container">
-            <div class="auth-heading">
-                <h2>Admin Sign in</h2>
-                <p>Access the admin dashboard, manage products, and view user data.</p>
-            </div>
+        <section class="auth-shell auth-shell--compact">
+            <aside class="auth-hero">
+                <div>
+                    <div class="auth-kicker">Loft & Living Admin</div>
+                    <h1 class="auth-hero-title">Admin access.</h1>
+                    <p class="auth-hero-copy">Sign in to manage products, customers, orders, and reporting from the admin dashboard.</p>
+                </div>
 
-            <div id="successPopup" class="popup popup-success">
-                <div class="popup-icon">✓</div>
-                <div class="popup-text" id="successText"></div>
-            </div>
-
-            <div id="errorPopup" class="popup popup-error">
-                <div class="popup-icon">!</div>
-                <div class="popup-text" id="errorText"></div>
-            </div>
-
-            <div class="auth-card">
-                <form id="signinForm" autocomplete="on">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input id="email" name="email" type="email" placeholder="you@example.com" required>
+                <div class="auth-feature-list">
+                    <div class="auth-feature">
+                        <span class="auth-feature-label">Control</span>
+                        <span class="auth-feature-value">Inventory, customers, orders and reporting</span>
                     </div>
-
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input id="password" name="password" type="password" placeholder="Enter your password" required>
+                    <div class="auth-feature">
+                        <span class="auth-feature-label">Access</span>
+                        <span class="auth-feature-value">Restricted admin credentials only</span>
                     </div>
+                </div>
+            </aside>
 
-                    <div class="auth-actions">
-                        <button class="btn-primary" id="signinBtn" type="submit">Sign in</button>
-                    </div>
+            <div class="auth-panel">
+                <div class="auth-heading">
+                    <h2>Admin Sign In</h2>
+                    <p>Access the admin dashboard, manage products, and review customer data.</p>
+                </div>
 
-                    <div class="auth-links">
-                        <a href="admin_signup.php">Create an account</a>
-                        <a href="forgotpassword.php">Forgot password?</a>
-                    </div>
-                </form>
+                <div id="successPopup" class="popup popup-success">
+                    <div class="popup-icon">✓</div>
+                    <div class="popup-text" id="successText"></div>
+                </div>
+
+                <div id="errorPopup" class="popup popup-error">
+                    <div class="popup-icon">!</div>
+                    <div class="popup-text" id="errorText"></div>
+                </div>
+
+                <div class="auth-card">
+                    <form id="signinForm" autocomplete="on">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input id="email" name="email" type="email" placeholder="you@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input id="password" name="password" type="password" placeholder="Enter your password" required>
+                        </div>
+
+                        <div class="auth-actions">
+                            <button class="btn-primary" id="signinBtn" type="submit">Sign in</button>
+                        </div>
+
+                        <div class="auth-links">
+                            <a href="admin_signup.php">Create an account</a>
+                            <a href="forgotpassword.php">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
+        </section>
     </main>
-
-    <!-- ===============================
-         Footer
-         =============================== -->
 
     <?php $footerPartialOnly = true; include 'footer.php'; ?>
 
@@ -386,31 +197,6 @@ $headerName = $_SESSION['name'] ?? 'Guest';
             }
         });
 
-        // Profile dropdown handling
-        document.addEventListener("DOMContentLoaded", () => {
-            const profileToggleBtn = document.getElementById("profile-toggle-btn");
-            const profileDropdown = document.getElementById("profile-dropdown");
-            const profileWrapper = document.getElementById("profile-wrapper");
-
-            if (!profileToggleBtn || !profileDropdown || !profileWrapper) return;
-
-            profileToggleBtn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                profileDropdown.classList.toggle("open");
-            });
-
-            document.addEventListener("click", (e) => {
-                if (!profileWrapper.contains(e.target)) {
-                    profileDropdown.classList.remove("open");
-                }
-            });
-
-            document.addEventListener("keydown", (e) => {
-                if (e.key === "Escape") {
-                    profileDropdown.classList.remove("open");
-                }
-            });
-        });
     </script>
 </body>
 </html>
