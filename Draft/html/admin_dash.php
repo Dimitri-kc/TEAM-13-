@@ -24,41 +24,37 @@ $extraHeadContent = <<<'HTML'
     <style>
         .dashboard-wrap {
             background: #ffffff;
-            padding: clamp(36px, 5vw, 60px) clamp(16px, 3vw, 24px) 80px;
+            padding: 60px 24px 80px;
         }
 
         .dashboard-container {
-            max-width: 1040px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
         .dashboard-heading {
             margin-bottom: 26px;
-            max-width: 100%;
         }
 
         .dashboard-heading-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 18px;
-            margin-bottom: 8px;
-            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 6px;
         }
 
         .dashboard-heading h2 {
-            font-size: clamp(28px, 3vw, 34px);
+            font-size: 30px;
             font-weight: 500;
             font-family: 'ivybodoni', serif;
             margin: 0;
-            line-height: 1.08;
-            min-width: 0;
         }
 
         .dashboard-heading p {
             margin: 0;
             color: #777;
-            font-size: 17px;
+            font-size: 18px;
         }
 
         .return-home-btn {
@@ -73,7 +69,6 @@ $extraHeadContent = <<<'HTML'
             font-size: 16px;
             font-weight: 500;
             white-space: nowrap;
-            flex-shrink: 0;
             transition: background-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
         }
 
@@ -85,7 +80,7 @@ $extraHeadContent = <<<'HTML'
 
         .dash-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 22px;
         }
 
@@ -96,7 +91,6 @@ $extraHeadContent = <<<'HTML'
             overflow: hidden;
             text-decoration: none;
             color: inherit;
-            min-width: 0;
             transition: transform 120ms ease, box-shadow 120ms ease;
         }
 
@@ -107,20 +101,18 @@ $extraHeadContent = <<<'HTML'
 
         .dash-card-inner {
             padding: 22px;
-            height: 100%;
         }
 
         .card-top {
             display: grid;
-            grid-template-columns: minmax(84px, 104px) minmax(0, 1fr);
+            grid-template-columns: 104px 1fr;
             gap: 18px;
             align-items: center;
         }
 
         .card-media img {
-            width: 100%;
-            max-width: 104px;
-            aspect-ratio: 1 / 1;
+            width: 104px;
+            height: 104px;
             object-fit: cover;
             border-radius: 8px;
             display: block;
@@ -128,50 +120,29 @@ $extraHeadContent = <<<'HTML'
 
         .dash-card h3 {
             margin: 6px 0;
-            font-size: 21px;
+            font-size: 22px;
             font-weight: 500;
             font-family: 'ivybodoni', serif;
-            line-height: 1.18;
         }
 
-        .dash-card p {
+.dash-card p {
             margin: 0;
-            font-size: 16px;
+            font-size: 17px;
             color: #777;
             line-height: 1.5;
-            max-width: 100%;
+            max-width: 320px;
         }
 
-        @media (max-width: 860px) {
-            .dashboard-wrap {
-                padding-top: 34px;
-            }
-
-            .card-top {
-                grid-template-columns: 88px minmax(0, 1fr);
-                gap: 16px;
-            }
+        @media (max-width: 980px) {
+            .dash-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 560px) {
             .dash-grid { grid-template-columns: 1fr; }
 
             .dashboard-heading-top {
                 flex-direction: column;
                 align-items: flex-start;
-            }
-
-            .return-home-btn {
-                width: 100%;
-            }
-
-            .card-top {
-                grid-template-columns: 1fr;
-                gap: 14px;
-            }
-
-            .card-media img {
-                max-width: 92px;
             }
         }
     </style>
