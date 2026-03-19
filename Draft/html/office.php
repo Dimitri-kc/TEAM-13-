@@ -3,6 +3,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+$isAdmin = (($_SESSION['role'] ?? '') === 'admin');
 include '../backend/config/db_connect.php';
 
 $favouriteProductIds = [];
@@ -30,7 +31,7 @@ if (!empty($_SESSION['user_ID'])) {
 
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=16">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=21">
     <link rel="stylesheet" href="../css/dark-mode.css?v=12">
 
     <link rel="stylesheet" href="../css/category-css/livingroom-base.css?v=2">
@@ -414,7 +415,10 @@ if (!empty($_SESSION['user_ID'])) {
     </style>
     <script src="../javascript/dark-mode.js"></script>
 </head>
-<body data-category="office">
+<body data-category="office" class="<?php echo $isAdmin ? 'admin-session-active' : ''; ?>">
+    <?php if ($isAdmin): ?>
+    <div class="admin-session-bar">Logged in as admin</div>
+    <?php endif; ?>
     <header class="site-header">
         <div class="header-inner">
 

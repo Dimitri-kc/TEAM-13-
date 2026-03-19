@@ -8,7 +8,7 @@
     <title>Contact | LOFT & LIVING</title>
 
     <!-- Header CSS -->
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=16">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=21">
 
     <!-- Page-specific CSS -->
     <link rel="stylesheet" href="../css/contact-css/contact-base.css?v=2">

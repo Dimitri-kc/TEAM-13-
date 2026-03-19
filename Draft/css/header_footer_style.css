@@ -16,6 +16,31 @@ body {
     overflow-x: hidden;
 }
 
+.admin-session-bar {
+    position: fixed;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1400;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 18px;
+    padding: 0 12px;
+    border: 1px solid rgba(111, 103, 92, 0.16);
+    border-radius: 999px;
+    background: rgba(255, 252, 248, 0.82);
+    backdrop-filter: blur(12px) saturate(135%);
+    -webkit-backdrop-filter: blur(12px) saturate(135%);
+    color: #6c5f52;
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: 0 8px 20px rgba(17, 17, 17, 0.08);
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -38,6 +63,10 @@ ul {
     position: relative;
     height: 150px;
     z-index: 1000;
+}
+
+body.admin-session-active .site-header {
+    margin-top: 10px;
 }
 
 .header-inner {
@@ -263,9 +292,20 @@ ul {
     padding: 0 12px;
 }
 
+html.dark-mode .admin-session-bar {
+    background: rgba(24, 24, 24, 0.78);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #e5ddd4;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+}
+
 @media (max-width: 1100px) {
     .site-header {
         height: 132px;
+    }
+
+    body.admin-session-active .site-header {
+        margin-top: 9px;
     }
 
     .footer-inner {
@@ -278,6 +318,10 @@ ul {
         height: 118px;
     }
 
+    body.admin-session-active .site-header {
+        margin-top: 8px;
+    }
+
     .header-inner {
         padding: 0 16px;
     }
@@ -286,11 +330,16 @@ ul {
         grid-template-columns: 1fr 1fr;
         gap: 28px;
     }
+
 }
 
 @media (max-width: 640px) {
     .site-header {
         height: 108px;
+    }
+
+    body.admin-session-active .site-header {
+        margin-top: 7px;
     }
 
     .main-logo {
@@ -304,6 +353,14 @@ ul {
     .footer-inner {
         grid-template-columns: 1fr;
         gap: 24px;
+    }
+
+    .admin-session-bar {
+        top: 8px;
+        min-height: 18px;
+        padding: 0 12px;
+        font-size: 11px;
+        letter-spacing: 0.1em;
     }
 }
 

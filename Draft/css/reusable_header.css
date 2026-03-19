@@ -10,6 +10,31 @@ body {
     overflow-x: hidden;
 }
 
+.admin-session-bar {
+    position: fixed;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1400;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 18px;
+    padding: 0 12px;
+    border: 1px solid rgba(111, 103, 92, 0.16);
+    border-radius: 999px;
+    background: rgba(255, 252, 248, 0.82);
+    backdrop-filter: blur(12px) saturate(135%);
+    -webkit-backdrop-filter: blur(12px) saturate(135%);
+    color: #6c5f52;
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: 0 8px 20px rgba(17, 17, 17, 0.08);
+}
+
 .site-header {
     position: fixed;
     top: 20px;
@@ -25,6 +50,10 @@ body {
         inset 0 1px 0 rgba(255, 255, 255, 0.55);
     border-radius: 50px;
     height: 80px;
+}
+
+body.admin-session-active .site-header {
+    top: 23px !important;
 }
 
 .site-footer {
@@ -201,6 +230,13 @@ html.dark-mode .social-icon {
     filter: invert(1);
 }
 
+html.dark-mode .admin-session-bar {
+    background: rgba(24, 24, 24, 0.78);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #e5ddd4;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+}
+
 .social-icon {
     filter: invert(1) brightness(0.8) !important;
 }
@@ -213,6 +249,10 @@ html.dark-mode .social-icon {
     .site-header {
         top: 16px;
         height: 74px;
+    }
+
+    body.admin-session-active .site-header {
+        top: 20px !important;
     }
 
     .main-logo {
@@ -230,10 +270,22 @@ html.dark-mode .social-icon {
         padding-top: 106px;
     }
 
+    .admin-session-bar {
+        top: 8px;
+        min-height: 18px;
+        padding: 0 12px;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+    }
+
     .site-header {
         left: 12px;
         right: 12px;
         height: 70px;
+    }
+
+    body.admin-session-active .site-header {
+        top: 18px !important;
     }
 
     .header-inner {

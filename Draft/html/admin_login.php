@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="../css/header_footer_style.css?v=16">
+  <link rel="stylesheet" href="../css/header_footer_style.css?v=21">
   <link rel="stylesheet" href="../css/signup.style.css">
 
   <style>

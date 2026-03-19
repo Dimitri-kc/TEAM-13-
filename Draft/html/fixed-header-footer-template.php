@@ -18,7 +18,7 @@ $headerName = ($userName !== '') ? $userName : 'Guest';
     <title>Page Title</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=16">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=21">
     <link rel="stylesheet" href="../css/dark-mode.css?v=12">
 
     <style>

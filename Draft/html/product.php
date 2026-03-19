@@ -30,7 +30,7 @@ if (isset($_SESSION['user_ID'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($product['name']); ?> | LOFT & LIVING</title>
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=16">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=21">
     <link rel="stylesheet" href="../css/sofa_style.css?v=5">
     <link rel="stylesheet" href="../css/favourites-toggle.css">
      <link rel="stylesheet" href="../css/reviews.css">

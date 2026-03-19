@@ -293,8 +293,8 @@ if (!$user) {
     <link rel="stylesheet" href="https://use.typekit.net/lll5xwi.css">
     <link rel="stylesheet" href="https://use.typekit.net/ehd2wqk.css">
     <link rel="stylesheet" href="../css/dark-mode.css?v=12">
-    <link rel="stylesheet" href="../css/header_footer_style.css?v=16">
-    <link rel="stylesheet" href="../css/reusable_header.css?v=6">
+    <link rel="stylesheet" href="../css/header_footer_style.css?v=21">
+    <link rel="stylesheet" href="../css/reusable_header.css?v=11">
     <link rel="stylesheet" href="../css/billings.css?v=1">
     <script src="../javascript/dark-mode.js"></script>
     
