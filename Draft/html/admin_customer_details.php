@@ -151,7 +151,7 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
     <script src="../javascript/dark-mode.js"></script>
 </head>
 
-<body class="page-background">
+<body>
 <?php $headerPartialOnly = true; include 'header.php'; ?>
 
 <main class="form-container">
