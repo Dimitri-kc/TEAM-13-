@@ -29,7 +29,6 @@ $userPhone = $user['phone'] ?? '';
 
 $addressParts = array_map('trim', explode(',', $user['address'] ?? '',3));
 $userAddress1 = $addressParts[0] ?? ''; 
-$userAddress2 = '';
 $userCity = $addressParts[1] ?? '';
 $userPostcode = $addressParts[2] ?? '';
 }

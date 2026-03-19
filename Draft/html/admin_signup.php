@@ -55,32 +55,32 @@ include '../backend/config/db_connect.php';
                 <form id="adminSignupForm">
                     <div class="form-grid">
                         <div class="input-group">
-                            <span class="input-label">Name</span>
+                            <span class="input-label">Name*</span>
                             <input type="text" id="name" name="name" required>
                         </div>
 
                         <div class="input-group">
-                            <span class="input-label">Surname</span>
+                            <span class="input-label">Surname*</span>
                             <input type="text" id="surname" name="surname" required>
                         </div>
 
                         <div class="input-group">
-                            <span class="input-label">Email</span>
+                            <span class="input-label">Email*</span>
                             <input type="email" id="email" name="email" required>
                         </div>
 
                         <div class="input-group">
-                            <span class="input-label">Phone Number</span>
+                            <span class="input-label">Phone Number*</span>
                             <input type="tel" id="phone" name="phone" required>
                         </div>
 
                         <div class="input-group input-group--full">
-                            <span class="input-label">Address</span>
+                            <span class="input-label">Address*</span>
                             <div class="postcode-row">
                                 <input
                                 type="text"
                                 id="postcodeInput"
-                                placeholder="Enter postcode e.g. NN4 8GR"
+                                placeholder="Enter postcode e.g. B73 5JY"
                                 maxlength="8"
                                 autocomplete="postal-code"
                                 >
@@ -101,7 +101,7 @@ include '../backend/config/db_connect.php';
                               <input
                                 type="text"
                                 id="manualAddress"
-                                placeholder="e.g. 26 Lion Ct, Northampton, NN4 8GR"
+                                placeholder="e.g. 46 Station Road, Birmingham, B73 5JY"
                                 autocomplete="street-address"
                               >
                             </div>
@@ -112,12 +112,12 @@ include '../backend/config/db_connect.php';
                         </div>
 
                         <div class="input-group">
-                            <span class="input-label">Password</span>
+                            <span class="input-label">Password*</span>
                             <input type="password" id="password" name="password" required>
                         </div>
 
                         <div class="input-group">
-                            <span class="input-label">Confirm Password</span>
+                            <span class="input-label">Confirm Password*</span>
                             <input type="password" id="confirmPassword" name="confirmPassword" required>
                         </div>
                     </div>
@@ -154,7 +154,7 @@ include '../backend/config/db_connect.php';
     //UK postcode format check 
     const postcode = rawPostcode.replace(/\s+/g, ' ').toUpperCase();
     if (!/^[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}$/.test(postcode)) {
-      showPopup('Please enter a valid UK postcode (e.g. NN4 8GR).');
+      showPopup('Please enter a valid UK postcode (e.g. B73 5JY).');
       return;
     }
     const btn = document.getElementById('findAddressBtn');
@@ -296,6 +296,11 @@ include '../backend/config/db_connect.php';
 
             if (usingManual) {//if manual entry, take that value as the address instead of (empty) hidden field
                 const manualVal = document.getElementById('manualAddress').value.trim();
+                const parts = manualVal.split(',').map(s => s.trim()).filter(Boolean);
+                if (parts.length < 3) {
+                    showPopup('Please enter your address in the format: Street, City, Postcode (e.g. 46 Station Road, Birmingham, B73 5JY)');
+                    return;
+                }
                 document.getElementById('address').value = manualVal;
             }
             const address = document.getElementById('address').value.trim();
@@ -322,6 +327,7 @@ include '../backend/config/db_connect.php';
                 surname,
                 email,
                 phone,
+                address,
                 password
             };
 
