@@ -1,13 +1,15 @@
 
 <?php //paymentController.php - process requests from checkout.html
 
+//STILL HAS OLD CODE FROM BEFORE JSON REFACTOR, NEEDS TO BE UPDATED TO MATCH NEW STRUCTURE
+
 session_start();
 //include database and user models so controller can connect to database and use user methods
-require_once '../../config/db_connect.php';//state file path
-include_once '../../models/paymentModel.php'; //call payment database functions
-include_once '../../models/orderItemsModel.php'; //call order 
-include_once '../../services/paymentFunctions.php'; //for payment functions
-include_once '../../services/basketFunctions.php'; //for checkout helpers and basket merger
+require_once __DIR__ . '/../config/db_connect.php';//state file path
+include_once __DIR__ . '/../models/paymentModel.php'; //call payment database functions
+include_once __DIR__ . '/../models/orderItemsModel.php'; //call order 
+include_once __DIR__ . '/../services/paymentFunctions.php'; //for payment functions
+include_once __DIR__ . '/../services/basketFunctions.php'; //for checkout helpers and basket merger
 
 class PaymentController {
     
@@ -33,7 +35,7 @@ class PaymentController {
         }
 
         //fetch payment via order id
-        $orderItemModel = new OrderItemModel();
+        $orderItemModel = new OrderItemsModel();
         if (isset($user_ID)) { //if user logged in
             $orderItems = $orderItemModel->getItemsByOrder($order_ID) ?? [];
         } else {
@@ -50,7 +52,7 @@ class PaymentController {
             if(!isset($user_ID)) {
                 clearSessionBasket();//call clear guest basket
             }
-            header ('Location: /order_confirmation.html');//if payment successful direct to confirmation
+            header ('Location: /orderconfirmation.php');//if payment successful direct to confirmation
             exit;
         } else {
             echo 'Payment failed. Please try again.';
@@ -74,5 +76,5 @@ class PaymentController {
 //Notes:
 //For both registered users and guests
 //basket totalS retrieved from basketFunctions.php
-//redirects to order_confirmation.html upon payment success
+//redirects to orderconfirmation.php upon payment success
 ?>

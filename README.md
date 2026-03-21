@@ -25,11 +25,11 @@ The primary purpose is to serve as a robust, scalable API for an e-commerce plat
 The frontend is built using:
 -	**HTML5** for page structure
 -	**CSS3** for layout and visual design
--	**Javascript** for dynamic UI interaction (client-side interactions and form handling)
+-	**JavaScript** for dynamic UI interaction (client-side interactions and form handling)
 -	**Figma** - UI/UX wireframing and prototyping
 
 ## Design Workflow
-Before devlopement began, we used **Figma** to create wireframes and early UI prototypes for the Loft & Living website. These wireframes defined the layout, nabigation flow and key user interactions, ensuring a consistent design across all pages.
+Before development began, we used **Figma** to create wireframes and early UI prototypes for the Loft & Living website. These wireframes defined the layout, navigation flow and key user interactions, ensuring a consistent design across all pages.
 
 Using Figma allowed us to:
 -	Plan the user journey and page structure in advance
@@ -50,7 +50,7 @@ The project is divided into frontend and backend components to maintain a clear 
 
 All frontend files are stored within the Draft folder as follows:
 -	css/: Stylesheets and layout design.
--	html/:  HTML pages.
+-	html/:  all frontend pages written in php and HTML.
 -	images/: Images, icons, and visual assets.
 -	javascript/: Client-side scripts for interactions and requests.
 
@@ -68,12 +68,12 @@ The Loft & Living frontend communicates with the backend via dedicated PHP route
 
 Interaction flows include:
 -	User Authentication: Login and signup forms send POST requests to /routes/userRoutes.php to validate input and manage user sessions.
--	Product Display: Product pages and Admin-accessible pages request data from /routes/productRoutes.php to dynaically retrieve details, categories and images.
+-	Product Display: Product pages and Admin-accessible pages request data from /routes/productRoute.php to dynamically retrieve details, categories and images.
 -	Basket Management: The basket page requests /routes/basketRoutes.php to add, remove or update items in the basket, reflecting database changes.
--	Orders & Payments: Order and payment submission are handled via their respected endpoints to ensure efficient transactional processing.
--	Returns & Reviews: Returns and reviews are also managed through returnsRoutes.php and reviewsRoutes.php
+-	Orders & Payments: Order and payment submission are handled via their respective endpoints to ensure efficient transactional processing.
+-	Returns & Reviews: Returns and reviews are also managed through returnsRoute.php and reviewsRoutes.php
 
-***Note:*** Full interaction implementation is still under development. Whilst the backend rouutes exist, not all frontend forms and pages are fully connected to the backend at this stage.
+***Note:*** Full interaction between the frontend and backend API endpoints have now been integrated, with correct calls implemented through fetch() and JSON. 
 
 ## Database Setup: Table Dependency Chain
 The database must be initialized in the following order to satisfy foreign key constraints:
@@ -98,30 +98,26 @@ The database must be initialized in the following order to satisfy foreign key c
 
 This service is deployed and managed using Webmin.
 •	Staging Environment: The entire codebase is placed in the dedicated Draft folder on Webmin
-Backend Developers.
 
 ## Contributors
 Team 13 - CS2TP 2025
+As the project progressed, page and feature ownership merged into team-wide maintenance. 
 
 ### Backend
-Dimitri Khair-Cabalan  
-(240124715)	Categories, Products, Returns, and related Models, Controllers, and Routes.<br>
-Amatullah Stevenson  
-(160158221)	Users, Basket, Payments, and related Models, Controllers, Routes, and Services.<br>
-Omar Fareh  
-(230087675)	Orders, Order Items, Reviews, and related Models, Controllers, and Routes.
+@Dimitri-kc: 
+Categories, Products, Returns, and related Models, Controllers, and Routes.<br>
+@Ama746: 
+Users, Basket, Payments, and related Models, Controllers, Routes, and Services.<br>
+@0marFareh: 
+Orders, Order Items, Reviews, and related Models, Controllers, and Routes.
 
 ### Frontend
-Bibi Alaradi  
-(240006097) Homepage, Basket, Order Confirmation pages and related CSS stylesheets.<br>
-Manaal Aouttah  
-(240124977) About, Contact, Categories, Checkout pages and related CSS stylesheets.<br>
-Navdeep Malhi  
-(230042537) Navigation (Header & Footer), Products page and related CSS stylesheets.<br>
-Ayoub Abdisalam  
-(240240392) Sign-in & Sign-up pages and related CSS stylesheets.
-
-
-
-
+@bibiala: 
+Homepage, Basket, Order Confirmation pages and related CSS stylesheets.<br>
+@m240124: 
+About, Contact, Categories, Checkout pages and related CSS stylesheets.<br>
+@navdeep-malhi: 
+Navigation (Header & Footer), Products page and related CSS stylesheets.<br>
+@Ayoub-01abdi: 
+Sign-in & Sign-up pages and related CSS stylesheets.
 

@@ -4,11 +4,41 @@
     box-sizing: border-box;
 }
 
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
 body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
     color: #000;
-    min-width: 1024px; 
-    overflow-x: auto;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+.admin-session-bar {
+    position: fixed;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1400;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 18px;
+    padding: 0 12px;
+    border: 1px solid rgba(111, 103, 92, 0.16);
+    border-radius: 999px;
+    background: rgba(255, 252, 248, 0.82);
+    backdrop-filter: blur(12px) saturate(135%);
+    -webkit-backdrop-filter: blur(12px) saturate(135%);
+    color: #6c5f52;
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: 0 8px 20px rgba(17, 17, 17, 0.08);
 }
 
 a {
@@ -29,10 +59,14 @@ ul {
 
 .site-header {
     background: #fff;
-    border-bottom: none;  
+    border-bottom: none;
     position: relative;
     height: 150px;
     z-index: 1000;
+}
+
+body.admin-session-active .site-header {
+    margin-top: 10px;
 }
 
 .header-inner {
@@ -42,7 +76,7 @@ ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 40px;
+    padding: 0 clamp(16px, 3vw, 40px);
 }
 
 /* 1. Menu Button */
@@ -50,7 +84,7 @@ ul {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 5px;
+    padding: 0;
 }
 
 /* 2. Logo */
@@ -62,7 +96,7 @@ ul {
 }
 
 .main-logo {
-    height: 50px; 
+    height: 50px;
     display: block;
 }
 
@@ -75,45 +109,60 @@ ul {
 
 /* Controls size of Heart, User, Basket, Menu Grid */
 .ui-icon {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     object-fit: contain;
     display: block;
 }
 
-/* DROPDOWN MENU */
+/* LEFT DROPDOWN MENU */
 .dropdown-panel {
     position: absolute;
-    top: 90px;
-    left: 0;
-    width: 300px;
+    top: 100px;
+    left: 10px;
+    width: 260px;
     background: #fff;
-    border: 1px solid #e0e0e0;
-    border-top: none;
-    padding: 30px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 18px;
     display: none;
     z-index: 999;
+    font-family: "mr-eaves-modern", Arial, sans-serif;
 }
 
 .dropdown-panel.open {
-    display: block; 
+    display: block;
+}
+
+.nav-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .nav-links li {
-    margin-bottom: 20px;
+    margin: 0;
 }
 
 .nav-links a {
+    display: block;
     font-size: 16px;
-    font-weight: 500;
-    color: #333;
+    color: #2B2B2B;
+    padding: 10px 0;
+    text-decoration: none;
+    font-weight: 400;
+    font-family: "mr-eaves-modern", Arial, sans-serif !important;
+}
+
+.nav-links li + li a {
+    border-top: 1px solid #E5E1DB;
 }
 
 .nav-divider {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
+    margin-top: 14px;
+    padding-top: 0;
+    border-top: 1px solid #E5E1DB;
 }
 
 /* FOOTER */
@@ -127,17 +176,18 @@ ul {
 .footer-inner {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 clamp(20px, 4vw, 40px);
     display: grid;
-    grid-template-columns: 0.5fr 1fr 1fr 1fr; 
+    grid-template-columns: 0.5fr 1fr 1fr 1fr;
     gap: 40px;
 }
 
 .footer-section h4 {
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 500;
     margin-bottom: 25px;
     color: #000;
+    font-family: 'ivybodoni', serif;
 }
 
 .footer-section ul li {
@@ -145,8 +195,9 @@ ul {
 }
 
 .footer-section ul li a {
-    font-size: 14px;
+    font-size: 16px;
     color: #444;
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
 }
 
 /* Social Icon specific size */
@@ -156,7 +207,255 @@ ul {
 }
 
 .social-icon {
-    width: 20px; /* Slightly smaller than header icons */
+    width: 20px;
     height: 20px;
     object-fit: contain;
+    filter: invert(1) brightness(0.8) !important;
+}
+
+/* PROFILE DROPDOWN (right side) */
+
+.profile-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    z-index: 2000; /* keeps it above header */
+}
+
+/* Button reset */
+.profile-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Dropdown under the user icon */
+.profile-dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: min(260px, calc(100vw - 32px));
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    display: none;
+    z-index: 3000; /* above left menu and header */
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
+}
+
+.profile-dropdown.open {
+    display: block;
+}
+
+.profile-welcome {
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 14px;
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
+}
+
+.profile-link {
+    display: block;
+    font-size: 16px;
+    color: #444;
+    padding: 10px 0;
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
+}
+
+.profile-link + .profile-link {
+    border-top: 1px solid #eee;
+}
+
+.profile-link-danger {
+    color: #00fa9a;
+}
+
+/* Welcome toast (top-centred) */
+.ll-welcome-toast {
+    position: fixed;
+    top: 140px; /* distance from top of viewport */
+    left: 50%;
+    transform: translate(-50%, -10px);
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 350ms ease, transform 350ms ease;
+    display: flex;
+    justify-content: center;
+    width: auto;
+    max-width: calc(100vw - 48px);
+    padding: 0 12px;
+}
+
+html.dark-mode .admin-session-bar {
+    background: rgba(24, 24, 24, 0.78);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #e5ddd4;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+}
+
+@media (max-width: 1100px) {
+    .site-header {
+        height: 132px;
+    }
+
+    body.admin-session-active .site-header {
+        margin-top: 9px;
+    }
+
+    .footer-inner {
+        grid-template-columns: 0.8fr 1fr 1fr;
+    }
+}
+
+@media (max-width: 860px) {
+    .site-header {
+        height: 118px;
+    }
+
+    body.admin-session-active .site-header {
+        margin-top: 8px;
+    }
+
+    .header-inner {
+        padding: 0 16px;
+    }
+
+    .footer-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+    }
+
+}
+
+@media (max-width: 640px) {
+    .site-header {
+        height: 108px;
+    }
+
+    body.admin-session-active .site-header {
+        margin-top: 7px;
+    }
+
+    .main-logo {
+        height: 42px;
+    }
+
+    .header-actions {
+        gap: 18px;
+    }
+
+    .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .admin-session-bar {
+        top: 8px;
+        min-height: 18px;
+        padding: 0 12px;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+    }
+}
+
+.ll-welcome-toast.is-visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    pointer-events: auto;
+}
+
+.ll-welcome-toast-inner{
+    background: rgba(20,20,20,0.50); /* lighter and more transparent */
+    color: #fff;
+    padding: 16px 26px;
+    border-radius: 18px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    font-family: 'mr-eaves-modern', Arial, sans-serif;
+}
+
+/* Stronger ID-based override to prevent page-level CSS from breaking positioning */
+#llWelcomeToast {
+    position: fixed !important;
+    top: 140px !important;
+        left: 50% !important;
+        transform: translate(-50%, 0) !important;
+        z-index: 99999 !important;
+        display: flex !important;
+        justify-content: center !important;
+        width: auto !important;
+        max-width: calc(100vw - 48px) !important;
+        padding: 0 12px !important;
+        pointer-events: auto !important;
+}
+
+/* Defensive overrides to prevent accidental filled circle on header icons */
+.header-actions .profile-btn,
+.header-actions .profile-btn * {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+/* Ensure inline SVG icons use stroke only and no fill */
+.header-actions .ui-icon svg,
+.header-actions .ui-icon {
+    fill: none !important;
+    stroke: currentColor !important;
+}
+
+/* Prevent pseudo-elements from creating shapes on header buttons */
+.header-actions .profile-btn::before,
+.header-actions .profile-btn::after,
+.profile-wrapper::before,
+.profile-wrapper::after {
+    content: none !important;
+}
+
+/* Restore dropdown background explicitly so defensive rules don't affect it */
+.profile-dropdown {
+    background: #fff !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+    border-radius: 6px !important;
+}
+
+/* basket icon that updates in the header  */
+.basket-icon {
+    position: relative;
+    display: inline-block;
+}
+/* basket product counter  */
+/* Ensure the basket counter is a small compact badge across the site */
+#basket-count,
+.basket-icon #basket-count,
+header .basket-icon #basket-count {
+    position: absolute !important;
+    top: -5px !important;
+    right: -5px !important;
+    background: #a2a2a2 !important;
+    color: white !important;
+    min-width: 16px !important;
+    height: 16px !important;
+    padding: 0 5px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 10px !important;
+    line-height: 1 !important;
+    font-weight: 700 !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    border-radius: 999px !important;
+    box-shadow: none !important;
+    border: none !important;
 }

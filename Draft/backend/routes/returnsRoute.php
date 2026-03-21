@@ -5,8 +5,8 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-include_once '../../controllers/ReturnsController.php';
-include_once '../../controllers/ReturnItemController.php';
+include_once '../../controllers/returnsController.php';
+include_once '../../controllers/returnItemController.php';
 
 $ReturnController = new ReturnController();
 $ReturnItemController = new ReturnItemController();

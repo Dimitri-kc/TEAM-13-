@@ -1,0 +1,313 @@
+/* REVIEWS SECTION */
+
+.reviews-header {
+    position: relative;
+    width: 100%;
+    margin-bottom: 25px;
+    display: block;
+    text-align: center;
+}
+
+.reviews-header h2 {
+    font-family: 'ivybodoni', serif !important;
+    font-size: 2rem;
+    font-weight: 450 !important;
+    letter-spacing: 0.04em !important;
+    color: #2B2B2B;
+    margin: 0;
+}
+
+.add-review-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #8C8376;
+    color: #fff;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 32px;
+    font-size: 1.15rem;
+    font-family: 'mr-eaves-modern', 'Mr Eaves Modern', Arial, sans-serif !important;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    box-shadow: 0 2px 12px rgba(43,43,43,0.08);
+    cursor: pointer;
+    transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+    white-space: nowrap;
+    width: auto;
+    display: inline-block;
+    outline: none;
+    border: 1.5px solid #8C8376;
+}
+
+.add-review-btn:hover {
+    background: #6F675C;
+    color: #fff;
+    transform: translateY(-2px) scale(1.07);
+    box-shadow: 0 4px 18px rgba(43,43,43,0.13);
+}
+.reviews-slider-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow: visible;
+    padding: 0 55px;
+}
+
+.reviews-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    padding: 10px 0;
+    scrollbar-width: none;
+}
+
+.reviews-container::-webkit-scrollbar {
+    display: none;
+}
+
+.review-card {
+    min-width: 260px;
+    max-width: 260px;
+    background: #FFFFFF;
+    border: 1px solid #E5E1DB;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-4px);
+}
+
+.stars {
+    font-size: 28px;
+    color: #2B2B2B;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #B8AFA4, #2B2B2B);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.review-card h3 {
+    margin: 8px 0;
+    font-size: 16px;
+    color: #2B2B2B;
+}
+
+.review-card p {
+    font-size: 16px;
+    color: #2B2B2B;
+    margin-bottom: 15px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    min-height: 70px;
+}
+
+.reviewer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.reviewer img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.name {
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.date {
+    font-size: 16px;
+    color: #B8AFA4;
+}
+
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #FFFFFF;
+    color: #2B2B2B;
+    border: 1px solid #E5E1DB;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+.nav-btn:hover {
+    transform: translateY(-50%) scale(1.08);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
+
+.reviews-section {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: calc(100% - 48px) !important;
+    max-width: none !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #E5E1DB;
+    padding: 30px;
+    border-radius: 25px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .review-card {
+        min-width: 220px;
+        max-width: 220px;
+    }
+}
+
+.review-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background: #FAFAF8;
+    width: 88%;
+    max-width: 320px;
+    margin: 6% auto;
+    padding: 20px 22px 16px;
+    border-radius: 16px;
+    border: 1px solid #E5E1DB;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    position: relative;
+}
+
+.modal-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2B2B2B;
+    margin: 0 0 10px 0;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #B8AFA4;
+    transition: color 0.2s;
+    line-height: 1;
+}
+
+.close-modal:hover {
+    color: #2B2B2B;
+}
+
+#reviewForm label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2B2B2B;
+    margin-bottom: 2px;
+    display: block;
+}
+
+#reviewForm input,
+#reviewForm textarea {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 7px 9px;
+    border-radius: 8px;
+    border: 1px solid #E5E1DB;
+    font-size: 16px;
+    background: #FFFFFF;
+    color: #2B2B2B;
+    box-sizing: border-box;
+}
+
+#reviewForm textarea {
+    height: 55px;
+    resize: none;
+}
+
+.submit-review-btn {
+    width: 100%;
+    padding: 8px;
+    background: #B8AFA4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 2px;
+    transition: background 0.2s;
+}
+
+.submit-review-btn:hover {
+    background: #C8B79C;
+}
+
+.star-rating {
+    display: flex;
+    gap: 3px;
+    font-size: 27px;
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+
+.star-rating span {
+    color: #ccc;
+    transition: color 0.2s, transform 0.15s;
+}
+
+.star-rating span.active {
+    color: #B8AFA4;
+    transform: scale(1.1);
+}
+
+@media (max-width: 900px){
+    .homepage-hero{ height: 420px; }
+}
+
+@media (max-width: 600px){
+    .homepage-hero{ height: 340px; }
+}
