@@ -391,7 +391,7 @@ body,
             & Living is here to help you create your dream space.
             Established in 2025, our commitment since day one has been
             to focus on exceptional design and quality while maintaining
-            an affordability.
+            affordability.
         </p>
         <div class="about-logo-container">
             <img src="../images/homepage-images/aboutus.png" alt="Loft & Living Logo" class="about-logo">
