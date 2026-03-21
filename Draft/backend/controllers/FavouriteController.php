@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../models/FavouriteModel.php';
+require_once __DIR__ . '/../models/favouriteModel.php';
 
 class FavouriteController {
 

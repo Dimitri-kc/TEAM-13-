@@ -1,6 +1,6 @@
 <?php
 
-include_once __DIR__ . '/../models/ProductModel.php';
+include_once __DIR__ . '/../models/productModel.php';
 
 class ProductController {
 private $model;
