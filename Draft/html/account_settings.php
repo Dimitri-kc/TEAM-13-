@@ -197,7 +197,7 @@ if (!$user) {
 
 $addressParts = array_map('trim', explode(',', $user['address'] ?? '', 4));
 $addr1    = $addressParts[0] ?? '';
-$addr2    = $addressParts[1] ?? '';
+$addr2    = ''; //match form structure of signup/checkout etc
 $addrCity = $addressParts[2] ?? '';
 $addrPost = $addressParts[3] ?? '';
 ?>
@@ -448,7 +448,6 @@ $addrPost = $addressParts[3] ?? '';
         const email   = document.getElementById('email').value.trim();
         const address = [
             document.getElementById('address1').value.trim(),
-            document.getElementById('address2').value.trim(),
             document.getElementById('city').value.trim(),
             document.getElementById('postcode').value.trim()
         ].filter(Boolean).join(', ');
