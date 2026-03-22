@@ -95,9 +95,9 @@ function resolveProductImage(?string $imagePath): string {
 $addressParts = array_map('trim', explode(",", $order['address']));
 
 $line1 = $addressParts[0] ?? '';
-$line2 = $addressParts[1] ?? '';
-$city = $addressParts[2] ?? '';
-$postcode = $addressParts[4] ?? '';
+$line2 = '';
+$city = $addressParts[1] ?? '';
+$postcode = $addressParts[2] ?? '';
 $activeItems = array_values(array_filter(
     $items,
     static fn($item) => strtolower((string)($item['item_status'] ?? 'active')) !== 'cancelled'
