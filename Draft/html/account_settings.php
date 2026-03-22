@@ -198,8 +198,8 @@ if (!$user) {
 $addressParts = array_map('trim', explode(',', $user['address'] ?? '', 4));
 $addr1    = $addressParts[0] ?? '';
 $addr2    = ''; //match form structure of signup/checkout etc
-$addrCity = $addressParts[2] ?? '';
-$addrPost = $addressParts[3] ?? '';
+$addrCity = $addressParts[1] ?? '';
+$addrPost = $addressParts[2] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,5 +1,5 @@
 <?php
-include 'db_connect.php';
+include '../backend/config/db_connect.php';
 session_start();
 
 if (!isset($_SESSION['user_ID']) || !is_numeric($_SESSION['user_ID'])) {
