@@ -1,5 +1,5 @@
 <?php
-include 'db_connect.php';
+include '../backend/config/db_connect.php';
 
 $order_id = $_GET['order_id'] ?? null;
 
