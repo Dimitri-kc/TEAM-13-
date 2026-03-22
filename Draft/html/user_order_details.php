@@ -121,6 +121,8 @@ $orderTotal = array_sum(array_map(static fn($item) => (float)($item['line_total'
 
 <h2>Order #UK<?= str_pad($order['order_ID'], 5, "0", STR_PAD_LEFT) ?></h2>
 
+<a href="orderconfirmation.php?order_id=<?= $order['order_ID'] ?>" class="track-order-btn">Track My Order</a>
+
 <div class="order-meta-grid">
     <div class="order-meta-card">
         <span class="order-meta-label">Customer</span>
