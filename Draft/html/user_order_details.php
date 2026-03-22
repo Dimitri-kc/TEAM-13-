@@ -85,7 +85,10 @@ $line2 = $addressParts[1] ?? '';
 $city = $addressParts[2] ?? '';
 $postcode = $addressParts[4] ?? '';
 $itemCount = array_sum(array_map(static fn($item) => (int)($item['quantity'] ?? 0), $items));
-$orderTotal = array_sum(array_map(static fn($item) => (float)($item['line_total'] ?? 0), $items));
+$subtotal = array_sum(array_map(static fn($item) => (float)($item['line_total'] ?? 0), $items));
+$storedTotal = (float)($order['total_price'] ?? 0);
+$taxAmount = max(0, $storedTotal - $subtotal);
+$orderTotal = $storedTotal > 0 ? $storedTotal : ($subtotal + $taxAmount);
 ?>
 
 <!DOCTYPE html>
@@ -157,9 +160,19 @@ $orderTotal = array_sum(array_map(static fn($item) => (float)($item['line_total'
             <div class="order-item-price"><?= money($item['line_total']) ?></div>
         </div>
     <?php endforeach; ?>
+    <div class="order-summary-breakdown">
+        <div class="order-summary-row">
+            <span>Subtotal</span>
+            <span><?= money($subtotal) ?></span>
+        </div>
+        <div class="order-summary-row">
+            <span>Tax</span>
+            <span><?= money($taxAmount) ?></span>
+        </div>
+    </div>
     <div class="order-summary-total">
         <span>Order Total</span>
-        <strong><?= money($orderTotal ?: ($order['total_price'] ?? 0)) ?></strong>
+        <strong><?= money($orderTotal) ?></strong>
     </div>
 </div>
 <?php endif; ?>
