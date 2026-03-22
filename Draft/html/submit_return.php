@@ -22,6 +22,27 @@ if (!$order_id || !$order_item_id || !$reason) {
     exit;
 }
 
+$ownershipStmt = $conn->prepare("
+    SELECT oi.order_item_ID
+    FROM orders o
+    JOIN order_items oi ON oi.order_ID = o.order_ID
+    WHERE o.order_ID = ? AND o.user_ID = ? AND oi.order_item_ID = ?
+    LIMIT 1
+");
+if ($ownershipStmt === false) {
+    echo json_encode(["status" => "error", "message" => "Unable to validate order item"]);
+    exit;
+}
+$ownershipStmt->bind_param("iii", $order_id, $user_id, $order_item_id);
+$ownershipStmt->execute();
+$ownershipResult = $ownershipStmt->get_result()->fetch_assoc();
+$ownershipStmt->close();
+
+if (!$ownershipResult) {
+    echo json_encode(["status" => "error", "message" => "Invalid order item"]);
+    exit;
+}
+
 // Insert into returns table
 $stmt = $conn->prepare("
     INSERT INTO returns (order_ID, user_id, reason, status, created_at)

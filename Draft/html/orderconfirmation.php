@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
 session_start();
+require_once '../backend/services/orderItemStatus.php';
 
 function e($s): string {
     return htmlspecialchars((string)($s ?? ''), ENT_QUOTES, 'UTF-8');
@@ -30,6 +31,7 @@ $sessionOrder = $_SESSION['order'] ?? null;
 
 try {
     include '../backend/config/db_connect.php';
+    ensureOrderItemStatusColumn($conn);
 
     if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
         throw new Exception("Database connection failed");
@@ -59,12 +61,13 @@ try {
             $total       = (float)($order['total_price'] ?? 0.0);
 
             $rawStatus = strtolower(trim((string)($order['status'] ?? $order['order_status'] ?? 'pending')));
+            $rawStatus = str_replace(' ', '_', $rawStatus);
 
             if ($rawStatus === 'preparing your order') {
                 $rawStatus = 'processing';
             }
 
-            $allowedStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+            $allowedStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled', 'partially_cancelled', 'paid'];
             $statusKey = in_array($rawStatus, $allowedStatuses, true) ? $rawStatus : 'pending';
 
             $statusLabels = [
@@ -73,12 +76,14 @@ try {
                 'shipped'    => 'Shipped',
                 'delivered'  => 'Delivered',
                 'cancelled'  => 'Cancelled',
+                'partially_cancelled' => 'Partially Cancelled',
+                'paid' => 'Paid',
             ];
 
             $orderStatus = $statusLabels[$statusKey];
 
             $items_stmt = $conn->prepare("
-                SELECT oi.quantity, oi.unit_price,
+                SELECT oi.quantity, oi.unit_price, oi.item_status,
                        (oi.quantity * oi.unit_price) AS line_total,
                        p.name, p.image
                 FROM order_items oi
@@ -91,6 +96,10 @@ try {
             $result = $items_stmt->get_result();
 
             while ($row = $result->fetch_assoc()) {
+                if (strtolower((string)($row['item_status'] ?? 'active')) === 'cancelled') {
+                    continue;
+                }
+
                 $line = (float)$row['line_total'];
                 $unit_price = (float)$row['unit_price'];
                 $subtotal += $line;
@@ -154,7 +163,7 @@ if (
 <?php
 $pageTitle = 'Order Confirmation | LOFT &amp; LIVING';
 $extraHeadContent = <<<'HTML'
-<link rel="stylesheet" href="../css/orderconfirmation.css?v=1">
+<link rel="stylesheet" href="../css/orderconfirmation.css?v=2">
 HTML;
 
 include 'header.php';
@@ -174,22 +183,37 @@ include 'header.php';
     <p class="order-confirmation-subtitle">Your order has been placed successfully and we will keep you updated as it moves through each stage.</p>
 
     <div class="order-track">
-        <div class="trackStep <?= in_array($statusKey, ['pending', 'processing', 'shipped', 'delivered'], true) ? 'active' : '' ?>">
-            <div class="trackIcon">✓</div>
-            <div class="trackLabel">Order<br>Confirmed</div>
+        <div class="trackStep <?= in_array($statusKey, ['pending', 'processing', 'shipped', 'delivered', 'paid'], true) ? 'active' : '' ?>">
+            <div class="trackMarker">
+                <div class="trackDot"></div>
+            </div>
+            <div class="trackLabel">Order Confirmed</div>
+        </div>
+
+        <div class="trackLine"></div>
+
+        <div class="trackStep <?= in_array($statusKey, ['processing', 'shipped', 'delivered'], true) ? 'active' : '' ?>">
+            <div class="trackMarker">
+                <div class="trackDot"></div>
+            </div>
+            <div class="trackLabel">Processing</div>
         </div>
 
         <div class="trackLine"></div>
 
         <div class="trackStep <?= in_array($statusKey, ['shipped', 'delivered'], true) ? 'active' : '' ?>">
-            <div class="trackIcon">🚚</div>
+            <div class="trackMarker">
+                <div class="trackDot"></div>
+            </div>
             <div class="trackLabel">Shipped</div>
         </div>
 
         <div class="trackLine"></div>
 
         <div class="trackStep <?= $statusKey === 'delivered' ? 'active' : '' ?>">
-            <div class="trackIcon">📦</div>
+            <div class="trackMarker">
+                <div class="trackDot"></div>
+            </div>
             <div class="trackLabel">Delivered</div>
         </div>
     </div>

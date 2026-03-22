@@ -62,7 +62,7 @@ body.order-history-page {
     display: flex;
     align-items: center;
     gap: 24px;
-    padding: 24px;
+    padding: 28px;
     border-radius: 26px;
     border: 1px solid rgba(111, 103, 92, 0.14);
     background: rgba(255, 255, 255, 0.94);
@@ -93,16 +93,73 @@ body.order-history-page {
 .order-history-page .order-content {
     flex: 1;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.order-history-page .order-heading-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
 }
 
 .order-history-page .order-date-label {
     display: block;
-    margin-bottom: 16px;
     font-family: 'ivybodoni', serif;
-    font-size: 28px;
+    font-size: clamp(24px, 2.4vw, 32px);
     font-weight: 500;
     line-height: 1.15;
     color: #1f1a17;
+}
+
+.order-history-page .order-status-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #f3ece4;
+    color: #6b6157;
+    font-family: 'mr-eaves-modern', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.order-history-page .order-status-pill--paid,
+.order-history-page .order-status-pill--processing,
+.order-history-page .order-status-pill--pending {
+    background: #f3ece4;
+    color: #6b6157;
+}
+
+.order-history-page .order-status-pill--shipped {
+    background: #e6f0f6;
+    color: #3d6277;
+}
+
+.order-history-page .order-status-pill--delivered {
+    background: #e3f2e8;
+    color: #3c6b4d;
+}
+
+.order-history-page .order-status-pill--cancelled,
+.order-history-page .order-status-pill--partially-cancelled {
+    background: #f8e2dd;
+    color: #92453d;
+}
+
+.order-history-page .order-meta-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    font-family: 'mr-eaves-modern', sans-serif;
+    font-size: 17px;
+    color: #6b6157;
 }
 
 .order-history-page .order-actions {
@@ -115,7 +172,8 @@ body.order-history-page {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 18px;
+    align-self: flex-start;
+    padding: 12px 20px;
     border-radius: 999px;
     border: 1.5px solid #8c8376;
     background: #8c8376;
@@ -135,38 +193,6 @@ body.order-history-page {
     transform: translateY(-1px);
 }
 
-.order-history-page .btn-return-order {
-    background: transparent;
-    color: #6f675c;
-    border-color: rgba(111, 103, 92, 0.26);
-}
-
-.order-history-page .btn-return-order:hover {
-    background: rgba(111, 103, 92, 0.08);
-    color: #4d463d;
-    border-color: rgba(111, 103, 92, 0.4);
-}
-
-.order-history-page .btn-cancel-order {
-    background: transparent;
-    color: #a53f36;
-    border-color: rgba(165, 63, 54, 0.28);
-}
-
-.order-history-page .btn-cancel-order:hover {
-    background: rgba(165, 63, 54, 0.08);
-    color: #7f2f29;
-    border-color: rgba(165, 63, 54, 0.42);
-}
-
-.order-history-page .btn-cancelled {
-    background: #a53f36;
-    border-color: #a53f36;
-    color: #fff;
-    opacity: 0.72;
-    cursor: not-allowed;
-}
-
 .order-history-page .orders-empty {
     grid-column: 1 / -1;
     padding: 30px 24px;
@@ -176,114 +202,6 @@ body.order-history-page {
     color: #5f564d;
     font-family: 'mr-eaves-modern', sans-serif;
     font-size: 18px;
-}
-
-.order-history-page .return-modal,
-.order-history-page .success-modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: rgba(0, 0, 0, 0.45);
-}
-
-.order-history-page .success-modal {
-    z-index: 10000;
-}
-
-.order-history-page .return-modal-content,
-.order-history-page .success-modal-content {
-    background: #fff;
-    width: min(92%, 420px);
-    margin: 8vh auto;
-    padding: 26px 24px;
-    border-radius: 24px;
-    border: 1px solid rgba(111, 103, 92, 0.14);
-    box-shadow: 0 16px 38px rgba(44, 31, 22, 0.12);
-}
-
-.order-history-page .success-modal-content {
-    width: min(92%, 360px);
-    text-align: center;
-}
-
-.order-history-page .close-return {
-    float: right;
-    font-size: 24px;
-    line-height: 1;
-    cursor: pointer;
-    opacity: 0.6;
-    transition: opacity 0.2s;
-}
-
-.order-history-page .close-return:hover {
-    opacity: 1;
-}
-
-.order-history-page .return-modal-content h2 {
-    margin: 0 0 18px;
-    font-family: 'ivybodoni', serif !important;
-    font-size: 30px !important;
-    font-weight: 500;
-    color: #1f1a17;
-}
-
-.order-history-page #returnForm label {
-    display: block;
-    margin-bottom: 8px;
-    font-family: 'mr-eaves-modern', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    color: #5f564d;
-}
-
-.order-history-page #returnForm select,
-.order-history-page #returnForm textarea,
-.order-history-page #returnForm input {
-    width: 100%;
-    margin-bottom: 14px;
-    padding: 13px 14px;
-    border-radius: 14px;
-    border: 1px solid rgba(111, 103, 92, 0.2);
-    background: #fbf9f6;
-    color: #1f1a17;
-    font-family: 'mr-eaves-modern', sans-serif;
-    font-size: 16px;
-    box-sizing: border-box;
-}
-
-.order-history-page #returnForm textarea {
-    min-height: 96px;
-    resize: vertical;
-}
-
-.order-history-page .submit-return-btn,
-.order-history-page .success-modal-content button {
-    width: 100%;
-    padding: 13px 18px;
-    border: 1.5px solid #8c8376;
-    border-radius: 999px;
-    background: #8c8376;
-    color: #fff;
-    font-family: 'mr-eaves-modern', sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
-}
-
-.order-history-page .submit-return-btn:hover,
-.order-history-page .success-modal-content button:hover {
-    background: #6f675c;
-    border-color: #6f675c;
-    transform: translateY(-1px);
-}
-
-.order-history-page .success-modal-content p {
-    margin: 0;
-    font-family: 'mr-eaves-modern', sans-serif;
-    font-size: 18px;
-    color: #1f1a17;
 }
 
 @media (max-width: 900px) {
@@ -298,6 +216,11 @@ body.order-history-page {
     }
 
     .order-history-page .order-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .order-history-page .order-heading-row {
         flex-direction: column;
         align-items: flex-start;
     }
