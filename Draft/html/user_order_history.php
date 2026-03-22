@@ -113,9 +113,40 @@ if (!empty($orders)) {
   </div>
 </div>
 
+<div id="cancelModal" class="return-modal">
+  <div class="return-modal-content">
+    <span class="close-cancel">&times;</span>
+
+    <h2 style="font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 10px;">
+      Cancel Order
+    </h2>
+
+    <form id="cancelForm">
+      <input type="hidden" id="cancelOrderId">
+
+      <label for="cancelReason">Reason for Cancellation</label>
+      <select id="cancelReason" required>
+        <option value="">Select a reason</option>
+        <option value="changed_mind">Changed my mind</option>
+        <option value="ordered_by_mistake">Ordered by mistake</option>
+        <option value="delivery_time">Delivery time is too long</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="cancelDetails">Additional Details</label>
+      <textarea id="cancelDetails"></textarea>
+
+      <label for="cancelName">Your Name (optional)</label>
+      <input type="text" id="cancelName">
+
+      <button type="submit" class="submit-return-btn">Submit Cancellation</button>
+    </form>
+  </div>
+</div>
+
 <div id="successModal" class="success-modal">
   <div class="success-modal-content">
-    <p>Your return request has been submitted.</p>
+    <p id="successMessage">Your return request has been submitted.</p>
     <button onclick="document.getElementById('successModal').style.display='none'">OK</button>
   </div>
 </div>
@@ -140,6 +171,8 @@ if (!empty($orders)) {
                 $imagePath = !empty($order['product_image'])
                     ? htmlspecialchars($order['product_image'])
                     : '../images/basket-images/placeholder.png';
+                $isCancelled = strtolower((string)($order['order_status'] ?? '')) === 'cancelled';
+                $isReturned = in_array($order['order_ID'], $returnedOrderIDs);
             ?>
             <div class="order-card">
                 <div class="order-image-box">
@@ -150,10 +183,13 @@ if (!empty($orders)) {
                     <span class="order-date-label"><?= $date ?></span>
 
                     <div class="order-actions">
-<?php if (in_array($order['order_ID'], $returnedOrderIDs)): ?>
+<?php if ($isCancelled): ?>
+    <button class="btn-action btn-cancelled" disabled>Cancelled</button>
+<?php elseif ($isReturned): ?>
     <button class="btn-action btn-returned" disabled>Returned</button>
 <?php else: ?>
     <button class="btn-action btn-return-order" data-return data-order-id="<?= $order['order_ID'] ?>">Return Item</button>
+    <button class="btn-action btn-cancel-order" data-cancel data-order-id="<?= $order['order_ID'] ?>">Cancel Order</button>
 <?php endif; ?>
 
 
@@ -172,42 +208,60 @@ if (!empty($orders)) {
 
 <script>
 const returnModal = document.getElementById("returnModal");
+const cancelModal = document.getElementById("cancelModal");
 const closeReturn = document.querySelector(".close-return");
+const closeCancel = document.querySelector(".close-cancel");
 const returnItemSelect = document.getElementById("returnItem");
+const successModal = document.getElementById("successModal");
+const successMessage = document.getElementById("successMessage");
 
 document.addEventListener("click", async (e) => {
     const btn = e.target.closest("[data-return]");
-    if (!btn) return;
+    if (btn) {
+        const orderId = btn.dataset.orderId;
+        document.getElementById("returnOrderId").value = orderId;
 
-    const orderId = btn.dataset.orderId;
-    document.getElementById("returnOrderId").value = orderId;
+        // Load items for this order
+        const response = await fetch("get_order_items.php?order_id=" + orderId);
+        const items = await response.json();
 
-    // Load items for this order
-    const response = await fetch("get_order_items.php?order_id=" + orderId);
-    const items = await response.json();
+        // Populate dropdown
+        returnItemSelect.innerHTML = '<option value="">Select an item</option>';
+        items.forEach(item => {
+            const opt = document.createElement("option");
+            opt.value = item.order_item_ID;
+            opt.textContent = item.name;
+            returnItemSelect.appendChild(opt);
+        });
 
-    // Populate dropdown
-    returnItemSelect.innerHTML = '<option value="">Select an item</option>';
-    items.forEach(item => {
-        const opt = document.createElement("option");
-        opt.value = item.order_item_ID;
-        opt.textContent = item.name;
-        returnItemSelect.appendChild(opt);
-    });
+        returnModal.style.display = "block";
+        return;
+    }
 
-    returnModal.style.display = "block";
+    const cancelBtn = e.target.closest("[data-cancel]");
+    if (!cancelBtn) return;
+
+    document.getElementById("cancelOrderId").value = cancelBtn.dataset.orderId;
+    cancelModal.style.display = "block";
 });
 
 closeReturn.onclick = () => {
     returnModal.style.display = "none";
 };
 
+closeCancel.onclick = () => {
+    cancelModal.style.display = "none";
+};
+
 window.onclick = (event) => {
     if (event.target === returnModal) {
         returnModal.style.display = "none";
     }
-    if (event.target === document.getElementById("successModal")) {
-        document.getElementById("successModal").style.display = "none";
+    if (event.target === cancelModal) {
+        cancelModal.style.display = "none";
+    }
+    if (event.target === successModal) {
+        successModal.style.display = "none";
     }
 };
 
@@ -234,17 +288,72 @@ document.getElementById("returnForm").addEventListener("submit", async function(
         const result = await response.json();
 
         if (result.status === "success") {
-            document.getElementById("successModal").style.display = "block";
+            successMessage.textContent = "Your return request has been submitted.";
+            successModal.style.display = "block";
             returnModal.style.display = "none";
             this.reset();
             const orderId = document.getElementById("returnOrderId").value;
-            const btn = document.querySelector(`[data-order-id="${orderId}"]`);
+            const btn = document.querySelector(`[data-return][data-order-id="${orderId}"]`);
+            const cancelBtn = document.querySelector(`[data-cancel][data-order-id="${orderId}"]`);
             if (btn) {
                 btn.textContent = "Returned";
                 btn.disabled = true;
                 btn.classList.remove("btn-return-order");
                 btn.classList.add("btn-returned");
                 btn.removeAttribute("data-return");
+            }
+            if (cancelBtn) {
+                cancelBtn.remove();
+            }
+        } else {
+            alert("Error: " + result.message);
+        }
+    } catch (error) {
+        alert("An error occurred: " + error.message);
+    }
+});
+
+document.getElementById("cancelForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("order_id", document.getElementById("cancelOrderId").value);
+    formData.append("reason", document.getElementById("cancelReason").value);
+    formData.append("details", document.getElementById("cancelDetails").value);
+    formData.append("name", document.getElementById("cancelName").value);
+
+    try {
+        const response = await fetch("submit_cancel.php", {
+            method: "POST",
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        if (result.status === "success") {
+            successMessage.textContent = "Your cancellation request has been submitted.";
+            successModal.style.display = "block";
+            cancelModal.style.display = "none";
+            this.reset();
+
+            const orderId = document.getElementById("cancelOrderId").value;
+            const cancelBtn = document.querySelector(`[data-cancel][data-order-id="${orderId}"]`);
+            const returnBtn = document.querySelector(`[data-return][data-order-id="${orderId}"]`);
+
+            if (cancelBtn) {
+                cancelBtn.textContent = "Cancelled";
+                cancelBtn.disabled = true;
+                cancelBtn.classList.remove("btn-cancel-order");
+                cancelBtn.classList.add("btn-cancelled");
+                cancelBtn.removeAttribute("data-cancel");
+            }
+
+            if (returnBtn) {
+                returnBtn.remove();
             }
         } else {
             alert("Error: " + result.message);

@@ -225,6 +225,7 @@ $addrPost = $addressParts[2] ?? '';
     <a href="user_dash.php" class="back-dashboard">← Back to Dashboard</a>
     <h1>Account Settings</h1>
     <p>Manage your personal information, security and preferences.</p>
+    <p><a href="user_order_history.php" style="display:inline-flex;align-items:center;justify-content:center;margin-top:12px;padding:10px 18px;border-radius:999px;border:1.5px solid #8c8376;background:#8c8376;color:#fff;text-decoration:none;font-family:'mr-eaves-modern',sans-serif;font-size:16px;font-weight:500;">My Orders</a></p>
 </div>
 
 <div class="settings-layout">
