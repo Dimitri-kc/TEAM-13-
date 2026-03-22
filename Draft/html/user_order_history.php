@@ -36,6 +36,20 @@ $stmt->execute();
 $result = $stmt->get_result();
 $orders = $result->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
+
+$returnedOrderIDs = [];
+if (!empty($orders)) {
+    $ids = array_column($orders, 'order_ID');
+    $placeholders = implode(',', array_fill(0, count($ids), '?'));
+    $rStmt = $conn->prepare("SELECT order_ID FROM returns WHERE order_ID IN ($placeholders)");
+    $rStmt->bind_param(str_repeat('i', count($ids)), ...$ids);
+    $rStmt->execute();
+    $rResult = $rStmt->get_result();
+    while ($row = $rResult->fetch_assoc()) {
+        $returnedOrderIDs[] = $row['order_ID'];
+    }
+    $rStmt->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,6 +65,13 @@ $stmt->close();
     <link rel="stylesheet" href="../css/dark-mode.css?v=12">
     <link rel="stylesheet" href="../css/reusable_header.css?v=11">
     <script src="../javascript/dark-mode.js"></script>
+
+    <style>
+    .btn-returned {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    </style>
 </head>
 
 
@@ -129,9 +150,11 @@ $stmt->close();
                     <span class="order-date-label"><?= $date ?></span>
 
                     <div class="order-actions">
-<button class="btn-action btn-return-order" data-return data-order-id="<?= $order['order_ID'] ?>">
-    Return Item
-</button>
+<?php if (in_array($order['order_ID'], $returnedOrderIDs)): ?>
+    <button class="btn-action btn-returned" disabled>Returned</button>
+<?php else: ?>
+    <button class="btn-action btn-return-order" data-return data-order-id="<?= $order['order_ID'] ?>">Return Item</button>
+<?php endif; ?>
 
 
 
@@ -214,6 +237,15 @@ document.getElementById("returnForm").addEventListener("submit", async function(
             document.getElementById("successModal").style.display = "block";
             returnModal.style.display = "none";
             this.reset();
+            const orderId = document.getElementById("returnOrderId").value;
+            const btn = document.querySelector(`[data-order-id="${orderId}"]`);
+            if (btn) {
+                btn.textContent = "Returned";
+                btn.disabled = true;
+                btn.classList.remove("btn-return-order");
+                btn.classList.add("btn-returned");
+                btn.removeAttribute("data-return");
+            }
         } else {
             alert("Error: " + result.message);
         }
