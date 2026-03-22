@@ -1,6 +1,6 @@
 <?php
 
-include_once 'backend/models/returnsModel.php';
+require_once __DIR__ . '/../models/returnsModel.php';
 
 class ReturnController {
 

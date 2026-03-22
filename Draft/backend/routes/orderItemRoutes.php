@@ -4,7 +4,7 @@ session_start();
 
 header('Content-Type: application/json');
 
-require_once __DIR__ . '/orderItemsController.php';
+require_once __DIR__ . '/../controllers/orderItemsController.php';
 
 $controller = new OrderItemsController();
 $method = $_SERVER['REQUEST_METHOD'];

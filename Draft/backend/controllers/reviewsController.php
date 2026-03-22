@@ -2,7 +2,7 @@
 // reviewsController.php
 header('Content-Type: application/json');
 
-require_once __DIR__ . '/reviewsModel.php';
+require_once __DIR__ . '/../models/reviewsModel.php';
 
 class ReviewsController {
 

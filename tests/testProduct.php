@@ -1,5 +1,9 @@
-<?php
-include_once 'backend/controllers/ProductController.php';
+<?php // DEVELOPMENT TESTING ONLY - DO NOT DEPLOY THIS FILE
+if ($_SERVER['HTTP_HOST'] !== 'localhost') {
+    http_response_code(403);
+    exit('Forbidden');
+}
+require_once __DIR__ . '/../controllers/ProductController.php';
 
 $controller = new ProductController();
 

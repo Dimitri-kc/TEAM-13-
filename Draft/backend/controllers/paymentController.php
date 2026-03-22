@@ -6,10 +6,10 @@
 session_start();
 //include database and user models so controller can connect to database and use user methods
 require_once __DIR__ . '/../config/db_connect.php';//state file path
-include_once __DIR__ . '/../models/paymentModel.php'; //call payment database functions
-include_once __DIR__ . '/../models/orderItemsModel.php'; //call order 
-include_once __DIR__ . '/../services/paymentFunctions.php'; //for payment functions
-include_once __DIR__ . '/../services/basketFunctions.php'; //for checkout helpers and basket merger
+require_once __DIR__ . '/../models/paymentModel.php'; //call payment database functions
+require_once __DIR__ . '/../models/orderItemsModel.php'; //call order 
+require_once __DIR__ . '/../services/paymentFunctions.php'; //for payment functions
+require_once __DIR__ . '/../services/basketFunctions.php'; //for checkout helpers and basket merger
 
 class PaymentController {
     

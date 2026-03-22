@@ -5,8 +5,8 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-include_once '../../controllers/returnsController.php';
-include_once '../../controllers/returnItemController.php';
+require_once __DIR__ . '/../controllers/returnsController.php';
+require_once __DIR__ . '/../controllers/returnItemController.php';
 
 $ReturnController = new ReturnController();
 $ReturnItemController = new ReturnItemController();
@@ -37,7 +37,7 @@ $new_return_id = $ReturnController->store($orderID, $userID, $reason, $productID
 if ($new_return_id) {
                                         
 // Insert the line items into the return_items table
-$items_success = $returnItemController->store($new_return_id, $items_to_return);
+$items_success = $ReturnItemController->store($new_return_id, $items_to_return);
                     
 if ($items_success) {
 // Success: Both header and items were inserted

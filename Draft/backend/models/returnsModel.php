@@ -5,8 +5,9 @@ class ReturnsModel {
 private $conn;
 
 public function __construct() {
-include_once __DIR__ . '/../db_connect.php';
-$this->conn = $conn;
+    global $conn;
+    require_once __DIR__ . '/../config/db_connect.php';
+    $this->conn = $conn;
 }
 // Get ALL returns.
 public function getAll() {

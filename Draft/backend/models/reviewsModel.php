@@ -1,6 +1,6 @@
 <?php
 // reviewsModel.php
-include_once __DIR__ . '/../../config/db_connect.php';
+require_once __DIR__ . '/../config/db_connect.php';
 
 class Review {
     private $conn;

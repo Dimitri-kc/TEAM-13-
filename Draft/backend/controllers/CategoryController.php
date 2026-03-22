@@ -3,9 +3,9 @@
 // CATEGORY CONTROLLER
 
 // Connect to DB
-include_once 'backend/db_connect.php';  
+require_once __DIR__ . '/../backend/db_connect.php';  
 // Load model
-include_once 'backend/models/categoryModel.php';  
+require_once __DIR__ . '/../backend/models/categoryModel.php';  
 class CategoryController {
 
 // Get ALL categories

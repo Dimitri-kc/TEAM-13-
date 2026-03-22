@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 header("Content-Type: application/json");
 
 //REMOVED THIS
-// include_once __DIR__ . '/../models/ProductModel.php';
+// require_once __DIR__ . '/../models/ProductModel.php';
 // $productModel = new ProductModel();
 
 // $category = isset($_GET['category']) ? (int)$_GET['category'] : null;
@@ -28,7 +28,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // Path to ProductController.php - added . __DIR__
-include_once __DIR__ . '/../controllers/productController.php'; 
+require_once __DIR__ . '/../controllers/productController.php'; 
 $productController = new ProductController();
 
 // Helper function to safely get integer IDs

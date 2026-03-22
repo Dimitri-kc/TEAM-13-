@@ -5,9 +5,9 @@ class ProductModel {
 private $conn;
 
 public function __construct() {
-global $conn; //placed before include_once as placement becomes null if placed after causing basket errors
-include_once __DIR__ . '/../config/db_connect.php';
-$this->conn = $conn;
+    global $conn; //placed before require_once as placement becomes null if placed after causing basket errors
+    require_once __DIR__ . '/../config/db_connect.php';
+    $this->conn = $conn;
 
 }
 

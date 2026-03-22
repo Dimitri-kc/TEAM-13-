@@ -1,7 +1,7 @@
 <?php
 // reviewsRoutes.php
 header('Content-Type: application/json');
-require_once __DIR__ . '/reviewsController.php';
+require_once __DIR__ . '/../controllers/reviewsController.php';
 
 $controller = new ReviewsController();
 $method = $_SERVER['REQUEST_METHOD'];

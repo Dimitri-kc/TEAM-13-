@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . '/../models/returnItemModel.php';
+require_once __DIR__ . '/../models/returnItemModel.php';
 
 class ReturnItemController {
 

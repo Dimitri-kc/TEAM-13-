@@ -2,7 +2,7 @@
 // > GET for payment history
 
 session_start();
-include_once '../../controllers/paymentController.php';
+require_once __DIR__ . '/../controllers/paymentController.php';
 
 $paymentController = new PaymentController(); //instance of payment controller
 

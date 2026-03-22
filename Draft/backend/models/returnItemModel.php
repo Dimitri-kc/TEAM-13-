@@ -4,7 +4,9 @@ class ReturnItemModel {
     private $db;
 
 public function __construct() {
-$this->db = new mysqli("localhost", "root", "", "cs2team13_db");
+global $conn;
+require_once __DIR__ . '/../config/db_connect.php';
+$this->db = $conn;
 
 if ($this->db->connect_error) {
 die("Connection failed: " . $this->db->connect_error);
