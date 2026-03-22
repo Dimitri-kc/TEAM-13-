@@ -112,6 +112,15 @@ body.admin-order-list-page {
     letter-spacing: 0.03em;
 }
 
+.admin-order-list-page .order-return-status {
+    margin: 0 0 8px;
+    font-family: 'mr-eaves-modern', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #9a5f36;
+    letter-spacing: 0.03em;
+}
+
 .admin-order-list-page .order-number {
     margin: 0 0 6px;
     font-family: 'ivybodoni', serif;

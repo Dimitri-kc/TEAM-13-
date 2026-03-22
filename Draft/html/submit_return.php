@@ -77,6 +77,22 @@ if (!$stmt2->execute()) {
 }
 $stmt2->close();
 
+$orderStatusStmt = $conn->prepare("
+    UPDATE orders
+    SET order_status = 'Return Pending'
+    WHERE order_ID = ? AND user_ID = ?
+");
+if ($orderStatusStmt === false) {
+    echo json_encode(["status" => "error", "message" => "Prepare failed for updating order status: " . $conn->error]);
+    exit;
+}
+$orderStatusStmt->bind_param("ii", $order_id, $user_id);
+if (!$orderStatusStmt->execute()) {
+    echo json_encode(["status" => "error", "message" => "Execute failed for updating order status: " . $orderStatusStmt->error]);
+    exit;
+}
+$orderStatusStmt->close();
+
 // Get product_ID from order_items to update stock
 $stmt3 = $conn->prepare("SELECT product_ID FROM order_items WHERE order_item_ID = ?");
 if ($stmt3 === false) {

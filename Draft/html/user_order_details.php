@@ -44,7 +44,7 @@ $user = $user_stmt->get_result()->fetch_assoc();
 $user_name = $user['name'] ?? 'Customer';
 
 $item_stmt = $conn->prepare("
-SELECT p.name, p.image, oi.quantity, oi.unit_price, oi.item_status, (oi.quantity * oi.unit_price) AS line_total
+SELECT oi.order_item_ID, p.name, p.image, oi.quantity, oi.unit_price, oi.item_status, (oi.quantity * oi.unit_price) AS line_total
 FROM order_items oi
 JOIN products p ON oi.product_ID = p.product_ID
 WHERE oi.order_ID = ?
@@ -57,15 +57,18 @@ $items = $item_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $item_stmt->close();
 
 $return_stmt = $conn->prepare("
-SELECT return_ID
+SELECT status
 FROM returns
 WHERE order_ID = ?
+ORDER BY return_ID DESC
 LIMIT 1
 ");
 $return_stmt->bind_param("i", $order_ID);
 $return_stmt->execute();
-$hasReturnRequest = (bool)$return_stmt->get_result()->fetch_assoc();
+$returnRow = $return_stmt->get_result()->fetch_assoc();
+$hasReturnRequest = (bool)$returnRow;
 $return_stmt->close();
+$returnStatus = trim((string)($returnRow['status'] ?? ''));
 
 $orderStatus = $order['order_status'] ?? 'Unknown';
 
@@ -110,6 +113,12 @@ $orderTotal = $storedTotal > 0 ? $storedTotal : ($subtotal + $taxAmount);
 $statusKey = strtolower(trim((string)$orderStatus));
 $canReturn = !$hasReturnRequest && $statusKey !== 'cancelled' && !empty($activeItems);
 $canCancel = !$hasReturnRequest && $statusKey !== 'cancelled' && !empty($activeItems);
+$returnButtonLabel = match ($returnStatus) {
+    'Authorised' => 'Return Processed',
+    'Refunded' => 'Returned',
+    'Denied' => 'Return Denied',
+    default => 'Return Requested',
+};
 ?>
 
 <!DOCTYPE html>
@@ -151,7 +160,7 @@ $canCancel = !$hasReturnRequest && $statusKey !== 'cancelled' && !empty($activeI
         <button type="button" class="detail-action-btn detail-action-btn-secondary" data-open-return>Return Item</button>
     <?php else: ?>
         <button type="button" class="detail-action-btn detail-action-btn-secondary" disabled>
-            <?= $hasReturnRequest ? 'Return Requested' : 'Return Unavailable' ?>
+            <?= $hasReturnRequest ? $returnButtonLabel : 'Return Unavailable' ?>
         </button>
     <?php endif; ?>
     <?php if ($canCancel): ?>
@@ -447,9 +456,8 @@ document.getElementById('returnForm')?.addEventListener('submit', async function
         }
 
         returnModal.style.display = 'none';
-        successMessage.textContent = 'Your return request has been submitted. Refreshing the order now.';
+        successMessage.textContent = 'Your return request has been submitted.';
         successModal.style.display = 'flex';
-        setTimeout(() => window.location.reload(), 700);
     } catch (error) {
         alert(error.message);
     }
@@ -480,9 +488,8 @@ document.getElementById('cancelForm')?.addEventListener('submit', async function
         }
 
         cancelModal.style.display = 'none';
-        successMessage.textContent = result.message || 'Your order has been updated. Refreshing now.';
+        successMessage.textContent = result.message || 'Your order has been updated.';
         successModal.style.display = 'flex';
-        setTimeout(() => window.location.reload(), 700);
     } catch (error) {
         alert(error.message);
     }

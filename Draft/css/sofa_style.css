@@ -91,22 +91,33 @@ select {
     align-items: center;
     gap: 12px;
     margin-bottom: 30px;
+    width: 100%;
 }
 
 .add-to-basket {
-    flex: 1;                  /* takes all remaining width */
-    background-color: #2c2c2c;
-    color: white;
-    padding: 15px;
-    border: none;
-    border-radius: 4px;
-    font-size: 15px;
+    flex: 1 1 auto;
+    min-height: 52px;
+    padding: 0 24px;
+    border: 1.5px solid #8c8376;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #93897c 0%, #8c8376 100%);
+    color: #fff;
+    font-family: 'mr-eaves-modern', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
     cursor: pointer;
-    transition: background 0.3s;
-
+    white-space: nowrap;
+    box-shadow: 0 14px 28px rgba(98, 84, 67, 0.14);
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
 }
 
-.add-to-basket:hover { background-color: #000; }
+.add-to-basket:hover {
+    background: linear-gradient(180deg, #7b7267 0%, #6f675c 100%);
+    border-color: #6f675c;
+    transform: translateY(-1px);
+    box-shadow: 0 16px 30px rgba(98, 84, 67, 0.18);
+}
 
 
 
@@ -132,7 +143,10 @@ select {
 @media (max-width: 768px) {
     .product-wrapper { flex-direction: column; }
     .action-buttons { flex-wrap: wrap; }
-    .add-to-basket { flex: 1 1 100%; }
+    .add-to-basket {
+        flex: 1 1 100%;
+        width: 100%;
+    }
 }
 
 .favourite-popup{
@@ -484,14 +498,39 @@ select {
 
         /* Disabled basket button */
         .add-to-basket:disabled {
-            background-color: #ccc;
-            color: #888;
+            background: #c6beb3;
+            border-color: #c6beb3;
+            color: #f7f3ee;
             cursor: not-allowed;
-            opacity: 0.7;
+            opacity: 0.82;
+            box-shadow: none;
         }
         .add-to-basket:disabled:hover {
-            background-color: #ccc;
+            background: #c6beb3;
+            border-color: #c6beb3;
+            transform: none;
+            box-shadow: none;
         }
+
+html.dark-mode .add-to-basket {
+    background: linear-gradient(180deg, #b8ab99 0%, #afa595 100%);
+    border-color: #afa595;
+    color: #171411;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.26);
+}
+
+html.dark-mode .add-to-basket:hover {
+    background: linear-gradient(180deg, #c7b9a5 0%, #bfae98 100%);
+    border-color: #c7b9a5;
+}
+
+html.dark-mode .add-to-basket:disabled,
+html.dark-mode .add-to-basket:disabled:hover {
+    background: #5a544b;
+    border-color: #5a544b;
+    color: #d4c8bb;
+    box-shadow: none;
+}
 
 .back-button {
     display: inline-flex;

@@ -126,7 +126,8 @@ SELECT
 
     CONCAT(u.name,' ',u.surname) AS customer_name,
 
-    p.image
+    p.image,
+    r.status AS return_status
 
 FROM orders o
 
@@ -138,6 +139,17 @@ ON o.order_ID = oi.order_ID
 
 LEFT JOIN products p 
 ON oi.product_ID = p.product_ID
+
+LEFT JOIN (
+    SELECT order_ID, status
+    FROM returns
+    WHERE return_ID IN (
+        SELECT MAX(return_ID)
+        FROM returns
+        GROUP BY order_ID
+    )
+) r
+ON o.order_ID = r.order_ID
 
 ORDER BY o.order_date DESC
 
@@ -178,4 +190,21 @@ return $orders;
         return $stmt->execute();
     }
 
-}
+    public function updateReturnStatusForOrder($order_ID, $status) {
+
+        $stmt = $this->conn->prepare(
+            "UPDATE returns
+             SET status = ?
+             WHERE order_ID = ?
+             ORDER BY return_ID DESC
+             LIMIT 1"
+        );
+
+        if (!$stmt) return false;
+
+        $stmt->bind_param("si", $status, $order_ID);
+
+        return $stmt->execute();
+    }
+
+} 

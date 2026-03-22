@@ -67,7 +67,7 @@ try {
                 $rawStatus = 'processing';
             }
 
-            $allowedStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled', 'partially_cancelled', 'paid'];
+            $allowedStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled', 'partially_cancelled', 'paid', 'return_pending', 'return_processed', 'returned'];
             $statusKey = in_array($rawStatus, $allowedStatuses, true) ? $rawStatus : 'pending';
 
             $statusLabels = [
@@ -78,6 +78,9 @@ try {
                 'cancelled'  => 'Cancelled',
                 'partially_cancelled' => 'Partially Cancelled',
                 'paid' => 'Paid',
+                'return_pending' => 'Return Pending',
+                'return_processed' => 'Return Processed',
+                'returned' => 'Returned',
             ];
 
             $orderStatus = $statusLabels[$statusKey];

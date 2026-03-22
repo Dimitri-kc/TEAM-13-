@@ -75,6 +75,9 @@ Return to Previous Page
 <option value="Shipped">Shipped</option>
 <option value="Delivered">Delivered</option>
 <option value="Cancelled">Cancelled</option>
+<option value="Return Pending">Return Pending</option>
+<option value="Return Processed">Return Processed</option>
+<option value="Returned">Returned</option>
 </select>
 
 </div>
@@ -139,6 +142,8 @@ const card=`
 <div class="order-details">
 
 <p class="order-status">Order Status: ${order.order_status}</p>
+
+${order.return_status ? `<p class="order-return-status">Return Status: ${order.return_status}</p>` : ``}
 
 <p class="order-number">Order #${order.order_ID}</p>
 
@@ -215,13 +220,42 @@ formData.append("action","updateStatus");
 formData.append("order_ID",orderId);
 formData.append("order_status",status);
 
-await fetch("/TEAM-13-/Draft/backend/routes/orderRoutes.php",{
+const response = await fetch("/TEAM-13-/Draft/backend/routes/orderRoutes.php",{
 method:"POST",
 body:formData
 });
 
+const result = await response.json();
+
+if(result.status !== "success"){
+alert(result.message || "Failed to update order status");
+return;
+}
+
 if(card){
 card.querySelector(".order-status").innerText="Order Status: "+status;
+const returnStatusEl = card.querySelector(".order-return-status");
+
+if(status === "Return Pending"){
+    if(returnStatusEl){
+        returnStatusEl.innerText = "Return Status: Requested";
+    } else {
+        const details = card.querySelector(".order-details");
+        details.insertAdjacentHTML("beforeend", `<p class="order-return-status">Return Status: Requested</p>`);
+    }
+}
+
+if(status === "Return Processed"){
+    if(returnStatusEl){
+        returnStatusEl.innerText = "Return Status: Authorised";
+    }
+}
+
+if(status === "Returned"){
+    if(returnStatusEl){
+        returnStatusEl.innerText = "Return Status: Refunded";
+    }
+}
 }
 
 }

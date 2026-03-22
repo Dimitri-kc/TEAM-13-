@@ -116,11 +116,19 @@ class OrderController {
         $order_ID = $_POST['order_ID'] ?? null;
         $status = $_POST['order_status'] ?? null;
 
-        $allowed = ['Pending','Shipped','Delivered','Cancelled'];
+        $allowed = ['Pending','Shipped','Delivered','Cancelled','Return Pending','Return Processed','Returned'];
 
         if (!$order_ID || !$status || !in_array($status,$allowed)) {
             echo json_encode(["status"=>"error","message"=>"Invalid order ID or status"]);
             return;
+        }
+
+        if ($status === 'Return Processed') {
+            $this->orderModel->updateReturnStatusForOrder($order_ID, 'Authorised');
+        }
+
+        if ($status === 'Returned') {
+            $this->orderModel->updateReturnStatusForOrder($order_ID, 'Refunded');
         }
 
         $success = $this->orderModel->updateOrderStatus($order_ID,$status);
