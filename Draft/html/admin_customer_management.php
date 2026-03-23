@@ -46,6 +46,13 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
             <option value="customer">Customers</option>
             <option value="admin">Admins</option>
           </select>
+          <select id="limitSelect">
+            <option value="10">Show 10</option>
+            <option value="25">Show 25</option>
+            <option value="50">Show 50</option>
+            <option value="100">Show 100</option>
+            <option value="0">Show All</option>
+          </select>
         </div>
 
         <a href="admin_add_customer.php" class="add-customer-btn">Add Customer</a>
@@ -169,8 +176,18 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
     async function loadCustomers() {
       hidePopup();
 
+      const limitVal = parseInt(document.getElementById("limitSelect").value);
+      const heading = document.querySelector(".recent-heading");
+
+      if (limitVal === 0) {
+          heading.textContent = "All Signed Up Users";
+      } else {
+          heading.textContent = `Last ${limitVal} Signed Up Users`;
+      }
+      
       const payload = {
-        action: "customers_list"
+        action: "customers_list",
+        limit: limitVal === 0 ? 999 : limitVal  // 0 = show all, send high number
       };
 
       try {
@@ -202,6 +219,7 @@ require_admin_page('/TEAM-13-/Draft/html/signin.php');
 
     searchInput.addEventListener("input", applySearch);
     roleFilter.addEventListener("change", applySearch);
+    document.getElementById("limitSelect").addEventListener("change", loadCustomers);
     loadCustomers();
   </script>
 </body>

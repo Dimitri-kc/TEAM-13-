@@ -34,10 +34,10 @@ class AdminController {
 
 //Customer Management Operations
     public function getCustomersList($data) {
-        //list limit hadling
+        //list limit handling
         $limit = isset($data['limit']) && is_int($data['limit']) ? $data['limit'] : 10; //default limit to 10 if not provided or invalid
         if ($limit <= 0) $limit = 1; //minimum limit set to 1 to prevent invalid queries
-        if ($limit > 100) $limit = 100; //max limit set to 100 to prevent excessive data retrieval
+        if ($limit > 999) $limit = 999; //max limit set to 999 to prevent excessive data retrieval
 
         //for retrieving list of all customers in database and their details (name, email, phone, address etc)
         $sql = "SELECT user_ID as id, name, surname, email, phone, address, role, status
